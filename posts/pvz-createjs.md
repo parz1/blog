@@ -1,9 +1,7 @@
 ---
 title: 'PVZ createjs ver'
-date: '20202-01-08'
+date: '2022-01-08'
 ---
-
-# PVZ(createjs.ver) 
 
 ### Usage
 
