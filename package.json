@@ -37,6 +37,7 @@
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "standard-version": "^9.5.0",
     "husky": ">=7",
     "lint-staged": ">=10",
     "postcss": "^8.4.16",
@@ -55,12 +56,6 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "pnpm run lint",
-      "prettier --write"
-    ]
   },
   "config": {
     "commitizen": {
