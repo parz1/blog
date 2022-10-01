@@ -21,12 +21,11 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Alert type='error'>WIP: parz1 is learning Next.js!</Alert>
+      <div>Home Blog Demo Log</div>
       <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
+        <p>白天不干活，晚上干活到四点，并说自己很努力</p>
         <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href='https://nextjs.org/learn'>our Next.js tutorial</a>.)
+          Nothing is important but yourself
         </p>
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
