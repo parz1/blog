@@ -1,8 +1,17 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { remark } from 'remark'
-import html from 'remark-html'
+
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import remarkSlug from 'remark-slug'
+import rehypeDocument from 'rehype-document'
+import rehypeFormat from 'rehype-format'
+import rehypeStringify from 'rehype-stringify'
+import rehypeToc from 'rehype-toc'
+import rehypeHighlight from 'rehype-highlight'
+import remarkEmoji from 'remark-emoji'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -77,8 +86,21 @@ export async function getPostData(id) {
   const matterResult = matter(fileContents)
 
   // Use remark to convert markdown into HTML string
-  const processedContent = await remark().use(html).process(matterResult.content)
-  const contentHtml = processedContent.toString()
+  const processedContent = await unified()
+    .data('settings', { fragment: true })
+    .use(remarkParse)
+    .use(remarkEmoji)
+    .use(remarkSlug)
+    // revert to remark-rehype <HTML>
+    .use(remarkRehype)
+    .use(rehypeDocument)
+    .use(rehypeFormat)
+    .use(rehypeToc)
+    .use(rehypeHighlight)
+    .use(rehypeStringify)
+    .process(matterResult.content)
+  console.log(processedContent)
+  const contentHtml = processedContent.value
 
   // Combine the data with the id and contentHtml
   return {

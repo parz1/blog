@@ -10,8 +10,8 @@ export async function getStaticProps() {
   const allPostsData = getSortedPostsData()
   return {
     props: {
-      allPostsData
-    }
+      allPostsData,
+    },
   }
 }
 
@@ -21,12 +21,12 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div>Home Blog Demo Log</div>
+      <div>
+        Home Blog Demo <Link href={'/log'}>Log</Link>
+      </div>
       <section className={utilStyles.headingMd}>
         <p>白天不干活，晚上干活到四点，并说自己很努力</p>
-        <p>
-          Nothing is important but yourself
-        </p>
+        <p>Nothing is important but yourself</p>
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>

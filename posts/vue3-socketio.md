@@ -3,7 +3,7 @@ title: 'Use Socket.io in Tauri'
 date: '2022-09-27'
 ---
 
-## Plugin
+## :rocket: Plugin
 
 ```typescript
 // plugins/io.ts TODO: build a code part route cpnt in blog
