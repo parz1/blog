@@ -3,7 +3,8 @@ import Layout from '../../components/layout'
 import Head from 'next/head'
 import Date from '../../components/Date'
 import { getAllPostIds, getPostData } from '../../lib/posts'
-import 'highlight.js/styles/default.css'
+// import 'highlight.js/styles/default.css'
+// import '../../styles/prism-nord.scss'
 
 export default function Post({ postData }) {
   return (

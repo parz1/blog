@@ -12,6 +12,7 @@ import rehypeStringify from 'rehype-stringify'
 import rehypeToc from 'rehype-toc'
 import rehypeHighlight from 'rehype-highlight'
 import remarkEmoji from 'remark-emoji'
+import rehypePrism from 'rehype-prism-plus'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -96,7 +97,8 @@ export async function getPostData(id) {
     .use(rehypeDocument)
     .use(rehypeFormat)
     .use(rehypeToc)
-    .use(rehypeHighlight)
+    // .use(rehypeHighlight)
+    .use(rehypePrism)
     .use(rehypeStringify)
     .process(matterResult.content)
   console.log(processedContent)
