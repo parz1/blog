@@ -1,6 +1,19 @@
 # History 
 
 
+### [0.0.3](https://github.com/parz1/blog/compare/v0.0.2...v0.0.3) (2022-10-04)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **config:** :bug: set trailingSlash to true ([ef832f2](https://github.com/parz1/blog/commit/ef832f27ed5f049a79084d375f10cbaf60a98bb8))
+
+
+### ✨ Features | 新功能
+
+* **code-block:** :sparkles: change highlight plugin to prism ([075f9ad](https://github.com/parz1/blog/commit/075f9ad8e6174ed42e39354fcf1a408b196b1ee8))
+* **posts:** :sparkles: add posts page ([e8fe137](https://github.com/parz1/blog/commit/e8fe137990935a97dea2f2e0537e9ff51412b897))
+
 ### [0.0.2](https://github.com/parz1/blog/compare/v0.0.1...v0.0.2) (2022-10-03)
 
 
