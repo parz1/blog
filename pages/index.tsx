@@ -22,12 +22,13 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <div>
-        Home Blog Demo <Link href={'/log'}>Log</Link>
+        Home <Link href={'/posts'}>Posts</Link> Demo <Link href={'/log'}>Log</Link>
       </div>
       <section className={utilStyles.headingMd}>
         <p>白天不干活，晚上干活到四点，并说自己很努力</p>
         <p>Nothing is important but yourself</p>
-        <ul className={utilStyles.list}>
+        <p>Happiness comes from progress</p>
+        {/* <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href={`/posts/${id}`}>
@@ -39,7 +40,7 @@ export default function Home({ allPostsData }) {
               </small>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </section>
     </Layout>
   )

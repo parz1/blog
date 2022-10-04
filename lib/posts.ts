@@ -101,7 +101,7 @@ export async function getPostData(id) {
     .use(rehypePrism)
     .use(rehypeStringify)
     .process(matterResult.content)
-  console.log(processedContent)
+  // console.log(processedContent)
   const contentHtml = processedContent.value
 
   // Combine the data with the id and contentHtml
