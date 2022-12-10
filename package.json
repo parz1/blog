@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.33.1",
+    "commitizen": "^4.2.6",
+    "cz-git": "^1.4.0",
+    "eslint": "^8.29.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "nuxt": "3.0.0",
+    "typescript": "^4.9.4",
+    "unocss": "^0.47.5"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,vue}": "pnpm lint",
+    "**/*.{js,jsx,tsx,ts,less,md,json,vue}": [
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+}

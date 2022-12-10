@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "extends": "@antfu",
+  "rules": {
+    // if else try catch 风格
+    // ```
+    // try {                       try {
+    //   loading()                   loading()
+    // }                 ==>       } catch (e) {
+    // catch (e) {                     hideLoading()
+    //   hideLoading()             }
+    // }
+    // ```
+    "@typescript-eslint/brace-style": ["error", "1tbs"],
+
+    // if else 必须添加{} if()do() => if(){ do() }
+    "curly": ["error", "multi-line"],
+    "no-console": "warn",
+    "operator-linebreak": ["error", "after"],
+    "comma-dangle": ["error", "always-multiline"],
+    "vue/html-self-closing": "off",
+    "prefer-template": "off"
+  },
+  "globals": {}
+}
