@@ -10,9 +10,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    <slot />
-  </div>
+  <div>about</div>
 </template>
 
 <style scoped></style>

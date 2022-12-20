@@ -10,10 +10,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    <slot />
-  </div>
+  <div>404</div>
 </template>
 
-<style scoped></style>
+<style lang='stylus' scoped></style>
 

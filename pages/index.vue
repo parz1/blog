@@ -10,10 +10,13 @@ export default defineComponent({
 </script>
 
 <template>
+  <div>I'm parz1, welcome to my website.</div>
   <div>
-    <slot />
+    <nuxt-link to="/posts">
+      posts
+    </nuxt-link>
   </div>
 </template>
 
-<style scoped></style>
+<style lang='scss' scoped></style>
 
