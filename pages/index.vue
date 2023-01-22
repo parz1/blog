@@ -1,22 +1,16 @@
-<script lang='ts'>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  setup() {
-    // todo
-    return {}
-  },
-})
+<script setup lang='ts'>
 </script>
 
 <template>
-  <div>I'm parz1, welcome to my website.</div>
-  <div>
-    <nuxt-link to="/posts">
-      posts
-    </nuxt-link>
+  <div mt-4>
+    <BaseIntroCard />
+  </div>
+  <!-- <BaseNavLinker /> -->
+  <div mt-20>
+    <RollingBox />
   </div>
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+</style>
 
