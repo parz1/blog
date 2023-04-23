@@ -3,6 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
+    '@nuxt/devtools',
     '@unocss/nuxt',
   ],
   app: {

@@ -11,15 +11,28 @@
     //   hideLoading()             }
     // }
     // ```
-    "@typescript-eslint/brace-style": ["error", "1tbs"],
-
+    "@typescript-eslint/brace-style": [
+      "error",
+      "1tbs"
+    ],
     // if else 必须添加{} if()do() => if(){ do() }
-    "curly": ["error", "multi-line"],
+    "curly": [
+      "error",
+      "multi-line"
+    ],
     "no-console": "warn",
-    "operator-linebreak": ["error", "after"],
-    "comma-dangle": ["error", "always-multiline"],
+    "operator-linebreak": [
+      "error",
+      "after"
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "vue/html-self-closing": "off",
-    "prefer-template": "off"
-  },
-  "globals": {}
+    "prefer-template": "off",
+    "eslint-comments/no-unlimited-disable": "off",
+    "unused-imports/no-unused-imports": ["warn"],
+    "no-multiple-empty-lines": ["warn"]
+  }
 }

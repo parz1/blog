@@ -9,10 +9,9 @@ const { data } = await useAsyncData('posts',
   <div>
     post index
     <div v-for="(item, index) in data" :key="index">
-      {{ item}}
+      {{ item }}
     </div>
   </div>
 </template>
 
 <style lang='scss' scoped></style>
-
