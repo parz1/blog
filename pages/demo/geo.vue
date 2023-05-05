@@ -22,7 +22,7 @@ onMounted(() => {
 
   console.log(canvasRef.value)
   const renderer = new THREE.WebGLRenderer({
-    alpha: true,
+    // alpha: true,
     antialias: true,
     canvas: canvasRef.value,
   })

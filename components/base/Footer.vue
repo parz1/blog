@@ -3,7 +3,7 @@ const thisYear = new Date().getFullYear()
 </script>
 
 <template>
-  <div>
+  <div flex justify-center>
     <div text-left px-4>
       <div mt-4 text-4>
         About Me
