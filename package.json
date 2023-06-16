@@ -12,6 +12,7 @@
     "@antfu/eslint-config": "^0.38.5",
     "@nuxt/content": "^2.6.0",
     "@nuxt/devtools": "^0.4.1",
+    "@nuxthq/ui": "^2.4.0",
     "@types/d3-geo": "^3.0.3",
     "@types/node": "^18",
     "@types/three": "^0.152.0",
@@ -21,7 +22,7 @@
     "eslint": "^8.29.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
-    "nuxt": "^3.4.1",
+    "nuxt": "^3.5.3",
     "sass": "^1.57.1"
   },
   "lint-staged": {
