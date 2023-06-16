@@ -7,7 +7,7 @@ const { data } = await useAsyncData('posts',
 
 <template>
   <div>
-    post index
+    <Icon name="uil:github" color="black" />post index
     <div v-for="(item, index) in data" :key="index">
       {{ item }}
     </div>

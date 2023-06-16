@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/content',
     '@nuxt/devtools',
+    'nuxt-icon',
   ],
   app: {
     head: {
