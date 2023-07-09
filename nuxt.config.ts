@@ -5,11 +5,20 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/devtools',
     'nuxt-icon',
+    '@nuxtjs/device',
   ],
   app: {
     head: {
       title: 'parz1\s playground',
     },
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in',
+    },
+  },
+  devtools: {
+    enabled: true,
+    host: 'localhost',
   },
   css: ['@/assets/css/global.scss'],
   vite: {
