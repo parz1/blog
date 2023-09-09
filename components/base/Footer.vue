@@ -9,7 +9,7 @@ const thisYear = new Date().getFullYear()
         About Me
       </div>
       <div mt-4 text-blueGray>
-        全栈开发者，热爱开源，热爱技术，不热爱生活。
+        全栈开发者，热爱技术，喜欢做梦。
       </div>
       <!-- copyright -->
       <div mt-4 text-blueGray>
