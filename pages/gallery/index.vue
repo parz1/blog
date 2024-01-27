@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -13,5 +13,4 @@ export default defineComponent({
   <div>gallery</div>
 </template>
 
-<style lang='scss' scoped></style>
-
+<style lang="scss" scoped></style>

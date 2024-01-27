@@ -10,6 +10,18 @@ export default defineNuxtConfig({
       mode: 'out-in',
     },
   },
+  content: {
+    highlight: {
+      theme: {
+        // Default theme (same as single string)
+        default: 'github-light',
+        // Theme used if `html.dark`
+        dark: 'github-dark',
+        // Theme used if `html.sepia`
+        sepia: 'monokai',
+      },
+    },
+  },
   devtools: {
     enabled: true,
   },
