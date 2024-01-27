@@ -1,5 +1,4 @@
-<script setup lang='ts'>
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
@@ -12,17 +11,12 @@
     </div>
 
     <div h-20 text-center mt-20>
-      <NuxtLink to="/posts">
-        Posts
-      </NuxtLink>
-      <NuxtLink>
-        Demo
-      </NuxtLink>
+      <NuxtLink to="/posts"> Posts </NuxtLink>
+      <NuxtLink> Demo </NuxtLink>
     </div>
 
     <BaseFooter />
   </div>
 </template>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

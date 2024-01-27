@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script lang="ts" setup>
 import * as THREE from 'three'
 import { Raycaster, Vector2 } from 'three'
 import { geoMercator } from 'd3-geo'
@@ -15,8 +15,7 @@ onMounted(() => {
   // canvasRef.value!.setAttribute('width', window.innerWidth.toString())
   // canvasRef.value!.setAttribute('height', window.innerHeight.toString())
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(45,
-    window.innerWidth / window.innerHeight, 1, 250)
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 250)
   camera.position.set(5, 5, 10)
   camera.lookAt(0, 0, 0)
 
@@ -29,91 +28,90 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   // document.body.appendChild(renderer.domElement)
 
-  $fetch('https://geo.datav.aliyun.com/areas_v3/bound/330100_full.json')
-    .then((data) => {
-      console.log(data)
+  $fetch('/hangzhou.json').then(data => {
+    console.log(data)
 
-      // 创建地理投影
-      const projection = geoMercator()
-        .center([121.27069, 29.162932])
-        .rotate([Math.PI / 2, Math.PI / 2])
-        .translate([0, 0])
+    // 创建地理投影
+    const projection = geoMercator()
+      .center([121.27069, 29.162932])
+      .rotate([Math.PI / 2, Math.PI / 2])
+      .translate([0, 0])
 
-      // 设定投影比例
-      // const geoPathGenerator = geoPath().projection(projection).pointRadius(1)
+    // 设定投影比例
+    // const geoPathGenerator = geoPath().projection(projection).pointRadius(1)
 
-      // const shapeArray = geoPathGenerator(data)
+    // const shapeArray = geoPathGenerator(data)
 
-      // 将 GeoJSON 转化为 Three.js 几何体
-      // const geometry = new GeoJsonGeometry(shapeArray)
-      const geo_data = data
-      geo_data.features.forEach((e) => {
-        const province = new THREE.Object3D()
-        const coors = e.geometry.coordinates
-        coors.forEach((multipolygon) => {
-          multipolygon.forEach((polygon) => {
-            const shape = new THREE.Shape()
-            const lineMaterial = new THREE.LineBasicMaterial({ color: '#FFF', linewidth: 2 })
-            const lineGeometry = new THREE.BufferGeometry()
-            const line_vertices = []
-            for (let i = 0; i < polygon.length; i++) {
-              const [x, y] = projection(polygon[i])
-              if (i === 0) {
-                shape.moveTo(x, -y)
-              }
-              shape.lineTo(x, -y)
-              line_vertices.push(new THREE.Vector3(x, -y, 1.01))
+    // 将 GeoJSON 转化为 Three.js 几何体
+    // const geometry = new GeoJsonGeometry(shapeArray)
+    const geo_data = data
+    geo_data.features.forEach(e => {
+      const province = new THREE.Object3D()
+      const coors = e.geometry.coordinates
+      coors.forEach(multipolygon => {
+        multipolygon.forEach(polygon => {
+          const shape = new THREE.Shape()
+          const lineMaterial = new THREE.LineBasicMaterial({ color: '#FFF', linewidth: 2 })
+          const lineGeometry = new THREE.BufferGeometry()
+          const line_vertices = []
+          for (let i = 0; i < polygon.length; i++) {
+            const [x, y] = projection(polygon[i])
+            if (i === 0) {
+              shape.moveTo(x, -y)
             }
-            lineGeometry.setFromPoints(line_vertices)
+            shape.lineTo(x, -y)
+            line_vertices.push(new THREE.Vector3(x, -y, 1.01))
+          }
+          lineGeometry.setFromPoints(line_vertices)
 
-            const bottomLineMaterial = new THREE.LineBasicMaterial({ color: '#000', linewidth: 2 })
-            const bottomLineGeometry = new THREE.BufferGeometry()
-            const Bottom_Line_vertices = []
-            for (let i = 0; i < polygon.length; i++) {
-              const [x, y] = projection(polygon[i])
-              if (i === 0) {
-                shape.moveTo(x, -y)
-              }
-              shape.lineTo(x, -y)
-              Bottom_Line_vertices.push(new THREE.Vector3(x, -y, 0.01))
+          const bottomLineMaterial = new THREE.LineBasicMaterial({ color: '#000', linewidth: 2 })
+          const bottomLineGeometry = new THREE.BufferGeometry()
+          const Bottom_Line_vertices = []
+          for (let i = 0; i < polygon.length; i++) {
+            const [x, y] = projection(polygon[i])
+            if (i === 0) {
+              shape.moveTo(x, -y)
             }
-            bottomLineGeometry.setFromPoints(Bottom_Line_vertices)
+            shape.lineTo(x, -y)
+            Bottom_Line_vertices.push(new THREE.Vector3(x, -y, 0.01))
+          }
+          bottomLineGeometry.setFromPoints(Bottom_Line_vertices)
 
-            const extrudeSettings = {
-              depth: 1,
-              bevelEnabled: false,
-            }
-            const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-            const material = new THREE.MeshBasicMaterial({
-              color: '#069EF2',
-              transparent: true,
-              opacity: 0.4,
-              side: THREE.DoubleSide,
-            })
-            const mesh = new THREE.Mesh(geometry, material)
-            province.add(mesh)
-            const line = new THREE.Line(lineGeometry, lineMaterial)
-            province.add(line)
-            const bottomLine = new THREE.Line(bottomLineGeometry, bottomLineMaterial)
-            province.add(bottomLine)
+          const extrudeSettings = {
+            depth: 1,
+            bevelEnabled: false,
+          }
+          const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+          const material = new THREE.MeshBasicMaterial({
+            color: '#069EF2',
+            transparent: true,
+            opacity: 0.4,
+            side: THREE.DoubleSide,
           })
+          const mesh = new THREE.Mesh(geometry, material)
+          province.add(mesh)
+          const line = new THREE.Line(lineGeometry, lineMaterial)
+          province.add(line)
+          const bottomLine = new THREE.Line(bottomLineGeometry, bottomLineMaterial)
+          province.add(bottomLine)
         })
-        objectWeakMap.set(province, {
-          properties: e.properties,
-        })
-        if (e.properties.center) {
-          const [x, y] = projection(e.properties.center)
-          province.name = e.properties.name
-          objectTable[e.properties.name as string] = province
-          objectWeakMap.set(province, { properties: { _centroid: [x, y] } })
-        }
-        map.add(province)
       })
-      map.rotation.x = -(Math.PI / 2)
-      // map.rotation.y = (Math.PI / 4)
-      // map.rotation.z = -(Math.PI / 2)
-      scene.add(map)
+      objectWeakMap.set(province, {
+        properties: e.properties,
+      })
+      if (e.properties.center) {
+        const [x, y] = projection(e.properties.center)
+        province.name = e.properties.name
+        objectTable[e.properties.name as string] = province
+        objectWeakMap.set(province, { properties: { _centroid: [x, y] } })
+      }
+      map.add(province)
     })
+    map.rotation.x = -(Math.PI / 2)
+    // map.rotation.y = (Math.PI / 4)
+    // map.rotation.z = -(Math.PI / 2)
+    scene.add(map)
+  })
 
   // function getLight() {
   //   const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1.1)
@@ -175,7 +173,7 @@ onMounted(() => {
     for (let i = 0; i < intersects.length; i++) {
       // intersects[i].object.material.color.set(0xFF0000)
       if (intersects[i].object.type === 'Mesh') {
-      // if (objectWeakMap.get(intersects[i].object)) {
+        // if (objectWeakMap.get(intersects[i].object)) {
         if (selecetdObj) {
           selecetdObj.material.color = new THREE.Color('#069EF2')
         }
@@ -207,7 +205,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 #canvas {
   width: 100vw;
   height: 100vh;
