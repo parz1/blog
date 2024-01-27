@@ -1,15 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@unocss/nuxt',
-    '@nuxt/content',
-    '@nuxt/devtools',
-    'nuxt-icon',
-    '@nuxtjs/device',
-  ],
+  modules: ['@unocss/nuxt', '@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui'],
   app: {
     head: {
-      title: 'parz1\s playground',
+      title: 'parz1s playground',
     },
     pageTransition: {
       name: 'fade',
@@ -18,7 +12,6 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true,
-    host: 'localhost',
   },
   css: ['@/assets/css/global.scss'],
   vite: {
