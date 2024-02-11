@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
-const colorModeArray = ['light', 'dark', 'sepia']
+const colorModeArray = ['system', 'light', 'dark', 'sepia']
 </script>
 
 <template>

@@ -12,6 +12,7 @@
 
     <div h-20 text-center mt-20>
       <NuxtLink to="/posts"> Posts </NuxtLink>
+      <NuxtLink to="/about"> About </NuxtLink>
       <NuxtLink> Demo </NuxtLink>
     </div>
 

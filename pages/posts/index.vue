@@ -8,8 +8,11 @@ const { data } = await useAsyncData('posts', () => queryContent('/posts').find()
   <div>
     <Icon name="uil:github" color="black" />post index
     <div v-for="(item, index) in data" :key="index">
-      {{ item }}
-      <UButton @click="() => $router.push(`${item._path}`)">go to post</UButton>
+      <div class="ma-4 pa-4">
+        TITLE: {{ item.title }}
+
+        <UButton @click="() => $router.push(`${item._path}`)">go to post</UButton>
+      </div>
     </div>
   </div>
 </template>
