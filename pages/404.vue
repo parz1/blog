@@ -1,17 +1,7 @@
-<script lang='ts'>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  setup() {
-    // todo
-    return {}
-  },
-})
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div>404</div>
 </template>
 
-<style lang='scss' scoped></style>
-
+<style lang="scss" scoped></style>

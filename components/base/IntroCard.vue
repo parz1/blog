@@ -4,12 +4,12 @@
 <template>
   <div class="flex flex-col justify-center items-center">
     <div>
-      <img w-40 h-40 bg-black elva-4 src="~/assets/avatar.png" />
+      <img class="w-40 h-40 bg-black elva-4" src="~/assets/avatar.png" />
     </div>
-    <div mt-4 text-6>
-      parz1
+    <div class="mt-4 text-3xl">
+      ivor
     </div>
-    <div text-blueGray>
+    <div class="">
       parz1zhou@gmail.com
     </div>
   </div>

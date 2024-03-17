@@ -2,15 +2,15 @@
 
 <template>
   <div>
-    <div mt-4>
+    <div class="mt-4">
       <BaseIntroCard />
     </div>
     <!-- <BaseNavLinker /> -->
-    <div mt-20>
+    <div class="mt-20">
       <RollingBox />
     </div>
 
-    <div h-20 text-center mt-20>
+    <div class="h-20 text-center mt-20">
       <NuxtLink to="/posts"> Posts </NuxtLink>
       <NuxtLink to="/about"> About </NuxtLink>
       <NuxtLink> Demo </NuxtLink>

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@unocss/nuxt', '@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui'],
+  modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui'],
   app: {
     head: {
       title: 'parz1s playground',
