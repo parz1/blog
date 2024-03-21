@@ -6,7 +6,7 @@
       <BaseIntroCard />
     </div>
     <!-- <BaseNavLinker /> -->
-    <div class="mt-20">
+    <div class="mt-28">
       <RollingBox />
     </div>
 

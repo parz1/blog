@@ -3,11 +3,7 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui'],
   app: {
     head: {
-      title: 'parz1s playground',
-    },
-    pageTransition: {
-      name: 'fade',
-      mode: 'out-in',
+      title: 'Ivor Zhou',
     },
   },
   content: {
@@ -22,7 +18,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  css: ['@/assets/css/global.scss'],
+  css: ['@/assets/css/main.css'],
   ui: {
     icons: ['carbon'],
   },

@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const navTabs = [
   {
     name: 'Posts',
@@ -23,10 +23,10 @@ const navTabs = [
   <div>
     <div class="box">
       <div class="wall">
-        <span style="--i: 0;"></span>
-        <span style="--i: 1;"></span>
-        <span style="--i: 2;"></span>
-        <span style="--i: 3;"></span>
+        <span style="--i: 0"></span>
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
       </div>
       <div class="text">
         <span
@@ -36,13 +36,15 @@ const navTabs = [
             '--i': index,
           }"
           :data-text="item.name"
-        >{{ item.name }}</span>
+        >
+          {{ item.name }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .box {
   position: relative;
   height: 8rem;
@@ -66,7 +68,7 @@ const navTabs = [
     left: calc(50% - 4rem);
     width: 8rem;
     height: 4rem;
-    background: #FFF;
+    background: #fff;
     transform: rotateY(calc(90deg * var(--i))) translateZ(4rem);
     transition: 0.5s;
     &:hover {
@@ -107,4 +109,3 @@ const navTabs = [
   }
 }
 </style>
-
