@@ -22,17 +22,11 @@ export default defineNuxtConfig({
       },
     },
   },
+  css: ['@/assets/css/global.scss'],
+  ui: {
+    icons: ['carbon'],
+  },
   devtools: {
     enabled: true,
-  },
-  css: ['@/assets/css/global.scss'],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@import "@/assets/css/_variables.scss";',
-        },
-      },
-    },
   },
 })

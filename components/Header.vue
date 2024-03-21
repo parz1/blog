@@ -1,6 +1,23 @@
 <script lang="ts" setup>
 const colorMode = useColorMode()
-const colorModeArray = ['system', 'light', 'dark', 'sepia']
+const colorModeArray = ['light', 'dark', 'sepia']
+const colorModeIcon = computed(() => {
+  switch (colorMode.value) {
+    case 'light':
+      return 'i-carbon-sun'
+    case 'dark':
+      return 'i-carbon-moon'
+    case 'sepia':
+      return 'i-carbon-book'
+    default:
+      return colorMode.value === 'light' ? 'i-carbon-sun' : 'i-carbon-moon'
+  }
+})
+const hanldeColorModeClick = () => {
+  const index = colorModeArray.indexOf(colorMode.value)
+  const nextIndex = (index + 1) % colorModeArray.length
+  colorMode.preference = colorModeArray[nextIndex]
+}
 </script>
 
 <template>
@@ -10,15 +27,19 @@ const colorModeArray = ['system', 'light', 'dark', 'sepia']
       <div>Blog</div>
       <div>Gallery</div>
       <div>Demo</div>
-      <UPopover>
-        <UButton :padded="false" trailing-icon="i-heroicons-chevron-down-20-solid" />
-
-        <template #panel>
-          <div class="p-4">
-            <Placeholder class="h-20 w-48" />
-          </div>
-        </template>
-      </UPopover>
+      <ClientOnly>
+        <UButton
+          :icon="colorModeIcon"
+          color="gray"
+          variant="ghost"
+          aria-label="Theme"
+          @click="hanldeColorModeClick"
+        >
+          <template #fallback>
+            <div class="w-8 h-8"></div>
+          </template>
+        </UButton>
+      </ClientOnly>
     </div>
   </div>
 </template>
