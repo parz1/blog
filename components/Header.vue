@@ -22,7 +22,9 @@ const hanldeColorModeClick = () => {
 
 <template>
   <div class="shadow h-16 flex justify-between items-center">
-    <div class="text-3xl pl-4">ivor.goder</div>
+    <ULink to="/">
+      <div class="text-3xl pl-4">ivor.goder</div>
+    </ULink>
     <div class="flex items-center gap-4 text-xl pr-4">
       <div>Blog</div>
       <div>Gallery</div>

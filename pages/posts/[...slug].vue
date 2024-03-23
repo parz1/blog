@@ -1,11 +1,10 @@
+<script lang="ts" setup></script>
 <template>
-  <main>
-    <p>ROUTE: {{ $route.params.dirs }} - {{ $route.params.slug }}</p>
+  <!-- <main> -->
+  <!-- <p>{{ $route.params.slug }}</p> -->
 
-    <ContentDoc>
-      <template #empty>
-        <h1>Document is empty</h1>
-      </template>
-    </ContentDoc>
-  </main>
+  <ContentDoc></ContentDoc>
+  <!-- </main> -->
 </template>
+
+<style lang="scss" scoped></style>
