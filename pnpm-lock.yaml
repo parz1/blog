@@ -14,6 +14,9 @@ dependencies:
   '@nuxt/ui':
     specifier: ^2.14.2
     version: 2.14.2(nuxt@3.11.1)(vite@5.2.4)(vue@3.4.21)
+  '@vercel/analytics':
+    specifier: ^1.2.2
+    version: 1.2.2
   '@vue-flow/core':
     specifier: ^1.33.4
     version: 1.33.4(vue@3.4.21)
@@ -2509,6 +2512,20 @@ packages:
       webpack-sources: 3.2.3
     transitivePeerDependencies:
       - rollup
+
+  /@vercel/analytics@1.2.2:
+    resolution: {integrity: sha512-X0rctVWkQV1e5Y300ehVNqpOfSOufo7ieA5PIdna8yX/U7Vjz0GFsGf4qvAhxV02uQ2CVt7GYcrFfddXXK2Y4A==}
+    peerDependencies:
+      next: '>= 13'
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      server-only: 0.0.1
+    dev: false
 
   /@vercel/nft@0.26.4:
     resolution: {integrity: sha512-j4jCOOXke2t8cHZCIxu1dzKLHLcFmYzC3yqAK6MfZznOL1QIJKd0xcFsXK3zcqzU7ScsE2zWkiMMNHGMHgp+FA==}
@@ -8229,6 +8246,10 @@ packages:
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
+
+  /server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+    dev: false
 
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
