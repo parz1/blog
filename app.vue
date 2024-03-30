@@ -1,5 +1,5 @@
 <script setup>
-useHead({
+useSeoMeta({
   title: 'Ivor Zhou',
 })
 </script>
