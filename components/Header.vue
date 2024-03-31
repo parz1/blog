@@ -28,7 +28,7 @@ const hanldeColorModeClick = () => {
   <div
     ref="headerRef"
     :style="styles"
-    class="sticky top-0 w-full z-50 h-16 flex justify-between items-center"
+    class="blur-header sticky top-0 w-full z-50 h-16 flex justify-between items-center"
   >
     <ULink to="/">
       <div class="text-3xl pl-4">ivor.goder</div>
@@ -53,3 +53,9 @@ const hanldeColorModeClick = () => {
     </div>
   </div>
 </template>
+
+<style>
+.blur-header {
+  backdrop-filter: blur(6px);
+}
+</style>

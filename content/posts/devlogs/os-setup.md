@@ -78,7 +78,44 @@ sudo qemu-system-x86_64 -kernel ./bzImage -append "root=/dev/sda console=ttyS0" 
 
 ![CleanShot 2024-03-31 at 12.16.52.jpeg](https://g.imgtg.com/uploads/7247/66090fe406119.jpeg)
 
+可以看到报了一个 Kernel Panic 的错误，还需要一个 root fs，使用 Busybox 来制作
+
 ## 编译 Busybox
+
+编译 Busybox 拿到 initramfs-busybox-x86.cpio.gz，也就是上文提到的 root fs
+::CodeView
+
+```bash
+wget https://busybox.net/downloads/busybox-1.35.0.tar.bz2
+tar xvjf busybox-1.35.0.tar.bz2
+cd busybox-1.35.0
+make defconfig
+make menuconfig
+make -j8
+make CONFIG_PREFIX=../img install
+cd ../img
+find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs-busybox.cpio.gz
+# 你可以看到 /root/projects/initramfs-busybox-x86.cpio.gz
+
+```
+
+::
+
+现在能直接启动 Qemu 了，在宿主机上启动
+::CodeView
+```zsh
+sudo qemu-system-x86_64 \
+ -m 512M \
+ -smp 4 \
+ -kernel ./bzImage \
+ -drive format=raw,file=./disk.raw \
+ -append "console=ttyS0 root=/dev/ram" \
+ -serial stdio \
+ -initrd initramfs-busybox-x86.cpio.gz
+```
+::
+
+[![CleanShot 2024-03-31 at 15.06.41@2x.png](https://g.imgtg.com/uploads/7247/66096fc58d0f9.png)](https://g.imgtg.com/uploads/7247/66096fc58d0f9.png)
 
 ## 新增系统调用并编译新内核
 
@@ -147,9 +184,38 @@ int main() {
 
 ```bash
 gcc -static -o testmysyscall testmysyscall.c
+cp testmysyscall /root/projects/imgs/usr/bin
+ls /root/projects/img/usr/bin
+# 省略别的，可以找到已经 cp 进去的二进制文件
+testmysyscall
+# 重新把 img 下的镜像打包成 initramfs-busybox-x86.cpio.gz
+cd /root/projects/imgs
+find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs-busybox.cpio.gz
+# 你可以看到 /root/projects/initramfs-busybox-x86.cpio.gz
 ```
 
 ::
+
+### 重新启动 qemu
+
+::CodeView
+
+```bash
+sudo qemu-system-x86_64 \
+ -m 512M \
+ -smp 4 \
+ -kernel ./bzImage \
+ -drive format=raw,file=./disk.raw \
+ -append "console=ttyS0 root=/dev/ram" \
+ -serial stdio \
+ -initrd initramfs-busybox-x86.cpio.gz
+```
+
+::
+
+输入`testmysyscall`你可以看到
+
+[![CleanShot 2024-03-31 at 20.44.50@2x.png](https://g.imgtg.com/uploads/7247/66096b47caf63.png)](https://g.imgtg.com/uploads/7247/66096b47caf63.png)
 
 ## 参考链接
 
