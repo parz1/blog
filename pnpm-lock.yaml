@@ -35,6 +35,9 @@ dependencies:
   three-geojson-geometry:
     specifier: ^1.3.2
     version: 1.3.2(three@0.152.2)
+  vue-use-fixed-header:
+    specifier: ^2.0.3
+    version: 2.0.3
 
 devDependencies:
   '@nuxt/devtools':
@@ -9553,6 +9556,10 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.6.1
       vue: 3.4.21(typescript@5.4.3)
+
+  /vue-use-fixed-header@2.0.3:
+    resolution: {integrity: sha512-kUgO3uBAbnTIv5m5SPGmVelN1yZ/4IwENdlqtja6u/fzLzu6OePExwXVOKVGp+a3oGI0dLQ43g6GgvjdCtwTuw==}
+    dev: false
 
   /vue-virtual-scroller@2.0.0-beta.8(vue@3.4.21):
     resolution: {integrity: sha512-b8/f5NQ5nIEBRTNi6GcPItE4s7kxNHw2AIHLtDp+2QvqdTjVN0FgONwX9cr53jWRgnu+HRLPaWDOR2JPI5MTfQ==}

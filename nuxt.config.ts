@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     },
     highlight: {
       theme: 'github-dark',
+      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js'],
     },
     // sources: {
     //   github: {

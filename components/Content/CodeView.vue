@@ -1,5 +1,29 @@
+<script setup>
+defineProps({
+  filename: {
+    type: String,
+    required: false,
+  },
+  description: {
+    type: String,
+    required: false,
+  },
+})
+</script>
 <template>
-  <div class="max-h-96 overflow-auto bg-gray-900 text-sm p-2">
-    <slot />
+  <div
+    class="relative"
+    :class="{
+      'pt-2': filename,
+    }"
+  >
+    <div class="absolute top-0">
+      {{ filename }}
+    </div>
+    <div>
+      <!-- TODO -->
+      <!-- <div class="absolute right-0">Copy</div> -->
+      <slot />
+    </div>
   </div>
 </template>
