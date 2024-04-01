@@ -1,6 +1,8 @@
 <script setup></script>
 <template>
-  <div class="px-4">
+  <section class="px-4 flex">
+    <span>"</span>
     <slot />
-  </div>
+    <span>"</span>
+  </section>
 </template>

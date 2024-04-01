@@ -24,6 +24,12 @@ useSeoMeta({
 </template>
 
 <style>
+.prose p {
+  @apply my-0;
+}
+.prose section {
+  @apply my-1;
+}
 .prose h2 a,
 .prose h3 a,
 .prose h4 a,

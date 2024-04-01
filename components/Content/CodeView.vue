@@ -11,19 +11,18 @@ defineProps({
 })
 </script>
 <template>
-  <div
-    class="relative"
-    :class="{
-      'pt-2': filename,
-    }"
-  >
-    <div class="absolute top-0">
+  <section class="relative">
+    <p class="absolute top-0">
       {{ filename }}
-    </div>
-    <div>
+    </p>
+    <p
+      :class="{
+        'pt-1': filename,
+      }"
+    >
       <!-- TODO -->
       <!-- <div class="absolute right-0">Copy</div> -->
       <slot />
-    </div>
-  </div>
+    </p>
+  </section>
 </template>

@@ -12,6 +12,9 @@ slug: 'os-exp-setup'
 你是什么电脑
 ::
 ::Talk
+我是 MBP M3pro（自豪）
+::
+::Talk
 洗洗睡吧
 ::
 
@@ -34,13 +37,14 @@ docker run -it --privileged --platform linux/amd64 -v /srcPath:/root/projects/ -
 ```bash
 apt install sudo
 apt install build-essential
+apt-get update
 apt-get install wget xz-utils -y
+apt-get install libncurses-dev flex bison bc openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf gcc make gnu-standards libtool gettext
+# 获取 kernel
 cd /project && wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.108.tar.xz
 tar -xf linux-5.15.108.tar.xz
-apt-get update
-apt-get install libncurses-dev flex bison bc openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf gcc make gnu-standards libtool gettext
-
 cd linux-5.15.108
+
 make menuconfig
 make bzImage -j8
 make modules
@@ -103,6 +107,7 @@ find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs-busybox.
 
 现在能直接启动 Qemu 了，在宿主机上启动
 ::CodeView
+
 ```zsh
 sudo qemu-system-x86_64 \
  -m 512M \
@@ -113,6 +118,7 @@ sudo qemu-system-x86_64 \
  -serial stdio \
  -initrd initramfs-busybox-x86.cpio.gz
 ```
+
 ::
 
 [![CleanShot 2024-03-31 at 15.06.41@2x.png](https://g.imgtg.com/uploads/7247/66096fc58d0f9.png)](https://g.imgtg.com/uploads/7247/66096fc58d0f9.png)
@@ -219,4 +225,12 @@ sudo qemu-system-x86_64 \
 
 ## 参考链接
 
+[how-to-build-a-custom-linux-kernel-for-qemu-using-docker](https://mgalgs.io/2021/03/23/how-to-build-a-custom-linux-kernel-for-qemu-using-docker.html)
+
 [内核篇1：docker + Qemu搭建内核开发与调试环境](https://www.midcheck.cn/archives/%E5%86%85%E6%A0%B8%E7%AF%871%E6%90%AD%E5%BB%BA%E5%86%85%E6%A0%B8%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83)
+
+[使用Docker编译32位Linux内核并在Qemu中运行](https://blog.arg.pub/2022/10/03/os/%E4%BD%BF%E7%94%A8Docker%E7%BC%96%E8%AF%9132%E4%BD%8DLinux%E5%86%85%E6%A0%B8%E5%B9%B6%E5%9C%A8Qemu%E4%B8%AD%E8%BF%90%E8%A1%8C/index.html)
+
+[在 Docker 容器环境中编译 linux-2.6.26](https://github.com/jklincn/Build-linux-2.6.26)
+
+[Kernel 5.x](https://cdn.kernel.org/pub/linux/kernel/v5.x/)
