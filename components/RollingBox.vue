@@ -20,8 +20,8 @@ const navTabs = [
 </script>
 
 <template>
-  <div>
-    <div class="box">
+  <div class="flex justify-center">
+    <div class="box w-fit cursor-pointer">
       <div class="wall">
         <span style="--i: 0"></span>
         <span style="--i: 1"></span>
@@ -68,9 +68,11 @@ const navTabs = [
     left: calc(50% - 4rem);
     width: 8rem;
     height: 4rem;
-    background: #fff;
+    background: rgba(0, 0, 0, 0.5);
     transform: rotateY(calc(90deg * var(--i))) translateZ(4rem);
     transition: 0.5s;
+
+    // @apply bg-zinc-500 dark:bg-zinc-100;
     &:hover {
       background: #ccc;
     }
@@ -87,6 +89,7 @@ const navTabs = [
     transform: rotateY(calc(90deg * var(--i))) translateZ(5.5rem);
     // cursor: pointer;
     font-size: 2.5rem;
+    font-weight: 500;
     // text-transform: uppercase;
     z-index: 10;
     line-height: 1rem;

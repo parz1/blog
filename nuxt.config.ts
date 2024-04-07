@@ -15,10 +15,12 @@ export default defineNuxtConfig({
   content: {
     markdown: {
       anchorLinks: true,
+      remarkPlugins: ['remark-math'],
+      rehypePlugins: [['rehype-katex', { output: 'html' }]],
     },
     highlight: {
       theme: 'github-dark',
-      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js'],
+      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js', 'python'],
     },
     // sources: {
     //   github: {

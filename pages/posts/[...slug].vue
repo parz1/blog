@@ -6,6 +6,11 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
   articleAuthor: ['ivor'],
 })
+useHead({
+  link: [
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css' },
+  ],
+})
 </script>
 
 <template>
@@ -13,11 +18,17 @@ useSeoMeta({
     <div
       class="prose dark:prose-invert prose-blockquote:not-italic prose-pre:bg-gray-900 prose-img:ring-1 prose-img:ring-gray-200 dark:prose-img:ring-white/10 prose-img:rounded-lg"
     >
-      <ContentDoc v-slot="{ doc }" tag="article">
-        <article>
-          <h1>{{ doc.title }}</h1>
-          <ContentRenderer :value="doc" />
-        </article>
+      <ContentDoc>
+        <template #default="{ doc }">
+          <article>
+            <h1>{{ doc.title }}</h1>
+            <ContentRenderer :value="doc" />
+          </article>
+        </template>
+        <template #empty>
+          <h1>Document is empty</h1>
+          <p>maybe I will write it tomorrow...</p>
+        </template>
       </ContentDoc>
     </div>
   </main>
