@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useFixedHeader } from 'vue-use-fixed-header'
+import LanguageSwitch from './LanguageSwitch.vue'
 const headerRef = ref(null)
 const { styles } = useFixedHeader(headerRef)
 
@@ -34,6 +35,7 @@ const hanldeColorModeClick = () => {
       <div class="text-3xl pl-4">ivor.goder</div>
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
+      <LanguageSwitch />
       <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">Posts</ULink>
       <div>Gallery</div>
       <div>Demo</div>
@@ -52,9 +54,7 @@ const hanldeColorModeClick = () => {
       </ClientOnly>
     </div>
 
-    <div class="md:hidden">
-      fuck you
-    </div>
+    <div class="md:hidden">Menu</div>
   </div>
 </template>
 

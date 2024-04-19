@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui'],
+  modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui', '@nuxtjs/i18n'],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
@@ -11,6 +11,30 @@ export default defineNuxtConfig({
         class: 'antialiased bg-gray-50 dark:bg-black min-h-screen',
       },
     },
+  },
+
+  i18n: {
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
+    },
+
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+      },
+      {
+        code: 'zh-CN',
+        name: '简体中文',
+      },
+      {
+        code: 'ja',
+        name: '日本語',
+      },
+    ],
   },
   content: {
     markdown: {
