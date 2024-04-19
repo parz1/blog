@@ -33,7 +33,7 @@ const hanldeColorModeClick = () => {
     <ULink to="/">
       <div class="text-3xl pl-4">ivor.goder</div>
     </ULink>
-    <div class="flex items-center gap-4 text-xl pr-4">
+    <div class="hidden md:flex items-center gap-4 text-xl pr-4">
       <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">Posts</ULink>
       <div>Gallery</div>
       <div>Demo</div>
@@ -50,6 +50,10 @@ const hanldeColorModeClick = () => {
           </template>
         </UButton>
       </ClientOnly>
+    </div>
+
+    <div class="md:hidden">
+      fuck you
     </div>
   </div>
 </template>

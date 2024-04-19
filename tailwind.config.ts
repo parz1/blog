@@ -8,6 +8,7 @@ export default <Partial<Config>>{
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
     './app.vue',
+    './content/**/*.md',
   ],
 
   theme: {
