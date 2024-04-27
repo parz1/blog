@@ -51,7 +51,8 @@ onUnmounted(() => {
 <template>
   <UContainer class="min-h-screen py-4 flex justify-center">
     <div class="relative w-60">
-      <div class="sticky top-20 flex flex-col items-center">
+      <div class="sticky top-20 flex flex-col items-start">
+        <div class="text-xl font-normal">Table of Content</div>
         <TableOfContents :active-toc-id="activeTocId" :doc="doc" />
       </div>
     </div>

@@ -12,8 +12,8 @@ const props = withDefaults(
 
 const router = useRouter()
 
-const sliderHeight = useState('sliderHeight', () => 0)
-const sliderTop = useState('sliderTop', () => 0)
+const sliderHeight = ref(0)
+const sliderTop = ref(0)
 const tocLinksH2: Ref<Array<HTMLElement>> = ref([])
 const tocLinksH3: Ref<Array<HTMLElement>> = ref([])
 
@@ -38,10 +38,10 @@ watchDebounced(
 
     if (h2Link) {
       sliderHeight.value = h2Link.offsetHeight
-      sliderTop.value = h2Link.offsetTop - 100
+      sliderTop.value = h2Link.offsetTop - 45
     } else if (h3Link) {
       sliderHeight.value = h3Link.offsetHeight
-      sliderTop.value = h3Link.offsetTop - 100
+      sliderTop.value = h3Link.offsetTop - 45
     }
   },
   { debounce: 200, immediate: true }
@@ -50,11 +50,10 @@ watchDebounced(
 
 <template>
   <div class="max-h-82 overflow-auto">
-    <div class="text-xl">Table of Contents</div>
-    <nav class="mt-4 flex">
-      <div class="relative w-0.5 overflow-hidden rounded bg-secondary">
+    <nav class="mt-4 flex pr-4">
+      <div class="relative w-1 overflow-hidden rounded bg-secondary">
         <div
-          class="absolute left-0 w-full rounded bg-red-500 transition-all duration-200"
+          class="absolute left-0 w-full rounded bg-blue-600 transition-all duration-200"
           :style="{ height: `${sliderHeight}px`, top: `${sliderTop}px` }"
         ></div>
       </div>
