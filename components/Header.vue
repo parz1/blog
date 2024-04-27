@@ -38,7 +38,7 @@ const hanldeColorModeClick = () => {
       <LanguageSwitch />
       <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">Posts</ULink>
       <div>Gallery</div>
-      <div>Demo</div>
+      <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">Demo</ULink>
       <ClientOnly>
         <UButton
           :icon="colorModeIcon"
