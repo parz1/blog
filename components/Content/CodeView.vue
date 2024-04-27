@@ -11,18 +11,23 @@ defineProps({
 })
 </script>
 <template>
-  <section class="relative">
-    <p class="absolute top-0">
+  <section
+    class="relative"
+    :class="{
+      'pt-0.2': !!filename,
+    }"
+  >
+    <span class="absolute filename">
       {{ filename }}
-    </p>
-    <p
-      :class="{
-        'pt-1': filename,
-      }"
-    >
-      <!-- TODO -->
-      <!-- <div class="absolute right-0">Copy</div> -->
+    </span>
+    <span>
       <ContentSlot />
-    </p>
+    </span>
   </section>
 </template>
+
+<style scoped>
+.filename {
+  top: -1.4rem;
+}
+</style>
