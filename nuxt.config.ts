@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     },
     highlight: {
       theme: 'github-dark',
-      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js', 'python'],
+      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js', 'python', 'asm'],
     },
     // sources: {
     //   github: {
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
     //   },
     // },
   },
-  css: ['~/assets/css/main.scss'],
+  css: ['~/assets/css/main.scss', '~/assets/css/line-numbers.css'],
   ui: {
     icons: ['carbon'],
   },

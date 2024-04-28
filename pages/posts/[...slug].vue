@@ -77,10 +77,7 @@ onUnmounted(() => {
 
 <style>
 .prose p {
-  @apply my-0;
-}
-.prose section {
-  @apply my-1;
+  @apply my-3;
 }
 /* .prose h2 a, */
 .prose h3 a,

@@ -2,19 +2,29 @@
 defineProps({
   title: {
     type: String,
-    required: true,
+    required: false,
   },
   icon: {
     type: String,
-    required: true,
+    required: false,
   },
 })
 </script>
 
 <template>
-  <UAlert :title="title" :icon="icon">
-    <template #description>
-      <ContentSlot />
-    </template>
-  </UAlert>
+  <ClientOnly>
+    <section class="text-xs content-tip">
+      <UAlert :title="title" :icon="icon">
+        <template #description>
+          <ContentSlot />
+        </template>
+      </UAlert>
+    </section>
+  </ClientOnly>
 </template>
+
+<style>
+.prose .content-tip p {
+  @apply my-0;
+}
+</style>
