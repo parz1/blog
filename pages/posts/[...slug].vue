@@ -49,8 +49,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <UContainer class="min-h-screen py-4 flex justify-center">
-    <div class="relative w-60">
+  <UContainer class="min-h-screen max-w-screen-sm md:max-w-screen-xl py-4 flex justify-center">
+    <div class="relative w-60 hidden md:block">
       <div class="sticky top-20 flex flex-col items-start">
         <div class="text-xl font-normal">Table of Content</div>
         <TableOfContents :active-toc-id="activeTocId" :doc="doc" />
@@ -58,7 +58,7 @@ onUnmounted(() => {
     </div>
 
     <div
-      class="nuxt-content max-w-2xl prose dark:prose-invert prose-blockquote:not-italic prose-pre:bg-gray-900 prose-img:ring-1 prose-img:ring-gray-200 dark:prose-img:ring-white/10 prose-img:rounded-lg"
+      class="nuxt-content w-screen px-4 md:px-0 md:max-w-2xl prose dark:prose-invert prose-blockquote:not-italic prose-pre:bg-gray-900 prose-img:ring-1 prose-img:ring-gray-200 dark:prose-img:ring-white/10 prose-img:rounded-lg"
     >
       <article>
         <div class="text-4xl mb-8 font-extrabold font-sans">{{ doc?.title }}</div>
