@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useFixedHeader } from 'vue-use-fixed-header'
 import LanguageSwitch from './LanguageSwitch.vue'
+import avator from '~/assets/avatar.png'
 const headerRef = ref(null)
 const { styles } = useFixedHeader(headerRef)
 
@@ -23,6 +24,39 @@ const hanldeColorModeClick = () => {
   const nextIndex = (index + 1) % colorModeArray.length
   colorMode.preference = colorModeArray[nextIndex]
 }
+
+const isMenuOpen = ref(false)
+const links = [
+  [
+    {
+      label: 'HomePage',
+      avatar: {
+        src: avator,
+      },
+      to: '/',
+    },
+    {
+      label: 'Posts',
+      icon: 'i-carbon-document',
+      to: '/posts',
+    },
+    {
+      label: 'Demos',
+      icon: 'i-carbon-development',
+      to: '/demo',
+    },
+  ],
+  [
+    {
+      label: 'Examples',
+      icon: 'i-heroicons-light-bulb',
+    },
+    {
+      label: 'Help',
+      icon: 'i-heroicons-question-mark-circle',
+    },
+  ],
+]
 </script>
 
 <template>
@@ -54,7 +88,29 @@ const hanldeColorModeClick = () => {
       </ClientOnly>
     </div>
 
-    <div class="md:hidden">Menu</div>
+    <div class="md:hidden">
+      <UButton
+        icon="i-carbon-book"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        @click="isMenuOpen = true"
+      >
+        <template #fallback>
+          <div class="w-8 h-8"></div>
+        </template>
+      </UButton>
+      <USlideover
+        v-model="isMenuOpen"
+        :ui="{
+          width: 'max-w-60',
+        }"
+      >
+        <div class="p-4 flex-1">
+          <UVerticalNavigation :links="links" />
+        </div>
+      </USlideover>
+    </div>
   </div>
 </template>
 
