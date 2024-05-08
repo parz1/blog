@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="w-500 h-500">
+  <div class="w-screen h-screen">
     <ClientOnly>
       <Flow />
     </ClientOnly>
