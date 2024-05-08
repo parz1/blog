@@ -90,7 +90,8 @@ const links = [
 
     <div class="md:hidden">
       <UButton
-        icon="i-carbon-book"
+        icon="i-carbon-menu"
+        size="xl"
         color="gray"
         variant="ghost"
         aria-label="Theme"

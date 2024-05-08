@@ -4,9 +4,11 @@ import { SpeedInsights } from '@vercel/speed-insights/vue'
 </script>
 
 <template>
-  <div>
+  <div class="w-screen min-h-screen flex flex-col">
     <Header />
     <slot />
+    <div class="flex-1"></div>
+    <BaseFooter />
   </div>
   <SpeedInsights />
 </template>

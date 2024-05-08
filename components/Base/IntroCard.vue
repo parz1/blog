@@ -10,7 +10,10 @@ const handleCopyEmailToClipboard = () => {
 <template>
   <div class="flex flex-col justify-center items-center">
     <div>
-      <img class="w-20 h-20 bg-black transition-shadow hover:shadow-xl" src="~/assets/avatar.png" />
+      <img
+        class="w-20 h-20 md:w-40 md:h-40 bg-black transition-shadow hover:shadow-xl"
+        src="~/assets/avatar.png"
+      />
     </div>
     <div class="mt-4 text-3xl font-bold">ivor</div>
     <div class="text-sm">['aivə; 'i:və]</div>

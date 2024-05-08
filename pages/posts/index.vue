@@ -12,12 +12,12 @@ const { data: articles } = await useAsyncData('all-posts', () =>
 </script>
 
 <template>
-  <main class="min-h-screen my-8">
+  <UContainer class="min-h-screen my-8">
     <!-- <AppHeader class="mb-16" title="Articles" :description="description" /> -->
     <ul class="space-y-8">
       <li v-for="(article, id) in articles" :key="id">
         <BaseArticleCard :article="article" />
       </li>
     </ul>
-  </main>
+  </UContainer>
 </template>
