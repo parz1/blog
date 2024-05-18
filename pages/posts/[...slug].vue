@@ -62,10 +62,10 @@ onUnmounted(() => {
     >
       <article>
         <div class="text-4xl mb-8 font-extrabold font-sans">{{ doc?.title }}</div>
-        <ContentRenderer ref="nuxtContent" :value="doc">
+        <ContentRenderer v-if="doc" ref="nuxtContent" :value="doc">
           <template #empty>
-            <h1>Document is empty</h1>
-            <p>maybe I will write it tomorrow...</p>
+            <div class="text-xl">Document is empty</div>
+            <p>maybe I will write it tomorrow... :)</p>
           </template>
         </ContentRenderer>
       </article>
@@ -96,6 +96,7 @@ onUnmounted(() => {
 .prose h5,
 .prose h6 {
   @apply mt-4 mb-2;
+  scroll-margin-top: 5rem;
 }
 
 .prose {

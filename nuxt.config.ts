@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   content: {
     markdown: {
       anchorLinks: true,
-      remarkPlugins: ['remark-math'],
+      remarkPlugins: ['remark-math', 'remark-emoji'],
       rehypePlugins: [['rehype-katex', { output: 'html' }]],
     },
     highlight: {

@@ -26,5 +26,6 @@
     "className",
     "ngClass",
     "ui"
-  ]
+  ],
+  "css.customData": [".vscode/tailwind.json"]
 }
