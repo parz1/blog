@@ -49,7 +49,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <UContainer class="min-h-screen max-w-screen-sm md:max-w-screen-xl py-4 flex justify-center">
+  <div class="min-h-screen max-w-screen-sm md:max-w-screen-xl py-4 flex justify-center">
     <div class="relative w-60 hidden md:block">
       <div class="sticky top-20 flex flex-col items-start">
         <div class="text-xl font-normal">Table of Content</div>
@@ -72,7 +72,7 @@ onUnmounted(() => {
     </div>
 
     <div></div>
-  </UContainer>
+  </div>
 </template>
 
 <style>
