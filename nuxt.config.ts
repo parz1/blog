@@ -14,25 +14,35 @@ export default defineNuxtConfig({
   },
 
   i18n: {
+    baseUrl: 'https://parz1.goder.club',
     strategy: 'no_prefix',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root', // recommended
+      cookieCrossOrigin: true,
     },
-
+    lazy: true,
+    langDir: 'lang',
+    defaultLocale: 'en',
     locales: [
       {
         code: 'en',
         name: 'English',
+        iso: 'en-US',
+        file: 'en-US.json',
       },
       {
         code: 'zh-CN',
         name: '简体中文',
+        iso: 'zh-CN',
+        file: 'zh-CN.json',
       },
       {
         code: 'ja',
         name: '日本語',
+        iso: 'ja-JP',
+        file: 'ja-JP.json',
       },
     ],
   },

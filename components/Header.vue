@@ -4,6 +4,7 @@ import LanguageSwitch from './LanguageSwitch.vue'
 import avator from '~/assets/avatar.png'
 const headerRef = ref(null)
 const { styles } = useFixedHeader(headerRef)
+const { t } = useI18n()
 
 const colorMode = useColorMode()
 const colorModeArray = ['light', 'dark', 'sepia']
@@ -29,19 +30,19 @@ const isMenuOpen = ref(false)
 const links = [
   [
     {
-      label: 'HomePage',
+      label: t('menu.home'),
       avatar: {
         src: avator,
       },
       to: '/',
     },
     {
-      label: 'Posts',
+      label: t('menu.posts'),
       icon: 'i-carbon-document',
       to: '/posts',
     },
     {
-      label: 'Demos',
+      label: t('menu.demo'),
       icon: 'i-carbon-development',
       to: '/demo',
     },
@@ -70,9 +71,13 @@ const links = [
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
       <LanguageSwitch />
-      <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">Posts</ULink>
-      <div>Gallery</div>
-      <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">Demo</ULink>
+      <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">
+        {{ t('menu.posts') }}
+      </ULink>
+      <div>{{ t('menu.gallery') }}</div>
+      <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">
+        {{ t('menu.demo') }}
+      </ULink>
       <ClientOnly>
         <UButton
           :icon="colorModeIcon"

@@ -17,6 +17,7 @@ useHead({
   link: [
     { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css' },
   ],
+  title: doc.value?.title,
 })
 
 const activeTocId = ref<string | null>(null)
