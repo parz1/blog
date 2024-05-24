@@ -3,14 +3,6 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui', '@nuxtjs/i18n'],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
-    head: {
-      htmlAttrs: {
-        class: 'h-full',
-      },
-      bodyAttrs: {
-        class: 'antialiased bg-gray-50 dark:bg-black min-h-screen',
-      },
-    },
   },
 
   i18n: {

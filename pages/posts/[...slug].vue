@@ -62,7 +62,11 @@ onUnmounted(() => {
       class="nuxt-content w-screen px-4 md:px-0 md:max-w-2xl prose dark:prose-invert prose-blockquote:not-italic prose-pre:bg-gray-900 prose-img:ring-1 prose-img:ring-gray-200 dark:prose-img:ring-white/10 prose-img:rounded-lg"
     >
       <article>
-        <div class="text-4xl mb-8 font-extrabold font-sans">{{ doc?.title }}</div>
+        <div class="mb-8">
+          <div class="text-4xl font-extrabold font-sans">{{ doc?.title }}</div>
+          <div class="text-lg">{{ doc?.description }}</div>
+          <div class="text-gray-500">{{ doc?.published }}</div>
+        </div>
         <ContentRenderer v-if="doc" ref="nuxtContent" :value="doc">
           <template #empty>
             <div class="text-xl">Document is empty</div>
@@ -90,8 +94,8 @@ onUnmounted(() => {
 
 .prose h2 {
   @apply mt-8 mb-4 text-3xl;
+  scroll-margin-top: 5rem;
 }
-.prose h2,
 .prose h3,
 .prose h4,
 .prose h5,

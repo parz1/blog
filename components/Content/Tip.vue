@@ -14,7 +14,10 @@ defineProps({
 <template>
   <ClientOnly>
     <section class="text-xs content-tip">
-      <UAlert :title="title" :icon="icon">
+      <UAlert :title="title">
+        <template #icon>
+          <UIcon class="text-4xl" :name="icon" />
+        </template>
         <template #description>
           <ContentSlot />
         </template>

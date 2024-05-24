@@ -67,7 +67,7 @@ const links = [
     class="blur-header sticky top-0 w-full z-50 h-16 flex justify-between items-center"
   >
     <ULink to="/">
-      <div class="text-3xl pl-4">ivor.goder</div>
+      <div class="text-3xl pl-4"><span class="font-extrabold">ivor</span>.goder</div>
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
       <LanguageSwitch />
@@ -78,6 +78,7 @@ const links = [
       <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">
         {{ t('menu.demo') }}
       </ULink>
+
       <ClientOnly>
         <UButton
           :icon="colorModeIcon"
@@ -91,9 +92,26 @@ const links = [
           </template>
         </UButton>
       </ClientOnly>
+      <UButton
+        icon="i-carbon-logo-github"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        to="https://github.com/parz1/blog"
+        target="_blank"
+      ></UButton>
     </div>
 
-    <div class="md:hidden">
+    <div class="md:hidden flex items-center pr-4">
+      <UButton
+        icon="i-carbon-logo-github"
+        size="xl"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        to="https://github.com/parz1/blog"
+        target="_blank"
+      ></UButton>
       <UButton
         icon="i-carbon-menu"
         size="xl"

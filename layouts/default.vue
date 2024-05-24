@@ -7,14 +7,12 @@ const head = useLocaleHead({
   identifierAttribute: 'id',
   addSeoAttributes: true,
 })
-const title = computed(() => route.meta.title)
 </script>
 
 <template>
   <div>
     <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir">
       <Head>
-        <Title>{{ title }}</Title>
         <template v-for="link in head.link" :key="link.id">
           <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
         </template>
