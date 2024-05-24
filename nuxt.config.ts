@@ -39,6 +39,9 @@ export default defineNuxtConfig({
     ],
   },
   content: {
+    navigation: {
+      fields: ['title', 'description', 'published'],
+    },
     markdown: {
       anchorLinks: true,
       remarkPlugins: ['remark-math', 'remark-emoji'],

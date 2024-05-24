@@ -3,7 +3,9 @@
   "menu": {
     "home": "首页",
     "demo": "演示",
+    "blog": "博客",
     "posts": "文章",
+    "devlogs": "开发日志",
     "about": "关于",
     "gallery": "画廊"
   }

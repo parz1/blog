@@ -37,9 +37,9 @@ const links = [
       to: '/',
     },
     {
-      label: t('menu.posts'),
+      label: t('menu.blog'),
       icon: 'i-carbon-document',
-      to: '/posts',
+      to: '/blog',
     },
     {
       label: t('menu.demo'),
@@ -71,8 +71,8 @@ const links = [
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
       <LanguageSwitch />
-      <ULink to="/posts" active-class="text-primary-600 dark:text-primary-400">
-        {{ t('menu.posts') }}
+      <ULink to="/blog" active-class="text-primary-600 dark:text-primary-400">
+        {{ t('menu.blog') }}
       </ULink>
       <div>{{ t('menu.gallery') }}</div>
       <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">

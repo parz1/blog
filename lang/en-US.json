@@ -1,9 +1,11 @@
 {
-  "hello": "hello",
+  "hello": "Hello",
   "menu": {
     "home": "Home",
     "demo": "Demo",
+    "blog": "Blog",
     "posts": "Posts",
+    "devlogs": "Devlogs",
     "gallery": "Gallery"
   }
 }

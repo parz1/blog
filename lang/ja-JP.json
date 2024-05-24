@@ -3,7 +3,10 @@
   "menu": {
     "home": "ホーム",
     "demo": "デモ",
+    "blog": "ブログ",
     "posts": "文章",
+    "devlogs": "開発ログ",
+    "about": "私について",
     "gallery": " ギャラリー"
   }
 }
