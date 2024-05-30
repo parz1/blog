@@ -16,7 +16,7 @@ const {
     await new Promise(resolve => setTimeout(resolve, 3000))
     return queryContent('/blog').limit(5).sort({ published: -1 }).find()
   },
-  { lazy: true, server: true }
+  { lazy: true, server: false }
 )
 
 const swiperRef = ref<SwiperContainer>()
