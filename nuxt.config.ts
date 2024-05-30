@@ -4,7 +4,11 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
-
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => /^(swiper|swiper-slide|swiper-container)$/.test(tag),
+    },
+  },
   i18n: {
     baseUrl: 'https://parz1.goder.club',
     strategy: 'no_prefix',

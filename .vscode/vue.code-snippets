@@ -1,0 +1,29 @@
+{
+  "Vue Component Init": {
+    "prefix": "vue-init",
+    "body": [
+      "<script setup lang=\"ts\"></script>",
+      "",
+      "<template>",
+      "  <div>",
+      "    $1",
+      "  </div>",
+      "</template>",
+      "",
+      "<style scope></style>"
+    ],
+    "description": "Vue 组件模板"
+  },
+
+  "Vueuse useIntervalFn": {
+    "prefix": "vueuse-intervalfn",
+    "body": [
+      "import { useIntervalFn } from '@vueuse/core'",
+      "",
+      "const { pause: ${1:custom}Pause, resume: ${1:custom}Resume, isActive: ${1:custom}IsActive } = useIntervalFn(() => {",
+      "  $2 // ${1:custom} function",
+      "}, ${3:1000})",
+    ],
+    "description": "使用 useIntervalFn 并自定义 pause, resume 和 isActive 的变量名",
+  },
+}

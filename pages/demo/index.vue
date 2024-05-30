@@ -16,6 +16,9 @@
       <ULink to="/demo/geo">
         <UCard> Threejs - Geo </UCard>
       </ULink>
+      <ULink to="/demo/scrolls">
+        <UCard> Scorlls </UCard>
+      </ULink>
     </div>
   </div>
 </template>
