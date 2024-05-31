@@ -13,6 +13,7 @@ const handleCopyEmailToClipboard = () => {
       <img
         class="w-20 h-20 md:w-40 md:h-40 bg-black transition-shadow hover:shadow-xl"
         src="~/assets/avatar.png"
+        alt="avatar"
       />
     </div>
     <div class="mt-4 text-3xl font-bold">ivor</div>
