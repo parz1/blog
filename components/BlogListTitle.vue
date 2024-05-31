@@ -1,22 +1,26 @@
 <script setup lang="ts">
 const links = [
   {
-    label: 'All',
+    label: 'Blog',
     avatar: {
-      src: 'https://avatars.githubusercontent.com/u/739984?v=4',
+      src: 'https://pics.goder.club/logo.png',
     },
-    badge: 100,
+    badge: 'All',
+    exact: true,
     to: '/blog',
+    prefetch: true,
   },
   {
     label: 'Posts',
     icon: 'i-carbon-document-multiple-01',
     to: '/blog/posts',
+    prefetch: true,
   },
   {
-    label: 'Command Palette',
+    label: 'DevLogs',
     icon: 'i-heroicons-command-line',
     to: '/blog/devlogs',
+    prefetch: true,
   },
 ]
 </script>

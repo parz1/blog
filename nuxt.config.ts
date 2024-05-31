@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui', '@nuxtjs/i18n'],
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    // pageTransition: { name: 'page', mode: 'out-in' },
   },
   vue: {
     compilerOptions: {
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
   content: {
     navigation: {
-      fields: ['title', 'description', 'published'],
+      fields: ['title', 'description', 'published', 'slug', 'tags'],
     },
     markdown: {
       anchorLinks: true,
@@ -75,5 +75,14 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true,
+  },
+
+  nitro: {
+    prerender: {
+      routes: ['/sitemap.xml'],
+    },
+    routeRules: {
+      '/blog/**': { prerender: true },
+    },
   },
 })

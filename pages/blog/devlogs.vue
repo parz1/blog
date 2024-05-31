@@ -1,6 +1,17 @@
+<script setup lang="ts">
+const { data: articles } = await useAsyncData(
+  'latest-posts',
+  () => queryContent('/blog/devlogs').sort({ published: -1 }).find(),
+  { lazy: true }
+)
+</script>
+
 <template>
-  <div>
-    <BlogListTitle />
-    devlogs
+  <div class="py-8">
+    <ul class="space-y-4">
+      <li v-for="(article, index) in articles" :key="index">
+        <BaseArticleCard :article="article" />
+      </li>
+    </ul>
   </div>
 </template>

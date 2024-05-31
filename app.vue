@@ -17,7 +17,7 @@ useHead({
 </template>
 
 <style>
-.page-enter-active,
+/* .page-enter-active,
 .page-leave-active {
   transition: all 0.2s;
 }
@@ -30,5 +30,5 @@ useHead({
 .page-enter-from {
   opacity: 0;
   transform: translateY(5px);
-}
+} */
 </style>
