@@ -49,6 +49,7 @@
     "@vue-flow/core": "^1.33.4",
     "d3-geo": "^3.1.1",
     "github-markdown-css": "^5.5.1",
+    "mermaid": "^10.9.1",
     "rehype-katex": "^7.0.0",
     "remark-emoji": "^4.0.1",
     "remark-math": "^6.0.0",

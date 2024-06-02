@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     },
     highlight: {
       theme: 'github-dark',
-      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js', 'python', 'asm'],
+      langs: ['zsh', 'c', 'cpp', 'rust', 'vue', 'ts', 'js', 'json', 'python', 'asm'],
     },
     // sources: {
     //   github: {
