@@ -19,6 +19,18 @@ const {
   { lazy: true, server: false }
 )
 
+const {
+  data: ssrArticles,
+  pending: ssrPending,
+  refresh: ssrRefresh,
+} = await useAsyncData(
+  'latest-posts',
+  async () => {
+    return queryContent('/blog').limit(5).sort({ published: -1 }).find()
+  },
+  { lazy: true, server: true }
+)
+
 const swiperRef = ref<SwiperContainer>()
 const swiperParams: SwiperOptions = {
   slidesPerView: 1,
@@ -113,10 +125,30 @@ watchEffect(() => {
             </swiper-container>
           </div>
         </ClientOnly>
+      </UCard>
+
+      <UCard class="w-80 bg-slate-300">
+        <template #header>
+          <div class="text-lg font-bold">SSR with swiper</div>
+          <div>it will show doms first</div>
+        </template>
+        <div v-if="ssrPending" class="h-40">请求中...</div>
+        <!-- container -->
+        <div v-else class="h-40 border-2 border-dashed border-black p-4 rounded-lg">
+          <swiper-container class="h-full" ref="swiperRef" init="false">
+            <swiper-slide
+              class="h-full bg-teal-300 flex items-center justify-center"
+              v-for="(article, idx) in ssrArticles"
+              :key="idx"
+            >
+              <div>{{ article.title }}</div>
+            </swiper-slide>
+          </swiper-container>
+        </div>
         <template #footer>
           <div class="text-sm">
             <ul class="">
-              <li>若不加 ClientOnly 则会导致 swiper-slide 全部排列在下面的情况（swiper 未完成）</li>
+              <li>若不加 ClientOnly 则会导致 swiper-slide 全部排列在下面的情况（刷新页面尝试）</li>
             </ul>
           </div>
         </template>

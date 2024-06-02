@@ -50,7 +50,7 @@ watchDebounced(
 
 <template>
   <div class="max-h-82 overflow-auto">
-    <nav class="mt-4 flex pr-2">
+    <nav class="mt-4 flex">
       <div class="relative w-1 overflow-hidden rounded bg-secondary">
         <div
           class="absolute left-0 w-full rounded bg-blue-600 transition-all duration-200"

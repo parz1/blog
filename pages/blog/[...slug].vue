@@ -56,9 +56,11 @@ onUnmounted(() => {
 <template>
   <div class="min-h-screen max-w-screen-sm md:max-w-screen-xl py-4 flex justify-center">
     <div class="relative w-60 hidden md:block">
-      <div class="sticky top-20 flex flex-col items-start">
+      <div class="sticky top-20 flex flex-col items-start pr-4">
         <div class="text-xl font-normal">Table of Content</div>
         <TableOfContents :active-toc-id="activeTocId" :doc="doc" />
+
+        <UCard class="w-full my-4"> TODO: sharing module </UCard>
       </div>
     </div>
 
@@ -66,11 +68,27 @@ onUnmounted(() => {
       class="nuxt-content w-screen px-4 md:px-0 md:max-w-2xl prose dark:prose-invert prose-blockquote:not-italic prose-pre:bg-gray-900 prose-img:ring-1 prose-img:ring-gray-200 dark:prose-img:ring-white/10 prose-img:rounded-lg"
     >
       <article>
-        <div class="mb-8">
-          <div class="text-4xl font-extrabold font-sans">{{ doc?.title }}</div>
-          <div class="text-lg">{{ doc?.description }}</div>
-          <div class="text-gray-500">{{ doc?.published }}</div>
+        <div class="mb-4">
+          <div class="text-4xl font-extrabold font-sans text-black dark:text-white">
+            {{ doc?.title }}
+          </div>
+          <div class="text-lg mb-2">{{ doc?.description }}</div>
+          <div class="text-gray-500 flex gap-4">
+            {{ doc?.published }}
+            <div>
+              <UBadge
+                v-for="tag in doc?.tags"
+                :key="tag"
+                color="white"
+                variant="solid"
+                class="mr-1"
+              >
+                {{ tag }}
+              </UBadge>
+            </div>
+          </div>
         </div>
+        <UDivider />
         <ContentRenderer v-if="doc" ref="nuxtContent" :value="doc">
           <template #empty>
             <div class="text-xl">Document is empty</div>

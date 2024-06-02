@@ -31,8 +31,6 @@ const removeUndefined = (obj: Record<string, any>) => {
   <div class="p-4">
     <div class="font-bold">Infinit Scroll</div>
     <DemoInfiniteScroll />
-    <div class="font-bold text-xl">Default Swiper (Element based on Web Component)</div>
-    <DemoDefaultSwiper />
     <div class="font-bold text-xl mt-8">封装 Swiper</div>
     <div class="flex gap-4 mt-4">
       <UCard class="w-80">
@@ -78,6 +76,8 @@ const removeUndefined = (obj: Record<string, any>) => {
         </div>
       </UCard>
     </div>
+    <div class="font-bold text-xl">Default Swiper (Element based on Web Component)</div>
+    <DemoDefaultSwiper />
   </div>
 </template>
 
