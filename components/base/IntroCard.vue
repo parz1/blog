@@ -16,12 +16,15 @@ const handleCopyEmailToClipboard = () => {
         alt="avatar"
       />
     </div>
-    <div class="mt-4 text-3xl font-bold">ivor</div>
-    <div class="text-sm">['aivə; 'i:və]</div>
+    <div class="mt-4">
+      <span class="text-3xl font-extralight">parz<span class="text-3xl font-bold">ivor</span></span>
+    </div>
+    <div class="text-sm">['aivə]</div>
+    <ULink class="underline" to="/about">About me</ULink>
     <div class="flex items-center">
       <UPopover mode="hover" :popper="{ placement: 'right' }">
         <!-- 支持划词 -->
-        <div class="my-2 text-lg">parz1zhou@gmail.com</div>
+        <div class="mb-2 text-lg">parz1zhou@gmail.com</div>
         <template #panel>
           <div class="p-2 text-sm">
             <div>

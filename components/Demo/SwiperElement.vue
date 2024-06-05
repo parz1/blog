@@ -25,13 +25,10 @@ const initSlider = async () => {
   swiperRef.value.initialize()
 }
 
-watchEffect(() => {
-  if (!props.data || !swiperRef.value) {
-    return
-  }
-  if (props.data.length > 0 && swiperRef.value) {
+onMounted(() => {
+  nextTick(() => {
     initSlider()
-  }
+  })
 })
 </script>
 

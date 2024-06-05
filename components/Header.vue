@@ -67,7 +67,9 @@ const links = [
     class="blur-header sticky top-0 w-full z-50 h-16 flex justify-between items-center"
   >
     <ULink to="/">
-      <div class="text-3xl pl-4"><span class="font-extrabold">ivor</span>.goder</div>
+      <div class="font-sans text-2xl pl-4 font-extralight">
+        <span class="font-bold">Goder.</span>parz1vor
+      </div>
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
       <LanguageSwitch />

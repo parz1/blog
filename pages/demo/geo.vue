@@ -201,6 +201,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <BaseMemory class="absolute bg-white p-4" />
     <canvas id="canvas" ref="canvasRef"></canvas>
   </div>
 </template>
