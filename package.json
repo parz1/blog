@@ -50,6 +50,8 @@
     "d3-geo": "^3.1.1",
     "github-markdown-css": "^5.5.1",
     "maptalks": "1.0.0-rc.33",
+    "maptalks.three": "^0.38.3",
+    "maptalks.wmts": "^1.0.3",
     "mermaid": "^10.9.1",
     "rehype-katex": "^7.0.0",
     "remark-emoji": "^4.0.1",

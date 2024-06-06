@@ -29,6 +29,12 @@ dependencies:
   maptalks:
     specifier: 1.0.0-rc.33
     version: 1.0.0-rc.33
+  maptalks.three:
+    specifier: ^0.38.3
+    version: 0.38.3
+  maptalks.wmts:
+    specifier: ^1.0.3
+    version: 1.0.3
   mermaid:
     specifier: ^10.9.1
     version: 10.9.1
@@ -5075,6 +5081,12 @@ packages:
       dequal: 2.0.3
     dev: false
 
+  /deyihu-geometry-extrude@0.1.10:
+    resolution: {integrity: sha512-qvX/TbA7aELZOwYOlhp2+gJILRGiUPGyErJDgTV8sooyocKERSxYWJxvwCT5bySnrVoJAd9Juh6jF8MvXzVbxA==}
+    dependencies:
+      earcut: 2.2.4
+    dev: false
+
   /didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
     dev: true
@@ -6971,6 +6983,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /maptalks.three@0.38.3:
+    resolution: {integrity: sha512-Auto+BTNumJ6r9LFhpY+20tWRCYentAiVGDasTKLTrJkc25+6I5Rvh0lNzfBDYsndKPFBVWV501eKP9tJuQjqg==}
+    dependencies:
+      deyihu-geometry-extrude: 0.1.10
+      poly-extrude: 0.3.0
+    dev: false
+
+  /maptalks.wmts@1.0.3:
+    resolution: {integrity: sha512-sKeS3MnjUJQo11sfMPD+E2Hmi5f9780cvY934wZGN8oWNaNSZpyxEsz2SCSasssbLeBvevZE+tUXAwSS0OMLeA==}
+    dev: false
+
   /maptalks@1.0.0-rc.33:
     resolution: {integrity: sha512-ivIZMlN3DQ5dh5ZUpq8QmKNHvg29W05p8D/pcVnRdldvYBvO0FAyU6bBHc1Yqj/Eofuj2pYhBthFQwkyYaiHlA==}
     dependencies:
@@ -8606,6 +8629,12 @@ packages:
       confbox: 0.1.7
       mlly: 1.7.0
       pathe: 1.1.2
+
+  /poly-extrude@0.3.0:
+    resolution: {integrity: sha512-CGnivlf8xonFCC3wYpLiD1b1o4j5BW62vZ3iu3ZWcQUMl7g3/crmiULnL5mxEBapwyXcd+4Cr8AkK/3ICa7xnQ==}
+    dependencies:
+      earcut: 2.2.4
+    dev: false
 
   /portfinder@1.0.32:
     resolution: {integrity: sha512-on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==}

@@ -1,5 +1,7 @@
 import type { Mermaid } from 'mermaid'
 
+declare module 'maptalks'
+
 declare module '#app' {
   interface NuxtApp {
     $mermaid(): Mermaid
