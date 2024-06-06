@@ -28,7 +28,7 @@ const {
 
 const map = shallowRef(null)
 let itemRefs = ref([])
-const fatherName = ref('father')
+const fatherName = ref('输入父组件 ref')
 const __instance = getCurrentInstance()
 const coordinates = randomCoordinates()
 onMounted(async () => {
@@ -82,7 +82,7 @@ function randomCoordinates() {
 
 <template>
   <div class="w-full h-full">
-    <UInput v-model="fatherName" />
+    <UInput class="absolute right-1 bottom-1 z-10" v-model="fatherName" />
     <div v-show="false" v-for="item in coordinates" :key="item[0]" ref="itemRefs"></div>
     <div class="w-full h-full bg-teal-500" ref="mapRef"></div>
   </div>
