@@ -23,7 +23,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ text: string }>
 
         <DemoMapThree />
       </BaseDashWrapper>
-      <BaseDashWrapper class="w-[100%] h-[30rem] relative">
+      <BaseDashWrapper class="w-[100%] h-[50rem] relative">
         <ReuseTemplate text="Dynamic Markers" />
         <DemoMapMarker />
       </BaseDashWrapper>

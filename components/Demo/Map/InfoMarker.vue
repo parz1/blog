@@ -26,7 +26,7 @@ const recover = () => {
   <div
     class="bg-white p-1 w-40 rounded-md cursor-pointer border-dashed border-2 shadow hover:shadow-2xl hover:bg-teal-50 transition-all"
     :class="{
-      'border-teal-500 shadow-2xl z-10': active.value,
+      'border-teal-500 bg-teal-50 shadow-2xl z-10': active.value,
     }"
     @click="$emit('click')"
   >
@@ -42,7 +42,7 @@ const recover = () => {
       </div>
       <div class="font-medium">{{ dataValue.title }}</div>
     </div>
-    <UButton color="black" block :to="dataValue._path" @click.prevent>前往</UButton>
+    <UButton color="black" block :to="dataValue._path">前往</UButton>
   </div>
 </template>
 

@@ -19,6 +19,12 @@
       <ULink to="/demo/scrolls">
         <UCard> Scorlls </UCard>
       </ULink>
+      <ULink to="/demo/swiper">
+        <UCard> Swiper </UCard>
+      </ULink>
+      <ULink to="/demo/maptalks">
+        <UCard> Maptalks </UCard>
+      </ULink>
     </div>
   </div>
 </template>
