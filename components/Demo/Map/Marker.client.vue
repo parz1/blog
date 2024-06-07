@@ -15,22 +15,20 @@ const mapCenterCoor: [number, number] = [centerLngLat[0], centerLngLat[1]]
 const {
   data: articles,
   pending,
+  execute,
   refresh,
 } = await useAsyncData(
   'latest-posts',
   async () => {
-    // 暂停 2 秒
-    await new Promise(resolve => setTimeout(resolve, 3000))
     return queryContent('/blog').limit(5).sort({ published: -1 }).find()
   },
-  { lazy: true, server: false }
+  { server: false, immediate: false }
 )
 
-const map = shallowRef(null)
-let itemRefs = ref([])
-const fatherName = ref('输入父组件 ref')
+const map = shallowRef<any>(null)
+const uiMarkers = shallowRef<any>([])
+const activeIdx = ref(0)
 const __instance = getCurrentInstance()
-const coordinates = randomCoordinates()
 onMounted(async () => {
   await nextTick()
   map.value = new maptalks.Map(mapRef.value, {
@@ -42,11 +40,48 @@ onMounted(async () => {
       subdomains: ['a', 'b', 'c', 'd'],
     }),
   })
+  map.value.config({
+    doubleClickZoom: false,
+  })
 
+  generateMarkers()
+})
+
+async function generateMarkers() {
+  await execute()
+  if (!articles.value) {
+    return
+  }
+  // clear markers
+  uiMarkers.value.forEach((m: any) => {
+    m.remove()
+  })
+  uiMarkers.value = []
+  const coordinates = randomCoordinates(articles.value.length)
   coordinates.forEach((c, index) => {
     try {
       const vNode = createVNode(InfoMarker, {
-        name: fatherName,
+        active: computed(() => activeIdx.value === index),
+        data: articles.value![index],
+        onFocus: () => {
+          console.log('onFocus', index)
+          uiMarkers.value.map((m: any, i: number) => {
+            if (i === index) {
+              // m.show()
+              map.value.panTo(c)
+            } else {
+              m.hide()
+            }
+          })
+        },
+        onRecover: () => {
+          console.log('onRecover', index)
+          uiMarkers.value.map((m: any, i: number) => {
+            if (!m.isVisible()) {
+              m.show()
+            }
+          })
+        },
       })
       if (!__instance) {
         console.log(__instance!.appContext)
@@ -60,20 +95,22 @@ onMounted(async () => {
       const uiMarker = new maptalks.ui.UIMarker(c, {
         content: container.firstElementChild,
         verticalAlignment: 'top',
+        autoPan: true,
+        eventsPropagation: true,
       })
-
       uiMarker.addTo(map.value)
+      uiMarkers.value.push(uiMarker)
     } catch (error) {
       console.error(error)
     }
   })
-})
+}
 
-function randomCoordinates() {
+function randomCoordinates(num: number) {
   const coordinates = []
-  for (let i = 0; i < 10; i++) {
-    const lng = 139.5 + Math.random() * 0.2
-    const lat = 35.4 + Math.random() * 0.2
+  for (let i = 0; i < num; i++) {
+    const lng = 139.5 + Math.random() * 1
+    const lat = 35.4 + Math.random() * 0.5
     coordinates.push([lng, lat])
   }
   return coordinates
@@ -82,8 +119,10 @@ function randomCoordinates() {
 
 <template>
   <div class="w-full h-full">
-    <UInput class="absolute right-1 bottom-1 z-10" v-model="fatherName" />
-    <div v-show="false" v-for="item in coordinates" :key="item[0]" ref="itemRefs"></div>
+    <div class="absolute right-1 top-1 z-10">
+      <UButton @click="generateMarkers" :loading="pending">Regenerate</UButton>
+    </div>
+    <UInput type="number" class="absolute right-1 bottom-1 z-10" v-model="activeIdx" />
     <div class="w-full h-full bg-teal-500" ref="mapRef"></div>
   </div>
 </template>
