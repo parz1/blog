@@ -4,10 +4,7 @@ import { WMTSTileLayer } from 'maptalks.wmts'
 import { createVNode, render } from 'vue'
 import InfoMarker from './InfoMarker.vue'
 
-const nuxtApp = useNuxtApp()
-
 const mapRef = ref(null)
-const tiandiKey = '4ec9de06ee7d2a644f0a7061032e5d27'
 const centerLngLat = gcj02towgs84(139.7036319, 35.6937632)
 const mapCenterCoor: [number, number] = [centerLngLat[0], centerLngLat[1]]
 
@@ -39,6 +36,8 @@ onMounted(async () => {
     baseLayer: new maptalks.TileLayer('base', {
       urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       subdomains: ['a', 'b', 'c', 'd'],
+      attribution:
+        '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>',
     }),
   })
   map.value.config({
