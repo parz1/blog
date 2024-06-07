@@ -28,12 +28,13 @@ const {
 const map = shallowRef<any>(null)
 const uiMarkers = shallowRef<any>([])
 const activeIdx = ref(0)
+const maxZIndex = ref(1000)
 const __instance = getCurrentInstance()
 onMounted(async () => {
   await nextTick()
   map.value = new maptalks.Map(mapRef.value, {
     center: mapCenterCoor,
-    zoom: 9,
+    zoom: 10,
     pitch: 30,
     baseLayer: new maptalks.TileLayer('base', {
       urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
@@ -63,8 +64,15 @@ async function generateMarkers() {
       const vNode = createVNode(InfoMarker, {
         active: computed(() => activeIdx.value === index),
         data: articles.value![index],
+        onClick: () => {
+          activeIdx.value = index
+          uiMarkers.value[index].setZIndex(maxZIndex.value)
+          maxZIndex.value += 1
+
+          map.value.panTo(c)
+        },
         onFocus: () => {
-          console.log('onFocus', index)
+          activeIdx.value = index
           uiMarkers.value.map((m: any, i: number) => {
             if (i === index) {
               // m.show()
@@ -75,7 +83,6 @@ async function generateMarkers() {
           })
         },
         onRecover: () => {
-          console.log('onRecover', index)
           uiMarkers.value.map((m: any, i: number) => {
             if (!m.isVisible()) {
               m.show()
@@ -97,6 +104,7 @@ async function generateMarkers() {
         verticalAlignment: 'top',
         autoPan: true,
         eventsPropagation: true,
+        zIndex: index,
       })
       uiMarker.addTo(map.value)
       uiMarkers.value.push(uiMarker)

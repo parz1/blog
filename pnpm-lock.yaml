@@ -27,8 +27,8 @@ dependencies:
     specifier: ^5.5.1
     version: 5.5.1
   maptalks:
-    specifier: 1.0.0-rc.33
-    version: 1.0.0-rc.33
+    specifier: 1.0.0-rc.32
+    version: 1.0.0-rc.32
   maptalks.three:
     specifier: ^0.38.3
     version: 0.38.3
@@ -6994,8 +6994,8 @@ packages:
     resolution: {integrity: sha512-sKeS3MnjUJQo11sfMPD+E2Hmi5f9780cvY934wZGN8oWNaNSZpyxEsz2SCSasssbLeBvevZE+tUXAwSS0OMLeA==}
     dev: false
 
-  /maptalks@1.0.0-rc.33:
-    resolution: {integrity: sha512-ivIZMlN3DQ5dh5ZUpq8QmKNHvg29W05p8D/pcVnRdldvYBvO0FAyU6bBHc1Yqj/Eofuj2pYhBthFQwkyYaiHlA==}
+  /maptalks@1.0.0-rc.32:
+    resolution: {integrity: sha512-Q2SJa9sLCHXKIS//XbOYC2JUWRBhAL0izFjQFD8xyOfUuj9udq5D5+B2CXl6S5zj5gYyWRBbmeYgylD74/wuGg==}
     dependencies:
       '@maptalks/feature-filter': 1.3.0
       '@maptalks/function-type': 1.3.1

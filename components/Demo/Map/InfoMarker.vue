@@ -7,7 +7,7 @@ const props = defineProps<{
   data: Ref<ParsedContent> | ParsedContent
 }>()
 
-const emits = defineEmits(['up', 'focus', 'recover'])
+const emits = defineEmits(['click', 'focus', 'recover'])
 
 const dataValue = computed(() => (isRef(props.data) ? props.data.value : props.data))
 
@@ -28,6 +28,7 @@ const recover = () => {
     :class="{
       'border-teal-500 shadow-2xl z-10': active.value,
     }"
+    @click="$emit('click')"
   >
     <div class="p-2">
       <div class="flex justify-between">
@@ -41,7 +42,7 @@ const recover = () => {
       </div>
       <div class="font-medium">{{ dataValue.title }}</div>
     </div>
-    <UButton color="black" block :to="dataValue._path">前往</UButton>
+    <UButton color="black" block :to="dataValue._path" @click.prevent>前往</UButton>
   </div>
 </template>
 
