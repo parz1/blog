@@ -5,19 +5,6 @@ published: 2024/03/31
 slug: 'os-exp-setup'
 ---
 
-::Talk
-我编译个内核试试。
-::
-::Talk
-你是什么电脑
-::
-::Talk
-我是 MBP M3pro（自豪）
-::
-::Talk
-洗洗睡吧
-::
-
 ## 项目根目录
 
 ::Tip{title="项目根目录" icon="i-carbon-tornado-warning"}
@@ -223,6 +210,253 @@ sudo qemu-system-x86_64 \
 
 [![CleanShot 2024-03-31 at 20.44.50@2x.png](https://g.imgtg.com/uploads/7247/66096b47caf63.png)](https://g.imgtg.com/uploads/7247/66096b47caf63.png)
 
+## 题目
+
+### 题目一
+>修改或返回指定进程的优先级（nice值和prio值）
+提示：可能参考的内核函数：set_user_nice()
+
+```c [sys_setgetpriority.c]
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/uaccess.h>
+
+struct proc_priority {
+    pid_t pid;
+    int nice;
+    int prio;
+};
+
+SYSCALL_DEFINE2(setgetpriority, struct proc_priority __user *, pinfo, int, set) {
+    struct proc_priority kinfo;
+    struct task_struct *task;
+
+    if (copy_from_user(&kinfo, pinfo, sizeof(struct proc_priority)))
+        return -EFAULT;
+
+    rcu_read_lock();
+    task = find_task_by_vpid(kinfo.pid);
+    if (!task) {
+        rcu_read_unlock();
+        return -ESRCH;
+    }
+
+    get_task_struct(task);
+    rcu_read_unlock();
+
+    if (set) {
+        if (kinfo.nice < -20 || kinfo.nice > 19) {
+            put_task_struct(task);
+            return -EINVAL;
+        }
+        set_user_nice(task, kinfo.nice);
+    }
+
+    kinfo.nice = task_nice(task);
+    kinfo.prio = task->prio;
+
+    put_task_struct(task);
+
+    if (copy_to_user(pinfo, &kinfo, sizeof(struct proc_priority)))
+        return -EFAULT;
+
+    return 0;
+}
+
+```
+### 题目二
+>返回指定进程的内存管理信息，如进程可执行代码的起始及结束地址、已初始化数据的起始及结束地址、用户态堆栈起始地址、堆起始地址等 
+```c [sys_getmeminfo.c]
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/uaccess.h>
+
+struct mem_info {
+    unsigned long start_code;
+    unsigned long end_code;
+    unsigned long start_data;
+    unsigned long end_data;
+    unsigned long start_brk;
+    unsigned long start_stack;
+};
+
+SYSCALL_DEFINE2(getmeminfo, pid_t, pid, struct mem_info __user *, minfo) {
+    struct task_struct *task;
+    struct mem_info kinfo;
+
+    rcu_read_lock();
+    task = find_task_by_vpid(pid);
+    if (!task) {
+        rcu_read_unlock();
+        return -ESRCH;
+    }
+
+    get_task_struct(task);
+    rcu_read_unlock();
+
+    kinfo.start_code = task->mm->start_code;
+    kinfo.end_code = task->mm->end_code;
+    kinfo.start_data = task->mm->start_data;
+    kinfo.end_data = task->mm->end_data;
+    kinfo.start_brk = task->mm->start_brk;
+    kinfo.start_stack = task->mm->start_stack;
+
+    put_task_struct(task);
+
+    if (copy_to_user(minfo, &kinfo, sizeof(struct mem_info)))
+        return -EFAULT;
+
+    return 0;
+}
+
+```
+
+### 题目三
+>返回指定进程当前的状态、各种用户信息，并能解释说明各种用户的含义、所使用的Linux内核版本中进程状态的设置情况。
+
+```c
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/uaccess.h>
+
+struct proc_info {
+    pid_t pid;
+    long state;
+    uid_t uid;
+    gid_t gid;
+    uid_t euid;
+    gid_t egid;
+    uid_t suid;
+    gid_t sgid;
+    uid_t fsuid;
+    gid_t fsgid;
+    char comm[16];
+};
+
+SYSCALL_DEFINE2(getprocinfo, pid_t, pid, struct proc_info __user *, pinfo) {
+    struct task_struct *task;
+    struct proc_info kinfo;
+
+    rcu_read_lock();
+    task = find_task_by_vpid(pid);
+    if (!task) {
+        rcu_read_unlock();
+        return -ESRCH;
+    }
+
+    get_task_struct(task);
+    rcu_read_unlock();
+
+    kinfo.pid = task->pid;
+    kinfo.state = task->state;
+    kinfo.uid = task->cred->uid.val;
+    kinfo.gid = task->cred->gid.val;
+    kinfo.euid = task->cred->euid.val;
+    kinfo.egid = task->cred->egid.val;
+    kinfo.suid = task->cred->suid.val;
+    kinfo.sgid = task->cred->sgid.val;
+    kinfo.fsuid = task->cred->fsuid.val;
+    kinfo.fsgid = task->cred->fsgid.val;
+    strncpy(kinfo.comm, task->comm, sizeof(kinfo.comm));
+
+    put_task_struct(task);
+
+    if (copy_to_user(pinfo, &kinfo, sizeof(struct proc_info)))
+        return -EFAULT;
+
+    return 0;
+}
+
+```
+
+### 题目四
+>返回指定进程的各种调度相关信息，比如各种优先级、采用的调度策略、运行该进程的CPU编号、进程的剩余时间片长度等，能解释各种优先级的含义。
+```c
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/uaccess.h>
+
+struct sched_info {
+    pid_t pid;
+    int policy;
+    int prio;
+    int static_prio;
+    int normal_prio;
+    int rt_priority;
+    int cpu;
+    unsigned int time_slice;
+};
+
+SYSCALL_DEFINE2(getschedinfo, pid_t, pid, struct sched_info __user *, sinfo) {
+    struct task_struct *task;
+    struct sched_info kinfo;
+
+    rcu_read_lock();
+    task = find_task_by_vpid(pid);
+    if (!task) {
+        rcu_read_unlock();
+        return -ESRCH;
+    }
+
+    get_task_struct(task);
+    rcu_read_unlock();
+
+    kinfo.pid = task->pid;
+    kinfo.policy = task->policy;
+    kinfo.prio = task->prio;
+    kinfo.static_prio = task->static_prio;
+    kinfo.normal_prio = task->normal_prio;
+    kinfo.rt_priority = task->rt_priority;
+    kinfo.cpu = task_cpu(task);
+    kinfo.time_slice = task->sched_info.run_delay; // 剩余时间片长度
+
+    put_task_struct(task);
+
+    if (copy_to_user(sinfo, &kinfo, sizeof(struct sched_info)))
+        return -EFAULT;
+
+    return 0;
+}
+
+```
+
+### 题目五
+>显示当前系统的名称和版本
+```c
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/utsname.h>
+#include <linux/uaccess.h>
+
+struct sysinfo {
+    char sysname[65];
+    char release[65];
+    char version[65];
+};
+
+SYSCALL_DEFINE1(getsysinfo, struct sysinfo __user *, info) {
+    struct new_utsname *u;
+    struct sysinfo kinfo;
+
+    u = utsname();
+    if (!u)
+        return -EFAULT;
+
+    strncpy(kinfo.sysname, u->sysname, sizeof(kinfo.sysname));
+    strncpy(kinfo.release, u->release, sizeof(kinfo.release));
+    strncpy(kinfo.version, u->version, sizeof(kinfo.version));
+
+    if (copy_to_user(info, &kinfo, sizeof(struct sysinfo)))
+        return -EFAULT;
+
+    return 0;
+}
+
+```
 ## 参考链接
 
 [how-to-build-a-custom-linux-kernel-for-qemu-using-docker](https://mgalgs.io/2021/03/23/how-to-build-a-custom-linux-kernel-for-qemu-using-docker.html)
