@@ -22,7 +22,9 @@ const head = useLocaleHead({
       </Head>
       <Body>
         <Header />
-        <slot />
+        <BaseMain>
+          <slot />
+        </BaseMain>
         <BaseFooter />
       </Body>
     </Html>

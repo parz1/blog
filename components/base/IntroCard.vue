@@ -17,10 +17,16 @@ const handleCopyEmailToClipboard = () => {
       />
     </div>
     <div class="mt-4">
-      <span class="text-3xl font-extralight">parz<span class="text-3xl font-bold">ivor</span></span>
+      <span class="text-3xl font-extralight"><span class="text-3xl font-medium">parz1</span></span>
     </div>
-    <div class="text-sm">['aivə]</div>
-    <ULink class="underline" to="/about">About me</ULink>
+    <div>周 磊</div>
+    <!-- <div class="text-sm">['aivə]</div> -->
+
+    <div>parz1zhou@gmail.com</div>
+
+    <UButton color="gray" variant="ghost" aria-label="Theme" @click="handleCopyEmailToClipboard">
+      <UIcon :name="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'" dynamic />
+    </UButton>
     <div class="flex items-center">
       <UPopover mode="hover" :popper="{ placement: 'right' }">
         <!-- 支持划词 -->
@@ -61,7 +67,7 @@ const handleCopyEmailToClipboard = () => {
 
         <template #panel>
           <div class="p-2 text-sm">
-            parz1
+            @parz1
             <div class="text-xs mt-1 font-light">
               Click icon to <span class="font-bold">GitHub</span>
             </div>

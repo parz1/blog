@@ -1,14 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui', '@nuxtjs/i18n'],
+
   app: {
     // pageTransition: { name: 'page', mode: 'out-in' },
   },
+
   vue: {
     compilerOptions: {
       isCustomElement: tag => /^(swiper|swiper-slide|swiper-container)$/.test(tag),
     },
   },
+
   i18n: {
     baseUrl: 'https://parz1.goder.club',
     strategy: 'no_prefix',
@@ -42,6 +45,7 @@ export default defineNuxtConfig({
       },
     ],
   },
+
   content: {
     navigation: {
       fields: ['title', 'description', 'published', 'slug', 'tags'],
@@ -66,13 +70,17 @@ export default defineNuxtConfig({
     //   },
     // },
   },
+
   css: ['~/assets/css/main.scss', '~/assets/css/line-numbers.css'],
+
   ui: {
     icons: ['carbon'],
   },
+
   runtimeConfig: {
     githubToken: process.env.NUXT_GITHUB_TOKEN,
   },
+
   devtools: {
     enabled: true,
   },
@@ -82,4 +90,6 @@ export default defineNuxtConfig({
       routes: ['/', '/sitemap.xml'],
     },
   },
+
+  compatibilityDate: '2024-12-05',
 })

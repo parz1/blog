@@ -68,8 +68,7 @@ const links = [
   >
     <ULink to="/">
       <div class="font-sans text-2xl pl-4 font-light">
-        <span class="font-bold">goder</span>
-        <span class="text-indigo-500 underline"><span class="font-medium">::</span>parz1vor </span>
+        <span class="font-bold">parz1</span>
       </div>
     </ULink>
     <div class="hidden md:flex items-center gap-4 text-xl pr-4">
