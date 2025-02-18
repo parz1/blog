@@ -1,5 +1,4 @@
 <script setup>
-// TODO: need to fix the i18n
 const { locale: curLocale, locales, setLocale } = useI18n()
 
 const items = computed(() => [
@@ -13,6 +12,10 @@ const items = computed(() => [
     },
   })),
 ])
+
+const curLocaleName = computed(() => {
+  return locales.value.find(locale => locale.code === curLocale.value)?.name
+})
 </script>
 
 <template>
@@ -23,11 +26,18 @@ const items = computed(() => [
   >
     {{ locale.name }}
   </NuxtLink> -->
-  {{ $t('hello') }}
-  <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+  <UDropdown :items="items" :popper="{ placement: 'bottom-start', arrow: true }">
+    <div class="flex items-center gap-2 hover:text-primary-600 cursor-pointer">
+      <UIcon name="i-carbon-ibm-watson-language-translator" />
+      <span>{{ curLocaleName }}</span>
+    </div>
     <!-- <UButton color="white" label="Options" trailing-icon="i-heroicons-chevron-down-20-solid" /> -->
-    <UIcon name="i-carbon-ibm-watson-language-translator" />
-
+    <!-- <UButton
+      size="xs"
+      color="white"
+      :label="curLocaleName"
+      trailing-icon="i-heroicons-chevron-down-20-solid"
+    /> -->
     <template #item="{ item }">
       <span class="truncate">{{ item.label }}</span>
       <span class="flex-1"></span>

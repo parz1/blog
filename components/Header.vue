@@ -72,16 +72,31 @@ const links = [
         <span class="font-bold">parz1</span>
       </div>
     </ULink>
-    <div class="hidden md:flex items-center gap-4 text-xl pr-4">
-      <LanguageSwitch />
-      <ULink to="/blog" active-class="text-primary-600 dark:text-primary-400">
+    <div class="hidden md:flex items-center gap-3 text-xl pr-4">
+      <ULink
+        to="/"
+        class="hover:underline hover:text-teal-500"
+        active-class="underline text-primary-600 dark:text-primary-400"
+      >
+        {{ t('menu.home') }}
+      </ULink>
+      <ULink
+        to="/blog"
+        class="hover:underline hover:text-teal-500"
+        active-class="underline text-primary-600 dark:text-primary-400"
+      >
         {{ t('menu.blog') }}
       </ULink>
       <div>{{ t('menu.gallery') }}</div>
-      <ULink to="/demo" active-class="text-primary-600 dark:text-primary-400">
+      <ULink
+        to="/demo"
+        class="hover:underline hover:text-teal-500"
+        active-class="underline text-primary-600 dark:text-primary-400"
+      >
         {{ t('menu.demo') }}
       </ULink>
 
+      <LanguageSwitch />
       <ClientOnly>
         <UButton
           :icon="colorModeIcon"
