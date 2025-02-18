@@ -24,8 +24,8 @@ const {
 )
 
 const map = shallowRef<any>(null)
-// map state: exploring | company | foundation to show different markers
-const mapState = ref<'exploring' | 'company' | 'foundation'>('exploring')
+// map state: japan | hangzhou | university to show different markers
+const mapState = ref<'japan' | 'hangzhou' | 'university'>('japan')
 
 const uiMarkers = shallowRef<any>([])
 const activeIdx = ref(0)
@@ -195,50 +195,106 @@ function randomCoordinates(num: number) {
         <div
           class="hover:underline cursor-pointer"
           :class="{
-            'underline text-blue-500': mapState === 'foundation',
+            'underline text-blue-500': mapState === 'university',
           }"
-          @click="mapState = 'foundation'"
+          @click="mapState = 'university'"
         >
-          FOUNDATION
+          UNIVERSITY
         </div>
         |
         <div
           class="hover:underline cursor-pointer"
           :class="{
-            'underline text-blue-500': mapState === 'company',
+            'underline text-blue-500': mapState === 'hangzhou',
           }"
-          @click="mapState = 'company'"
+          @click="mapState = 'hangzhou'"
         >
-          COMPANY
+          🇨🇳HANGZHOU
         </div>
         |
         <div
           class="hover:underline cursor-pointer"
           :class="{
-            'underline text-blue-500': mapState === 'exploring',
+            'underline text-blue-500': mapState === 'japan',
           }"
-          @click="mapState = 'exploring'"
+          @click="mapState = 'japan'"
         >
-          EXPLORING
+          🇯🇵JAPAN
         </div>
       </div>
-      <div class="bg-gray-50 opacity-80 p-2 text-sm w-60">
-        <div>2024-03 日本留学確定</div>
+      <div class="p-2 text-xs md:text-sm w-[60%] md:w-[16rem] bg-transparent pointer-events-none">
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'japan',
+            'border-blue-500 border-l-2 pl-2': mapState === 'japan',
+          }"
+        >
+          2024-03 日本留学確定
+        </div>
         <div
           class="border-l-2 pl-2"
           :class="{
-            'text-gray-500 border-gray-300': mapState !== 'foundation',
-            'border-blue-500': mapState === 'foundation',
+            'text-gray-500 border-gray-300': mapState !== 'university',
+            'border-blue-500': mapState === 'university',
           }"
         >
           休学終わり、学歴を取る
         </div>
-        <div class="border-l-2 border-gray-300 pl-2">会社の仕事交代</div>
-        <div>2024-07 日本語能力試験N2(合格)</div>
-        <div>2024-08 TOEFLの準備開始</div>
-        <div>2024-09 TOEFL試験 (90点)</div>
-        <div>2024-10 日本に到着、日本語学校</div>
-        <div>2024-12 日本語能力試験N1(合格)</div>
+        <div
+          class="transition-all border-l-2 pl-2"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'hangzhou',
+            'border-blue-500 border-l-2 pl-2': mapState === 'hangzhou',
+          }"
+        >
+          会社の仕事交代
+        </div>
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'hangzhou',
+            'border-blue-500 border-l-2 pl-2': mapState === 'hangzhou',
+          }"
+        >
+          2024-07 日本語能力試験N2(合格)
+        </div>
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'hangzhou',
+            'border-blue-500 border-l-2 pl-2': mapState === 'hangzhou',
+          }"
+        >
+          2024-08 TOEFLの準備開始
+        </div>
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'hangzhou',
+            'border-blue-500 border-l-2 pl-2': mapState === 'hangzhou',
+          }"
+        >
+          2024-09 TOEFL試験 (90点)
+        </div>
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'japan',
+            'border-blue-500 border-l-2 pl-2': mapState === 'japan',
+          }"
+        >
+          2024-10 日本に到着、日本語学校
+        </div>
+        <div
+          class="transition-all"
+          :class="{
+            'text-gray-500 border-gray-300': mapState !== 'japan',
+            'border-blue-500 border-l-2 pl-2': mapState === 'japan',
+          }"
+        >
+          2024-12 日本語能力試験N1(合格)
+        </div>
       </div>
     </div>
     <div class="w-full h-full bg-teal-500" ref="mapRef"></div>

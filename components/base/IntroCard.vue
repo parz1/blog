@@ -5,6 +5,11 @@ const { text, copy, copied, isSupported } = useClipboard({ source })
 const handleCopyEmailToClipboard = () => {
   copy()
 }
+const source2 = ref('parzivor@gmail.com')
+const { text2, copy2, copied2, isSupported2 } = useClipboard({ source2 })
+const handleCopyEmailToClipboard2 = () => {
+  copy2()
+}
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const handleCopyEmailToClipboard = () => {
     <div class="mt-0">
       <span class="text-4xl font-bold">parz1</span>
     </div>
-    <div class="mt-4 mb-2">
+    <div class="mt-4 mb-0">
       <div class="text-sm flex justify-start items-center gap-2">
         <div>シュウ</div>
         <div>ライ</div>
@@ -29,10 +34,15 @@ const handleCopyEmailToClipboard = () => {
         <div>磊</div>
       </div>
     </div>
+
+    <div class="mb-4 text-sm">物に喜ばず、己に悲しまず。</div>
+
     <!-- <div class="text-sm">['aivə]</div> -->
     <div class="text-sm text-gray-400">仕事メール</div>
     <div class="flex items-center mt-[-0.5rem]">
-      <div>parz1zhou@gmail.com</div>
+      <div class="underline">
+        <a href="mailto:parz1zhou@gmail.com" @click.stop> parz1zhou@gmail.com </a>
+      </div>
       <UButton
         :icon="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'"
         size="xs"
@@ -41,29 +51,24 @@ const handleCopyEmailToClipboard = () => {
         aria-label="Theme"
         @click="handleCopyEmailToClipboard"
       />
-
-      <a href="mailto:parz1zhou@gmail.com" @click.stop>
-        <UButton icon="i-carbon-email" size="xs" color="gray" variant="ghost" aria-label="Theme" />
-      </a>
     </div>
 
     <div class="text-sm text-gray-400">アカデミックメール</div>
     <div class="flex items-center mt-[-0.5rem]">
-      <div>parzivor@gmail.com</div>
+      <div class="underline">
+        <a href="mailto:parz1zhou@gmail.com" @click.stop> parzivor@gmail.com </a>
+      </div>
       <UButton
-        :icon="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'"
+        :icon="copied2 ? 'i-carbon-checkmark' : 'i-carbon-copy'"
         size="xs"
         color="gray"
         variant="ghost"
         aria-label="Theme"
-        @click="handleCopyEmailToClipboard"
+        @click="handleCopyEmailToClipboard2"
       />
-
-      <a href="mailto:parz1zhou@gmail.com" @click.stop>
-        <UButton icon="i-carbon-email" size="xs" color="gray" variant="ghost" aria-label="Theme" />
-      </a>
     </div>
 
+    <div class="text-gray-500 mt-4">Links</div>
     <div class="flex">
       <UPopover mode="hover" :popper="{ placement: 'bottom' }">
         <a href="https://github.com/parz1" target="_blank" @click.stop>
