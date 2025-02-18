@@ -60,7 +60,7 @@ onUnmounted(() => {
         <div class="text-xl font-normal">Table of Content</div>
         <TableOfContents :active-toc-id="activeTocId" :doc="doc" />
 
-        <UCard class="w-full my-4"> TODO: sharing module </UCard>
+        <!-- <UCard class="w-full my-4"> TODO: sharing module </UCard> -->
       </div>
     </div>
 

@@ -85,7 +85,7 @@
             <!-- rust -->
             <TechIcon name="rust" size="4rem" icon="/svg/rust-color.svg" />
           </div>
-          <div class="font-bold text-lg mt-2">Frameworks</div>
+          <div class="text-lg mt-2">Frameworks&Tools</div>
           <div
             class="lg:hidden flex h-[6.8rem] p-2 border-2 border-dashed rounded-md dark:bg-gray-800"
           >
