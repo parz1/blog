@@ -1,4 +1,5 @@
 <script setup>
+// TODO: need to fix the i18n
 const { locale: curLocale, locales, setLocale } = useI18n()
 
 const items = computed(() => [

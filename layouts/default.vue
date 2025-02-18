@@ -20,7 +20,7 @@ const head = useLocaleHead({
           <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
         </template>
       </Head>
-      <Body>
+      <Body class="overflow-x-hidden">
         <Header />
         <BaseMain>
           <slot />

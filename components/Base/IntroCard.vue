@@ -8,53 +8,60 @@ const handleCopyEmailToClipboard = () => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center">
-    <div>
+  <div class="flex flex-col justify-center items-center lg:items-start">
+    <div class="">
       <img
         class="w-20 h-20 md:w-40 md:h-40 bg-black transition-shadow hover:shadow-xl"
         src="~/assets/avatar.png"
         alt="avatar"
       />
     </div>
-    <div class="mt-4">
-      <span class="text-3xl font-extralight"><span class="text-3xl font-medium">parz1</span></span>
+    <div class="mt-0">
+      <span class="text-4xl font-bold">parz1</span>
     </div>
-    <div>周 磊</div>
+    <div class="mt-4 mb-2">
+      <div class="text-sm flex justify-start items-center gap-2">
+        <div>シュウ</div>
+        <div>ライ</div>
+      </div>
+      <div class="text-xl flex justify-start items-center gap-8">
+        <div>周</div>
+        <div>磊</div>
+      </div>
+    </div>
     <!-- <div class="text-sm">['aivə]</div> -->
+    <div class="text-sm text-gray-400">仕事メール</div>
+    <div class="flex items-center mt-[-0.5rem]">
+      <div>parz1zhou@gmail.com</div>
+      <UButton
+        :icon="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'"
+        size="xs"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        @click="handleCopyEmailToClipboard"
+      />
 
-    <div>parz1zhou@gmail.com</div>
+      <a href="mailto:parz1zhou@gmail.com" @click.stop>
+        <UButton icon="i-carbon-email" size="xs" color="gray" variant="ghost" aria-label="Theme" />
+      </a>
+    </div>
 
-    <UButton color="gray" variant="ghost" aria-label="Theme" @click="handleCopyEmailToClipboard">
-      <UIcon :name="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'" dynamic />
-    </UButton>
-    <div class="flex items-center">
-      <UPopover mode="hover" :popper="{ placement: 'right' }">
-        <!-- 支持划词 -->
-        <div class="mb-2 text-lg">parz1zhou@gmail.com</div>
-        <template #panel>
-          <div class="p-2 text-sm">
-            <div>
-              <a href="mailto:parz1zhou@gmail.com" @click.stop>
-                <UButton color="gray" variant="ghost" aria-label="Theme">
-                  <UIcon name="i-carbon-email" />
-                  Email with default mail client
-                </UButton>
-              </a>
-            </div>
-            <div>
-              <UButton
-                color="gray"
-                variant="ghost"
-                aria-label="Theme"
-                @click="handleCopyEmailToClipboard"
-              >
-                <UIcon :name="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'" dynamic />
-                {{ copied ? 'Copied!' : 'Copy to clipboard' }}
-              </UButton>
-            </div>
-          </div>
-        </template>
-      </UPopover>
+    <div class="text-sm text-gray-400">アカデミックメール</div>
+    <div class="flex items-center mt-[-0.5rem]">
+      <div>parzivor@gmail.com</div>
+      <UButton
+        :icon="copied ? 'i-carbon-checkmark' : 'i-carbon-copy'"
+        size="xs"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        @click="handleCopyEmailToClipboard"
+      />
+
+      <a href="mailto:parz1zhou@gmail.com" @click.stop>
+        <UButton icon="i-carbon-email" size="xs" color="gray" variant="ghost" aria-label="Theme" />
+      </a>
     </div>
 
     <div class="flex">

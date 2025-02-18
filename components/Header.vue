@@ -6,6 +6,7 @@ const headerRef = ref(null)
 const { styles } = useFixedHeader(headerRef)
 const { t } = useI18n()
 
+// TODO: need to be refactored
 const colorMode = useColorMode()
 const colorModeArray = ['light', 'dark', 'sepia']
 const colorModeIcon = computed(() => {

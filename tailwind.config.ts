@@ -30,6 +30,10 @@ export default <Partial<Config>>{
         'Ubuntu',
         '"Helvetica Neue"',
         'Arial',
+        '"Noto Sans JP"',
+        '"Hiragino Sans"',
+        '"Meiryo"',
+        '"Yu Gothic"',
         '"Noto Sans"',
         'sans-serif',
         '"Apple Color Emoji"',
@@ -37,6 +41,7 @@ export default <Partial<Config>>{
         '"Segoe UI Symbol"',
         '"Noto Color Emoji"',
       ],
+      serif: ['"Noto Serif JP"', 'serif'],
       mono: [
         'Cascadia Code',
         'ui-monospace',

@@ -1,19 +1,16 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="w-screen bg-amber-500 md:flex">
-    <!-- 黄金比例 -->
-
-    <div class="p-4 bg-green-500">
+  <div class="w-screen flex flex-col lg:flex-row">
+    <!-- 左侧固定区域 -->
+    <div class="w-full lg:w-[20%] ml-0 lg:ml-[10%] h-full pt-20 lg:fixed left-0 top-0">
       <BaseIntroCard />
     </div>
 
-    <div>
-      <div class="flex justify-center items-center h-96 bg-amber-500">
-        <div class="text-4xl text-white">Hello, World!</div>
-      </div>
+    <!-- 右侧自适应区域 -->
+    <div class="w-full lg:ml-[30%] flex-grow flex flex-col justify-start items-start">
+      <HomePage />
     </div>
-    <!-- <Motto /> -->
   </div>
 </template>
 

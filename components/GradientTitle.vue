@@ -11,7 +11,7 @@ defineProps<{
     >
       {{ title }}
     </div>
-    <div class="text-xl font-mono">{{ subtitle }}</div>
+    <div class="text-xl">{{ subtitle }}</div>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ defineProps<{
 .headline {
   padding: 0 0.1rem;
   font-size: 3rem;
-  line-height: 1.1;
+  line-height: 1.2;
   // font-family: Raleway, sans-serif;
   //font-family: Montserrat, sans-serif;
   color: hsl(260 70% 40%);
