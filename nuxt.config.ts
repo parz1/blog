@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/devtools', '@nuxtjs/device', '@nuxt/ui', '@nuxtjs/i18n'],
 
+  colorMode: {
+    preference: 'system', // default theme
+    fallback: 'light', // fallback theme if system preference can't be detected
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
+  },
+
   app: {
     // pageTransition: { name: 'page', mode: 'out-in' },
     head: {
