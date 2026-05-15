@@ -106,11 +106,6 @@ export default defineNuxtConfig({
   },
 
   content: {
-    database: {
-      type: 'postgres',
-      url: process.env.POSTGRES_URL || '',
-      /* Other options for `pg` */
-    },
     build: {
       markdown: {
         remarkPlugins: {
@@ -192,7 +187,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      routes: ['/', '/sitemap.xml'],
+      routes: ['/', '/zh-CN', '/ja', '/sitemap.xml'],
     },
   },
 
