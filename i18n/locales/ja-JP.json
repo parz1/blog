@@ -51,6 +51,12 @@
       "tech": {
         "heading": "いま使っているもの",
         "description": "完全なスタック一覧ではなく、研究、プロダクト、個人システムをつなぐときによく使う道具です。",
+        "stackLabel": "技術スタック",
+        "lanes": {
+          "research": "研究",
+          "bridge": "重なり",
+          "engineering": "エンジニアリング"
+        },
         "categories": {
           "language": "言語",
           "frontend": "Web / UI",
@@ -62,6 +68,21 @@
           "workflow": "ワークフロー"
         },
         "items": {
+          "python": {
+            "description": "実験、データ処理、local AI pipeline、素早いアイデア検証の中心になる言語です。"
+          },
+          "colab": {
+            "description": "一時的な実験、モデル確認、リモート GPU notebook の軽い入口です。"
+          },
+          "jupyter": {
+            "description": "データ探索、実験の流れ、再現可能な分析を同じ文脈に置けます。"
+          },
+          "pytorch": {
+            "description": "マルチモーダル認識やモデル試作でよく使う深層学習フレームワークです。"
+          },
+          "numpy": {
+            "description": "実験データ、信号特徴、モデルの前後処理を扱う基礎ツールです。"
+          },
           "typescript": {
             "description": "プロダクトの試作、フロントエンド状態、保守しやすい境界づくりに使います。"
           },

@@ -72,7 +72,7 @@
 
 /* 标题尺寸与锚点滚动偏移（有固定头部时很关键） */
 .prose h1 {
-  @apply text-4xl font-extrabold tracking-tight mt-8 mb-4 scroll-mt-24;
+  @apply text-3xl font-extrabold tracking-tight mt-8 mb-4 scroll-mt-24;
 }
 .prose h2 {
   @apply text-3xl font-bold leading-9 mt-4 mb-4 scroll-mt-24;

@@ -51,6 +51,12 @@
       "tech": {
         "heading": "我正在使用这些",
         "description": "这些不是完整清单，更像我现在把研究、产品和个人系统拼起来时会反复拿起的工具。",
+        "stackLabel": "技术栈",
+        "lanes": {
+          "research": "研究",
+          "bridge": "交叉",
+          "engineering": "工程"
+        },
         "categories": {
           "language": "语言",
           "frontend": "Web / UI",
@@ -62,6 +68,21 @@
           "workflow": "工作流"
         },
         "items": {
+          "python": {
+            "description": "研究实验、数据处理、本地 AI pipeline 和快速验证想法的主力语言。"
+          },
+          "colab": {
+            "description": "临时实验、模型验证和远程 GPU notebook 的轻量入口。"
+          },
+          "jupyter": {
+            "description": "把数据探索、实验过程和可复现分析放在同一个上下文里。"
+          },
+          "pytorch": {
+            "description": "做多模态识别、原型模型和实验训练时最常用的深度学习框架。"
+          },
+          "numpy": {
+            "description": "处理实验数据、信号特征和模型前后处理时的基础工具。"
+          },
           "typescript": {
             "description": "主要用来组织产品原型、前端状态和可维护的系统边界。"
           },

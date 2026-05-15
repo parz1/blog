@@ -1,13 +1,21 @@
 <script setup lang="ts">
 type TechCloudItem = {
-  categoryKey: string
-  channels: string[]
-  descriptionKey: string
   icon: string
   name: string
   rotation?: number
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   tone: 'amber' | 'cyan' | 'green' | 'neutral' | 'rose' | 'violet'
+  x: number
+  y: number
+}
+
+type Body = {
+  radius: number
+  rotation: number
+  supported: boolean
+  vr: number
+  vx: number
+  vy: number
   x: number
   y: number
 }
@@ -19,255 +27,444 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const container = ref<HTMLElement | null>(null)
-const activeIndex = ref(0)
+const hoverIndex = ref(-1)
+const ready = ref(false)
 const reducedMotion = ref(false)
+const selectedIndex = ref(-1)
 
-const bodies = reactive(
+const bounds = reactive({
+  height: 0,
+  width: 0,
+})
+
+const bodies = reactive<Body[]>(
   props.items.map((item) => ({
+    radius: 0,
     rotation: item.rotation ?? 0,
-    tx: 0,
-    ty: 0,
+    supported: false,
+    vr: 0,
     vx: 0,
     vy: 0,
-    vr: 0,
+    x: 0,
+    y: 0,
   })),
 )
 
-const drag = reactive({
-  index: -1,
-  lastX: 0,
-  lastY: 0,
-  vx: 0,
-  vy: 0,
-})
-
 const toneClasses = {
   amber:
-    'bg-amber-50/90 text-amber-950 dark:bg-amber-300/15 dark:text-amber-50',
-  cyan: 'bg-cyan-50/90 text-cyan-950 dark:bg-cyan-300/15 dark:text-cyan-50',
+    'bg-amber-50/95 text-amber-900 dark:bg-amber-300/15 dark:text-amber-50',
+  cyan: 'bg-cyan-50/95 text-cyan-900 dark:bg-cyan-300/15 dark:text-cyan-50',
   green:
-    'bg-emerald-50/90 text-emerald-950 dark:bg-emerald-300/15 dark:text-emerald-50',
-  neutral: 'bg-white/90 text-gray-900 dark:bg-gray-800/80 dark:text-gray-100',
-  rose: 'bg-rose-50/90 text-rose-950 dark:bg-rose-300/15 dark:text-rose-50',
+    'bg-emerald-50/95 text-emerald-900 dark:bg-emerald-300/15 dark:text-emerald-50',
+  neutral: 'bg-white/95 text-gray-900 dark:bg-gray-800/90 dark:text-gray-100',
+  rose: 'bg-rose-50/95 text-rose-900 dark:bg-rose-300/15 dark:text-rose-50',
   violet:
-    'bg-violet-50/90 text-violet-950 dark:bg-violet-300/15 dark:text-violet-50',
+    'bg-violet-50/95 text-violet-900 dark:bg-violet-300/15 dark:text-violet-50',
 }
 
-const sizeClasses = {
-  sm: 'min-w-20 h-9 text-[11px]',
-  md: 'min-w-24 h-10 text-xs',
-  lg: 'min-w-28 h-11 text-xs',
+const radiusBySize = {
+  sm: 17,
+  md: 20,
+  lg: 24,
+  xl: 30,
 }
 
-const iconSizeClasses = {
-  sm: 'size-5',
-  md: 'size-6',
-  lg: 'size-7',
-}
+const wallInset = 6
+const floorInset = 8
+const gravity = 0.34
+const collisionGap = 2
+const collisionSlop = 0.65
+const sleepVelocity = 0.055
+const sleepRotation = 0.018
 
 let frame = 0
-
-const activeItem = computed(
-  () => props.items[activeIndex.value] ?? props.items[0],
-)
-
-const activeRelations = computed(() => {
-  const item = activeItem.value
-
-  if (!item) {
-    return []
-  }
-
-  return props.items
-    .map((relatedItem, index) => ({
-      index,
-      item: relatedItem,
-    }))
-    .filter(
-      ({ index, item: relatedItem }) =>
-        index !== activeIndex.value &&
-        relatedItem.channels.some((channel) => item.channels.includes(channel)),
-    )
-})
+let resizeObserver: ResizeObserver | undefined
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value))
 
-const getStyle = (item: TechCloudItem, index: number) => {
+const isIconifyIcon = (icon: string) => icon.startsWith('i-')
+
+const getBaseRadius = (item: TechCloudItem) => radiusBySize[item.size ?? 'md']
+
+const activeIndex = computed(() =>
+  hoverIndex.value >= 0 ? hoverIndex.value : selectedIndex.value,
+)
+
+const activeItem = computed(() =>
+  activeIndex.value >= 0 ? props.items[activeIndex.value] : undefined,
+)
+
+const activeIcon = computed(() => activeItem.value?.icon ?? 'i-lucide-mouse')
+
+const activeLabel = computed(
+  () => activeItem.value?.name ?? t('home.profile.tech.stackLabel'),
+)
+
+const isActive = (index: number) => activeIndex.value === index
+
+const getTargetRadius = (index: number) => {
+  const item = props.items[index]
+
+  if (!item) {
+    return 0
+  }
+
+  const baseRadius = getBaseRadius(item)
+
+  return isActive(index) ? baseRadius * 1.42 : baseRadius
+}
+
+const getAnchorX = (item: TechCloudItem) => (item.x / 100) * bounds.width
+
+const getIconSize = (index: number) => {
   const body = bodies[index]
+  const item = props.items[index]
+  const radius = ready.value && body ? body.radius : getBaseRadius(item)
+
+  return `${Math.round(clamp(radius * 1.08, 18, 40))}px`
+}
+
+const getNodeStyle = (item: TechCloudItem, index: number) => {
+  const body = bodies[index]
+  const radius = ready.value && body ? body.radius : getBaseRadius(item)
+  const diameter = `${Math.round(radius * 2)}px`
+
+  if (!ready.value || !body) {
+    return {
+      height: diameter,
+      left: `${item.x}%`,
+      top: `${item.y}%`,
+      transform: `translate(-50%, -50%) rotate(${item.rotation ?? 0}deg)`,
+      width: diameter,
+      zIndex: `${20 + index}`,
+    }
+  }
 
   return {
-    left: `${item.x}%`,
-    top: `${item.y}%`,
-    transform: `translate(-50%, -50%) translate3d(${body.tx}px, ${body.ty}px, 0) rotate(${body.rotation}deg)`,
-    zIndex: `${20 + index}`,
+    height: diameter,
+    left: '0',
+    top: '0',
+    transform: `translate3d(${body.x - radius}px, ${body.y - radius}px, 0) rotate(${body.rotation}deg)`,
+    width: diameter,
+    zIndex: `${isActive(index) ? 100 : 20 + index}`,
   }
 }
 
-const isRelated = (item: TechCloudItem, index: number) => {
-  const active = activeItem.value
-
-  if (!active || index === activeIndex.value) {
-    return true
-  }
-
-  return item.channels.some((channel) => active.channels.includes(channel))
-}
-
-const activate = (index: number) => {
-  activeIndex.value = index
-}
-
-const animate = () => {
+const resolveWalls = (body: Body) => {
+  const minX = wallInset + body.radius
+  const maxX = bounds.width - wallInset - body.radius
+  const minY = wallInset + body.radius
+  const maxY = bounds.height - floorInset - body.radius
   let active = false
 
-  bodies.forEach((body, index) => {
-    if (index === drag.index) {
+  if (body.x < minX) {
+    body.x = minX
+    body.vx = Math.abs(body.vx) > 0.45 ? Math.abs(body.vx) * 0.24 : 0
+    body.vr += body.vx * 0.018
+    active = true
+  } else if (body.x > maxX) {
+    body.x = maxX
+    body.vx = Math.abs(body.vx) > 0.45 ? -Math.abs(body.vx) * 0.24 : 0
+    body.vr += body.vx * 0.018
+    active = true
+  }
+
+  if (body.y < minY) {
+    body.y = minY
+    body.vy = Math.abs(body.vy) > 0.45 ? Math.abs(body.vy) * 0.22 : 0
+    active = true
+  } else if (body.y > maxY) {
+    body.y = maxY
+
+    if (body.vy > 0.65) {
+      body.vy *= -0.14
       active = true
-      return
+    } else {
+      body.vy = 0
     }
 
-    const baseRotation = props.items[index]?.rotation ?? 0
+    body.vx *= 0.82
+    body.vr += body.vx * 0.006
+  }
 
-    body.vx += -body.tx * 0.025
-    body.vy += -body.ty * 0.025
-    body.vr += -(body.rotation - baseRotation) * 0.018
+  return active
+}
 
-    body.vx *= 0.88
-    body.vy *= 0.88
-    body.vr *= 0.86
+const resolveCollisions = (supported: boolean[]) => {
+  let active = false
 
-    body.tx = clamp(body.tx + body.vx, -104, 104)
-    body.ty = clamp(body.ty + body.vy, -116, 98)
+  for (let i = 0; i < bodies.length; i += 1) {
+    for (let j = i + 1; j < bodies.length; j += 1) {
+      const first = bodies[i]
+      const second = bodies[j]
+      let dx = second.x - first.x
+      let dy = second.y - first.y
+      let distance = Math.hypot(dx, dy)
+      const minDistance = first.radius + second.radius + collisionGap
+
+      if (distance >= minDistance + collisionSlop) {
+        continue
+      }
+
+      if (distance < 0.001) {
+        dx = (j - i) * 0.01
+        dy = -0.01
+        distance = Math.hypot(dx, dy)
+      }
+
+      const nx = dx / distance
+      const ny = dy / distance
+      const overlap = minDistance - distance
+
+      if (ny > 0.32) {
+        supported[i] = true
+      } else if (ny < -0.32) {
+        supported[j] = true
+      }
+
+      if (overlap <= collisionSlop) {
+        continue
+      }
+
+      const firstMass = first.radius * first.radius * (isActive(i) ? 2.2 : 1)
+      const secondMass = second.radius * second.radius * (isActive(j) ? 2.2 : 1)
+      const firstInverseMass = 1 / firstMass
+      const secondInverseMass = 1 / secondMass
+      const totalInverseMass = firstInverseMass + secondInverseMass
+      const firstShare = firstInverseMass / totalInverseMass
+      const secondShare = secondInverseMass / totalInverseMass
+      const correction = (overlap - collisionSlop) * 0.82
+
+      first.x -= nx * correction * firstShare
+      first.y -= ny * correction * firstShare
+      second.x += nx * correction * secondShare
+      second.y += ny * correction * secondShare
+
+      const relativeVx = second.vx - first.vx
+      const relativeVy = second.vy - first.vy
+      const separatingVelocity = relativeVx * nx + relativeVy * ny
+
+      if (separatingVelocity < -0.04) {
+        const impulse = -separatingVelocity * 0.38
+
+        first.vx -= nx * impulse * firstShare
+        first.vy -= ny * impulse * firstShare
+        second.vx += nx * impulse * secondShare
+        second.vy += ny * impulse * secondShare
+      }
+
+      first.vr -= ny * correction * 0.0013
+      second.vr += ny * correction * 0.0013
+      active = true
+    }
+  }
+
+  return active
+}
+
+const step = () => {
+  let active = false
+  const wasSupported = bodies.map((body) => body.supported)
+  const supported = Array.from({ length: bodies.length }, () => false)
+
+  bodies.forEach((body, index) => {
+    const item = props.items[index]
+    const targetRadius = getTargetRadius(index)
+    const radiusDelta = targetRadius - body.radius
+    const anchorX = getAnchorX(item)
+    const floorY = bounds.height - floorInset - body.radius
+    const restingOnFloor = body.y >= floorY - 0.4 && Math.abs(body.vy) < 0.08
+    const restingOnSupport =
+      wasSupported[index] &&
+      Math.abs(body.vy) < 0.18 &&
+      Math.abs(radiusDelta) < 0.16
+    const anchorDelta = anchorX - body.x
+
+    body.radius += radiusDelta * 0.2
+    if (Math.abs(anchorDelta) > 8) {
+      body.vx += anchorDelta * 0.00025
+    }
+
+    if (restingOnFloor) {
+      body.y = floorY
+      body.vy = 0
+      body.vx *= 0.9
+      supported[index] = true
+    } else if (restingOnSupport) {
+      body.vy = 0
+      body.vx *= 0.94
+    } else {
+      body.vy += gravity
+    }
+
+    body.vx *= 0.992
+    body.vy *= 0.996
+    body.vr *= 0.94
+
+    body.x += body.vx
+    body.y += body.vy
     body.rotation += body.vr
 
     if (
-      Math.abs(body.tx) > 0.2 ||
-      Math.abs(body.ty) > 0.2 ||
-      Math.abs(body.vx) > 0.2 ||
-      Math.abs(body.vy) > 0.2 ||
-      Math.abs(body.vr) > 0.05
+      Math.abs(radiusDelta) > 0.12 ||
+      Math.abs(body.vx) > 0.06 ||
+      Math.abs(body.vy) > 0.06 ||
+      Math.abs(body.vr) > 0.02
     ) {
       active = true
     }
   })
 
+  for (let iteration = 0; iteration < 4; iteration += 1) {
+    active = resolveCollisions(supported) || active
+
+    bodies.forEach((body) => {
+      active = resolveWalls(body) || active
+    })
+  }
+
+  bodies.forEach((body, index) => {
+    const targetRadius = getTargetRadius(index)
+    const radiusDelta = targetRadius - body.radius
+    const isSupported = supported[index]
+
+    if (Math.abs(radiusDelta) < 0.08) {
+      body.radius = targetRadius
+    }
+
+    if (Math.abs(body.vx) < sleepVelocity) {
+      body.vx = 0
+    }
+
+    if (isSupported && Math.abs(body.vy) < sleepVelocity) {
+      body.vy = 0
+    }
+
+    if (isSupported && body.vy > 0 && body.vy < 0.5) {
+      body.vy = 0
+    }
+
+    if (Math.abs(body.vr) < sleepRotation) {
+      body.vr = 0
+    }
+
+    if (
+      Math.abs(body.vx) > sleepVelocity ||
+      Math.abs(body.vy) > sleepVelocity ||
+      Math.abs(body.vr) > sleepRotation ||
+      Math.abs(radiusDelta) > 0.08 ||
+      !isSupported
+    ) {
+      active = true
+    }
+
+    body.supported = isSupported
+  })
+
   if (active) {
-    frame = requestAnimationFrame(animate)
+    frame = requestAnimationFrame(step)
   } else {
     frame = 0
   }
 }
 
 const start = () => {
-  if (!frame && !reducedMotion.value) {
-    frame = requestAnimationFrame(animate)
+  if (!frame && !reducedMotion.value && ready.value) {
+    frame = requestAnimationFrame(step)
   }
 }
 
-const kick = (strength: number, originX = 50) => {
-  if (reducedMotion.value) {
+const initializeBodies = () => {
+  const rect = container.value?.getBoundingClientRect()
+
+  if (!rect?.width || !rect.height) {
     return
   }
 
-  props.items.forEach((item, index) => {
-    const body = bodies[index]
-    const direction = item.x >= originX ? 1 : -1
-    const spread = ((index % 5) - 2) * 0.6
-    const lift = strength * (0.62 + ((index * 7) % 9) * 0.035)
+  const previousWidth = bounds.width || rect.width
+  const previousHeight = bounds.height || rect.height
+  const wasReady = ready.value
 
-    body.vx += direction * (2.2 + Math.abs(item.x - originX) * 0.025) + spread
-    body.vy -= lift
-    body.vr += (index % 2 === 0 ? 1 : -1) * (1.1 + (index % 4) * 0.45)
+  bounds.width = rect.width
+  bounds.height = rect.height
+
+  bodies.forEach((body, index) => {
+    const item = props.items[index]
+    const radius = body.radius || getBaseRadius(item)
+    const minX = wallInset + radius
+    const maxX = bounds.width - wallInset - radius
+    const minY = wallInset + radius
+    const maxY = bounds.height - floorInset - radius
+
+    body.radius = radius
+
+    if (!wasReady) {
+      body.x = clamp((item.x / 100) * bounds.width, minX, maxX)
+      body.y = clamp((item.y / 100) * bounds.height, minY, maxY)
+      body.vx = ((index % 5) - 2) * 0.08
+      body.vy = -0.2
+      return
+    }
+
+    body.x = clamp(body.x * (bounds.width / previousWidth), minX, maxX)
+    body.y = clamp(body.y * (bounds.height / previousHeight), minY, maxY)
   })
 
+  ready.value = true
   start()
 }
 
-const handleWheel = (event: WheelEvent) => {
-  const rect = container.value?.getBoundingClientRect()
-  const originX = rect ? ((event.clientX - rect.left) / rect.width) * 100 : 50
-  const strength = Math.min(28, 9 + Math.abs(event.deltaY) * 0.08)
-
-  kick(strength, originX)
-}
-
-const handlePointerDown = (index: number, event: PointerEvent) => {
-  activate(index)
-
-  if (event.button !== 0 || reducedMotion.value) {
-    return
-  }
-
-  const body = bodies[index]
-  body.vx = 0
-  body.vy = 0
-  body.vr = 0
-
-  drag.index = index
-  drag.lastX = event.clientX
-  drag.lastY = event.clientY
-  drag.vx = 0
-  drag.vy = 0
-
-  const target = event.currentTarget as HTMLElement
-  target.setPointerCapture?.(event.pointerId)
-}
-
-const handlePointerMove = (event: PointerEvent) => {
-  if (drag.index >= 0) {
-    const body = bodies[drag.index]
-    const dx = event.clientX - drag.lastX
-    const dy = event.clientY - drag.lastY
-
-    body.tx = clamp(body.tx + dx, -104, 104)
-    body.ty = clamp(body.ty + dy, -116, 98)
-    body.rotation += dx * 0.04
-
-    drag.lastX = event.clientX
-    drag.lastY = event.clientY
-    drag.vx = dx * 0.76
-    drag.vy = dy * 0.76
+const updateHoverFromPointer = (event: PointerEvent) => {
+  if (!ready.value) {
     return
   }
 
   const rect = container.value?.getBoundingClientRect()
-  if (!rect || reducedMotion.value) {
+
+  if (!rect) {
     return
   }
 
-  props.items.forEach((item, index) => {
-    const body = bodies[index]
-    const x = (item.x / 100) * rect.width + body.tx
-    const y = (item.y / 100) * rect.height + body.ty
-    const dx = event.clientX - rect.left - x
-    const dy = event.clientY - rect.top - y
-    const distance = Math.hypot(dx, dy)
+  const pointerX = event.clientX - rect.left
+  const pointerY = event.clientY - rect.top
+  let nearestIndex = -1
+  let nearestDistance = Infinity
 
-    if (distance > 0 && distance < 96) {
-      const force = (1 - distance / 96) * 3
-      body.vx -= (dx / distance) * force
-      body.vy -= (dy / distance) * force
-      body.vr += (index % 2 === 0 ? 1 : -1) * force * 0.25
+  bodies.forEach((body, index) => {
+    const distance = Math.hypot(pointerX - body.x, pointerY - body.y)
+
+    if (hoverIndex.value === index && distance < body.radius + 24) {
+      nearestIndex = index
+      nearestDistance = distance
+      return
+    }
+
+    if (distance < body.radius + 14 && distance < nearestDistance) {
+      nearestDistance = distance
+      nearestIndex = index
     }
   })
 
+  if (hoverIndex.value !== nearestIndex) {
+    hoverIndex.value = nearestIndex
+    start()
+  }
+}
+
+const activate = (index: number) => {
+  hoverIndex.value = index
   start()
 }
 
-const handlePointerEnd = (event: PointerEvent) => {
-  if (drag.index < 0) {
-    return
-  }
+const select = (index: number) => {
+  selectedIndex.value = index
+  hoverIndex.value = index
+  start()
+}
 
-  const body = bodies[drag.index]
-  body.vx += drag.vx
-  body.vy += drag.vy
-  body.vr += drag.vx * 0.08
-
-  drag.index = -1
-  const target = event.currentTarget as HTMLElement
-  target.releasePointerCapture?.(event.pointerId)
+const clearHover = () => {
+  hoverIndex.value = -1
   start()
 }
 
@@ -275,12 +472,24 @@ onMounted(() => {
   reducedMotion.value = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
   ).matches
+
+  initializeBodies()
+
+  resizeObserver = new ResizeObserver(() => {
+    initializeBodies()
+  })
+
+  if (container.value) {
+    resizeObserver.observe(container.value)
+  }
 })
 
 onBeforeUnmount(() => {
   if (frame) {
     cancelAnimationFrame(frame)
   }
+
+  resizeObserver?.disconnect()
 })
 </script>
 
@@ -288,116 +497,62 @@ onBeforeUnmount(() => {
   <div class="mt-4">
     <div
       ref="container"
-      class="tech-cloud relative h-72 overflow-hidden rounded-lg bg-gray-50/80 shadow-sm dark:bg-gray-900/60 sm:h-80"
-      @pointermove="handlePointerMove"
-      @wheel.passive="handleWheel"
+      class="relative h-40 overflow-hidden bg-transparent sm:h-44"
+      @pointerleave="clearHover"
+      @pointermove="updateHoverFromPointer"
     >
-      <svg
-        v-if="activeItem"
-        class="pointer-events-none absolute inset-0 size-full"
-        aria-hidden="true"
+      <div
+        class="pointer-events-none absolute left-1/2 top-2 z-50 flex -translate-x-1/2 items-center gap-2 text-base font-semibold text-gray-900 sm:top-3 sm:text-lg dark:text-gray-50"
+        aria-live="polite"
       >
-        <line
-          v-for="{ item } in activeRelations"
-          :key="item.name"
-          :x1="`${activeItem.x}%`"
-          :y1="`${activeItem.y}%`"
-          :x2="`${item.x}%`"
-          :y2="`${item.y}%`"
-          class="tech-cloud-line"
+        <UIcon
+          v-if="isIconifyIcon(activeIcon)"
+          :name="activeIcon"
+          class="size-5 sm:size-6"
+          aria-hidden="true"
         />
-      </svg>
+        <img
+          v-else
+          :src="activeIcon"
+          alt=""
+          class="size-5 sm:size-6"
+          draggable="false"
+        />
+        <span class="whitespace-nowrap leading-none">
+          {{ activeLabel }}
+        </span>
+      </div>
 
       <button
         v-for="(item, index) in items"
         :key="item.name"
         type="button"
-        class="absolute inline-flex touch-none select-none items-center justify-center gap-2 rounded-full px-3 font-medium shadow-sm ring-1 ring-black/5 backdrop-blur transition-opacity duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:ring-white/10"
+        class="absolute grid touch-none select-none place-items-center rounded-full shadow-sm ring-1 ring-black/5 transition-[box-shadow,filter] duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:ring-white/10"
         :class="[
           toneClasses[item.tone],
-          sizeClasses[item.size ?? 'md'],
-          isRelated(item, index)
-            ? 'opacity-100'
-            : 'opacity-35 grayscale hover:opacity-80 hover:grayscale-0',
-          index === activeIndex
-            ? 'shadow-md ring-primary-400/60'
-            : 'hover:shadow-md',
-          drag.index === index ? 'cursor-grabbing' : 'cursor-grab',
+          isActive(index) ? 'shadow-md ring-primary-400/60' : 'hover:shadow-md',
         ]"
-        :style="getStyle(item, index)"
-        :aria-pressed="index === activeIndex"
-        @click="activate(index)"
+        :style="getNodeStyle(item, index)"
+        :aria-label="item.name"
+        @blur="clearHover"
+        @click="select(index)"
         @focus="activate(index)"
         @pointerenter="activate(index)"
-        @pointerdown.stop="handlePointerDown(index, $event)"
-        @pointerup="handlePointerEnd"
-        @pointercancel="handlePointerEnd"
       >
+        <UIcon
+          v-if="isIconifyIcon(item.icon)"
+          :name="item.icon"
+          :style="{ height: getIconSize(index), width: getIconSize(index) }"
+          aria-hidden="true"
+        />
         <img
+          v-else
           :src="item.icon"
           alt=""
-          :class="iconSizeClasses[item.size ?? 'md']"
-          aria-hidden="true"
+          :style="{ height: getIconSize(index), width: getIconSize(index) }"
           draggable="false"
         />
-        <span class="whitespace-nowrap leading-none">
-          {{ item.name }}
-        </span>
       </button>
-    </div>
-
-    <div
-      v-if="activeItem"
-      class="mt-3 min-h-20 rounded-lg border border-gray-200/70 bg-white/70 px-3 py-2 shadow-sm dark:border-gray-800 dark:bg-gray-900/60"
-    >
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-          {{ activeItem.name }}
-        </span>
-        <span class="text-xs text-gray-500 dark:text-gray-400">
-          {{ t(activeItem.categoryKey) }}
-        </span>
-      </div>
-      <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
-        {{ t(activeItem.descriptionKey) }}
-      </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.tech-cloud {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.2)),
-    repeating-linear-gradient(
-      135deg,
-      rgba(15, 23, 42, 0.04) 0,
-      rgba(15, 23, 42, 0.04) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-}
-
-.tech-cloud-line {
-  stroke: rgba(14, 165, 233, 0.2);
-  stroke-dasharray: 5 7;
-  stroke-linecap: round;
-  stroke-width: 1.2;
-}
-
-:global(.dark) .tech-cloud {
-  background-image:
-    linear-gradient(rgba(17, 24, 39, 0.72), rgba(17, 24, 39, 0.5)),
-    repeating-linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.05) 0,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 18px
-    );
-}
-
-:global(.dark) .tech-cloud-line {
-  stroke: rgba(125, 211, 252, 0.22);
-}
-</style>

@@ -37,7 +37,7 @@ html,
 body,
 #__nuxt {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 :root {

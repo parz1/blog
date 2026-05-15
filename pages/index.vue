@@ -18,7 +18,9 @@ const { t } = useI18n()
       <HomeProfileIntro />
       <section class="max-w-xl px-4 sm:px-0 mt-10">
         <div class="mb-4 px-2">
-          <h2 class="text-3xl font-serif">
+          <h2
+            class="text-4xl font-semibold font-serif leading-tight text-gray-900 dark:text-gray-50"
+          >
             {{ t('home.latestActivities') }}
           </h2>
           <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">

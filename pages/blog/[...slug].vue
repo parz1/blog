@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { locales, locale, setLocale } = useI18n()
+const { locale } = useI18n()
 
 const slug = route.params.slug
 
@@ -50,41 +50,11 @@ useHead({
   ],
   title: doc.value?.title,
 })
-
-const activeTocId = ref<string | null>(null)
-const nuxtContent = ref(null)
-
-const observer: Ref<IntersectionObserver | null | undefined> = ref(null)
-const observerOptions = reactive({
-  root: nuxtContent.value,
-  threshold: 0.5,
-})
-
-onMounted(() => {
-  observer.value = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const id = entry.target.getAttribute('id')
-      if (entry.isIntersecting) {
-        activeTocId.value = id
-      }
-    })
-  }, observerOptions)
-
-  document
-    .querySelectorAll('.nuxt-content h2[id], .nuxt-content h3[id]')
-    .forEach((section) => {
-      observer.value?.observe(section)
-    })
-})
-
-onUnmounted(() => {
-  observer.value?.disconnect()
-})
 </script>
 
 <template>
-  <UPage class="lg:pt-8 overflow-x-hidden">
-    <UPageBody class="min-w-0">
+  <div class="relative lg:pt-8">
+    <section class="mt-8 min-w-0 overflow-x-hidden pb-24">
       <div v-if="!doc">
         <UEmpty
           icon="i-lucide-file"
@@ -109,7 +79,7 @@ onUnmounted(() => {
       </div>
       <template v-else>
         <div class="w-full min-w-0">
-          <div class="w-full min-w-0 max-w-3xl px-0 md:px-6 lg:px-8">
+          <div class="mx-auto w-full min-w-0 max-w-2xl px-0 md:px-6 lg:px-0">
             <article class="min-w-0 max-w-full">
               <div class="mb-6">
                 <div
@@ -117,7 +87,7 @@ onUnmounted(() => {
                 >
                   {{ doc?.title }}
                 </div>
-                <div class="text-lg mb-3 break-words">
+                <div class="text-lg mb-3 wrap-break-word">
                   {{ doc?.description }}
                 </div>
                 <div class="text-gray-500 flex flex-wrap gap-4 items-center">
@@ -137,7 +107,6 @@ onUnmounted(() => {
               </div>
               <ContentRenderer
                 v-if="doc"
-                ref="nuxtContent"
                 :value="doc"
                 class="nuxt-content prose dark:prose-invert min-w-0 max-w-full"
               >
@@ -150,22 +119,24 @@ onUnmounted(() => {
           </div>
         </div>
       </template>
-    </UPageBody>
+    </section>
 
-    <template #left>
-      <UPageAside>
-        <!-- <div class="text-xl font-normal mb-2">{{ $t('base.tocTitle') }}</div> -->
-        <UContentToc
-          class=""
-          :title="$t('base.tocTitle')"
-          :links="doc?.body?.toc?.links"
-        />
-        <!-- <ClientOnly>
-            <TableOfContents :active-toc-id="activeTocId" :doc="doc" />
-          </ClientOnly> -->
-      </UPageAside>
-    </template>
-  </UPage>
+    <aside
+      v-if="doc?.body?.toc?.links?.length"
+      class="absolute top-14 bottom-0 left-[calc(50%+21rem+1rem)] hidden w-56 min-[1040px]:block min-[1040px]:pt-36 min-[1040px]:pb-8"
+    >
+      <div
+        class="min-[1040px]:sticky min-[1040px]:top-[calc(var(--ui-header-height,4rem)+0.75rem)]"
+      >
+        <div class="mb-3 text-2xl font-medium text-gray-900 dark:text-gray-50">
+          {{ $t('base.tocTitle') }}
+        </div>
+        <ClientOnly>
+          <TableOfContents :doc="doc" />
+        </ClientOnly>
+      </div>
+    </aside>
+  </div>
 </template>
 
 <style></style>

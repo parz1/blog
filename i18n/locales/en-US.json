@@ -51,6 +51,12 @@
       "tech": {
         "heading": "Currently using",
         "description": "Not a complete stack list, but the tools I keep reaching for while connecting research, product work, and personal systems.",
+        "stackLabel": "Tech stack",
+        "lanes": {
+          "research": "Research",
+          "bridge": "Overlap",
+          "engineering": "Engineering"
+        },
         "categories": {
           "language": "Language",
           "frontend": "Web / UI",
@@ -62,6 +68,21 @@
           "workflow": "Workflow"
         },
         "items": {
+          "python": {
+            "description": "My main language for experiments, data handling, local AI pipelines, and fast idea checks."
+          },
+          "colab": {
+            "description": "A lightweight entry point for temporary experiments, model checks, and remote GPU notebooks."
+          },
+          "jupyter": {
+            "description": "Keeps data exploration, experiment traces, and reproducible analysis in the same context."
+          },
+          "pytorch": {
+            "description": "The deep learning framework I reach for most in multimodal recognition and model prototypes."
+          },
+          "numpy": {
+            "description": "The base layer for experimental data, signal features, and model pre/post-processing."
+          },
           "typescript": {
             "description": "My default for product prototypes, frontend state, and maintainable system boundaries."
           },
