@@ -34,10 +34,14 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
+        '@deck.gl/layers',
+        '@deck.gl/mapbox',
         '@vercel/analytics',
         '@vue/devtools-core',
         '@vue/devtools-kit',
         '@vueuse/core',
+        'd3-geo',
+        'maplibre-gl',
         'mermaid',
         'vue3-marquee',
       ],
@@ -172,7 +176,11 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/css/main.css', '~/assets/css/line-numbers.css'],
+  css: [
+    '~/assets/css/main.css',
+    '~/assets/css/line-numbers.css',
+    'maplibre-gl/dist/maplibre-gl.css',
+  ],
 
   runtimeConfig: {
     githubToken: process.env.NUXT_GITHUB_TOKEN,

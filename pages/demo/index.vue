@@ -8,7 +8,7 @@ const localePath = useLocalePath()
       <div class="text-3xl font-bold">DEMOs</div>
       <div class="">demos here...</div>
     </div>
-    <div class="flex gap-8 p-8">
+    <div class="flex flex-wrap gap-8 p-8">
       <ULink :to="localePath('/demo/flow')">
         <UCard> Flow </UCard>
       </ULink>
@@ -26,6 +26,9 @@ const localePath = useLocalePath()
       </ULink>
       <ULink :to="localePath('/demo/maptalks')">
         <UCard> Maptalks </UCard>
+      </ULink>
+      <ULink :to="localePath('/demo/maplibre')">
+        <UCard> MapLibre Flight </UCard>
       </ULink>
     </div>
   </div>
