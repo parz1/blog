@@ -70,6 +70,11 @@
   font-family: var(--font-mono);
 }
 
+.prose :where(:not(pre) > code, kbd, samp) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* 标题尺寸与锚点滚动偏移（有固定头部时很关键） */
 .prose h1 {
   @apply text-3xl font-extrabold tracking-tight mt-8 mb-4 scroll-mt-24;
@@ -179,4 +184,23 @@
 /* 分割线更淡 */
 .prose hr {
   @apply my-6 border-gray-200 dark:border-gray-700;
+}
+
+@media (max-width: 640px) {
+  .prose:lang(zh-CN) p,
+  .prose:lang(ja) p,
+  .prose:lang(ja-JP) p {
+    line-break: loose;
+    text-align: justify;
+    text-align-last: start;
+    text-justify: inter-character;
+  }
+
+  @supports (word-break: auto-phrase) {
+    .prose:lang(zh-CN) p,
+    .prose:lang(ja) p,
+    .prose:lang(ja-JP) p {
+      word-break: auto-phrase;
+    }
+  }
 }

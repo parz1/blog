@@ -108,6 +108,7 @@ useHead({
               <ContentRenderer
                 v-if="doc"
                 :value="doc"
+                :lang="locale"
                 class="nuxt-content prose dark:prose-invert min-w-0 max-w-full"
               >
                 <template #empty>
