@@ -26,11 +26,9 @@ Markdown 支持六级标题，如下所示：
 
 例如，这个段落和上面的段落之间有一个空行。
 
-
 ```typescript
-const ref = ref();
+const ref = ref()
 ```
-
 
 ## 强调文本
 

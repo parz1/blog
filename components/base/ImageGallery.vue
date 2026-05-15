@@ -16,6 +16,10 @@ const columns = computed(() => props.columns || 3)
 
 <template>
   <div :class="`grid grid-cols-${columns} gap-4`">
-    <BaseImagePreview v-for="(image, index) in images" :key="index" v-bind="image" />
+    <BaseImagePreview
+      v-for="(image, index) in images"
+      :key="index"
+      v-bind="image"
+    />
   </div>
 </template>

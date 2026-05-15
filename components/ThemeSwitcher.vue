@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import type { DropdownMenuItem } from "@nuxt/ui"
+import type { DropdownMenuItem } from '@nuxt/ui'
 
 const colorMode = useColorMode()
 
 const items = computed<DropdownMenuItem[]>(() => [
   {
-    label: "System",
-    icon: "i-carbon-laptop",
-    disabled: colorMode.preference === "system",
+    label: 'System',
+    icon: 'i-carbon-laptop',
+    disabled: colorMode.preference === 'system',
     onSelect: () => {
-      colorMode.preference = "system"
+      colorMode.preference = 'system'
     },
   },
   {
-    label: "Light",
-    icon: "i-carbon-sun",
-    disabled: colorMode.preference === "light",
+    label: 'Light',
+    icon: 'i-carbon-sun',
+    disabled: colorMode.preference === 'light',
     onSelect: () => {
-      colorMode.preference = "light"
+      colorMode.preference = 'light'
     },
   },
   {
-    label: "Dark",
-    icon: "i-carbon-moon",
-    disabled: colorMode.preference === "dark",
+    label: 'Dark',
+    icon: 'i-carbon-moon',
+    disabled: colorMode.preference === 'dark',
     onSelect: () => {
-      colorMode.preference = "dark"
+      colorMode.preference = 'dark'
     },
   },
 ])
 
 const currentIcon = computed(() => {
   switch (colorMode.preference) {
-    case "light":
-      return "i-carbon-sun"
-    case "dark":
-      return "i-carbon-moon"
-    case "system":
+    case 'light':
+      return 'i-carbon-sun'
+    case 'dark':
+      return 'i-carbon-moon'
+    case 'system':
     default:
-      return "i-carbon-laptop"
+      return 'i-carbon-laptop'
   }
 })
 </script>

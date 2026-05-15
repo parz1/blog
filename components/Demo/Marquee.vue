@@ -18,7 +18,7 @@ const props = withDefaults(
   }>(),
   {
     vertical: false,
-  }
+  },
 )
 </script>
 

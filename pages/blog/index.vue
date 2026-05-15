@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogCollectionItem } from "@nuxt/content"
+import type { BlogCollectionItem } from '@nuxt/content'
 
 type ArticleWithLang = BlogCollectionItem & {
   availableLangs: string[]
@@ -8,10 +8,10 @@ type ArticleWithLang = BlogCollectionItem & {
 const { locale } = useI18n()
 
 const { data: articles } = await useAsyncData<ArticleWithLang[]>(
-  "posts",
+  'posts',
   async () => {
-    const allArticles = await queryCollection("blog")
-      .order("published", "DESC")
+    const allArticles = await queryCollection('blog')
+      .order('published', 'DESC')
       .all()
 
     const groups = new Map<string, BlogCollectionItem[]>()
@@ -26,8 +26,8 @@ const { data: articles } = await useAsyncData<ArticleWithLang[]>(
     const normalizeLocale = (value: string) => {
       // 只保留语言代码的主部分，例如 "en-US" -> "en"
       // 中文特殊处理为 "zh"
-      if (value.toLowerCase().startsWith("zh")) return "cn"
-      return value.toLowerCase().split("-")[0]
+      if (value.toLowerCase().startsWith('zh')) return 'cn'
+      return value.toLowerCase().split('-')[0]
     }
 
     const localeCode = normalizeLocale(locale.value)
@@ -49,7 +49,7 @@ const { data: articles } = await useAsyncData<ArticleWithLang[]>(
             (entry.lang as string | undefined)?.toLowerCase() === localeCode,
         ) ||
         group.find(
-          (entry) => (entry.lang as string | undefined)?.toLowerCase() === "en",
+          (entry) => (entry.lang as string | undefined)?.toLowerCase() === 'en',
         ) ||
         group[0]
 

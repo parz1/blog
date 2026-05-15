@@ -11,7 +11,9 @@ const props = defineProps<{
 
 const emits = defineEmits(['click', 'focus', 'recover'])
 
-const dataValue = computed(() => (isRef(props.data) ? props.data.value : props.data))
+const dataValue = computed(() =>
+  isRef(props.data) ? props.data.value : props.data,
+)
 
 const isFocused = ref(false)
 const handleFocus = () => {
@@ -37,10 +39,18 @@ const recover = () => {
         <div class="flex justify-between">
           <div class="text-gray-500 text-sm">{{ dataValue.published }}</div>
           <UTooltip v-if="!isFocused" text="Focus me">
-            <UIcon name="i-carbon-circle-measurement" class="text-teal-500" @click="handleFocus" />
+            <UIcon
+              name="i-carbon-circle-measurement"
+              class="text-teal-500"
+              @click="handleFocus"
+            />
           </UTooltip>
           <UTooltip v-else text="Recover">
-            <UIcon name="i-carbon-fit-to-screen" class="text-neutral-500" @click="recover" />
+            <UIcon
+              name="i-carbon-fit-to-screen"
+              class="text-neutral-500"
+              @click="recover"
+            />
           </UTooltip>
         </div>
         <div class="font-medium">{{ dataValue.title }}</div>

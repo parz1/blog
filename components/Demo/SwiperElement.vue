@@ -13,7 +13,7 @@ const props = withDefaults(
   }>(),
   {
     data: () => [],
-  }
+  },
 )
 
 const swiperRef = ref<SwiperContainer>()
@@ -35,7 +35,11 @@ onMounted(() => {
 <template>
   <ClientOnly>
     <swiper-container ref="swiperRef" :class="containerClass" init="false">
-      <swiper-slide v-for="(item, idx) in data" :key="idx" :class="elementClass">
+      <swiper-slide
+        v-for="(item, idx) in data"
+        :key="idx"
+        :class="elementClass"
+      >
         <slot :data="item" />
       </swiper-slide>
     </swiper-container>

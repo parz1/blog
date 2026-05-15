@@ -369,8 +369,6 @@ module_exit(set_hostname_exit);
 
 [![set_hostname](https://g.imgtg.com/uploads/7247/661ca1757a8bc.png)](https://g.imgtg.com/uploads/7247/661ca1757a8bc.png)
 
-
-
 设计一个带参数的模块，其参数为指定进程标识符PID和新nice值（优先值），模块功能为修改指定进程的优先级（nice值和prio值）
 
 ```c

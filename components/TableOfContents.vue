@@ -6,7 +6,7 @@ const props = withDefaults(
     activeTocId?: string | null
     doc: BlogCollectionItem | null | undefined
   }>(),
-  {}
+  {},
 )
 
 const router = useRouter()
@@ -31,7 +31,7 @@ const normalizedHashId = computed<string | null>(() => {
 const lastUserClickAt = ref(0)
 const ioActiveId = ref<string | null>(null)
 const effectiveId = computed<string | null>(
-  () => normalizedHashId.value ?? ioActiveId.value ?? props.activeTocId ?? null
+  () => normalizedHashId.value ?? ioActiveId.value ?? props.activeTocId ?? null,
 )
 
 const updateSliderById = (id: string | null) => {
@@ -48,7 +48,9 @@ const onClick = async (id: string) => {
   const hash = `#${id}` // 不再 encode，避免 router 选择器警告
   if (route.hash !== hash) await router.replace({ hash })
   await nextTick()
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  document
+    .getElementById(id)
+    ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   updateSliderById(id)
 }
 
@@ -62,7 +64,9 @@ const collectHeadingEls = () => {
     }
   }
   walk(tocLinks.value)
-  return ids.map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el)
+  return ids
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => !!el)
 }
 
 let io: IntersectionObserver | null = null
@@ -76,11 +80,11 @@ const bindIO = () => {
   if (!targets.length || typeof IntersectionObserver === 'undefined') return
 
   io = new IntersectionObserver(
-    entries => {
+    (entries) => {
       if (performance.now() - lastUserClickAt.value < 600) return
       const visible = entries
-        .filter(e => e.isIntersecting && e.intersectionRatio > 0)
-        .map(e => {
+        .filter((e) => e.isIntersecting && e.intersectionRatio > 0)
+        .map((e) => {
           const rect = (e.target as HTMLElement).getBoundingClientRect()
           return {
             id: (e.target as HTMLElement).id,
@@ -100,7 +104,7 @@ const bindIO = () => {
       root: null,
       rootMargin: '-20% 0% -60% 0%',
       threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-    }
+    },
   )
 
   for (const el of targets) io.observe(el)
@@ -117,7 +121,7 @@ watch(
   () => [route.fullPath, normalizedHashId.value, tocLinks.value?.length],
   () => {
     rebindAndAlign()
-  }
+  },
 )
 
 onMounted(() => {

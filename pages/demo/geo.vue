@@ -16,7 +16,12 @@ onMounted(() => {
   // canvasRef.value!.setAttribute('width', window.innerWidth.toString())
   // canvasRef.value!.setAttribute('height', window.innerHeight.toString())
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 250)
+  const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    1,
+    250,
+  )
   camera.position.set(5, 5, 10)
   camera.lookAt(0, 0, 0)
 
@@ -29,7 +34,7 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   // document.body.appendChild(renderer.domElement)
 
-  $fetch('/hangzhou.json').then(data => {
+  $fetch('/hangzhou.json').then((data) => {
     console.log(data)
 
     // 创建地理投影
@@ -46,13 +51,16 @@ onMounted(() => {
     // 将 GeoJSON 转化为 Three.js 几何体
     // const geometry = new GeoJsonGeometry(shapeArray)
     const geo_data = data
-    geo_data.features.forEach(e => {
+    geo_data.features.forEach((e) => {
       const province = new THREE.Object3D()
       const coors = e.geometry.coordinates
-      coors.forEach(multipolygon => {
-        multipolygon.forEach(polygon => {
+      coors.forEach((multipolygon) => {
+        multipolygon.forEach((polygon) => {
           const shape = new THREE.Shape()
-          const lineMaterial = new THREE.LineBasicMaterial({ color: '#FFF', linewidth: 2 })
+          const lineMaterial = new THREE.LineBasicMaterial({
+            color: '#FFF',
+            linewidth: 2,
+          })
           const lineGeometry = new THREE.BufferGeometry()
           const line_vertices = []
           for (let i = 0; i < polygon.length; i++) {
@@ -65,7 +73,10 @@ onMounted(() => {
           }
           lineGeometry.setFromPoints(line_vertices)
 
-          const bottomLineMaterial = new THREE.LineBasicMaterial({ color: '#000', linewidth: 2 })
+          const bottomLineMaterial = new THREE.LineBasicMaterial({
+            color: '#000',
+            linewidth: 2,
+          })
           const bottomLineGeometry = new THREE.BufferGeometry()
           const Bottom_Line_vertices = []
           for (let i = 0; i < polygon.length; i++) {
@@ -93,7 +104,10 @@ onMounted(() => {
           province.add(mesh)
           const line = new THREE.Line(lineGeometry, lineMaterial)
           province.add(line)
-          const bottomLine = new THREE.Line(bottomLineGeometry, bottomLineMaterial)
+          const bottomLine = new THREE.Line(
+            bottomLineGeometry,
+            bottomLineMaterial,
+          )
           province.add(bottomLine)
         })
       })

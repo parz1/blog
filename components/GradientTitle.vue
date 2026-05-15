@@ -41,7 +41,11 @@ defineProps<{
 }
 
 .headline--linear-gradient {
-  background-image: linear-gradient(120deg, hsl(142, 70%, 40%), hsl(0, 100%, 70%));
+  background-image: linear-gradient(
+    120deg,
+    hsl(142, 70%, 40%),
+    hsl(0, 100%, 70%)
+  );
 }
 
 .headline--radial-gradient {

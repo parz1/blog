@@ -10,7 +10,9 @@
     </div>
 
     <!-- 右侧自适应区域 -->
-    <div class="w-full md:w-[80%] lg:ml-[40%] grow flex flex-col justify-start items-start md:items-center lg:items-start">
+    <div
+      class="w-full md:w-[80%] lg:ml-[40%] grow flex flex-col justify-start items-start md:items-center lg:items-start"
+    >
       <!-- <HomePage /> -->
       <section class="max-w-xl px-4 sm:px-0 mt-8">
         <div class="flex items-center justify-between mb-4">

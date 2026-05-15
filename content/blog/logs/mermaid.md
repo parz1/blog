@@ -50,11 +50,11 @@ sequenceDiagram
 ```ts [plugins/mermaid.client.ts]
 import mermaid from 'mermaid'
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.provide('mermaid', () => mermaid)
 })
-
 ```
+
 ```ts [index.d.ts]
 import type { Mermaid } from 'mermaid'
 
@@ -72,6 +72,7 @@ declare module 'vue' {
 
 export {}
 ```
+
 ```vue [components/global/mermaid.vue]
 <script setup lang="ts">
 let show = ref(false)
@@ -91,5 +92,4 @@ onMounted(async () => {
     <slot></slot>
   </div>
 </template>
-
 ```

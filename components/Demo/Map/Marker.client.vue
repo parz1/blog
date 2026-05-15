@@ -19,7 +19,7 @@ const {
   async () => {
     return queryCollection('blog').limit(5).order('published', 'DESC').all()
   },
-  { server: false, immediate: false }
+  { server: false, immediate: false },
 )
 
 const map = shallowRef<any>(null)
@@ -34,7 +34,8 @@ onMounted(async () => {
     zoom: 10,
     pitch: 30,
     baseLayer: new maptalks.TileLayer('base', {
-      urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      urlTemplate:
+        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       subdomains: ['a', 'b', 'c', 'd'],
       attribution:
         '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>',
@@ -129,7 +130,11 @@ function randomCoordinates(num: number) {
     <div class="absolute right-1 top-1 z-10">
       <UButton :loading="pending" @click="generateMarkers">Regenerate</UButton>
     </div>
-    <UInput v-model="activeIdx" type="number" class="absolute right-1 bottom-1 z-10" />
+    <UInput
+      v-model="activeIdx"
+      type="number"
+      class="absolute right-1 bottom-1 z-10"
+    />
     <div ref="mapRef" class="w-full h-full bg-teal-500"></div>
   </div>
 </template>

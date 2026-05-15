@@ -10,7 +10,7 @@ lang: cn
 
 ### 利用 linux 的消息队列通信机制实现两个进程间的通信
 
->编写程序创建两个进程：sender 和 receive ，其中 sender运行函数 sender()，它创建一个消息队列，然后，循环等待用户通过终端输入一串字符，将这串字符通过消息队列发送给 receiver ，直到用户输入“exit”为止；最后，它向 receiver 发送消息“end”，并且等待 receiver 的应答，等到应答消息后，将接收到的应答信息显示在终端屏幕上，删除相关消息队列，结束程序的运行。 Receiver 运行 receive()，它通过消息队列接收来自sender 的消息，将消息显示在终端屏幕上，直至收到内容为“end”的消息为止，此时，它向 sender 发送一个应答消息“over”，结束程序的运行。 
+> 编写程序创建两个进程：sender 和 receive ，其中 sender运行函数 sender()，它创建一个消息队列，然后，循环等待用户通过终端输入一串字符，将这串字符通过消息队列发送给 receiver ，直到用户输入“exit”为止；最后，它向 receiver 发送消息“end”，并且等待 receiver 的应答，等到应答消息后，将接收到的应答信息显示在终端屏幕上，删除相关消息队列，结束程序的运行。 Receiver 运行 receive()，它通过消息队列接收来自sender 的消息，将消息显示在终端屏幕上，直至收到内容为“end”的消息为止，此时，它向 sender 发送一个应答消息“over”，结束程序的运行。
 
 先上结果
 
@@ -48,10 +48,10 @@ if (mq_send(mq_sync, MSG_READY, strlen(MSG_READY) + 1, 0) == -1) {
 
 ```
 
-
 ### 全部代码
 
 ::CodeView
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -219,4 +219,5 @@ int main() {
 }
 
 ```
+
 ::

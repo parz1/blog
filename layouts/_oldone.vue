@@ -21,7 +21,10 @@ const canonical = computed(() => {
 
 <template>
   <div>
-    <Html :lang="head.htmlAttrs?.lang || 'en'" :dir="head.htmlAttrs?.dir || 'ltr'">
+    <Html
+      :lang="head.htmlAttrs?.lang || 'en'"
+      :dir="head.htmlAttrs?.dir || 'ltr'"
+    >
       <Head>
         <!-- i18n 生成的 alternate / og:locale 等 -->
         <template v-for="link in head.link" :key="link.id || link.href">

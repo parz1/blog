@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const navTabs = [
   {
     name: 'Posts',
@@ -18,16 +18,11 @@ const navTabs = [
 <template>
   <div>
     <div flex justify-center items-center>
-      <NuxtLink
-        v-for="(item, index) in navTabs"
-        :key="index"
-        :to="item.path"
-      >
+      <NuxtLink v-for="(item, index) in navTabs" :key="index" :to="item.path">
         {{ item.name }}
       </NuxtLink>
     </div>
   </div>
 </template>
 
-<style lang='scss' scoped></style>
-
+<style lang="scss" scoped></style>

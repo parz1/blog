@@ -19,7 +19,9 @@ const swiperOption = ref({
 
 // remove undefined value
 const removeUndefined = (obj: Record<string, any>) => {
-  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== undefined))
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, v]) => v !== undefined),
+  )
 }
 
 // 获取数据
@@ -31,10 +33,10 @@ const {
   'latest-posts',
   async () => {
     // 暂停 2 秒
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     return queryCollection('blog').limit(5).order('published', 'DESC').all()
   },
-  { lazy: true, server: false }
+  { lazy: true, server: false },
 )
 
 const swiperKey = ref(0)
@@ -61,7 +63,9 @@ const refreshSwiper = () => {
             :options="removeUndefined(swiperOption)"
           >
             <template #default="{ data }">
-              <div class="h-full w-full flex justify-center items-center bg-slate-300">
+              <div
+                class="h-full w-full flex justify-center items-center bg-slate-300"
+              >
                 {{ data.title }}
               </div>
             </template>
@@ -80,10 +84,26 @@ const refreshSwiper = () => {
             <FormSelectMenu
               v-model="swiperOption.effect"
               label="effect"
-              :options="['slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards']"
+              :options="[
+                'slide',
+                'fade',
+                'cube',
+                'coverflow',
+                'flip',
+                'creative',
+                'cards',
+              ]"
             />
-            <FormInput v-model="swiperOption.slidesPerView" type="number" label="slidesPerView" />
-            <FormInput v-model="swiperOption.autoplay.delay" type="number" label="autoplay.delay" />
+            <FormInput
+              v-model="swiperOption.slidesPerView"
+              type="number"
+              label="slidesPerView"
+            />
+            <FormInput
+              v-model="swiperOption.autoplay.delay"
+              type="number"
+              label="autoplay.delay"
+            />
           </div>
           <div>
             <FormToggle v-model="swiperOption.cssMode" label="cssMode" />
@@ -95,7 +115,9 @@ const refreshSwiper = () => {
         </div>
       </UCard>
     </div>
-    <div class="font-bold text-xl mt-4">Default Swiper (Element based on Web Component)</div>
+    <div class="font-bold text-xl mt-4">
+      Default Swiper (Element based on Web Component)
+    </div>
     <!-- <DemoDefaultSwiper /> -->
   </div>
 </template>

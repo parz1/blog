@@ -13,10 +13,10 @@ const {
   'latest-posts',
   async () => {
     // 暂停 2 秒
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     return queryCollection('/blog').limit(5).sort({ published: -1 }).find()
   },
-  { lazy: true, server: false }
+  { lazy: true, server: false },
 )
 
 const {
@@ -28,7 +28,7 @@ const {
   async () => {
     return queryCollection('/blog').limit(5).sort({ published: -1 }).find()
   },
-  { lazy: true, server: true }
+  { lazy: true, server: true },
 )
 
 const swiperRef = ref<SwiperContainer>()
@@ -79,9 +79,17 @@ watchEffect(() => {
         <ClientOnly>
           <div v-if="pending" class="h-40">请求中...</div>
           <!-- container -->
-          <div v-else class="h-40 border-2 border-dashed border-black p-4 rounded-lg">
+          <div
+            v-else
+            class="h-40 border-2 border-dashed border-black p-4 rounded-lg"
+          >
             <!-- Hydration class mismatch -->
-            <swiper-container class="h-full" navigation="true" pagination="true" scrollbar="true">
+            <swiper-container
+              class="h-full"
+              navigation="true"
+              pagination="true"
+              scrollbar="true"
+            >
               <swiper-slide
                 v-for="(article, idx) in articles"
                 :key="idx"
@@ -106,14 +114,17 @@ watchEffect(() => {
         <template #header>
           <div class="text-lg font-bold">Init with props in TypeScript</div>
           <div>
-            注意: onMounted 和 pending 会有一个异步到达的时间差，不能贸然用 onMounted，而应采用
-            watchEffect 处理
+            注意: onMounted 和 pending 会有一个异步到达的时间差，不能贸然用
+            onMounted，而应采用 watchEffect 处理
           </div>
         </template>
         <ClientOnly>
           <div v-if="pending" class="h-40">请求中...</div>
           <!-- container -->
-          <div v-else class="h-40 border-2 border-dashed border-black p-4 rounded-lg">
+          <div
+            v-else
+            class="h-40 border-2 border-dashed border-black p-4 rounded-lg"
+          >
             <swiper-container ref="swiperRef" class="h-full" init="false">
               <swiper-slide
                 v-for="(article, idx) in articles"
@@ -134,7 +145,10 @@ watchEffect(() => {
         </template>
         <div v-if="ssrPending" class="h-40">请求中...</div>
         <!-- container -->
-        <div v-else class="h-40 border-2 border-dashed border-black p-4 rounded-lg">
+        <div
+          v-else
+          class="h-40 border-2 border-dashed border-black p-4 rounded-lg"
+        >
           <swiper-container ref="swiperRef" class="h-full" init="false">
             <swiper-slide
               v-for="(article, idx) in ssrArticles"
@@ -148,7 +162,10 @@ watchEffect(() => {
         <template #footer>
           <div class="text-sm">
             <ul class="">
-              <li>若不加 ClientOnly 则会导致 swiper-slide 全部排列在下面的情况（刷新页面尝试）</li>
+              <li>
+                若不加 ClientOnly 则会导致 swiper-slide
+                全部排列在下面的情况（刷新页面尝试）
+              </li>
             </ul>
           </div>
         </template>

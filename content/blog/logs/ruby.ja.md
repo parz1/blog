@@ -10,7 +10,9 @@ tags:
 ---
 
 授業中で急にルビがどうやって付くのか気になったので、調べてみた。Wordの中ではルビを振る機能があるけど、Wordを使ってノートをとるのは無理すぎ。Obsidianの中で試した後、ルビはHTMLそのままの機能だと思わなかった。
+
 ## ルビとは
+
 ルビを振る（ふる）とは、<u>漢字や専門用語などの文字の上や横に小さく読み仮名を添えること</u>を指す。日本語の文章では特に重要で、子ども向けの本や新聞、学術論文、ウェブ記事など幅広く使われている。
 
 <div class="flex flex-wrap justify-center gap-2 my-4">
@@ -87,11 +89,42 @@ tags:
 
 ```html
 <p>
-<ruby>本件<rt>ほんけん</rt></ruby>につきましては、<ruby>兎角<rt>とかく</rt></ruby><ruby>曖昧模糊<rt>あいまいもこ</rt></ruby>たる<ruby>前提<rt>ぜんてい</rt></ruby>と<ruby>相俟<rt>あいま</rt></ruby>って<ruby>齟齬<rt>そご</rt></ruby>が<ruby>累積<rt>るいせき</rt></ruby>しており、<ruby>拙速<rt>せっそく</rt></ruby>な<ruby>結論<rt>けつろん</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けるべきであると<ruby>存<rt>ぞん</rt></ruby>じます。とりわけ<ruby>恣意的<rt>しいてき</rt></ruby>な<ruby>解釈<rt>かいしゃく</rt></ruby>を<ruby>介在<rt>かいざい</rt></ruby>させず、<ruby>俯瞰<rt>ふかん</rt></ruby>的かつ<ruby>多角<rt>たかく</rt></ruby>的に<ruby>精査<rt>せいさ</rt></ruby>を<ruby>重<rt>かさ</rt></ruby>ね、<ruby>必要十分<rt>ひつようじゅうぶん</rt></ruby>な<ruby>合意形成<rt>ごういけいせい</rt></ruby>を<ruby>図<rt>はか</rt></ruby>る所存です。つまり、<ruby>要<rt>よう</rt></ruby>は<ruby>誰<rt>だれ</rt></ruby>も<ruby>読<rt>よ</rt></ruby>まない<ruby>冗長<rt>じょうちょう</rt></ruby>な<ruby>文<rt>ぶん</rt></ruby>を<ruby>生成<rt>せいせい</rt></ruby>しながら、<ruby>実<rt>じつ</rt></ruby>は<ruby>何<rt>なに</rt></ruby>も<ruby>言<rt>い</rt></ruby>っていない——という<ruby>話<rt>はなし</rt></ruby>です。
+  <ruby>本件<rt>ほんけん</rt></ruby
+  >につきましては、<ruby>兎角<rt>とかく</rt></ruby
+  ><ruby>曖昧模糊<rt>あいまいもこ</rt></ruby
+  >たる<ruby>前提<rt>ぜんてい</rt></ruby
+  >と<ruby>相俟<rt>あいま</rt></ruby
+  >って<ruby>齟齬<rt>そご</rt></ruby
+  >が<ruby>累積<rt>るいせき</rt></ruby
+  >しており、<ruby>拙速<rt>せっそく</rt></ruby
+  >な<ruby>結論<rt>けつろん</rt></ruby
+  >を<ruby>避<rt>さ</rt></ruby
+  >けるべきであると<ruby>存<rt>ぞん</rt></ruby
+  >じます。とりわけ<ruby>恣意的<rt>しいてき</rt></ruby
+  >な<ruby>解釈<rt>かいしゃく</rt></ruby
+  >を<ruby>介在<rt>かいざい</rt></ruby
+  >させず、<ruby>俯瞰<rt>ふかん</rt></ruby
+  >的かつ<ruby>多角<rt>たかく</rt></ruby
+  >的に<ruby>精査<rt>せいさ</rt></ruby
+  >を<ruby>重<rt>かさ</rt></ruby
+  >ね、<ruby>必要十分<rt>ひつようじゅうぶん</rt></ruby
+  >な<ruby>合意形成<rt>ごういけいせい</rt></ruby
+  >を<ruby>図<rt>はか</rt></ruby
+  >る所存です。つまり、<ruby>要<rt>よう</rt></ruby
+  >は<ruby>誰<rt>だれ</rt></ruby
+  >も<ruby>読<rt>よ</rt></ruby
+  >まない<ruby>冗長<rt>じょうちょう</rt></ruby
+  >な<ruby>文<rt>ぶん</rt></ruby
+  >を<ruby>生成<rt>せいせい</rt></ruby
+  >しながら、<ruby>実<rt>じつ</rt></ruby
+  >は<ruby>何<rt>なに</rt></ruby
+  >も<ruby>言<rt>い</rt></ruby
+  >っていない——という<ruby>話<rt>はなし</rt></ruby
+  >です。
 </p>
 ```
 
-  <ruby>本件<rt>ほんけん</rt></ruby>につきましては、<ruby>兎角<rt>とかく</rt></ruby><ruby>曖昧模糊<rt>あいまいもこ</rt></ruby>たる<ruby>前提<rt>ぜんてい</rt></ruby>と<ruby>相俟<rt>あいま</rt></ruby>って<ruby>齟齬<rt>そご</rt></ruby>が<ruby>累積<rt>るいせき</rt></ruby>しており、<ruby>拙速<rt>せっそく</rt></ruby>な<ruby>結論<rt>けつろん</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けるべきであると<ruby>存<rt>ぞん</rt></ruby>じます。とりわけ<ruby>恣意的<rt>しいてき</rt></ruby>な<ruby>解釈<rt>かいしゃく</rt></ruby>を<ruby>介在<rt>かいざい</rt></ruby>させず、<ruby>俯瞰<rt>ふかん</rt></ruby>的かつ<ruby>多角<rt>たかく</rt></ruby>的に<ruby>精査<rt>せいさ</rt></ruby>を<ruby>重<rt>かさ</rt></ruby>ね、<ruby>必要十分<rt>ひつようじゅうぶん</rt></ruby>な<ruby>合意形成<rt>ごういけいせい</rt></ruby>を<ruby>図<rt>はか</rt></ruby>る所存です。つまり、<ruby>要<rt>よう</rt></ruby>は<ruby>誰<rt>だれ</rt></ruby>も<ruby>読<rt>よ</rt></ruby>まない<ruby>冗長<rt>じょうちょう</rt></ruby>な<ruby>文<rt>ぶん</rt></ruby>を<ruby>生成<rt>せいせい</rt></ruby>しながら、<ruby>実<rt>じつ</rt></ruby>は<ruby>何<rt>なに</rt></ruby>も<ruby>言<rt>い</rt></ruby>っていない——という<ruby>話<rt>はなし</rt></ruby>です。
+<ruby>本件<rt>ほんけん</rt></ruby>につきましては、<ruby>兎角<rt>とかく</rt></ruby><ruby>曖昧模糊<rt>あいまいもこ</rt></ruby>たる<ruby>前提<rt>ぜんてい</rt></ruby>と<ruby>相俟<rt>あいま</rt></ruby>って<ruby>齟齬<rt>そご</rt></ruby>が<ruby>累積<rt>るいせき</rt></ruby>しており、<ruby>拙速<rt>せっそく</rt></ruby>な<ruby>結論<rt>けつろん</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けるべきであると<ruby>存<rt>ぞん</rt></ruby>じます。とりわけ<ruby>恣意的<rt>しいてき</rt></ruby>な<ruby>解釈<rt>かいしゃく</rt></ruby>を<ruby>介在<rt>かいざい</rt></ruby>させず、<ruby>俯瞰<rt>ふかん</rt></ruby>的かつ<ruby>多角<rt>たかく</rt></ruby>的に<ruby>精査<rt>せいさ</rt></ruby>を<ruby>重<rt>かさ</rt></ruby>ね、<ruby>必要十分<rt>ひつようじゅうぶん</rt></ruby>な<ruby>合意形成<rt>ごういけいせい</rt></ruby>を<ruby>図<rt>はか</rt></ruby>る所存です。つまり、<ruby>要<rt>よう</rt></ruby>は<ruby>誰<rt>だれ</rt></ruby>も<ruby>読<rt>よ</rt></ruby>まない<ruby>冗長<rt>じょうちょう</rt></ruby>な<ruby>文<rt>ぶん</rt></ruby>を<ruby>生成<rt>せいせい</rt></ruby>しながら、<ruby>実<rt>じつ</rt></ruby>は<ruby>何<rt>なに</rt></ruby>も<ruby>言<rt>い</rt></ruby>っていない——という<ruby>話<rt>はなし</rt></ruby>です。
 
 ## Markdown中のルビ
 
@@ -107,8 +140,7 @@ Markdown内でルビを簡単に書けるように、\{漢字|よみ} の形式�
 
 下の TypeScript コード例のように実装している。
 
-
-```typescript[@/utils/rubyHook.ts]
+`````typescript[@/utils/rubyHook.ts]
 export function rubyHook(file: { id: string; body: string }) {
   if (!file.id.endsWith('.md')) return
   const vault: string[] = []
@@ -134,7 +166,7 @@ export function rubyHook(file: { id: string; body: string }) {
   console.log('[rubyHook] stashed blocks =', vault.length)
 }
 
-```
+`````
 
 ### 例: \{漢字|かんじ\}の形
 
@@ -143,4 +175,3 @@ export function rubyHook(file: { id: string; body: string }) {
 ```
 
 {本件|ほんけん}につきましては、{兎角|とかく}{曖昧模糊|あいまいもこ}たる{前提|ぜんてい}と{相俟|あいま}って{齟齬|そご}が{累積|るいせき}しており、{拙速|せっそく}な{結論|けつろん}を{避|さ}けるべきであると{存|ぞん}じます。とりわけ{恣意的|しいてき}な{解釈|かいしゃく}を{介在|かいざい}させず、{俯瞰|ふかん}的かつ{多角|たかく}的に{精査|せいさ}を{重|かさ}ね、{必要十分|ひつようじゅうぶん}な{合意形成|ごういけいせい}を{図|はか}る所存です。つまり、{要|よう}は{誰|だれ}も{読|よ}まない{冗長|じょうちょう}な{文|ぶん}を{生成|せいせい}しながら、{実|じつ}は{何|なに}も{言|い}っていない——という{話|はなし}です。
-

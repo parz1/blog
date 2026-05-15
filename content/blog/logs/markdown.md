@@ -1,8 +1,8 @@
 ---
-title: "How to convert a SVG to PNG using Canvas"
-description: "A simple way to convert a SVG to PNG using Canvas"
+title: 'How to convert a SVG to PNG using Canvas'
+description: 'A simple way to convert a SVG to PNG using Canvas'
 published: 2023/11/22
-slug: "how-to-convert-a-svg-to-png-using-canvas"
+slug: 'how-to-convert-a-svg-to-png-using-canvas'
 lang: en
 ---
 
@@ -17,9 +17,9 @@ Converting an SVG to a PNG in JavaScript using a canvas element is a handy techn
    You need a canvas element to draw your SVG onto. This can be an existing canvas in your HTML or one created dynamically using JavaScript:
 
 ```js
-let canvas = document.createElement("canvas");
-canvas.width = 500; // Set the canvas width
-canvas.height = 500; // Set the canvas height
+let canvas = document.createElement('canvas')
+canvas.width = 500 // Set the canvas width
+canvas.height = 500 // Set the canvas height
 ```
 
 Set the width and height of the canvas to match the desired dimensions of your final PNG.
@@ -28,12 +28,12 @@ Set the width and height of the canvas to match the desired dimensions of your f
    To draw the SVG onto the canvas, you need to convert the SVG into an image and then draw that image on the canvas. This can be done using the Image object in JavaScript:
 
 ```js
-let img = new Image();
+let img = new Image()
 img.onload = function () {
-  let ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0);
-};
-img.src = "data:image/svg+xml;base64," + btoa(svgString);
+  let ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0)
+}
+img.src = 'data:image/svg+xml;base64,' + btoa(svgString)
 ```
 
 In this code, replace svgString with your SVG code. If you're using an external SVG file, ensure the file is read and converted into a base64 string.
@@ -42,7 +42,7 @@ In this code, replace svgString with your SVG code. If you're using an external 
    Once your SVG is rendered on the canvas, you can convert the canvas to a PNG image:
 
 ```js
-let pngUrl = canvas.toDataURL("image/png");
+let pngUrl = canvas.toDataURL('image/png')
 ```
 
 This pngUrl is a base64 encoded string representing your PNG image.
@@ -51,15 +51,15 @@ This pngUrl is a base64 encoded string representing your PNG image.
    Now that you have your PNG in base64 format, you can use it as needed in your application. For example, you can display it in an <img> element or download it:
 
 ```js
-let imgElement = document.createElement("img");
-imgElement.src = pngUrl;
-document.body.appendChild(imgElement);
+let imgElement = document.createElement('img')
+imgElement.src = pngUrl
+document.body.appendChild(imgElement)
 
 // To download the image
-let downloadLink = document.createElement("a");
-downloadLink.href = pngUrl;
-downloadLink.download = "image.png";
-downloadLink.click();
+let downloadLink = document.createElement('a')
+downloadLink.href = pngUrl
+downloadLink.download = 'image.png'
+downloadLink.click()
 ```
 
 ### Additional Considerations

@@ -1,36 +1,36 @@
 export default defineAppConfig({
   ui: {
     container: {
-      base: "w-full max-w-(--ui-container) mx-auto",
+      base: 'w-full max-w-(--ui-container) mx-auto',
     },
     main: {
-      base: "min-h-[calc(100vh-var(--ui-header-height))]",
+      base: 'min-h-[calc(100vh-var(--ui-header-height))]',
     },
     colors: {
-      primary: "blue",
-      neutral: "zinc",
+      primary: 'blue',
+      neutral: 'zinc',
     },
     button: {
       slots: {
-        base: ["cursor-pointer"],
+        base: ['cursor-pointer'],
       },
     },
     link: {
-      base: "focus-visible:outline-primary hover:underline",
+      base: 'focus-visible:outline-primary hover:underline',
       variants: {
         active: {
-          true: "text-primary underline",
-          false: "text-muted",
+          true: 'text-primary underline',
+          false: 'text-muted',
         },
         disabled: {
-          true: "cursor-not-allowed opacity-75",
+          true: 'cursor-not-allowed opacity-75',
         },
       },
       compoundVariants: [
         {
           active: false,
           disabled: false,
-          class: ["hover:text-default", "transition-colors"],
+          class: ['hover:text-default', 'transition-colors'],
         },
       ],
     },

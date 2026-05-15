@@ -10,7 +10,9 @@ const { locale } = useI18n()
 const { data: articles } = await useAsyncData<ArticleWithLang[]>(
   'crap-preview',
   async () => {
-    const allArticles = await queryCollection('crap').order('published', 'DESC').all()
+    const allArticles = await queryCollection('crap')
+      .order('published', 'DESC')
+      .all()
 
     const groups = new Map<string, BlogCollectionItem[]>()
 
@@ -36,14 +38,19 @@ const { data: articles } = await useAsyncData<ArticleWithLang[]>(
       const availableLangs = Array.from(
         new Set(
           group
-            .map(entry => (entry.lang as string | undefined)?.toLowerCase())
+            .map((entry) => (entry.lang as string | undefined)?.toLowerCase())
             .filter(Boolean) as string[],
         ),
       )
 
       const primary =
-        group.find(entry => (entry.lang as string | undefined)?.toLowerCase() === localeCode) ||
-        group.find(entry => (entry.lang as string | undefined)?.toLowerCase() === 'en') ||
+        group.find(
+          (entry) =>
+            (entry.lang as string | undefined)?.toLowerCase() === localeCode,
+        ) ||
+        group.find(
+          (entry) => (entry.lang as string | undefined)?.toLowerCase() === 'en',
+        ) ||
         group[0]
 
       merged.push({
@@ -54,7 +61,8 @@ const { data: articles } = await useAsyncData<ArticleWithLang[]>(
 
     merged.sort(
       (a, b) =>
-        new Date(b.published ?? '').getTime() - new Date(a.published ?? '').getTime(),
+        new Date(b.published ?? '').getTime() -
+        new Date(a.published ?? '').getTime(),
     )
 
     return merged.slice(0, 5)

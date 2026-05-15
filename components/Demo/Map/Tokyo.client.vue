@@ -24,7 +24,8 @@ onMounted(async () => {
     zoom: 9,
     pitch: 60,
     baseLayer: new maptalks.TileLayer('base', {
-      urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      urlTemplate:
+        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       subdomains: ['a', 'b', 'c', 'd'],
       attribution:
         '&copy; <a href="http://www.osm.org/copyright">OSM</a> contributors, ' +
@@ -34,9 +35,24 @@ onMounted(async () => {
   map.value.config({ doubleClickZoom: false })
 
   // 创建 InfoWindows
-  createInfoWindow('university', UNIVERSITY_LNGLAT, '🎓 杭州電子科技大学', 'デジタルメディア学部')
-  createInfoWindow('hangzhou', HANGZHOU_LNGLAT, '🏢 杭州', '会社の仕事交代 / 2024-07 N2 合格')
-  createInfoWindow('japan', TOKYO_LNGLAT, '📍 東京', '2024-10 到着 / 日本語能力試験N1合格')
+  createInfoWindow(
+    'university',
+    UNIVERSITY_LNGLAT,
+    '🎓 杭州電子科技大学',
+    'デジタルメディア学部',
+  )
+  createInfoWindow(
+    'hangzhou',
+    HANGZHOU_LNGLAT,
+    '🏢 杭州',
+    '会社の仕事交代 / 2024-07 N2 合格',
+  )
+  createInfoWindow(
+    'japan',
+    TOKYO_LNGLAT,
+    '📍 東京',
+    '2024-10 到着 / 日本語能力試験N1合格',
+  )
   focusOnLocation('japan')
 })
 
@@ -45,7 +61,7 @@ function createInfoWindow(
   name: 'japan' | 'hangzhou' | 'university',
   coordinates: number[],
   title: string,
-  content: string
+  content: string,
 ) {
   const vNode = createVNode(PositionMarker, {
     active: computed(() => mapState.value === name),
@@ -133,7 +149,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'japan',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'japan',
             'text-gray-500 border-gray-300': mapState !== 'japan',
           }"
           @click="focusOnLocation('japan')"
@@ -143,7 +160,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'university',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'university',
             'text-gray-500 border-gray-300': mapState !== 'university',
           }"
           @click="focusOnLocation('university')"
@@ -153,7 +171,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'hangzhou',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'hangzhou',
             'text-gray-500 border-gray-300': mapState !== 'hangzhou',
           }"
           @click="focusOnLocation('hangzhou')"
@@ -163,7 +182,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'hangzhou',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'hangzhou',
             'text-gray-500 border-gray-300': mapState !== 'hangzhou',
           }"
           @click="focusOnLocation('hangzhou')"
@@ -173,7 +193,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'hangzhou',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'hangzhou',
             'text-gray-500 border-gray-300': mapState !== 'hangzhou',
           }"
           @click="focusOnLocation('hangzhou')"
@@ -183,7 +204,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'hangzhou',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'hangzhou',
             'text-gray-500 border-gray-300': mapState !== 'hangzhou',
           }"
           @click="focusOnLocation('hangzhou')"
@@ -193,7 +215,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'japan',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'japan',
             'text-gray-500 border-gray-300': mapState !== 'japan',
           }"
           @click="focusOnLocation('japan')"
@@ -203,7 +226,8 @@ function focusOnLocation(location: 'japan' | 'hangzhou' | 'university') {
         <div
           class="cursor-pointer transition-all"
           :class="{
-            'border-blue-500 border-l-2 pl-2 text-blue-600': mapState === 'japan',
+            'border-blue-500 border-l-2 pl-2 text-blue-600':
+              mapState === 'japan',
             'text-gray-500 border-gray-300': mapState !== 'japan',
           }"
           @click="focusOnLocation('japan')"
