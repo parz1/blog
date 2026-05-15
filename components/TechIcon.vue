@@ -15,7 +15,7 @@ const props = defineProps<{
         height: props.size,
       }"
       :src="props.icon"
-      alt="javascript"
+      :alt="props.name"
     />
   </UTooltip>
 </template>

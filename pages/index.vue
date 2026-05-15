@@ -15,8 +15,8 @@ const { t } = useI18n()
     <div
       class="w-full md:w-[80%] lg:ml-[40%] grow flex flex-col justify-start items-start md:items-center lg:items-start"
     >
-      <!-- <HomePage /> -->
-      <section class="max-w-xl px-4 sm:px-0 mt-8">
+      <HomeProfileIntro />
+      <section class="max-w-xl px-4 sm:px-0 mt-10">
         <div class="mb-4 px-2">
           <h2 class="text-3xl font-serif">
             {{ t('home.latestActivities') }}

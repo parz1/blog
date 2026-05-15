@@ -15,7 +15,125 @@
   },
   "home": {
     "latestActivities": "最新动态",
-    "latestActivitiesDescription": "文章、札记和开发记录的最近更新"
+    "latestActivitiesDescription": "文章、札记和开发记录的最近更新",
+    "profile": {
+      "name": "周磊 / ZHOU LEI",
+      "heading": "关于我",
+      "education": {
+        "school": "东京大学",
+        "program": "GSII / III",
+        "role": "修士"
+      },
+      "identity": "东京大学 GSII / III 修士",
+      "location": "东京",
+      "summary": "我做 AI-native 应用、开发者工具和以人为中心的系统，把研究、交互和真实落地连接起来。",
+      "note": "现在最关心的问题是：AI 如何进入人的记忆、工作、研究和日常思考。",
+      "actions": {
+        "about": "了解更多"
+      },
+      "focus": {
+        "heading": "我正在做",
+        "items": {
+          "memory": {
+            "title": "Minerei / Kotolog",
+            "description": "一个结合任务、记录与长期记忆的 AI-native personal system。"
+          },
+          "research": {
+            "title": "研究",
+            "description": "多模态情绪识别、疲劳 / 衰弱估计，以及长期的人本数据采集。"
+          },
+          "engineering": {
+            "title": "工程",
+            "description": "用全栈和本地 AI pipeline 快速做 0 到 1 原型，让想法真正可用。"
+          }
+        }
+      },
+      "tech": {
+        "heading": "我正在使用这些",
+        "description": "这些不是完整清单，更像我现在把研究、产品和个人系统拼起来时会反复拿起的工具。",
+        "categories": {
+          "language": "语言",
+          "frontend": "Web / UI",
+          "backend": "后端",
+          "infra": "基础设施",
+          "desktop": "桌面与本地",
+          "mobile": "移动端",
+          "research": "研究工具",
+          "workflow": "工作流"
+        },
+        "items": {
+          "typescript": {
+            "description": "主要用来组织产品原型、前端状态和可维护的系统边界。"
+          },
+          "react": {
+            "description": "做交互密度更高的界面，尤其是工具型产品和实验原型。"
+          },
+          "rust": {
+            "description": "偏向本地性能、桌面应用和需要稳定边界的系统部分。"
+          },
+          "next": {
+            "description": "用于需要内容、产品体验和服务端能力结合的 Web 应用。"
+          },
+          "node": {
+            "description": "连接 API、脚本、数据处理和快速工程原型的日常运行时。"
+          },
+          "docker": {
+            "description": "把研究环境、服务依赖和部署流程整理成可复现的形态。"
+          },
+          "vue": {
+            "description": "博客和内容系统里常用的 UI 层，也适合快速做轻量交互。"
+          },
+          "nuxt": {
+            "description": "支撑这个站点的框架，用来处理内容、国际化和页面体验。"
+          },
+          "javascript": {
+            "description": "快速验证想法、浏览器实验和小工具脚本的基础语言。"
+          },
+          "expo": {
+            "description": "做移动端 AI workflow 和跨平台原型时最快的入口之一。"
+          },
+          "tauri": {
+            "description": "适合做本地优先、轻量桌面和本地 AI pipeline 的应用外壳。"
+          },
+          "zotero": {
+            "description": "研究阅读、引用管理和长期知识整理的核心工具。"
+          },
+          "obsidian": {
+            "description": "承接个人知识、项目笔记和长期记忆系统的工作台。"
+          },
+          "cplusplus": {
+            "description": "在本地 AI、音视频和性能敏感模块里仍然很重要。"
+          },
+          "turborepo": {
+            "description": "管理多应用、多包原型，让产品和工具链能一起迭代。"
+          },
+          "tailwind": {
+            "description": "把界面样式快速落地，同时保持工具型 UI 的一致性。"
+          },
+          "gitea": {
+            "description": "偏自托管的代码与协作基础设施，适合个人系统的长期维护。"
+          },
+          "vite": {
+            "description": "快速启动前端实验和组件原型，减少从想法到界面的等待。"
+          },
+          "electron": {
+            "description": "在需要成熟桌面能力和 Web 技术栈时仍然很实用。"
+          },
+          "reactNative": {
+            "description": "连接移动端交互、记录场景和个人工作流的跨平台方案。"
+          },
+          "vscode": {
+            "description": "日常工程、AI 辅助开发和研究代码整理的主编辑器。"
+          },
+          "xcode": {
+            "description": "做 iOS 相关原型、真机调试和移动端体验验证时会用到。"
+          },
+          "postman": {
+            "description": "验证 API、调试服务边界和整理接口工作流的工具。"
+          }
+        }
+      }
+    }
   },
   "contentKind": {
     "post": "文章",

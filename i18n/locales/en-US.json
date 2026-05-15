@@ -15,7 +15,125 @@
   },
   "home": {
     "latestActivities": "Latest Activities",
-    "latestActivitiesDescription": "Essays, notes, and devlogs in one stream"
+    "latestActivitiesDescription": "Essays, notes, and devlogs in one stream",
+    "profile": {
+      "name": "ZHOU LEI / 周磊",
+      "heading": "About me",
+      "education": {
+        "school": "The University of Tokyo",
+        "program": "GSII / III",
+        "role": "M.S. Student"
+      },
+      "identity": "M.S. Student at The University of Tokyo",
+      "location": "Tokyo",
+      "summary": "I build AI-native applications, developer tools, and human-centered systems that connect research, interaction, and real-world implementation.",
+      "note": "My current question: how can AI become part of human memory, work, research, and everyday thinking?",
+      "actions": {
+        "about": "More"
+      },
+      "focus": {
+        "heading": "Currently working on",
+        "items": {
+          "memory": {
+            "title": "Minerei / Kotolog",
+            "description": "An AI-native personal system that brings together tasks, logs, and long-term memory."
+          },
+          "research": {
+            "title": "Research",
+            "description": "Multimodal sensing for emotion, fatigue, and interaction-aware longitudinal data collection."
+          },
+          "engineering": {
+            "title": "Engineering",
+            "description": "Full-stack prototypes, local AI workflows, and tools that move quickly from idea to real use."
+          }
+        }
+      },
+      "tech": {
+        "heading": "Currently using",
+        "description": "Not a complete stack list, but the tools I keep reaching for while connecting research, product work, and personal systems.",
+        "categories": {
+          "language": "Language",
+          "frontend": "Web / UI",
+          "backend": "Backend",
+          "infra": "Infrastructure",
+          "desktop": "Desktop & local",
+          "mobile": "Mobile",
+          "research": "Research tool",
+          "workflow": "Workflow"
+        },
+        "items": {
+          "typescript": {
+            "description": "My default for product prototypes, frontend state, and maintainable system boundaries."
+          },
+          "react": {
+            "description": "Used for interaction-heavy tools, product surfaces, and experimental interfaces."
+          },
+          "rust": {
+            "description": "Useful for local performance, desktop apps, and system parts that need firm boundaries."
+          },
+          "next": {
+            "description": "A good fit when content, product experience, and server-side capability meet."
+          },
+          "node": {
+            "description": "The everyday runtime for APIs, scripts, data handling, and fast engineering prototypes."
+          },
+          "docker": {
+            "description": "Keeps research environments, service dependencies, and deployment paths reproducible."
+          },
+          "vue": {
+            "description": "A comfortable UI layer for content systems and lightweight interaction work."
+          },
+          "nuxt": {
+            "description": "The framework behind this site, handling content, localization, and page experience."
+          },
+          "javascript": {
+            "description": "Still the fastest base for browser experiments, small tools, and quick idea checks."
+          },
+          "expo": {
+            "description": "One of the fastest paths into mobile AI workflows and cross-platform prototypes."
+          },
+          "tauri": {
+            "description": "A lightweight shell for local-first desktop tools and local AI pipelines."
+          },
+          "zotero": {
+            "description": "Core infrastructure for reading, citation management, and long-term research memory."
+          },
+          "obsidian": {
+            "description": "A workspace for personal knowledge, project notes, and long-term memory systems."
+          },
+          "cplusplus": {
+            "description": "Still important for local AI, audio/video work, and performance-sensitive modules."
+          },
+          "turborepo": {
+            "description": "Helps keep multi-app and multi-package prototypes moving together."
+          },
+          "tailwind": {
+            "description": "Lets interface work move quickly while keeping tool surfaces consistent."
+          },
+          "gitea": {
+            "description": "Self-hostable code and collaboration infrastructure for long-lived personal systems."
+          },
+          "vite": {
+            "description": "Keeps frontend experiments and component prototypes close to instant."
+          },
+          "electron": {
+            "description": "Still practical when mature desktop capability and a web stack need to meet."
+          },
+          "reactNative": {
+            "description": "Connects mobile interaction, capture flows, and personal workflow prototypes."
+          },
+          "vscode": {
+            "description": "My main editor for daily engineering, AI-assisted development, and research code."
+          },
+          "xcode": {
+            "description": "Used for iOS prototypes, device debugging, and validating mobile interaction details."
+          },
+          "postman": {
+            "description": "Useful for API checks, service boundaries, and keeping interface workflows clear."
+          }
+        }
+      }
+    }
   },
   "contentKind": {
     "post": "Essay",

@@ -30,8 +30,8 @@ const handleCopyEmailToClipboard2 = () => copy2()
   <div class="flex flex-col justify-center items-center lg:items-start">
     <div class="lg:-ml-2">
       <img
-        class="rounded-full w-40 h-40 lg:w-50 lg:h-50 bg-black transition-shadow shadow-xl hover:shadow-2xl"
-        src="~/assets/avatar.jpg"
+        class="rounded-full w-40 h-40 lg:w-50 lg:h-50 bg-black object-cover object-[52%_38%] transition-shadow shadow-xl hover:shadow-2xl"
+        src="~/assets/inDisney.jpg"
         :alt="t('introCard.avatarAlt')"
       />
     </div>

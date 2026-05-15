@@ -15,7 +15,125 @@
   },
   "home": {
     "latestActivities": "最新アクティビティ",
-    "latestActivitiesDescription": "記事、メモ、開発ログをまとめた最新更新"
+    "latestActivitiesDescription": "記事、メモ、開発ログをまとめた最新更新",
+    "profile": {
+      "name": "周 磊 / ZHOU LEI",
+      "heading": "私について",
+      "education": {
+        "school": "東京大学",
+        "program": "GSII / III",
+        "role": "修士課程"
+      },
+      "identity": "東京大学 GSII / III 修士課程",
+      "location": "東京",
+      "summary": "AI-native なアプリ、開発者ツール、人間中心のシステムを作り、研究・インタラクション・実装をつなげています。",
+      "note": "いま考えている問いは、AI が人の記憶、仕事、研究、日常の思考にどう組み込まれるかです。",
+      "actions": {
+        "about": "詳しく見る"
+      },
+      "focus": {
+        "heading": "いま取り組んでいること",
+        "items": {
+          "memory": {
+            "title": "Minerei / Kotolog",
+            "description": "タスク、記録、長期記憶を結びつける AI-native な personal system。"
+          },
+          "research": {
+            "title": "研究",
+            "description": "マルチモーダル感情認識、疲労・フレイル推定、長期的な人間中心データ収集。"
+          },
+          "engineering": {
+            "title": "エンジニアリング",
+            "description": "フルスタックとローカル AI pipeline で、アイデアを素早く実用できる形にします。"
+          }
+        }
+      },
+      "tech": {
+        "heading": "いま使っているもの",
+        "description": "完全なスタック一覧ではなく、研究、プロダクト、個人システムをつなぐときによく使う道具です。",
+        "categories": {
+          "language": "言語",
+          "frontend": "Web / UI",
+          "backend": "バックエンド",
+          "infra": "インフラ",
+          "desktop": "デスクトップ / ローカル",
+          "mobile": "モバイル",
+          "research": "研究ツール",
+          "workflow": "ワークフロー"
+        },
+        "items": {
+          "typescript": {
+            "description": "プロダクトの試作、フロントエンド状態、保守しやすい境界づくりに使います。"
+          },
+          "react": {
+            "description": "操作密度の高いツール、プロダクト画面、実験的な UI に使います。"
+          },
+          "rust": {
+            "description": "ローカル性能、デスクトップアプリ、境界を固めたい部分で使います。"
+          },
+          "next": {
+            "description": "コンテンツ、プロダクト体験、サーバー側の機能が交わる Web アプリに合います。"
+          },
+          "node": {
+            "description": "API、スクリプト、データ処理、素早い工程試作のための日常的なランタイムです。"
+          },
+          "docker": {
+            "description": "研究環境、サービス依存、デプロイ手順を再現しやすくします。"
+          },
+          "vue": {
+            "description": "コンテンツシステムや軽いインタラクションに使いやすい UI レイヤーです。"
+          },
+          "nuxt": {
+            "description": "このサイトを支えるフレームワークで、コンテンツ、多言語、ページ体験を扱います。"
+          },
+          "javascript": {
+            "description": "ブラウザ実験、小さなツール、素早いアイデア検証の基礎として使います。"
+          },
+          "expo": {
+            "description": "モバイル AI workflow とクロスプラットフォーム試作への速い入口です。"
+          },
+          "tauri": {
+            "description": "ローカルファーストなデスクトップツールや local AI pipeline に合う軽量な殻です。"
+          },
+          "zotero": {
+            "description": "論文読み、引用管理、長期的な研究メモリのための基盤です。"
+          },
+          "obsidian": {
+            "description": "個人知識、プロジェクトメモ、長期記憶システムの作業場です。"
+          },
+          "cplusplus": {
+            "description": "ローカル AI、音声・映像、性能が必要なモジュールで今も重要です。"
+          },
+          "turborepo": {
+            "description": "複数アプリ、複数パッケージの試作をまとめて進めるために使います。"
+          },
+          "tailwind": {
+            "description": "ツール型 UI の一貫性を保ちながら、画面づくりを速くします。"
+          },
+          "gitea": {
+            "description": "長く育てる個人システムに向いた、自分で運用できるコード基盤です。"
+          },
+          "vite": {
+            "description": "フロントエンド実験やコンポーネント試作をすぐに始められます。"
+          },
+          "electron": {
+            "description": "成熟したデスクトップ機能と Web 技術をつなぎたいときに使います。"
+          },
+          "reactNative": {
+            "description": "モバイル操作、記録の流れ、個人ワークフローの試作をつなげます。"
+          },
+          "vscode": {
+            "description": "日常の開発、AI 支援開発、研究コード整理の中心になるエディタです。"
+          },
+          "xcode": {
+            "description": "iOS 試作、実機デバッグ、モバイル体験の細部確認で使います。"
+          },
+          "postman": {
+            "description": "API の確認、サービス境界の調整、インターフェース整理に使います。"
+          }
+        }
+      }
+    }
   },
   "contentKind": {
     "post": "記事",
