@@ -2,10 +2,11 @@
 import type { BlogCollectionItem } from '@nuxt/content'
 
 type ArticleWithLang = BlogCollectionItem & {
+  activityKind?: 'post' | 'log'
   availableLangs?: string[]
 }
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 const props = defineProps<{
@@ -49,6 +50,23 @@ const languageBadges = computed(() => {
     isCurrent: code === current,
   }))
 })
+
+const activityBadge = computed(() => {
+  switch (props.article.activityKind) {
+    case 'post':
+      return {
+        color: 'primary',
+        label: t('contentKind.post'),
+      }
+    case 'log':
+      return {
+        color: 'neutral',
+        label: t('contentKind.log'),
+      }
+    default:
+      return null
+  }
+})
 </script>
 
 <template>
@@ -79,9 +97,17 @@ const languageBadges = computed(() => {
           {{ i18nTime }}
         </time>
         <div
-          v-if="languageBadges.length"
+          v-if="activityBadge || languageBadges.length"
           class="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400"
         >
+          <UBadge
+            v-if="activityBadge"
+            :color="activityBadge.color"
+            size="sm"
+            variant="soft"
+          >
+            {{ activityBadge.label }}
+          </UBadge>
           <UBadge
             v-for="lang in languageBadges"
             :key="lang.code"

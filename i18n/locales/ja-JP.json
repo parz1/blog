@@ -4,14 +4,22 @@
     "home": "ホーム",
     "demo": "デモ",
     "blog": "ブログ",
-    "posts": "文章",
-    "postsDescription": "すべてのブログ記事",
-    "logs": "ログ",
-    "logsDescription": "技術、学習のランダムな記録",
+    "posts": "記事",
+    "postsDescription": "整理した長文とまとまった考え",
+    "logs": "メモ",
+    "logsDescription": "開発ログ、設定メモ、学習の記録",
     "crap": "デタラメ",
     "crapDescription": "ランダムなものとナンセンス",
     "about": "私について",
     "gallery": " ギャラリー"
+  },
+  "home": {
+    "latestActivities": "最新アクティビティ",
+    "latestActivitiesDescription": "記事、メモ、開発ログをまとめた最新更新"
+  },
+  "contentKind": {
+    "post": "記事",
+    "log": "メモ"
   },
   "introCard": {
     "avatarAlt": "parz1のアバター",

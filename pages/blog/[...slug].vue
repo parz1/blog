@@ -83,8 +83,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <UPage class="lg:pt-8">
-    <UPageBody>
+  <UPage class="lg:pt-8 overflow-x-hidden">
+    <UPageBody class="min-w-0">
       <div v-if="!doc">
         <UEmpty
           icon="i-lucide-file"
@@ -108,16 +108,18 @@ onUnmounted(() => {
         />
       </div>
       <template v-else>
-        <div class="flex justify-center lg:block">
-          <div class="w-full max-w-3xl px-0 md:px-6 lg:px-8">
-            <article>
+        <div class="w-full min-w-0">
+          <div class="w-full min-w-0 max-w-3xl px-0 md:px-6 lg:px-8">
+            <article class="min-w-0 max-w-full">
               <div class="mb-6">
                 <div
-                  class="text-4xl font-semibold font-serif leading-tight text-black dark:text-white"
+                  class="text-3xl sm:text-4xl font-semibold font-serif leading-tight text-black dark:text-white break-words"
                 >
                   {{ doc?.title }}
                 </div>
-                <div class="text-lg mb-3">{{ doc?.description }}</div>
+                <div class="text-lg mb-3 break-words">
+                  {{ doc?.description }}
+                </div>
                 <div class="text-gray-500 flex flex-wrap gap-4 items-center">
                   {{ publishedDate }}
                   <div class="flex flex-wrap gap-2">
@@ -137,7 +139,7 @@ onUnmounted(() => {
                 v-if="doc"
                 ref="nuxtContent"
                 :value="doc"
-                class="prose dark:prose-invert"
+                class="nuxt-content prose dark:prose-invert min-w-0 max-w-full"
               >
                 <template #empty>
                   <div class="text-xl">Document is empty</div>

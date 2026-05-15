@@ -213,21 +213,40 @@ const imageStyleFor = (image: FigureImage): CSSProperties | undefined => {
 </template>
 
 <style scoped>
+.cf-figure {
+  max-width: 100%;
+}
+
 .cf-figure img {
   border-radius: 0.75rem;
   margin: 0;
+  max-width: 100%;
 }
 
 .cf-gallery {
   display: grid;
+  max-width: 100%;
 }
 
 .cf-image-cell {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .cf-caption-cell {
   margin: 0;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 640px) {
+  .cf-gallery {
+    grid-auto-flow: row !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-columns: auto !important;
+    width: 100%;
+  }
 }
 </style>

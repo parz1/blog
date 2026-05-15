@@ -9,22 +9,7 @@ lang: ja
 最近、**Obsidian + AWS S3** の環境を再構築したところ、すぐに違和感がありました。  
 フォントが Affine ほどシャープに見えず、設定を調整してもわずかに太くぼやけた印象が残ります。
 
-## ::caption-figure
-
-images:
-
-- src: https://g.imgtg.com/uploads/7247/68d9053554d2f.png
-  alt: Obsidianフォント
-  caption: Obsidianフォント
-- src: https://g.imgtg.com/uploads/7247/68d90e807ee72.png
-  alt: Affineフォント
-  caption: Affineフォント
-  caption: Obsidian（左） vs Affine（右）
-  align: center
-  columns: 2
-
----
-
+::caption-figure{:images='[{"src":"https://g.imgtg.com/uploads/7247/68d9053554d2f.png","alt":"Obsidian フォント","caption":"Obsidian フォント"},{"src":"https://g.imgtg.com/uploads/7247/68d90e807ee72.png","alt":"Affine フォント","caption":"Affine フォント"}]' caption="Obsidian（左） vs Affine（右）" align="center" :columns='2'}
 ::
 
 CSS を見比べてみると、Affine には次の設定が含まれていました。

@@ -8,22 +8,7 @@ lang: cn
 
 最近又开始折腾 **Obsidian + AWS S3** 了。结果一用，发现一个老问题：**字体总觉得没 Affine 那么清晰**。不管怎么调，总是有点糊、发粗，和 Affine 那种细腻的质感差了一截。
 
-## ::caption-figure
-
-images:
-
-- src: https://g.imgtg.com/uploads/7247/68d9053554d2f.png
-  alt: Obsidian字体
-  caption: Obsidian字体
-- src: https://g.imgtg.com/uploads/7247/68d90e807ee72.png
-  alt: Affine字体
-  caption: Affine字体
-  caption: Obsidian(左) vs Affine(右)
-  align: center
-  columns: 2
-
----
-
+::caption-figure{:images='[{"src":"https://g.imgtg.com/uploads/7247/68d9053554d2f.png","alt":"Obsidian 字体","caption":"Obsidian 字体"},{"src":"https://g.imgtg.com/uploads/7247/68d90e807ee72.png","alt":"Affine 字体","caption":"Affine 字体"}]' caption="Obsidian（左） vs Affine（右）" align="center" :columns='2'}
 ::
 
 我忍不住去对比了一下两边的 CSS，才发现 **Affine 悄悄多了这一段**：

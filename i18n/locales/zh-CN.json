@@ -5,13 +5,21 @@
     "demo": "演示",
     "blog": "博客",
     "posts": "文章",
-    "postsDescription": "所有博客文章",
-    "logs": "记录",
-    "logsDescription": "技术、学习的随机记录",
+    "postsDescription": "整理过的长文和完整观点",
+    "logs": "札记",
+    "logsDescription": "开发记录、配置笔记和学习过程",
     "crap": "扯",
     "crapDescription": "扯淡随机的东西",
     "about": "关于",
     "gallery": "画廊"
+  },
+  "home": {
+    "latestActivities": "最新动态",
+    "latestActivitiesDescription": "文章、札记和开发记录的最近更新"
+  },
+  "contentKind": {
+    "post": "文章",
+    "log": "札记"
   },
   "introCard": {
     "avatarAlt": "parz1 的头像",

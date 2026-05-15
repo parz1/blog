@@ -37,6 +37,7 @@ export default defineNuxtConfig({
         '@vercel/analytics',
         '@vue/devtools-core',
         '@vue/devtools-kit',
+        '@vueuse/core',
         'mermaid',
         'vue3-marquee',
       ],

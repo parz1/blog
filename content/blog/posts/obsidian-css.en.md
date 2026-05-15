@@ -9,22 +9,7 @@ lang: en
 After rebuilding my **Obsidian + AWS S3** setup, the typography immediately felt off.  
 Text looked less crisp than in Affine, and even after several configuration tweaks it still appeared slightly heavy and blurred.
 
-## ::caption-figure
-
-images:
-
-- src: https://g.imgtg.com/uploads/7247/68d9053554d2f.png
-  alt: Obsidian font rendering
-  caption: Obsidian font rendering
-- src: https://g.imgtg.com/uploads/7247/68d90e807ee72.png
-  alt: Affine font rendering
-  caption: Affine font rendering
-  caption: Obsidian (left) vs Affine (right)
-  align: center
-  columns: 2
-
----
-
+::caption-figure{:images='[{"src":"https://g.imgtg.com/uploads/7247/68d9053554d2f.png","alt":"Obsidian font rendering","caption":"Obsidian font rendering"},{"src":"https://g.imgtg.com/uploads/7247/68d90e807ee72.png","alt":"Affine font rendering","caption":"Affine font rendering"}]' caption="Obsidian (left) vs Affine (right)" align="center" :columns='2'}
 ::
 
 Comparing the CSS revealed that Affine ships with the following properties:

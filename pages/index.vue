@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { t } = useI18n()
+</script>
 
 <template>
   <div class="w-screen flex flex-col lg:flex-row">
@@ -15,10 +17,15 @@
     >
       <!-- <HomePage /> -->
       <section class="max-w-xl px-4 sm:px-0 mt-8">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-3xl font-serif pl-2">Latest Posts</h2>
+        <div class="mb-4 px-2">
+          <h2 class="text-3xl font-serif">
+            {{ t('home.latestActivities') }}
+          </h2>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {{ t('home.latestActivitiesDescription') }}
+          </p>
         </div>
-        <PostsPreview />
+        <LatestActivitiesPreview />
       </section>
     </div>
   </div>

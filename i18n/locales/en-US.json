@@ -4,14 +4,22 @@
     "home": "Home",
     "demo": "Demo",
     "blog": "Blog",
-    "posts": "Posts",
-    "postsDescription": "Blog posts all together",
-    "logs": "Logs",
-    "logsDescription": "Random records of tech and learning",
+    "posts": "Essays",
+    "postsDescription": "Polished long-form writing and complete ideas",
+    "logs": "Notes",
+    "logsDescription": "Devlogs, setup notes, and learning traces",
     "crap": "Crap",
     "crapDescription": "Random stuff and nonsense",
     "about": "About Me",
     "gallery": "Gallery"
+  },
+  "home": {
+    "latestActivities": "Latest Activities",
+    "latestActivitiesDescription": "Essays, notes, and devlogs in one stream"
+  },
+  "contentKind": {
+    "post": "Essay",
+    "log": "Note"
   },
   "introCard": {
     "avatarAlt": "Portrait of parz1",
