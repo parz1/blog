@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NavigationMenuItem } from "@nuxt/ui"
+import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
 
@@ -7,11 +7,11 @@ const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
 const normalizePath = (path: string) => {
-  const segments = path.split("/").filter(Boolean)
+  const segments = path.split('/').filter(Boolean)
   if (segments[0]?.toLowerCase() === locale.value.toLowerCase()) {
-    return "/" + segments.slice(1).join("/")
+    return '/' + segments.slice(1).join('/')
   }
-  return path.startsWith("/") ? path : `/${path}`
+  return path.startsWith('/') ? path : `/${path}`
 }
 
 const normalizedRoutePath = computed(() => normalizePath(route.path))
@@ -19,43 +19,43 @@ const normalizedRoutePath = computed(() => normalizePath(route.path))
 const isActivePath = (path?: string | null) => {
   if (!path) return false
   const target = normalizePath(localePath(path))
-  if (target === "/") return normalizedRoutePath.value === "/"
+  if (target === '/') return normalizedRoutePath.value === '/'
   return normalizedRoutePath.value.startsWith(target)
 }
 
 const navLinks = computed<NavigationMenuItem[]>(() => [
   {
-    label: t("menu.home"),
-    to: localePath("/"),
-    active: isActivePath("/"),
+    label: t('menu.home'),
+    to: localePath('/'),
+    active: isActivePath('/'),
   },
   {
-    label: t("menu.blog"),
-    to: localePath("/blog"),
-    active: isActivePath("/blog"),
+    label: t('menu.blog'),
+    to: localePath('/blog'),
+    active: isActivePath('/blog'),
     children: [
       {
-        label: t("menu.posts"),
-        to: localePath("/blog/posts"),
-        description: t("menu.postsDescription"),
+        label: t('menu.posts'),
+        to: localePath('/blog/posts'),
+        description: t('menu.postsDescription'),
       },
       {
-        label: t("menu.logs"),
-        to: localePath("/blog/logs"),
-        description: t("menu.logsDescription"),
+        label: t('menu.logs'),
+        to: localePath('/blog/logs'),
+        description: t('menu.logsDescription'),
       },
       {
-        label: t("menu.crap"),
-        to: localePath("/blog/crap"),
-        description: t("menu.crapDescription"),
+        label: t('menu.crap'),
+        to: localePath('/blog/crap'),
+        description: t('menu.crapDescription'),
       },
     ],
   },
-  { label: t("menu.gallery"), to: undefined, active: false },
+  { label: t('menu.gallery'), to: undefined, active: false },
   {
-    label: t("menu.demo"),
-    to: localePath("/demo"),
-    active: isActivePath("/demo"),
+    label: t('menu.demo'),
+    to: localePath('/demo'),
+    active: isActivePath('/demo'),
   },
 ])
 </script>
@@ -67,7 +67,9 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     :to="localePath('/about')"
     :ui="{ container: 'py-3' }"
   >
-    <template #title> parz1 </template>
+    <template #title>
+      <span class="font-serif font-semibold">parz1</span>
+    </template>
 
     <UNavigationMenu class="w-100 flex justify-center" :items="navLinks" />
 
@@ -104,11 +106,14 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     <template #content="{ close }">
       <div class="p-6 space-y-6">
         <div class="flex items-center justify-between">
-          <NuxtLink :to="localePath('/')" class="font-sans text-2xl font-light">
-            <span class="font-bold">parz1</span>
+          <NuxtLink
+            :to="localePath('/')"
+            class="font-serif text-2xl font-semibold"
+          >
+            <span>parz1</span>
           </NuxtLink>
           <UButton
-            icon="i-heroicons-x-mark-20-solid"
+            icon="i-lucide-x"
             color="neutral"
             variant="ghost"
             aria-label="Close navigation"

@@ -18,18 +18,21 @@ const links = [
   },
   {
     label: 'Logs',
-    icon: 'i-heroicons-command-line',
+    icon: 'i-lucide-terminal',
     to: '/blog/logs',
     prefetch: true,
   },
   {
     label: 'Crap',
-    icon: 'i-heroicons-face-frown',
+    icon: 'i-lucide-frown',
     to: '/blog/crap',
     prefetch: true,
   },
 ]
 </script>
 <template>
-  <UNavigationMenu :items="links" class="border-b border-gray-200 dark:border-gray-800" />
+  <UNavigationMenu
+    :items="links"
+    class="border-b border-gray-200 dark:border-gray-800"
+  />
 </template>

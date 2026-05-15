@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".cache/**",
+    ".data/**",
+    ".local",
+    ".nitro/**",
+    ".nuxt/**",
+    ".output/**",
+    ".vscode/**",
+    "coverage/**",
+    "content/.obsidian/**",
+    "dist/**",
+    "node_modules/**",
+    "pnpm-lock.yaml",
+    "public/**",
+    "**/*.svg",
+    "**/*.sh",
+    "stats.html"
+  ]
+}

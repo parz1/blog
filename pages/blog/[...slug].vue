@@ -5,11 +5,11 @@ const { locales, locale, setLocale } = useI18n()
 const slug = route.params.slug
 
 const { data: variants, refresh } = await useAsyncData(
-  "slug-variants",
+  'slug-variants',
   async () => {
     if (!slug) return []
     // Query strictly by slug; frontend will handle variants
-    return await queryCollection("blog").where("slug", "=", slug).all()
+    return await queryCollection('blog').where('slug', '=', slug).all()
   },
   // lazy load may cause SEO issue and get some trouble for toc comp
   { lazy: false },
@@ -28,24 +28,24 @@ const publishedDate = computed(() => {
   return new Date(doc.value.published as unknown as string).toLocaleDateString(
     locale.value,
     {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     },
   )
 })
 
 useSeoMeta({
   ogImage: doc.value?.cover,
-  twitterCard: "summary_large_image",
-  articleAuthor: ["parz1"],
+  twitterCard: 'summary_large_image',
+  articleAuthor: ['parz1'],
 })
 
 useHead({
   link: [
     {
-      rel: "stylesheet",
-      href: "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css",
+      rel: 'stylesheet',
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css',
     },
   ],
   title: doc.value?.title,
@@ -63,7 +63,7 @@ const observerOptions = reactive({
 onMounted(() => {
   observer.value = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      const id = entry.target.getAttribute("id")
+      const id = entry.target.getAttribute('id')
       if (entry.isIntersecting) {
         activeTocId.value = id
       }
@@ -71,7 +71,7 @@ onMounted(() => {
   }, observerOptions)
 
   document
-    .querySelectorAll(".nuxt-content h2[id], .nuxt-content h3[id]")
+    .querySelectorAll('.nuxt-content h2[id], .nuxt-content h3[id]')
     .forEach((section) => {
       observer.value?.observe(section)
     })
@@ -113,7 +113,7 @@ onUnmounted(() => {
             <article>
               <div class="mb-6">
                 <div
-                  class="text-4xl font-bold font-sans text-black dark:text-white"
+                  class="text-4xl font-semibold font-serif leading-tight text-black dark:text-white"
                 >
                   {{ doc?.title }}
                 </div>

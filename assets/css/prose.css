@@ -3,6 +3,12 @@
 /* 容器：开大行距、去掉宽度限制（按文档站风格） */
 .prose {
   @apply leading-relaxed max-w-none;
+  font-family: var(--font-serif);
+  font-size: 1.04rem;
+  line-height: 1.82;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1;
   /* Typography 插件的颜色变量（亮色） */
   --tw-prose-body: theme(colors.gray.800);
   --tw-prose-headings: inherit;
@@ -46,6 +52,10 @@
 
 .prose :where(h1, h2, h3, h4, h5, h6) a {
   @apply font-bold text-gray-900 dark:text-gray-100;
+}
+
+.prose :where(code, kbd, samp, pre) {
+  font-family: var(--font-mono);
 }
 
 /* 标题尺寸与锚点滚动偏移（有固定头部时很关键） */
@@ -131,7 +141,6 @@
 .prose tbody tr:hover td {
   @apply bg-primary-50 dark:bg-primary-900/30 transition-colors;
 }
-
 
 /* 图片/图注 */
 .prose img {

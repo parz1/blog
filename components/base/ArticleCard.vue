@@ -13,12 +13,16 @@ const props = defineProps<{
 }>()
 
 const publishedDate = computed(() =>
-  props.article.published ? new Date(props.article.published as unknown as string) : null,
+  props.article.published
+    ? new Date(props.article.published as unknown as string)
+    : null,
 )
 
 const i18nTime = computed(() => {
   if (!publishedDate.value) return ''
-  return new Intl.DateTimeFormat(locale.value, { dateStyle: 'long' }).format(publishedDate.value)
+  return new Intl.DateTimeFormat(locale.value, { dateStyle: 'long' }).format(
+    publishedDate.value,
+  )
 })
 
 // 供 <time datetime> 使用，确保是有效 ISO
@@ -34,13 +38,13 @@ const languageBadges = computed(() => {
     new Set(
       languages
         .filter((lang): lang is string => Boolean(lang))
-        .map(lang => lang.toUpperCase())
-    )
+        .map((lang) => lang.toUpperCase()),
+    ),
   )
 
   const current = (props.article.lang as string | undefined)?.toUpperCase()
 
-  return normalized.map(code => ({
+  return normalized.map((code) => ({
     code,
     isCurrent: code === current,
   }))
@@ -49,7 +53,11 @@ const languageBadges = computed(() => {
 
 <template>
   <NuxtLink
-    :to="localePath(`/blog/${(article as any).slug ?? (article.path || '').split('/').pop()}`)"
+    :to="
+      localePath(
+        `/blog/${(article as any).slug ?? (article.path || '').split('/').pop()}`,
+      )
+    "
     class="group"
   >
     <article
@@ -60,8 +68,13 @@ const languageBadges = computed(() => {
           class="relative flex items-center text-sm text-gray-400 dark:text-gray-500 pl-3.5"
           :datetime="datetimeAttr"
         >
-          <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-            <span class="h-4 w-1 rounded-full bg-gray-200 dark:bg-gray-500"></span>
+          <span
+            class="absolute inset-y-0 left-0 flex items-center"
+            aria-hidden="true"
+          >
+            <span
+              class="h-4 w-1 rounded-full bg-gray-200 dark:bg-gray-500"
+            ></span>
           </span>
           {{ i18nTime }}
         </time>
@@ -81,7 +94,7 @@ const languageBadges = computed(() => {
         </div>
       </div>
       <h2
-        class="text-xl font-bold font-display tracking-tight text-gray-800 dark:text-gray-100 group-hover:text-primary-600"
+        class="text-xl font-medium font-serif leading-snug text-gray-800 dark:text-gray-100 group-hover:text-primary-600"
       >
         {{ article.title }}
       </h2>
@@ -92,7 +105,13 @@ const languageBadges = computed(() => {
         v-if="article.tags?.length"
         class="mt-2 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400"
       >
-        <UBadge v-for="tag in article.tags" :key="tag" color="neutral" size="md" variant="soft">
+        <UBadge
+          v-for="tag in article.tags"
+          :key="tag"
+          color="neutral"
+          size="md"
+          variant="soft"
+        >
           {{ tag }}
         </UBadge>
       </div>

@@ -15,7 +15,8 @@
     <UFooter>
       <template #left>
         <p class="text-muted text-sm">
-          Copyright © {{ new Date().getFullYear() }} parz1 • MIT License
+          Copyright © {{ new Date().getFullYear() }}
+          <span class="font-serif">parz1</span> • MIT License
         </p>
       </template>
     </UFooter>

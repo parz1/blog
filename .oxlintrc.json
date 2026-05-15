@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "vue", "promise", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "ignorePatterns": [
+    ".cache/**",
+    ".data/**",
+    ".nitro/**",
+    ".nuxt/**",
+    ".output/**",
+    ".vscode/**",
+    "coverage/**",
+    "content/.obsidian/**",
+    "dist/**",
+    "node_modules/**",
+    "public/**",
+    "pages/demo/geo.vue"
+  ],
+  "rules": {},
+  "env": {
+    "builtin": true
+  }
+}

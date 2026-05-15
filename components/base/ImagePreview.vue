@@ -34,11 +34,11 @@ const handleClose = () => {
         <UButton
           color="gray"
           variant="ghost"
-          icon="i-heroicons-x-mark"
+          icon="i-lucide-x"
           class="absolute top-2 right-2"
           @click="handleClose"
         />
       </div>
     </UModal>
   </div>
-</template> 
+</template>
