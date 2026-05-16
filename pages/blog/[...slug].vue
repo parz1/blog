@@ -203,7 +203,7 @@ useHead(() => ({
 
 <template>
   <main
-    class="mx-auto w-full max-w-[59.5rem] px-4 py-10 sm:px-6 lg:px-0 xl:max-w-[62.5rem]"
+    class="mx-auto w-full max-w-[56.5rem] px-4 py-10 sm:px-6 lg:px-0 xl:max-w-[58.5rem]"
   >
     <div v-if="!doc">
       <UEmpty
@@ -237,7 +237,7 @@ useHead(() => ({
         {{ t('menu.blog') }}
       </NuxtLink>
 
-      <header class="mb-10 max-w-[44rem] xl:max-w-[46rem]">
+      <header class="mb-10 max-w-[41rem] xl:max-w-[42rem]">
         <div class="mb-4 flex flex-wrap items-center gap-3">
           <UBadge v-if="kindLabel" color="neutral" variant="subtle">
             {{ kindLabel }}
@@ -273,7 +273,7 @@ useHead(() => ({
       </header>
 
       <div
-        class="grid gap-10 lg:grid-cols-[minmax(0,44rem)_13rem] xl:grid-cols-[minmax(0,46rem)_14rem]"
+        class="grid gap-10 lg:grid-cols-[minmax(0,41rem)_13rem] xl:grid-cols-[minmax(0,42rem)_14rem]"
       >
         <article class="min-w-0">
           <ContentRenderer

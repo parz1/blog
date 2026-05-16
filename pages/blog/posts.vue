@@ -21,7 +21,7 @@ const { data: articles } = await useAsyncData<SiteArticle[]>(
 </script>
 
 <template>
-  <main class="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-0">
+  <main class="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-0">
     <header class="mb-10">
       <p
         class="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400"
