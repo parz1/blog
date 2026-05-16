@@ -206,6 +206,8 @@
       "updated": "更新于 {date}",
       "emptyBody": "这个概念还没有正文。",
       "localGraph": "局部图谱",
+      "expandGraph": "打开局部图谱",
+      "closeGraph": "关闭局部图谱",
       "connections": "连接",
       "noConnections": "还没有显式连接。",
       "backlinks": "反向链接",

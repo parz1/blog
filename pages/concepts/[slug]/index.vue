@@ -238,7 +238,9 @@ useHead(() => ({
 </script>
 
 <template>
-  <main class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-0">
+  <main
+    class="mx-auto w-full max-w-[66.5rem] px-4 py-10 sm:px-6 lg:px-0 xl:max-w-[69.5rem]"
+  >
     <div v-if="!doc">
       <UEmpty
         icon="i-lucide-file-question"
@@ -271,7 +273,7 @@ useHead(() => ({
         {{ t('menu.concepts') }}
       </NuxtLink>
 
-      <header class="mb-10 max-w-3xl">
+      <header class="mb-7 max-w-[47rem] xl:max-w-[49.5rem]">
         <div class="mb-4 flex flex-wrap items-center gap-3">
           <ConceptStateBadge :state="doc.state" />
           <time class="text-sm text-gray-500 dark:text-gray-400">
@@ -304,7 +306,9 @@ useHead(() => ({
         </div>
       </header>
 
-      <div class="grid gap-10 lg:grid-cols-[minmax(0,42rem)_minmax(18rem,1fr)]">
+      <div
+        class="grid gap-10 lg:grid-cols-[minmax(0,47rem)_17rem] xl:grid-cols-[minmax(0,49.5rem)_17.5rem]"
+      >
         <article class="min-w-0">
           <ContentRenderer
             :value="doc"
@@ -316,12 +320,23 @@ useHead(() => ({
           </ContentRenderer>
         </article>
 
-        <aside class="space-y-7 pt-1 text-sm">
+        <aside
+          class="min-w-0 space-y-6 pt-3 pr-1 text-sm lg:sticky lg:top-[calc(var(--ui-header-height,4rem)+1.75rem)]"
+        >
           <section>
-            <h2
-              class="mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
-            >
-              {{ t('concepts.detail.localGraph') }}
+            <h2 class="mb-3 flex items-center justify-between gap-2">
+              <span
+                class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
+              >
+                {{ t('concepts.detail.localGraph') }}
+              </span>
+              <NuxtLink
+                :to="localePath(`/concepts/${doc.slug}/local-graph`)"
+                :aria-label="t('concepts.detail.expandGraph')"
+                class="text-gray-300 transition-colors hover:text-primary-500 dark:text-gray-700 dark:hover:text-primary-400"
+              >
+                <UIcon name="i-lucide-expand" class="size-3.5" />
+              </NuxtLink>
             </h2>
             <ConceptLocalGraph
               :current="{
@@ -332,6 +347,8 @@ useHead(() => ({
               :concepts="conceptNodes"
               :linked-concepts="activeLinkedConcepts"
               :relations="activeRelations"
+              orientation="vertical"
+              size="compact"
             />
           </section>
 

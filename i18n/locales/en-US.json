@@ -206,6 +206,8 @@
       "updated": "Updated {date}",
       "emptyBody": "This concept is still empty.",
       "localGraph": "Local graph",
+      "expandGraph": "Open local graph",
+      "closeGraph": "Close local graph",
       "connections": "Connections",
       "noConnections": "No explicit connections yet.",
       "backlinks": "Backlinks",

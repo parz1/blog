@@ -28,6 +28,7 @@ declare global {
     slug?: string
     path?: string
     description?: string
+    notice?: string
     published?: string
     lang?: string
     categories?: string[]

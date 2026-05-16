@@ -2,15 +2,12 @@
 title: Corepack
 slug: corepack
 description: What is corepack
+notice: This paragraph is mostly written by ChatGPT.
 published: 2024/05/24
 lang: cn
 ---
 
 ## What is Corepack
-
-::tip{icon="i-carbon-ai" title="Attention:"}
-This paragraph is mostly written by ChatGPT
-::
 
 `corepack` 是一个 Node.js 的工具，它被设计为一个零配置的包管理器前端，它允许开发者无缝地使用不同的包管理器，如 `yarn`、`pnpm` 和 `npm`。从 Node.js 版本 16.9.0 开始，`corepack` 被包含在 Node.js 的发行版中。
 

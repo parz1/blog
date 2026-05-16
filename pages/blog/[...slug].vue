@@ -237,7 +237,7 @@ useHead(() => ({
         {{ t('menu.blog') }}
       </NuxtLink>
 
-      <header class="mb-10 max-w-[41rem] xl:max-w-[42rem]">
+      <header class="mb-7 max-w-[41rem] xl:max-w-[42rem]">
         <div class="mb-4 flex flex-wrap items-center gap-3">
           <UBadge v-if="kindLabel" color="neutral" variant="subtle">
             {{ kindLabel }}
@@ -259,6 +259,17 @@ useHead(() => ({
         >
           {{ doc.description }}
         </p>
+
+        <div
+          v-if="doc.notice"
+          class="mt-5 flex items-start gap-2 text-sm leading-6 text-gray-500 dark:text-gray-500"
+        >
+          <UIcon
+            name="i-carbon-ai"
+            class="mt-1 size-4 shrink-0 text-gray-400 dark:text-gray-600"
+          />
+          <p>{{ doc.notice }}</p>
+        </div>
 
         <div v-if="doc.tags?.length" class="mt-5 flex flex-wrap gap-2">
           <UBadge

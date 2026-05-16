@@ -18,6 +18,8 @@ const props = defineProps<{
   concepts: ConceptNode[]
   linkedConcepts?: string[]
   relations?: ConceptRelation[]
+  orientation?: 'horizontal' | 'vertical'
+  size?: 'compact' | 'expanded'
 }>()
 
 const { t } = useI18n()
@@ -45,21 +47,31 @@ const relatedConcepts = computed(() =>
 )
 
 watchEffect(() => {
-  const currentX = 220
-  const centerY = 125
-  const relatedX = 35
+  const orientation = props.orientation ?? 'horizontal'
+  const expanded = props.size === 'expanded'
+  const currentX = orientation === 'vertical' ? (expanded ? 310 : 64) : 220
+  const currentY = orientation === 'vertical' ? 36 : 125
+  const relatedX = orientation === 'vertical' ? currentX : 35
   const relatedSpacing =
-    relatedConcepts.value.length > 1
-      ? Math.min(76, 210 / (relatedConcepts.value.length - 1))
-      : 0
+    orientation === 'vertical'
+      ? expanded
+        ? 86
+        : 64
+      : relatedConcepts.value.length > 1
+        ? Math.min(76, 210 / (relatedConcepts.value.length - 1))
+        : 0
   const relatedStartY =
-    centerY - (relatedSpacing * (relatedConcepts.value.length - 1)) / 2
+    orientation === 'vertical'
+      ? expanded
+        ? 160
+        : 120
+      : currentY - (relatedSpacing * (relatedConcepts.value.length - 1)) / 2
 
   const nodes: Elements = [
     {
       id: props.current.slug,
       label: props.current.title,
-      position: { x: currentX, y: centerY },
+      position: { x: currentX, y: currentY },
       class: 'concept-graph-node concept-graph-node-current',
     },
   ]
@@ -90,7 +102,8 @@ watchEffect(() => {
 
 <template>
   <div
-    class="h-80 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+    class="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+    :class="size === 'expanded' ? 'h-[34rem]' : 'h-72'"
   >
     <VueFlow
       v-if="relatedConcepts.length"
@@ -103,7 +116,11 @@ watchEffect(() => {
       :zoom-on-pinch="false"
       :zoom-on-double-click="false"
       :fit-view-on-init="false"
-      :default-viewport="{ x: 0, y: 0, zoom: 1 }"
+      :default-viewport="{
+        x: 0,
+        y: 0,
+        zoom: size === 'expanded' ? 1 : 0.9,
+      }"
       class="concept-local-graph"
     />
     <div

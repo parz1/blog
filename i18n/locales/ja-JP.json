@@ -206,6 +206,8 @@
       "updated": "{date} 更新",
       "emptyBody": "この概念にはまだ本文がありません。",
       "localGraph": "ローカルグラフ",
+      "expandGraph": "ローカルグラフを開く",
+      "closeGraph": "ローカルグラフを閉じる",
       "connections": "つながり",
       "noConnections": "明示的なつながりはまだありません。",
       "backlinks": "バックリンク",
