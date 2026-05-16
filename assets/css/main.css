@@ -40,6 +40,10 @@ body,
   overflow-x: clip;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 :root {
   /* --ui-primary: black; */
   --ui-secondary: var(--ui-color-neutral-500);

@@ -45,6 +45,7 @@ const currentIcon = computed(() => {
 
 <template>
   <UDropdownMenu
+    :modal="false"
     mode="hover"
     :items="items"
     :content="{ align: 'end', side: 'bottom' }"
@@ -54,6 +55,7 @@ const currentIcon = computed(() => {
       color="neutral"
       :icon="currentIcon"
       aria-label="Toggle Theme"
+      @mousedown.prevent
     />
     <!-- <UButton variant="ghost" color="neutral" :icon="currentIcon" aria-label="Toggle Theme" /> -->
     <!-- <UButton label="Open" icon="i-lucide-menu" color="neutral" variant="outline" /> -->

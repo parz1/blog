@@ -23,6 +23,45 @@ const isActivePath = (path?: string | null) => {
   return normalizedRoutePath.value.startsWith(target)
 }
 
+const lastNonZeroScrollY = ref(0)
+
+const syncLastScrollY = () => {
+  if (window.scrollY > 4) lastNonZeroScrollY.value = window.scrollY
+}
+
+const restoreDropdownScroll = (event: MouseEvent) => {
+  const target = event.target
+  if (!(target instanceof Element)) return
+
+  const trigger = target.closest(
+    'button[aria-label="Switch language"], button[aria-label="Toggle Theme"]',
+  )
+  if (!trigger) return
+
+  const scrollY = lastNonZeroScrollY.value
+  if (!scrollY) return
+
+  const restore = () => {
+    if (window.scrollY >= scrollY - 4) return
+
+    document.documentElement.scrollTop = scrollY
+    document.body.scrollTop = scrollY
+  }
+
+  requestAnimationFrame(restore)
+  window.setTimeout(restore, 0)
+  window.setTimeout(restore, 80)
+}
+
+onMounted(() => {
+  syncLastScrollY()
+  window.addEventListener('scroll', syncLastScrollY, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', syncLastScrollY)
+})
+
 const navLinks = computed<NavigationMenuItem[]>(() => [
   {
     label: t('menu.home'),
@@ -66,21 +105,25 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader
-    mode="slideover"
-    class="sticky top-0 z-50 backdrop-blur"
-    :to="localePath('/about')"
-    :ui="{ container: 'py-3' }"
+  <div
+    class="fixed inset-x-0 top-0 z-50"
+    @click.capture="restoreDropdownScroll"
   >
-    <template #title>
-      <span class="font-serif font-semibold">parz1</span>
-    </template>
+    <UHeader
+      mode="slideover"
+      class="backdrop-blur"
+      :to="localePath('/about')"
+      :ui="{ container: 'py-3' }"
+    >
+      <template #title>
+        <span class="font-serif font-semibold">parz1</span>
+      </template>
 
-    <UNavigationMenu class="w-100 flex justify-center" :items="navLinks" />
+      <UNavigationMenu class="w-100 flex justify-center" :items="navLinks" />
 
-    <template #right>
-      <div class="hidden md:flex items-center gap-2">
-        <!-- <nav class="items-center gap-0 text-xl">
+      <template #right>
+        <div class="hidden md:flex items-center gap-2">
+          <!-- <nav class="items-center gap-0 text-xl">
           <template v-for="link in navLinks" :key="link.label">
             <ULink
               v-if="link.to"
@@ -94,41 +137,7 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
             </span>
           </template>
         </nav> -->
-        <UContentSearchButton :collapsed="false" />
-        <LanguageSwitch />
-        <ThemeSwitcher />
-        <UButton
-          icon="i-carbon-logo-github"
-          color="neutral"
-          variant="ghost"
-          aria-label="GitHub"
-          to="https://github.com/parz1/blog"
-          target="_blank"
-        />
-      </div>
-    </template>
-
-    <template #content="{ close }">
-      <div class="p-6 space-y-6">
-        <div class="flex items-center justify-between">
-          <NuxtLink
-            :to="localePath('/')"
-            class="font-serif text-2xl font-semibold"
-          >
-            <span>parz1</span>
-          </NuxtLink>
-          <UButton
-            icon="i-lucide-x"
-            color="neutral"
-            variant="ghost"
-            aria-label="Close navigation"
-            @click="close?.()"
-          />
-        </div>
-
-        <UNavigationMenu orientation="vertical" :items="navLinks" />
-
-        <div class="flex items-center gap-3">
+          <UContentSearchButton :collapsed="false" />
           <LanguageSwitch />
           <ThemeSwitcher />
           <UButton
@@ -138,11 +147,47 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
             aria-label="GitHub"
             to="https://github.com/parz1/blog"
             target="_blank"
-            class="ml-auto"
-            @click="close?.()"
           />
         </div>
-      </div>
-    </template>
-  </UHeader>
+      </template>
+
+      <template #content="{ close }">
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <NuxtLink
+              :to="localePath('/')"
+              class="font-serif text-2xl font-semibold"
+            >
+              <span>parz1</span>
+            </NuxtLink>
+            <UButton
+              icon="i-lucide-x"
+              color="neutral"
+              variant="ghost"
+              aria-label="Close navigation"
+              @click="close?.()"
+            />
+          </div>
+
+          <UNavigationMenu orientation="vertical" :items="navLinks" />
+
+          <div class="flex items-center gap-3">
+            <LanguageSwitch />
+            <ThemeSwitcher />
+            <UButton
+              icon="i-carbon-logo-github"
+              color="neutral"
+              variant="ghost"
+              aria-label="GitHub"
+              to="https://github.com/parz1/blog"
+              target="_blank"
+              class="ml-auto"
+              @click="close?.()"
+            />
+          </div>
+        </div>
+      </template>
+    </UHeader>
+  </div>
+  <div aria-hidden="true" class="h-[var(--ui-header-height,4rem)]"></div>
 </template>
