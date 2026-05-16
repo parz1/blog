@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { BlogCollectionItem } from '@nuxt/content'
 import { type Ref } from 'vue'
 // Tooltip 外层需要一层 Provider，因为是脱离UApp独立渲染
 import { TooltipProvider } from 'reka-ui'
 
 const props = defineProps<{
   active: ComputedRef<boolean>
-  data: Ref<BlogCollectionItem> | BlogCollectionItem
+  data: Ref<SiteArticle> | SiteArticle
 }>()
 
 const emits = defineEmits(['click', 'focus', 'recover'])

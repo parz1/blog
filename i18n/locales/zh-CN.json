@@ -10,6 +10,8 @@
     "logsDescription": "开发记录、配置笔记和学习过程",
     "crap": "扯",
     "crapDescription": "扯淡随机的东西",
+    "concepts": "概念",
+    "conceptsDescription": "持续演化的概念笔记和研究节点",
     "about": "关于",
     "gallery": "画廊"
   },
@@ -158,7 +160,61 @@
   },
   "contentKind": {
     "post": "文章",
-    "log": "札记"
+    "log": "札记",
+    "crap": "散记"
+  },
+  "blog": {
+    "kicker": "写作",
+    "description": "文章、札记和一些松散片段，按时间组织在同一个写作流里。",
+    "all": "全部",
+    "sidebar": {
+      "onThisPage": "本文目录",
+      "concepts": "相关概念",
+      "noConcepts": "No concepts yet.",
+      "backlinks": "反向链接",
+      "noBacklinks": "No backlinks yet.",
+      "details": "文章信息",
+      "collection": "集合",
+      "published": "发布于",
+      "languages": "语言",
+      "tags": "标签"
+    }
+  },
+  "concepts": {
+    "kicker": "数字花园",
+    "description": "围绕研究、工程、产品思考和世界观持续演化的概念笔记。这里不是最终定义，而是仍在工作的思考节点。",
+    "filters": {
+      "state": "状态",
+      "tag": "标签"
+    },
+    "states": {
+      "seed": "种子",
+      "growing": "生长中",
+      "mature": "成熟",
+      "shifting": "变化中"
+    },
+    "empty": {
+      "title": "没有找到概念",
+      "description": "试试换一个状态或标签筛选。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "没有找到这个概念",
+        "description": "你正在寻找的概念节点还不存在。"
+      },
+      "backToConcepts": "返回概念",
+      "updated": "更新于 {date}",
+      "emptyBody": "这个概念还没有正文。",
+      "localGraph": "局部图谱",
+      "connections": "连接",
+      "noConnections": "还没有显式连接。",
+      "backlinks": "反向链接",
+      "noBacklinks": "还没有反向链接。",
+      "mentions": "写作中提到",
+      "noMentions": "还没有写作提到这个概念。",
+      "relatedProjects": "相关项目",
+      "noGraphLinks": "这个概念还没有可见连接。"
+    }
   },
   "introCard": {
     "avatarAlt": "parz1 的头像",

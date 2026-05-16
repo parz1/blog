@@ -10,6 +10,8 @@
     "logsDescription": "開発ログ、設定メモ、学習の記録",
     "crap": "デタラメ",
     "crapDescription": "ランダムなものとナンセンス",
+    "concepts": "Concepts",
+    "conceptsDescription": "変化し続ける概念ノートと研究ノード",
     "about": "私について",
     "gallery": " ギャラリー"
   },
@@ -158,7 +160,61 @@
   },
   "contentKind": {
     "post": "記事",
-    "log": "メモ"
+    "log": "メモ",
+    "crap": "断片"
+  },
+  "blog": {
+    "kicker": "Writing",
+    "description": "記事、メモ、ゆるい断片を時系列でまとめた書き物の流れです。",
+    "all": "すべて",
+    "sidebar": {
+      "onThisPage": "目次",
+      "concepts": "関連する概念",
+      "noConcepts": "No concepts yet.",
+      "backlinks": "バックリンク",
+      "noBacklinks": "No backlinks yet.",
+      "details": "記事情報",
+      "collection": "コレクション",
+      "published": "公開日",
+      "languages": "言語",
+      "tags": "タグ"
+    }
+  },
+  "concepts": {
+    "kicker": "Digital garden",
+    "description": "研究、エンジニアリング、プロダクト思考、世界観に影響する概念を育てていくノートです。完成した定義ではなく、作業中の思考ノードとして扱います。",
+    "filters": {
+      "state": "状態",
+      "tag": "タグ"
+    },
+    "states": {
+      "seed": "seed",
+      "growing": "growing",
+      "mature": "mature",
+      "shifting": "shifting"
+    },
+    "empty": {
+      "title": "概念が見つかりません",
+      "description": "別の状態やタグで絞り込んでみてください。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "概念が見つかりません",
+        "description": "探している概念ノードはまだ存在しません。"
+      },
+      "backToConcepts": "Concepts に戻る",
+      "updated": "{date} 更新",
+      "emptyBody": "この概念にはまだ本文がありません。",
+      "localGraph": "ローカルグラフ",
+      "connections": "つながり",
+      "noConnections": "明示的なつながりはまだありません。",
+      "backlinks": "バックリンク",
+      "noBacklinks": "バックリンクはまだありません。",
+      "mentions": "書き物での言及",
+      "noMentions": "この概念に言及している書き物はまだありません。",
+      "relatedProjects": "関連プロジェクト",
+      "noGraphLinks": "この概念にはまだ表示できるリンクがありません。"
+    }
   },
   "introCard": {
     "avatarAlt": "parz1のアバター",

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { BlogCollectionItem } from '@nuxt/content'
-
 const props = withDefaults(
   defineProps<{
     activeTocId?: string | null
-    doc: BlogCollectionItem | null | undefined
+    doc: SiteArticle | null | undefined
   }>(),
   {},
 )

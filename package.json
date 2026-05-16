@@ -54,6 +54,7 @@
     "pg": "^8.20.0",
     "rehype-katex": "^7.0.1",
     "remark-emoji": "^4.0.1",
+    "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "sitemap": "^9.0.1",
     "swiper": "^12.1.4",

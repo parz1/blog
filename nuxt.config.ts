@@ -37,6 +37,7 @@ export default defineNuxtConfig({
         '@deck.gl/layers',
         '@deck.gl/mapbox',
         '@vercel/analytics',
+        '@vue-flow/core',
         '@vue/devtools-core',
         '@vue/devtools-kit',
         '@vueuse/core',
@@ -111,6 +112,7 @@ export default defineNuxtConfig({
         remarkPlugins: {
           'remark-math': {},
           'remark-emoji': {},
+          'remark-gfm': {},
         },
         rehypePlugins: {
           'rehype-katex': { output: 'html' },

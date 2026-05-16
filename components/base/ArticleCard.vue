@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import type { BlogCollectionItem } from '@nuxt/content'
-
-type ArticleWithLang = BlogCollectionItem & {
-  activityKind?: 'post' | 'log'
-  availableLangs?: string[]
-}
-
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 const props = defineProps<{
-  article: ArticleWithLang
+  article: SiteArticle
 }>()
 
 const publishedDate = computed(() =>
@@ -63,6 +56,11 @@ const activityBadge = computed(() => {
         color: 'neutral',
         label: t('contentKind.log'),
       }
+    case 'crap':
+      return {
+        color: 'warning',
+        label: t('contentKind.crap'),
+      }
     default:
       return null
   }
@@ -73,17 +71,17 @@ const activityBadge = computed(() => {
   <NuxtLink
     :to="
       localePath(
-        `/blog/${(article as any).slug ?? (article.path || '').split('/').pop()}`,
+        `/blog/${article.slug ?? (article.path || '').split('/').pop()}`,
       )
     "
     class="group"
   >
     <article
-      class="rounded-xl p-2 transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+      class="rounded-lg border border-transparent px-3 py-4 transition-colors duration-200 hover:border-gray-200 hover:bg-gray-50/70 dark:hover:border-gray-800 dark:hover:bg-gray-900/50"
     >
-      <div class="flex flex-wrap items-center gap-4">
+      <div class="mb-2 flex flex-wrap items-center gap-3">
         <time
-          class="relative flex items-center text-sm text-gray-400 dark:text-gray-500 pl-3.5"
+          class="relative flex items-center pl-3.5 text-sm text-gray-400 dark:text-gray-500"
           :datetime="datetimeAttr"
         >
           <span
@@ -120,11 +118,14 @@ const activityBadge = computed(() => {
         </div>
       </div>
       <h2
-        class="text-xl font-medium font-serif leading-snug text-gray-800 dark:text-gray-100 group-hover:text-primary-600"
+        class="font-serif text-xl font-medium leading-snug text-gray-900 group-hover:text-primary-600 dark:text-gray-100"
       >
         {{ article.title }}
       </h2>
-      <p class="relative z-10 text-sm text-gray-600 dark:text-gray-400">
+      <p
+        v-if="article.description"
+        class="relative z-10 mt-1 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+      >
         {{ article.description }}
       </p>
       <div

@@ -10,6 +10,8 @@
     "logsDescription": "Devlogs, setup notes, and learning traces",
     "crap": "Crap",
     "crapDescription": "Random stuff and nonsense",
+    "concepts": "Concepts",
+    "conceptsDescription": "Evolving concept notes and research nodes",
     "about": "About Me",
     "gallery": "Gallery"
   },
@@ -158,7 +160,61 @@
   },
   "contentKind": {
     "post": "Essay",
-    "log": "Note"
+    "log": "Note",
+    "crap": "Loose"
+  },
+  "blog": {
+    "kicker": "Writing",
+    "description": "Essays, notes, and loose fragments collected in one chronological stream.",
+    "all": "All",
+    "sidebar": {
+      "onThisPage": "On this page",
+      "concepts": "Concepts",
+      "noConcepts": "No concepts yet.",
+      "backlinks": "Backlinks",
+      "noBacklinks": "No backlinks yet.",
+      "details": "Details",
+      "collection": "Collection",
+      "published": "Published",
+      "languages": "Languages",
+      "tags": "Tags"
+    }
+  },
+  "concepts": {
+    "kicker": "Digital garden",
+    "description": "Evolving notes around the concepts that shape my research, engineering, product thinking, and worldview. These are working nodes, not final definitions.",
+    "filters": {
+      "state": "state",
+      "tag": "tag"
+    },
+    "states": {
+      "seed": "seed",
+      "growing": "growing",
+      "mature": "mature",
+      "shifting": "shifting"
+    },
+    "empty": {
+      "title": "No concepts found",
+      "description": "Try a different state or tag filter."
+    },
+    "detail": {
+      "notFound": {
+        "title": "Concept not found",
+        "description": "The concept node you are looking for does not exist yet."
+      },
+      "backToConcepts": "Back to Concepts",
+      "updated": "Updated {date}",
+      "emptyBody": "This concept is still empty.",
+      "localGraph": "Local graph",
+      "connections": "Connections",
+      "noConnections": "No explicit connections yet.",
+      "backlinks": "Backlinks",
+      "noBacklinks": "No backlinks yet.",
+      "mentions": "Mentioned in writing",
+      "noMentions": "No writing mentions this concept yet.",
+      "relatedProjects": "Related projects",
+      "noGraphLinks": "This concept does not have visible links yet."
+    }
   },
   "introCard": {
     "avatarAlt": "Portrait of parz1",

@@ -1,78 +1,77 @@
 <script setup lang="ts">
-import type { BlogCollectionItem } from '@nuxt/content'
+const { locale, t } = useI18n()
 
-type ArticleWithLang = BlogCollectionItem & {
-  availableLangs: string[]
-}
-
-const { locale } = useI18n()
-
-const { data: articles } = await useAsyncData<ArticleWithLang[]>(
-  'posts',
+const { data: articles } = await useAsyncData<SiteArticle[]>(
+  'blog-index',
   async () => {
-    const allArticles = await queryCollection('blog')
-      .order('published', 'DESC')
-      .all()
+    const [posts, logs, crap] = await Promise.all([
+      queryCollection('posts').order('published', 'DESC').all(),
+      queryCollection('logs').order('published', 'DESC').all(),
+      queryCollection('crap').order('published', 'DESC').all(),
+    ])
 
-    const groups = new Map<string, BlogCollectionItem[]>()
-
-    for (const article of allArticles) {
-      const key = article.slug
-      if (!key) continue
-      if (!groups.has(key)) groups.set(key, [])
-      groups.get(key)!.push(article)
-    }
-
-    const normalizeLocale = (value: string) => {
-      // 只保留语言代码的主部分，例如 "en-US" -> "en"
-      // 中文特殊处理为 "zh"
-      if (value.toLowerCase().startsWith('zh')) return 'cn'
-      return value.toLowerCase().split('-')[0]
-    }
-
-    const localeCode = normalizeLocale(locale.value)
-
-    const merged: ArticleWithLang[] = []
-
-    for (const group of groups.values()) {
-      const availableLangs = Array.from(
-        new Set(
-          group
-            .map((entry) => (entry.lang as string | undefined)?.toLowerCase())
-            .filter(Boolean) as string[],
-        ),
-      )
-
-      const primary =
-        group.find(
-          (entry) =>
-            (entry.lang as string | undefined)?.toLowerCase() === localeCode,
-        ) ||
-        group.find(
-          (entry) => (entry.lang as string | undefined)?.toLowerCase() === 'en',
-        ) ||
-        group[0]
-
-      merged.push({
-        ...(primary as BlogCollectionItem),
-        availableLangs,
-      })
-    }
-
-    return merged
+    return mergeLocalizedArticles(
+      [
+        ...posts.map((article) => ({
+          ...article,
+          activityKind: 'post' as const,
+        })),
+        ...logs.map((article) => ({
+          ...article,
+          activityKind: 'log' as const,
+        })),
+        ...crap.map((article) => ({
+          ...article,
+          activityKind: 'crap' as const,
+        })),
+      ],
+      locale.value,
+    )
   },
   {
     watch: [() => locale.value],
   },
 )
+
+useHead({
+  title: 'Blog',
+})
 </script>
 
 <template>
-  <div class="py-8 flex justify-center">
-    <ul class="space-y-0 max-w-4xl w-full">
-      <li v-for="(article, index) in articles" :key="index">
+  <main class="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-0">
+    <header class="mb-10">
+      <p
+        class="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400"
+      >
+        {{ t('blog.kicker') }}
+      </p>
+      <h1
+        class="font-serif text-4xl font-semibold leading-tight text-gray-950 dark:text-gray-50"
+      >
+        {{ t('menu.blog') }}
+      </h1>
+      <p
+        class="mt-4 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-400"
+      >
+        {{ t('blog.description') }}
+      </p>
+    </header>
+
+    <BlogListTitle class="mb-8" />
+
+    <ul class="space-y-2">
+      <li v-for="article in articles" :key="article.slug ?? article.path">
         <BaseArticleCard :article="article" />
       </li>
     </ul>
-  </div>
+
+    <UEmpty
+      v-if="!articles?.length"
+      icon="i-lucide-file"
+      :title="$t('base.noBlogPosts')"
+      :description="$t('base.contentYouAreLookingForDoesNotExist')"
+      size="lg"
+    />
+  </main>
 </template>
