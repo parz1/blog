@@ -14,7 +14,7 @@ const {
 } = useClipboard({ source: source1 })
 
 // 第二个邮箱（アカデミックメール）
-const source2 = ref('parzivor@gmail.com')
+const source2 = ref('zhoulei@g.ecc.u-tokyo.ac.jp')
 const {
   text: text2,
   copy: copy2,
@@ -91,7 +91,9 @@ const handleCopyEmailToClipboard2 = () => copy2()
     </div>
     <div class="flex items-center -mt-1">
       <div class="underline font-serif">
-        <a href="mailto:parzivor@gmail.com" @click.stop> parzivor@gmail.com </a>
+        <a href="mailto:zhoulei@g.ecc.u-tokyo.ac.jp" @click.stop>
+          zhoulei@g.ecc.u-tokyo.ac.jp
+        </a>
       </div>
       <UButton
         :icon="copied2 ? 'i-carbon-checkmark' : 'i-carbon-copy'"
