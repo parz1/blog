@@ -65,6 +65,8 @@ const activityBadge = computed(() => {
       return null
   }
 })
+
+const articleLang = computed(() => toHtmlLang(props.article.lang))
 </script>
 
 <template>
@@ -77,6 +79,7 @@ const activityBadge = computed(() => {
     class="group"
   >
     <article
+      :lang="articleLang"
       class="rounded-lg border border-transparent px-3 py-4 transition-colors duration-200 hover:border-gray-200 hover:bg-gray-50/70 dark:hover:border-gray-800 dark:hover:bg-gray-900/50"
     >
       <div class="mb-2 flex flex-wrap items-center gap-3">
@@ -118,13 +121,13 @@ const activityBadge = computed(() => {
         </div>
       </div>
       <h2
-        class="font-serif text-xl font-medium leading-snug text-gray-900 group-hover:text-primary-600 dark:text-gray-100"
+        class="content-title font-serif text-xl font-medium leading-snug text-gray-900 group-hover:text-primary-600 dark:text-gray-100"
       >
         {{ article.title }}
       </h2>
       <p
         v-if="article.description"
-        class="relative z-10 mt-1 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+        class="content-description relative z-10 mt-1 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
       >
         {{ article.description }}
       </p>

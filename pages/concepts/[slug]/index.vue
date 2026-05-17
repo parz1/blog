@@ -121,6 +121,8 @@ const currentConceptVariants = computed(() =>
 
 const doc = computed(() => pickLocalized(currentConceptVariants.value))
 
+const renderedLang = computed(() => toHtmlLang(doc.value?.lang ?? locale.value))
+
 const conceptNodes = computed<ConceptNode[]>(() =>
   visibleConcepts.value.map((concept) => ({
     title: concept.title,
@@ -273,7 +275,10 @@ useHead(() => ({
         {{ t('menu.concepts') }}
       </NuxtLink>
 
-      <header class="mb-7 max-w-[47rem] xl:max-w-[49.5rem]">
+      <header
+        :lang="renderedLang"
+        class="mb-7 max-w-[47rem] xl:max-w-[49.5rem]"
+      >
         <div class="mb-4 flex flex-wrap items-center gap-3">
           <ConceptStateBadge :state="doc.state" />
           <time class="text-sm text-gray-500 dark:text-gray-400">
@@ -282,14 +287,14 @@ useHead(() => ({
         </div>
 
         <h1
-          class="font-serif text-4xl font-semibold leading-tight text-gray-950 dark:text-gray-50"
+          class="content-title font-serif text-4xl font-semibold leading-tight text-gray-950 dark:text-gray-50"
         >
           {{ doc.title }}
         </h1>
 
         <p
           v-if="doc.summary"
-          class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400"
+          class="content-description mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400"
         >
           {{ doc.summary }}
         </p>
@@ -312,6 +317,7 @@ useHead(() => ({
         <article class="min-w-0">
           <ContentRenderer
             :value="doc"
+            :lang="renderedLang"
             class="nuxt-content prose dark:prose-invert min-w-0 max-w-full"
           >
             <template #empty>

@@ -58,6 +58,11 @@
   overflow-wrap: break-word;
 }
 
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
+  letter-spacing: 0;
+}
+
 .prose a {
   overflow-wrap: anywhere;
 }
@@ -85,7 +90,7 @@
 
 /* 标题尺寸与锚点滚动偏移（有固定头部时很关键） */
 .prose h1 {
-  @apply text-3xl font-extrabold tracking-tight mt-8 mb-4 scroll-mt-24;
+  @apply text-3xl font-extrabold mt-8 mb-4 scroll-mt-24;
 }
 .prose h2 {
   @apply text-3xl font-bold leading-9 mt-4 mb-4 scroll-mt-24;
@@ -214,22 +219,51 @@
   @apply ml-0.5 rounded-sm px-0.5 text-xs;
 }
 
+.content-title {
+  text-wrap: balance;
+  letter-spacing: 0;
+}
+
+.content-description {
+  text-wrap: pretty;
+}
+
+.prose:lang(zh) p,
+.prose:lang(zh-CN) p,
+.prose:lang(ja) p,
+.prose:lang(ja-JP) p,
+.content-description:lang(zh),
+.content-description:lang(zh-CN),
+.content-description:lang(ja),
+.content-description:lang(ja-JP) {
+  text-wrap: wrap;
+}
+
 /* 分割线更淡 */
 .prose hr {
   @apply my-6 border-gray-200 dark:border-gray-700;
 }
 
 @media (max-width: 640px) {
+  .prose:lang(zh),
+  .prose:lang(zh-CN),
+  .prose:lang(ja),
+  .prose:lang(ja-JP) {
+    line-break: strict;
+    word-break: normal;
+  }
+
+  .prose:lang(zh) p,
   .prose:lang(zh-CN) p,
   .prose:lang(ja) p,
   .prose:lang(ja-JP) p {
-    line-break: loose;
-    text-align: justify;
-    text-align-last: start;
-    text-justify: inter-character;
+    text-align: start;
+    text-align-last: auto;
+    text-justify: auto;
   }
 
   @supports (word-break: auto-phrase) {
+    .prose:lang(zh) p,
     .prose:lang(zh-CN) p,
     .prose:lang(ja) p,
     .prose:lang(ja-JP) p {

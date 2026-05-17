@@ -3,6 +3,15 @@ export const normalizeContentLocale = (value: string) => {
   return value.toLowerCase().split('-')[0]
 }
 
+export const toHtmlLang = (value?: string) => {
+  const lang = value?.toLowerCase()
+  if (!lang) return 'en'
+  if (lang === 'cn' || lang.startsWith('zh')) return 'zh-CN'
+  if (lang === 'ja' || lang.startsWith('ja')) return 'ja-JP'
+  if (lang === 'en' || lang.startsWith('en')) return 'en'
+  return lang
+}
+
 export const mergeLocalizedArticles = <T extends SiteArticle>(
   articles: T[],
   locale: string,
