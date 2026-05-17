@@ -5,6 +5,7 @@
     "dev": "nuxt dev",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
+    "gallery:import": "node .local/scripts/gallery-import.mjs",
     "generate": "nuxt generate",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",

@@ -95,7 +95,11 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     to: localePath('/concepts'),
     active: isActivePath('/concepts'),
   },
-  { label: t('menu.gallery'), to: undefined, active: false },
+  {
+    label: t('menu.gallery'),
+    to: localePath('/gallery'),
+    active: isActivePath('/gallery'),
+  },
   {
     label: t('menu.demo'),
     to: localePath('/demo'),
