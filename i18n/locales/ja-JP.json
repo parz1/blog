@@ -1,5 +1,11 @@
 {
   "hello": "こんにちは",
+  "search": {
+    "title": "検索",
+    "description": "サイト内コンテンツを検索",
+    "placeholder": "記事、メモ、Concepts を検索...",
+    "empty": "一致するコンテンツはありません。"
+  },
   "menu": {
     "home": "ホーム",
     "demo": "デモ",

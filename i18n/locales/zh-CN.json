@@ -1,5 +1,11 @@
 {
   "hello": "你好",
+  "search": {
+    "title": "搜索",
+    "description": "搜索站内内容",
+    "placeholder": "搜索文章、札记、概念...",
+    "empty": "没有匹配的内容。"
+  },
   "menu": {
     "home": "首页",
     "demo": "演示",

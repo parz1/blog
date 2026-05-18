@@ -175,6 +175,8 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
 
           <UNavigationMenu orientation="vertical" :items="navLinks" />
 
+          <UContentSearchButton :collapsed="false" block @click="close?.()" />
+
           <div class="flex items-center gap-3">
             <LanguageSwitch />
             <ThemeSwitcher />

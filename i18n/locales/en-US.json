@@ -1,5 +1,11 @@
 {
   "hello": "Hello",
+  "search": {
+    "title": "Search",
+    "description": "Search site content",
+    "placeholder": "Search articles, notes, concepts...",
+    "empty": "No matching content."
+  },
   "menu": {
     "home": "Home",
     "demo": "Demo",

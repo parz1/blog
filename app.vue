@@ -5,6 +5,9 @@
 <template>
   <UApp>
     <Header />
+    <ClientOnly>
+      <LazySiteSearch />
+    </ClientOnly>
 
     <UMain>
       <NuxtLayout>
