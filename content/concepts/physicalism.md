@@ -8,8 +8,12 @@ tags:
   - mind
   - research
 updated: 2026-05-16
-linkedConcepts: []
-relations: []
+linkedConcepts:
+  - metacognition
+relations:
+  - concept: metacognition
+    type: relates
+relatedProjects: []
 aliases:
   - 物理主义
   - physicalist view
@@ -30,7 +34,9 @@ Physicalism gives me a way to stay honest about that bridge. It keeps abstract i
 
 ## Connections
 
-This node will probably connect to future notes on embodiment, fatigue, interaction, memory systems, multimodal sensing, and AI-native software. For now, it is the first anchor for a larger question: how can personal and cognitive phenomena be handled technically without flattening them?
+This node connects to [[metacognition]] because reflection about thinking is still a situated activity: it depends on memory, attention, language, bodily state, tools, and feedback from the environment.
+
+It will probably connect to future notes on embodiment, fatigue, interaction, memory systems, multimodal sensing, and AI-native software. For now, it is an anchor for a larger question: how can personal and cognitive phenomena be handled technically without flattening them?
 
 ## Tensions
 
@@ -45,3 +51,4 @@ The main tension is reduction. A physicalist framing can make a system more conc
 ## Evolution
 
 - 2026-05-16: Initial seed node, mostly a philosophical anchor for future research and builder notes.
+- 2026-05-19: Mirrored into the research vault and linked to [[metacognition]].
