@@ -20,7 +20,8 @@ relations:
     type: depends-on
   - concept: baseline
     type: relates
-relatedProjects: []
+relatedProjects:
+  - leclog
 aliases:
   - protocol
   - 协议

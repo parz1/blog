@@ -20,7 +20,8 @@ relations:
     type: depends-on
   - concept: fitting
     type: relates
-relatedProjects: []
+relatedProjects:
+  - leclog
 aliases:
   - reference point
   - benchmark

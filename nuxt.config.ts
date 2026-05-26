@@ -180,7 +180,7 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    githubToken: process.env.NUXT_GITHUB_TOKEN,
+    githubToken: process.env.NUXT_GITHUB_TOKEN || process.env.GITHUB_TOKEN,
   },
 
   devtools: {

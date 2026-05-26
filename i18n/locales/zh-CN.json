@@ -3,12 +3,14 @@
   "search": {
     "title": "搜索",
     "description": "搜索站内内容",
-    "placeholder": "搜索文章、札记、概念...",
+    "placeholder": "搜索文章、札记、概念、项目...",
     "empty": "没有匹配的内容。"
   },
   "menu": {
     "home": "首页",
     "demo": "演示",
+    "demoDescription": "小型交互和渲染实验",
+    "lab": "实验室",
     "blog": "博客",
     "posts": "文章",
     "postsDescription": "整理过的长文和完整观点",
@@ -18,6 +20,8 @@
     "crapDescription": "扯淡随机的东西",
     "concepts": "概念",
     "conceptsDescription": "持续演化的概念笔记和研究节点",
+    "projects": "项目",
+    "projectsDescription": "正在开发的工具、实验和产品工作",
     "about": "关于",
     "gallery": "画廊"
   },
@@ -222,6 +226,43 @@
       "noMentions": "还没有写作提到这个概念。",
       "relatedProjects": "相关项目",
       "noGraphLinks": "这个概念还没有可见连接。"
+    }
+  },
+  "projects": {
+    "kicker": "项目索引",
+    "description": "用 wiki 的方式整理正在推进的项目、稳定项目说明、release 和仓库动态。",
+    "status": {
+      "active": "活跃",
+      "paused": "暂停",
+      "archived": "归档",
+      "experimental": "实验中"
+    },
+    "empty": {
+      "title": "还没有项目",
+      "description": "项目笔记会出现在这里。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "没有找到这个项目",
+        "description": "你正在寻找的项目页还不存在。"
+      },
+      "backToProjects": "返回项目",
+      "emptyBody": "这个项目笔记还没有正文。",
+      "relatedConcepts": "相关概念"
+    },
+    "github": {
+      "status": "GitHub 状态",
+      "stars": "stars",
+      "forks": "forks",
+      "issues": "issues",
+      "defaultBranch": "默认分支",
+      "pushedAt": "最近推送",
+      "latestRelease": "最新 release",
+      "recentCommits": "最近 commits",
+      "noRelease": "还没有 release",
+      "noCommits": "没有找到 commit。",
+      "unknown": "未知",
+      "loadFailed": "无法加载 GitHub 状态"
     }
   },
   "introCard": {

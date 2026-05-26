@@ -32,6 +32,33 @@ export default defineContentConfig({
         lang: z.enum(['cn', 'ja', 'en']).default('en').optional(),
       }),
     }),
+    projects: defineCollection({
+      type: 'page',
+      source: 'projects/*.md',
+      schema: z.object({
+        title: z.string(),
+        slug: z.string(),
+        summary: z.string(),
+        status: z.enum(['active', 'paused', 'archived', 'experimental']),
+        version: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+        updated: z.string(),
+        repo: z.object({
+          owner: z.string(),
+          name: z.string(),
+        }),
+        links: z
+          .array(
+            z.object({
+              label: z.string(),
+              url: z.string(),
+            }),
+          )
+          .optional(),
+        relatedConcepts: z.array(z.string()).optional(),
+        lang: z.enum(['cn', 'ja', 'en']).default('en').optional(),
+      }),
+    }),
     posts: defineCollection({
       type: 'page',
       source: 'blog/posts/*.md',

@@ -14,7 +14,8 @@ linkedConcepts:
 relations:
   - concept: protocol
     type: relates
-relatedProjects: []
+relatedProjects:
+  - leclog
 aliases:
   - daemon process
   - background process

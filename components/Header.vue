@@ -5,6 +5,7 @@ const route = useRoute()
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
+const { open: contentSearchOpen } = useContentSearch()
 
 const normalizePath = (path: string) => {
   const segments = path.split('/').filter(Boolean)
@@ -96,14 +97,25 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     active: isActivePath('/concepts'),
   },
   {
+    label: t('menu.lab'),
+    active: isActivePath('/projects') || isActivePath('/demo'),
+    children: [
+      {
+        label: t('menu.projects'),
+        to: localePath('/projects'),
+        description: t('menu.projectsDescription'),
+      },
+      {
+        label: t('menu.demo'),
+        to: localePath('/demo'),
+        description: t('menu.demoDescription'),
+      },
+    ],
+  },
+  {
     label: t('menu.gallery'),
     to: localePath('/gallery'),
     active: isActivePath('/gallery'),
-  },
-  {
-    label: t('menu.demo'),
-    to: localePath('/demo'),
-    active: isActivePath('/demo'),
   },
 ])
 </script>
@@ -123,7 +135,10 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
         <span class="font-serif font-semibold">parz1</span>
       </template>
 
-      <UNavigationMenu class="w-100 flex justify-center" :items="navLinks" />
+      <UNavigationMenu
+        class="min-w-0 flex-1 justify-center"
+        :items="navLinks"
+      />
 
       <template #right>
         <div class="hidden md:flex items-center gap-2">
@@ -141,7 +156,13 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
             </span>
           </template>
         </nav> -->
-          <UContentSearchButton :collapsed="false" />
+          <UButton
+            icon="i-lucide-search"
+            color="neutral"
+            variant="ghost"
+            :aria-label="t('search.title')"
+            @click="contentSearchOpen = true"
+          />
           <LanguageSwitch />
           <ThemeSwitcher />
           <UButton

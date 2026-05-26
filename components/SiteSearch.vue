@@ -5,13 +5,13 @@ import type {
   ContentSearchLink,
 } from '@nuxt/ui'
 
-type SearchCollection = 'posts' | 'logs' | 'crap' | 'concepts'
+type SearchCollection = 'posts' | 'logs' | 'crap' | 'concepts' | 'projects'
 
 type SearchCollectionConfig = {
   collection: SearchCollection
   labelKey: string
   icon: string
-  routeBase: 'blog' | 'concepts'
+  routeBase: 'blog' | 'concepts' | 'projects'
 }
 
 type SearchSection = {
@@ -66,6 +66,12 @@ const collections: SearchCollectionConfig[] = [
     icon: 'i-lucide-network',
     routeBase: 'concepts',
   },
+  {
+    collection: 'projects',
+    labelKey: 'menu.projects',
+    icon: 'i-lucide-folder-kanban',
+    routeBase: 'projects',
+  },
 ]
 
 const collectionConfigByName = Object.fromEntries(
@@ -108,7 +114,11 @@ const toSearchRoute = (
   if (!slug) return localizeSearchRoute(section.id)
 
   const path =
-    config.routeBase === 'concepts' ? `/concepts/${slug}` : `/blog/${slug}`
+    config.routeBase === 'concepts'
+      ? `/concepts/${slug}`
+      : config.routeBase === 'projects'
+        ? `/projects/${slug}`
+        : `/blog/${slug}`
 
   return localizeSearchRoute(`${path}${getHash(section.id)}`)
 }
@@ -160,19 +170,23 @@ const { data: searchItems, status } = await useLazyAsyncData(
       logSections,
       crapSections,
       conceptSections,
+      projectSections,
       posts,
       logs,
       crap,
       concepts,
+      projects,
     ] = await Promise.all([
       queryCollectionSearchSections('posts'),
       queryCollectionSearchSections('logs'),
       queryCollectionSearchSections('crap'),
       queryCollectionSearchSections('concepts'),
+      queryCollectionSearchSections('projects'),
       queryCollection('posts').all(),
       queryCollection('logs').all(),
       queryCollection('crap').all(),
       queryCollection('concepts').all(),
+      queryCollection('projects').all(),
     ])
 
     return {
@@ -184,6 +198,11 @@ const { data: searchItems, status } = await useLazyAsyncData(
         concepts,
         collectionConfigByName.concepts,
       ),
+      projects: mapSections(
+        projectSections,
+        projects,
+        collectionConfigByName.projects,
+      ),
     } satisfies Record<SearchCollection, SiteSearchItem[]>
   },
   {
@@ -192,6 +211,7 @@ const { data: searchItems, status } = await useLazyAsyncData(
       logs: [],
       crap: [],
       concepts: [],
+      projects: [],
     }),
     server: false,
   },
@@ -274,6 +294,12 @@ const links = computed<ContentSearchLink[]>(() => [
     description: t('menu.conceptsDescription'),
     to: localePath('/concepts'),
     icon: 'i-lucide-network',
+  },
+  {
+    label: t('menu.projects'),
+    description: t('menu.projectsDescription'),
+    to: localePath('/projects'),
+    icon: 'i-lucide-folder-kanban',
   },
   {
     label: t('menu.gallery'),

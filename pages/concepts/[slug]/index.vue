@@ -460,7 +460,13 @@ useHead(() => ({
             </h2>
             <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li v-for="project in activeRelatedProjects" :key="project">
-                {{ project }}
+                <NuxtLink
+                  :to="localePath(`/projects/${project}`)"
+                  class="inline-flex items-center gap-1 transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+                >
+                  <UIcon name="i-lucide-folder-kanban" class="size-3.5" />
+                  {{ project }}
+                </NuxtLink>
               </li>
             </ul>
           </section>

@@ -3,12 +3,14 @@
   "search": {
     "title": "検索",
     "description": "サイト内コンテンツを検索",
-    "placeholder": "記事、メモ、Concepts を検索...",
+    "placeholder": "記事、メモ、Concepts、Projects を検索...",
     "empty": "一致するコンテンツはありません。"
   },
   "menu": {
     "home": "ホーム",
     "demo": "デモ",
+    "demoDescription": "小さなインタラクションとレンダリング実験",
+    "lab": "Lab",
     "blog": "ブログ",
     "posts": "記事",
     "postsDescription": "整理した長文とまとまった考え",
@@ -18,6 +20,8 @@
     "crapDescription": "ランダムなものとナンセンス",
     "concepts": "Concepts",
     "conceptsDescription": "変化し続ける概念ノートと研究ノード",
+    "projects": "Projects",
+    "projectsDescription": "開発中のツール、実験、プロダクト",
     "about": "私について",
     "gallery": " ギャラリー"
   },
@@ -222,6 +226,43 @@
       "noMentions": "この概念に言及している書き物はまだありません。",
       "relatedProjects": "関連プロジェクト",
       "noGraphLinks": "この概念にはまだ表示できるリンクがありません。"
+    }
+  },
+  "projects": {
+    "kicker": "Project index",
+    "description": "進行中のプロジェクト、安定したプロジェクトノート、release、リポジトリ活動を wiki 風に整理します。",
+    "status": {
+      "active": "active",
+      "paused": "paused",
+      "archived": "archived",
+      "experimental": "experimental"
+    },
+    "empty": {
+      "title": "プロジェクトがありません",
+      "description": "プロジェクトノートはここに表示されます。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "プロジェクトが見つかりません",
+        "description": "探しているプロジェクトページはまだ存在しません。"
+      },
+      "backToProjects": "Projects に戻る",
+      "emptyBody": "このプロジェクトノートにはまだ本文がありません。",
+      "relatedConcepts": "関連 Concepts"
+    },
+    "github": {
+      "status": "GitHub status",
+      "stars": "stars",
+      "forks": "forks",
+      "issues": "issues",
+      "defaultBranch": "default",
+      "pushedAt": "last push",
+      "latestRelease": "Latest release",
+      "recentCommits": "Recent commits",
+      "noRelease": "No release yet",
+      "noCommits": "No commits found.",
+      "unknown": "unknown",
+      "loadFailed": "GitHub status を読み込めません"
     }
   },
   "introCard": {
