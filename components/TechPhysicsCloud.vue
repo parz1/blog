@@ -20,6 +20,18 @@ type Body = {
   y: number
 }
 
+type DragState = {
+  index: number
+  lastTime: number
+  lastX: number
+  lastY: number
+  offsetX: number
+  offsetY: number
+  pointerId: number
+  velocityX: number
+  velocityY: number
+}
+
 const props = defineProps<{
   items: TechCloudItem[]
 }>()
@@ -27,6 +39,8 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const container = ref<HTMLElement | null>(null)
+const draggingIndex = ref(-1)
+const hasEnteredViewport = ref(false)
 const hoverIndex = ref(-1)
 const ready = ref(false)
 const reducedMotion = ref(false)
@@ -76,8 +90,12 @@ const collisionGap = 2
 const collisionSlop = 0.65
 const sleepVelocity = 0.055
 const sleepRotation = 0.018
+const throwVelocityScale = 16.67
+const maxThrowVelocity = 18
 
+let dragState: DragState | undefined
 let frame = 0
+let intersectionObserver: IntersectionObserver | undefined
 let resizeObserver: ResizeObserver | undefined
 
 const clamp = (value: number, min: number, max: number) =>
@@ -88,7 +106,11 @@ const isIconifyIcon = (icon: string) => icon.startsWith('i-')
 const getBaseRadius = (item: TechCloudItem) => radiusBySize[item.size ?? 'md']
 
 const activeIndex = computed(() =>
-  hoverIndex.value >= 0 ? hoverIndex.value : selectedIndex.value,
+  draggingIndex.value >= 0
+    ? draggingIndex.value
+    : hoverIndex.value >= 0
+      ? hoverIndex.value
+      : selectedIndex.value,
 )
 
 const activeItem = computed(() =>
@@ -272,6 +294,16 @@ const step = () => {
     const item = props.items[index]
     const targetRadius = getTargetRadius(index)
     const radiusDelta = targetRadius - body.radius
+
+    if (draggingIndex.value === index) {
+      body.radius += radiusDelta * 0.24
+      body.supported = false
+      body.vr *= 0.86
+      body.rotation += body.vr
+      active = true
+      return
+    }
+
     const anchorX = getAnchorX(item)
     const floorY = bounds.height - floorInset - body.radius
     const restingOnFloor = body.y >= floorY - 0.4 && Math.abs(body.vy) < 0.08
@@ -329,6 +361,12 @@ const step = () => {
     const radiusDelta = targetRadius - body.radius
     const isSupported = supported[index]
 
+    if (draggingIndex.value === index) {
+      body.supported = false
+      active = true
+      return
+    }
+
     if (Math.abs(radiusDelta) < 0.08) {
       body.radius = targetRadius
     }
@@ -370,9 +408,164 @@ const step = () => {
 }
 
 const start = () => {
-  if (!frame && !reducedMotion.value && ready.value) {
+  if (
+    !frame &&
+    !reducedMotion.value &&
+    ready.value &&
+    hasEnteredViewport.value
+  ) {
     frame = requestAnimationFrame(step)
   }
+}
+
+const dropBodiesFromTop = () => {
+  if (hasEnteredViewport.value) {
+    return
+  }
+
+  hasEnteredViewport.value = true
+
+  bodies.forEach((body, index) => {
+    const direction = index % 2 === 0 ? 1 : -1
+
+    body.supported = false
+    body.vx += direction * (0.16 + (index % 4) * 0.025)
+    body.vy = 0.35 + (index % 5) * 0.08
+    body.vr += direction * 0.018
+  })
+
+  start()
+}
+
+const getPointerPosition = (event: PointerEvent) => {
+  const rect = container.value?.getBoundingClientRect()
+
+  if (!rect) {
+    return undefined
+  }
+
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top,
+  }
+}
+
+const moveDraggedBody = (event: PointerEvent) => {
+  if (!dragState || dragState.pointerId !== event.pointerId) {
+    return false
+  }
+
+  const body = bodies[dragState.index]
+  const pointer = getPointerPosition(event)
+
+  if (!body || !pointer) {
+    return false
+  }
+
+  const minX = wallInset + body.radius
+  const maxX = bounds.width - wallInset - body.radius
+  const minY = wallInset + body.radius
+  const maxY = bounds.height - floorInset - body.radius
+  const nextX = clamp(pointer.x - dragState.offsetX, minX, maxX)
+  const nextY = clamp(pointer.y - dragState.offsetY, minY, maxY)
+  const now = event.timeStamp || performance.now()
+  const dt = Math.max(8, now - dragState.lastTime)
+  const frameVelocityX =
+    ((pointer.x - dragState.lastX) / dt) * throwVelocityScale
+  const frameVelocityY =
+    ((pointer.y - dragState.lastY) / dt) * throwVelocityScale
+
+  dragState.velocityX = dragState.velocityX * 0.32 + frameVelocityX * 0.68
+  dragState.velocityY = dragState.velocityY * 0.32 + frameVelocityY * 0.68
+  dragState.lastX = pointer.x
+  dragState.lastY = pointer.y
+  dragState.lastTime = now
+
+  body.x = nextX
+  body.y = nextY
+  body.vx = dragState.velocityX
+  body.vy = dragState.velocityY
+  body.vr += clamp(dragState.velocityX, -8, 8) * 0.012
+  body.supported = false
+
+  start()
+  return true
+}
+
+const startDrag = (index: number, event: PointerEvent) => {
+  if (!ready.value || reducedMotion.value) {
+    return
+  }
+
+  if (!hasEnteredViewport.value) {
+    dropBodiesFromTop()
+  }
+
+  const body = bodies[index]
+  const pointer = getPointerPosition(event)
+
+  if (!body || !pointer) {
+    return
+  }
+
+  event.preventDefault()
+  event.stopPropagation()
+
+  const target = event.currentTarget
+
+  if (target instanceof HTMLElement) {
+    target.setPointerCapture(event.pointerId)
+  }
+
+  draggingIndex.value = index
+  selectedIndex.value = index
+  hoverIndex.value = index
+  dragState = {
+    index,
+    lastTime: event.timeStamp || performance.now(),
+    lastX: pointer.x,
+    lastY: pointer.y,
+    offsetX: pointer.x - body.x,
+    offsetY: pointer.y - body.y,
+    pointerId: event.pointerId,
+    velocityX: body.vx,
+    velocityY: body.vy,
+  }
+
+  body.vx = 0
+  body.vy = 0
+  body.supported = false
+  start()
+}
+
+const finishDrag = (event: PointerEvent) => {
+  if (!dragState || dragState.pointerId !== event.pointerId) {
+    return
+  }
+
+  moveDraggedBody(event)
+
+  const body = bodies[dragState.index]
+
+  if (body) {
+    body.vx = clamp(dragState.velocityX, -maxThrowVelocity, maxThrowVelocity)
+    body.vy = clamp(dragState.velocityY, -maxThrowVelocity, maxThrowVelocity)
+    body.vr += clamp(body.vx, -10, 10) * 0.018
+    body.supported = false
+  }
+
+  const target = event.currentTarget
+
+  if (
+    target instanceof HTMLElement &&
+    target.hasPointerCapture(event.pointerId)
+  ) {
+    target.releasePointerCapture(event.pointerId)
+  }
+
+  draggingIndex.value = -1
+  dragState = undefined
+  start()
 }
 
 const initializeBodies = () => {
@@ -401,9 +594,11 @@ const initializeBodies = () => {
 
     if (!wasReady) {
       body.x = clamp((item.x / 100) * bounds.width, minX, maxX)
-      body.y = clamp((item.y / 100) * bounds.height, minY, maxY)
+      body.y = reducedMotion.value
+        ? clamp((item.y / 100) * bounds.height, minY, maxY)
+        : minY
       body.vx = ((index % 5) - 2) * 0.08
-      body.vy = -0.2
+      body.vy = 0
       return
     }
 
@@ -416,6 +611,10 @@ const initializeBodies = () => {
 }
 
 const updateHoverFromPointer = (event: PointerEvent) => {
+  if (moveDraggedBody(event)) {
+    return
+  }
+
   if (!ready.value) {
     return
   }
@@ -464,6 +663,10 @@ const select = (index: number) => {
 }
 
 const clearHover = () => {
+  if (draggingIndex.value >= 0) {
+    return
+  }
+
   hoverIndex.value = -1
   start()
 }
@@ -482,6 +685,29 @@ onMounted(() => {
   if (container.value) {
     resizeObserver.observe(container.value)
   }
+
+  if (reducedMotion.value) {
+    hasEnteredViewport.value = true
+    return
+  }
+
+  intersectionObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        dropBodiesFromTop()
+        intersectionObserver?.disconnect()
+        intersectionObserver = undefined
+      }
+    },
+    {
+      rootMargin: '0px 0px -12% 0px',
+      threshold: 0.16,
+    },
+  )
+
+  if (container.value) {
+    intersectionObserver.observe(container.value)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -490,6 +716,7 @@ onBeforeUnmount(() => {
   }
 
   resizeObserver?.disconnect()
+  intersectionObserver?.disconnect()
 })
 </script>
 
@@ -497,7 +724,8 @@ onBeforeUnmount(() => {
   <div class="mt-4">
     <div
       ref="container"
-      class="relative h-40 overflow-hidden bg-transparent sm:h-44"
+      data-tech-cloud
+      class="relative h-72 overflow-hidden bg-transparent sm:h-64 md:h-52"
       @pointerleave="clearHover"
       @pointermove="updateHoverFromPointer"
     >
@@ -537,7 +765,10 @@ onBeforeUnmount(() => {
         @blur="clearHover"
         @click="select(index)"
         @focus="activate(index)"
+        @pointercancel="finishDrag"
+        @pointerdown="startDrag(index, $event)"
         @pointerenter="activate(index)"
+        @pointerup="finishDrag"
       >
         <UIcon
           v-if="isIconifyIcon(item.icon)"

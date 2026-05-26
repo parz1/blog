@@ -12,11 +12,14 @@ updated: 2026-05-20
 linkedConcepts:
   - fitting
   - research-framing
+  - baseline
 relations:
   - concept: fitting
     type: relates
   - concept: research-framing
     type: depends-on
+  - concept: baseline
+    type: relates
 relatedProjects: []
 aliases:
   - protocol
@@ -61,6 +64,8 @@ API protocols sit at system boundaries. A login endpoint is not just `POST /logi
 In experiments, a protocol fixes the procedure before the result is interpreted. It can define the dataset, sample preparation, train/test split, controlled variables, metrics, number of runs, random seed, logging format, and reporting rules.
 
 This is downstream of [[research-framing]]. Research framing defines what question is being asked and what would count as an answer. Protocol defines the procedure for answering it without constantly changing the rules.
+
+It also protects the [[baseline]] comparison. If the baseline and new method use different data splits, metrics, preprocessing rules, or tuning budgets, the comparison becomes hard to trust.
 
 This connects directly to [[fitting]] in machine learning. A model may be fitted as one step in a larger evaluation protocol. The protocol decides which data can be used for fitting, which data must be held out, whether cross validation is used, which metrics matter, and when the final test set can be touched.
 

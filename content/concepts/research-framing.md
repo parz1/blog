@@ -12,11 +12,14 @@ updated: 2026-05-20
 linkedConcepts:
   - protocol
   - fitting
+  - baseline
 relations:
   - concept: protocol
     type: shapes
   - concept: fitting
     type: relates
+  - concept: baseline
+    type: shapes
 relatedProjects: []
 aliases:
   - framing
@@ -78,6 +81,8 @@ On the Breast Cancer dataset, is Random Forest more suitable than Logistic Regre
 ```
 
 That frame names the dataset, task, comparison, and direction. A protocol can then specify train/test split, random seed, preprocessing, metrics, cross validation, and reporting rules.
+
+It also decides the [[baseline]]. A frame that asks whether Random Forest is better than Logistic Regression is already choosing Logistic Regression as the reference point that makes the result interpretable.
 
 This also connects to [[fitting]], because fitting is only one step inside a framed and protocol-driven experiment. The frame decides why a model is being fitted at all; the protocol decides which data can be used for fitting and how the fitted model will be evaluated.
 
