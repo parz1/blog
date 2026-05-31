@@ -1,18 +1,38 @@
 ---
-title: 'About this website'
-description: 'Introducing the meaning and the reason why I build this website'
+title: About
+description: A short profile for Zhou Lei.
+lang: cn
+slug: about
 ---
 
-# Why 为什么？
+# 周磊
 
-由于常常遇到瓶颈，于是我建立了博客。
+东京大学大学院学際情報学府 / 情報学環修士课程学生，现居东京。
 
-> 用一句话来说明我对生活的态度，就是“无尽而廉价地热爱一切”。解释起来无非凡事三分钟热度，但量变终会发生质变，对知识广度的拓展往往能提炼出方向上的正确性，保持与时俱进。
+> 我想做帮助人思考的软件。
+>
+> 我的目标是创造这样的系统：AI 不只是回答问题，而是成为人们记忆、学习、研究和做决定的一部分。
 
-## 关于 Nuxt3
+我的兴趣位于人工智能、人类认知和产品设计的交界处。
 
-想过非常多的技术方案，也尝试过基于 headless CMS 的 Jamstack 方案，但往往精力不够，所以需要一种低成本维护又不失探索性的方案，于是我选择了 Nuxt3，
+我关注那些能帮助人更有效思考、持续学习，并与智能系统一起工作的工具。
 
-I established a blog due to frequently encountering bottlenecks in life. To summarize my attitude towards life in one sentence, it would be 'to love everything endlessly and cheaply.' Explaining further, everything tends to be short-lived, but gradual progress can eventually lead to transformation. Expanding my knowledge breadth often provides me with direction and confidence to shine in this ever-evolving era.
+我喜欢把研究想法推进成可以使用的产品：既设计背后的技术系统，也设计让它们进入日常使用的体验。
 
-Regarding Nuxt3, I considered numerous technical solutions and tried the Jamstack approach based on headless CMS. However, my energy was often insufficient, so I needed a low-cost and non-exploratory solution, which led me to choose Nuxt3.
+目前我的研究探索 multimodal AI 和 human-centered computing，尤其关注语音、面部表情等信号如何帮助计算机更好地理解人的状态和行为。
+
+## Focus
+
+- AI-native 产品和 agent systems
+- 个人知识和记忆系统
+- Local-first software
+- Multimodal human-AI interaction
+- Human-centered AI
+- 从 0 → 1 快速原型
+- 中文 · 日本語 · English
+
+## Now
+
+我正在东京大学攻读修士，同时探索 AI-native software 的未来形态。
+
+我尤其关心研究和产品开发之间的空间：新想法如何变成真正有人愿意使用的工具。

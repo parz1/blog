@@ -52,7 +52,7 @@
           },
           "research": {
             "title": "研究",
-            "description": "マルチモーダル感情認識、疲労・フレイル推定、長期的な人間中心データ収集。"
+            "description": "人間中心の AI、personal system、プロダクト workflow につながるインタラクションデータ。"
           },
           "engineering": {
             "title": "エンジニアリング",
@@ -168,6 +168,120 @@
       }
     }
   },
+  "about": {
+    "me": {
+      "metaTitle": "私について",
+      "kicker": "About me",
+      "name": "周 磊 / ZHOU LEI",
+      "title": "東京を拠点に、AI-native なプロダクトを作っています。",
+      "identity": "東京大学大学院 GSII / III 修士課程",
+      "summary": "local-first な AI ツール、プロダクト UI、研究の視点を含むプロトタイプを作っています。曖昧なアイデアを、実際に触れるシステムまで持っていくことが得意です。",
+      "actions": {
+        "projects": "Projects を見る",
+        "site": "このサイトについて"
+      },
+      "proof": {
+        "education": {
+          "label": "Education",
+          "value": "東京大学 GSII / III"
+        },
+        "product": {
+          "label": "Current work",
+          "value": "AI-native ツールと local-first デスクトップアプリ"
+        },
+        "location": {
+          "label": "Base",
+          "value": "東京"
+        }
+      },
+      "focus": {
+        "kicker": "What I bring",
+        "title": "研究の感度、プロダクト実装、多言語での協働。",
+        "items": {
+          "prototyping": {
+            "title": "0 to 1 の AI プロトタイピング",
+            "description": "まだ輪郭の粗いアイデアを動くデモにし、データの流れ、UI、システム境界を整えながら実用に近づけます。"
+          },
+          "localFirst": {
+            "title": "Local-first な AI ツール",
+            "description": "ユーザーのファイル、端末、日常の作業に近い場所で動くソフトウェアに関心があります。すべてを遠隔のチャット体験に閉じ込めたくありません。"
+          },
+          "interface": {
+            "title": "密度のあるプロダクト UI",
+            "description": "録音、確認、検索、編集、状態管理など、繰り返し使うためのツール画面を作ります。重要な情報を隠さず、扱いやすくすることを重視します。"
+          },
+          "languages": {
+            "title": "言語と文化をつなぐ",
+            "description": "中国語、日本語、英語の文脈を行き来できます。海外の技術情報を読み、日本のチームで議論し、アジア市場を考える場面で強みになります。"
+          }
+        }
+      },
+      "work": {
+        "kicker": "Selected work",
+        "title": "いちばん強い証拠は、動くソフトウェアです。",
+        "description": "技術スタックを単独で並べるより、実際のプロジェクトの中でどう使ったかを見せたいと考えています。",
+        "featuredLabel": "Featured project",
+        "leclog": "Leclog は、講義録音、文字起こし、session リソース管理のための local-first な macOS デスクトップアプリです。React / TypeScript の UI、Tauri 2、Rust command、ffmpeg、whisper.cpp を組み合わせ、ローカルで文字起こし workflow を実行します。",
+        "projectPage": "Project page"
+      },
+      "languages": {
+        "kicker": "Languages",
+        "title": "コミュニケーションもプロダクトの一部です。",
+        "description": "日本の AI startup に向けて、国内の文脈、海外の技術資料、中国語圏の視点をつなげられることを見せたいと考えています。",
+        "items": {
+          "zh": {
+            "label": "中国語",
+            "description": "母語。"
+          },
+          "ja": {
+            "label": "日本語",
+            "description": "大学院での学術コミュニケーション、日本での日常的な業務コミュニケーション。"
+          },
+          "en": {
+            "label": "英語",
+            "description": "技術資料、ドキュメント、issue discussion、研究資料の読解と執筆。"
+          }
+        }
+      }
+    },
+    "site": {
+      "metaTitle": "このサイトについて",
+      "backToAbout": "私についてに戻る",
+      "kicker": "About this site",
+      "title": "これは単なるブログではなく、長く育てている個人システムです。",
+      "summary": "このサイトでは、文章、概念ノート、プロジェクト記録、多言語コンテンツ、ソフトウェア実験をつなげています。ポートフォリオであり、知識ベースであり、未完成のアイデアを使えるツールへ近づける場所です。",
+      "system": {
+        "items": {
+          "writing": {
+            "title": "Build log としての文章",
+            "description": "記事やメモには、技術選定の理由、失敗した試行、プロジェクトが少しずつ形になる過程を残します。"
+          },
+          "concepts": {
+            "title": "作業中のノードとしての Concepts",
+            "description": "Concept ページは完成した定義ではありません。研究関心、プロダクト上の問い、実装アイデアをつなぐ、変化し続けるノードです。"
+          },
+          "projects": {
+            "title": "証拠としての Projects",
+            "description": "Project ページには、スコープ、アーキテクチャ、release、リポジトリ活動、関連 Concepts をまとめ、仕事の中身を確認できるようにしています。"
+          },
+          "languages": {
+            "title": "多言語を前提にする",
+            "description": "中国語、日本語、英語を近い場所に置いています。自分の仕事と就職活動が、その文脈の間にあるからです。"
+          }
+        }
+      },
+      "build": {
+        "kicker": "How it is built",
+        "title": "小さなプロダクトとして運用しています。",
+        "body1": "このサイトは Nuxt、Nuxt Content、i18n を使い、projects、concepts、notes、essays が互いに参照できる content model を持っています。",
+        "body2": "それは、自分のツール観をそのまま示しています。システムを理解しやすく保ち、コンテンツを長く使える形にし、小さな要素が積み重なって有用な UI になるようにすることです。"
+      },
+      "next": {
+        "title": "次に見る場所",
+        "description": "Concepts と Projects を見ると、このサイトが静的な履歴書以上のシステムであることが分かります。"
+      }
+    }
+  },
   "contentKind": {
     "post": "記事",
     "log": "メモ",
@@ -278,6 +392,10 @@
     "academicEmailLabel": "アカデミックメール",
     "copyEmailAria": "メールアドレスをコピー",
     "linksTitle": "リンク",
+    "pageLinks": {
+      "aboutMe": "私について",
+      "aboutSite": "このサイトについて"
+    },
     "links": {
       "github": {
         "ariaLabel": "GitHubプロフィールを開く",

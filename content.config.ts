@@ -2,6 +2,16 @@ import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 
 export default defineContentConfig({
   collections: {
+    pages: defineCollection({
+      type: 'page',
+      source: '*.md',
+      schema: z.object({
+        title: z.string(),
+        slug: z.string().optional(),
+        description: z.string().optional(),
+        lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
+      }),
+    }),
     concepts: defineCollection({
       type: 'page',
       source: 'concepts/*.md',

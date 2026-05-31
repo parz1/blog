@@ -4,6 +4,19 @@ import { useClipboard } from '@vueuse/core'
 const localePath = useLocalePath()
 const { t } = useI18n()
 
+const pageLinks = [
+  {
+    icon: 'i-lucide-user-round',
+    labelKey: 'introCard.pageLinks.aboutMe',
+    to: '/about',
+  },
+  {
+    icon: 'i-lucide-waypoints',
+    labelKey: 'introCard.pageLinks.aboutSite',
+    to: '/about-this-site',
+  },
+]
+
 // 第一个邮箱（仕事メール）
 const source1 = ref('parz1zhou@gmail.com')
 const {
@@ -63,6 +76,22 @@ const handleCopyEmailToClipboard2 = () => copy2()
       class="mt-2 mb-4 whitespace-pre-line text-center font-serif text-lg leading-relaxed lg:text-left"
     >
       {{ t('introCard.motto') }}
+    </div>
+
+    <div class="mb-4 flex flex-col items-center gap-y-1.5 lg:items-start">
+      <NuxtLink
+        v-for="link in pageLinks"
+        :key="link.to"
+        :to="localePath(link.to)"
+        class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-highlighted"
+      >
+        <UIcon :name="link.icon" class="size-4 shrink-0" />
+        {{ t(link.labelKey) }}
+        <UIcon
+          name="i-lucide-arrow-right"
+          class="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
+        />
+      </NuxtLink>
     </div>
 
     <!-- 仕事メール -->

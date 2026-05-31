@@ -52,7 +52,7 @@
           },
           "research": {
             "title": "研究",
-            "description": "多模态情绪识别、疲劳 / 衰弱估计，以及长期的人本数据采集。"
+            "description": "人本 AI、personal system，以及能进入产品工作流的交互数据。"
           },
           "engineering": {
             "title": "工程",
@@ -168,6 +168,120 @@
       }
     }
   },
+  "about": {
+    "me": {
+      "metaTitle": "关于我",
+      "kicker": "About me",
+      "name": "周磊 / ZHOU LEI",
+      "title": "我在东京做 AI-native 产品和工具。",
+      "identity": "东京大学 GSII / III 修士",
+      "summary": "我做 local-first 的 AI 工具、产品界面，以及带研究视角的原型系统。我的优势是把早期想法推进到真正能被人使用的软件。",
+      "actions": {
+        "projects": "查看项目",
+        "site": "关于这个网站"
+      },
+      "proof": {
+        "education": {
+          "label": "Education",
+          "value": "东京大学 GSII / III"
+        },
+        "product": {
+          "label": "Current work",
+          "value": "AI-native 工具和 local-first 桌面应用"
+        },
+        "location": {
+          "label": "Base",
+          "value": "东京，日本"
+        }
+      },
+      "focus": {
+        "kicker": "What I bring",
+        "title": "研究感、产品落地和多语言协作。",
+        "items": {
+          "prototyping": {
+            "title": "0 到 1 的 AI 原型",
+            "description": "我喜欢把还很模糊的产品想法变成能跑的 demo，再把数据流、界面和系统边界整理到真正可用。"
+          },
+          "localFirst": {
+            "title": "Local-first AI 工具",
+            "description": "我关心贴近用户文件、设备和日常工作流的软件，而不是把所有 AI 体验都收束成远程聊天框。"
+          },
+          "interface": {
+            "title": "高密度产品界面",
+            "description": "我会做适合反复使用的工具界面：录音、查看、搜索、编辑和状态管理，不把重要细节藏起来。"
+          },
+          "languages": {
+            "title": "连接不同语言环境",
+            "description": "我可以在中文、日文和英文语境之间切换。对阅读全球技术资料、参与日本团队讨论、理解亚洲市场都很有用。"
+          }
+        }
+      },
+      "work": {
+        "kicker": "Selected work",
+        "title": "最有说服力的证据，应该是能运行的软件。",
+        "description": "我不想单独堆技术栈，更想展示这些技术在真实项目里是怎么被使用的。",
+        "featuredLabel": "Featured project",
+        "leclog": "Leclog 是一个 local-first 的 macOS 桌面应用，用于课堂录音、转写和 session 资源管理。它结合了 React / TypeScript 界面、Tauri 2、Rust command、ffmpeg 和 whisper.cpp，在本地完成转写工作流。",
+        "projectPage": "项目页面"
+      },
+      "languages": {
+        "kicker": "Languages",
+        "title": "沟通能力也是产品能力的一部分。",
+        "description": "面向日本 AI startup，我希望这个页面能说明：我能连接日本本地语境、国际技术资料，以及中文圈视角。",
+        "items": {
+          "zh": {
+            "label": "中文",
+            "description": "母语。"
+          },
+          "ja": {
+            "label": "日语",
+            "description": "研究生阶段的学术沟通，以及在日本的日常工作沟通。"
+          },
+          "en": {
+            "label": "英语",
+            "description": "技术阅读、文档写作、issue 讨论和研究资料阅读。"
+          }
+        }
+      }
+    },
+    "site": {
+      "metaTitle": "关于这个网站",
+      "backToAbout": "返回关于我",
+      "kicker": "About this site",
+      "title": "这不只是一个博客，而是我长期维护的个人系统。",
+      "summary": "我用这个网站连接文章、概念笔记、项目记录、多语言内容和软件实验。它既是作品集，也是知识库，也是让未完成想法逐渐变成可用工具的地方。",
+      "system": {
+        "items": {
+          "writing": {
+            "title": "把写作当作 build log",
+            "description": "文章和札记会留下技术选择的理由、失败的尝试，以及项目逐渐成形的过程。"
+          },
+          "concepts": {
+            "title": "把 Concepts 当作工作节点",
+            "description": "概念页不是最终定义，而是连接研究兴趣、产品问题和实现想法的持续变化节点。"
+          },
+          "projects": {
+            "title": "把 Projects 当作证据",
+            "description": "项目页会整理范围、架构、release、仓库动态和相关概念，让别人能看到工作的真实内容。"
+          },
+          "languages": {
+            "title": "默认多语言",
+            "description": "中文、日文和英文被放在相近的位置，因为我的工作和求职本来就处在这些语境之间。"
+          }
+        }
+      },
+      "build": {
+        "kicker": "How it is built",
+        "title": "把它当作一个小产品维护。",
+        "body1": "这个网站使用 Nuxt、Nuxt Content 和 i18n，并让 projects、concepts、notes、essays 可以互相引用。",
+        "body2": "这本身也展示了我的工具观：让系统保持可理解，让内容长期可用，让小的模块逐渐积累成有用的界面。"
+      },
+      "next": {
+        "title": "接下来可以看哪里",
+        "description": "Concepts 和 Projects 比静态简历更能展示这个系统的形态。"
+      }
+    }
+  },
   "contentKind": {
     "post": "文章",
     "log": "札记",
@@ -278,6 +392,10 @@
     "academicEmailLabel": "学术邮箱",
     "copyEmailAria": "复制邮箱地址",
     "linksTitle": "链接",
+    "pageLinks": {
+      "aboutMe": "关于我",
+      "aboutSite": "关于这个网站"
+    },
     "links": {
       "github": {
         "ariaLabel": "打开 GitHub 主页",

@@ -52,7 +52,7 @@
           },
           "research": {
             "title": "Research",
-            "description": "Multimodal sensing for emotion, fatigue, and interaction-aware longitudinal data collection."
+            "description": "Human-centered AI, personal systems, and interaction-aware data that can become useful product workflows."
           },
           "engineering": {
             "title": "Engineering",
@@ -168,6 +168,120 @@
       }
     }
   },
+  "about": {
+    "me": {
+      "metaTitle": "About Me",
+      "kicker": "About me",
+      "name": "ZHOU LEI / 周磊",
+      "title": "AI-native product engineer based in Tokyo.",
+      "identity": "M.S. student at The University of Tokyo GSII / III",
+      "summary": "I build local-first AI tools, product interfaces, and research-informed prototypes. My strength is moving from an early idea to a working system that people can actually use.",
+      "actions": {
+        "projects": "View projects",
+        "site": "About this site"
+      },
+      "proof": {
+        "education": {
+          "label": "Education",
+          "value": "The University of Tokyo, GSII / III"
+        },
+        "product": {
+          "label": "Current work",
+          "value": "AI-native tools and local-first desktop apps"
+        },
+        "location": {
+          "label": "Base",
+          "value": "Tokyo, Japan"
+        }
+      },
+      "focus": {
+        "kicker": "What I bring",
+        "title": "Research taste, product shipping, and multilingual collaboration.",
+        "items": {
+          "prototyping": {
+            "title": "0 to 1 AI prototyping",
+            "description": "I like turning vague product ideas into working demos, then tightening the data flow, UI, and system boundaries until the prototype becomes useful."
+          },
+          "localFirst": {
+            "title": "Local-first AI tools",
+            "description": "I care about software that runs close to the user's files, devices, and daily work instead of treating every workflow as a remote chat box."
+          },
+          "interface": {
+            "title": "Dense product interfaces",
+            "description": "I build tool surfaces for repeated use: recording, reviewing, searching, editing, and managing state without hiding the important details."
+          },
+          "languages": {
+            "title": "Bridge across languages",
+            "description": "I can work across Chinese, Japanese, and English contexts, which helps when teams read global technical material and build for Asian markets."
+          }
+        }
+      },
+      "work": {
+        "kicker": "Selected work",
+        "title": "The strongest proof should be software.",
+        "description": "Instead of listing a stack in isolation, I prefer showing how the tools appear inside shipped or active projects.",
+        "featuredLabel": "Featured project",
+        "leclog": "Leclog is a local-first macOS desktop app for lecture recording, transcription, and session resource management. It combines a React and TypeScript interface with Tauri 2, Rust commands, ffmpeg, and whisper.cpp for local transcription workflows.",
+        "projectPage": "Project page"
+      },
+      "languages": {
+        "kicker": "Languages",
+        "title": "Communication is part of the product surface.",
+        "description": "For Japanese AI startups, I want this page to show that I can work across local business context, international technical material, and China-related perspective.",
+        "items": {
+          "zh": {
+            "label": "Chinese",
+            "description": "Native language."
+          },
+          "ja": {
+            "label": "Japanese",
+            "description": "Graduate-level academic communication and daily work communication in Japan."
+          },
+          "en": {
+            "label": "English",
+            "description": "Technical reading, documentation, issue discussion, and research material."
+          }
+        }
+      }
+    },
+    "site": {
+      "metaTitle": "About This Site",
+      "backToAbout": "Back to About me",
+      "kicker": "About this site",
+      "title": "This is not only a blog. It is my long-term personal system.",
+      "summary": "I use this site to connect writing, concept notes, project records, multilingual content, and software experiments. It is a portfolio, a knowledge base, and a place where unfinished ideas can become usable tools.",
+      "system": {
+        "items": {
+          "writing": {
+            "title": "Writing as a build log",
+            "description": "Essays and notes preserve the reasoning behind technical choices, failed attempts, and the slow shape of a project."
+          },
+          "concepts": {
+            "title": "Concepts as working nodes",
+            "description": "Concept pages are not final definitions. They are evolving nodes that connect research interests, product questions, and implementation ideas."
+          },
+          "projects": {
+            "title": "Projects as evidence",
+            "description": "Project pages collect scope, architecture, releases, repository activity, and related concepts so the work can be inspected."
+          },
+          "languages": {
+            "title": "Multilingual by default",
+            "description": "The site keeps Chinese, Japanese, and English close together because my work and job search sit between those contexts."
+          }
+        }
+      },
+      "build": {
+        "kicker": "How it is built",
+        "title": "A small product, maintained like a product.",
+        "body1": "The site is built with Nuxt, Nuxt Content, i18n, and a content model that lets projects, concepts, notes, and essays reference one another.",
+        "body2": "That matters because the site itself demonstrates how I think about tools: keep the system understandable, make the content durable, and let small pieces accumulate into a useful interface."
+      },
+      "next": {
+        "title": "Where to look next",
+        "description": "The concepts and projects sections show the system more clearly than a static resume can."
+      }
+    }
+  },
   "contentKind": {
     "post": "Essay",
     "log": "Note",
@@ -278,6 +392,10 @@
     "academicEmailLabel": "Academic email",
     "copyEmailAria": "Copy email address",
     "linksTitle": "Links",
+    "pageLinks": {
+      "aboutMe": "About me",
+      "aboutSite": "About this site"
+    },
     "links": {
       "github": {
         "ariaLabel": "Open GitHub profile",
