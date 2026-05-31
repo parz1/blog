@@ -2,6 +2,7 @@
 title: 这个网站的技术解析
 slug: about-this-site
 description: 从 Nuxt 前端、内容系统、Nitro 后端、媒体管线到构建和托管，整理这个个人站的技术结构。
+notice: 本文大部分由 AI 生成，并由我审阅和编辑。
 published: 2026-06-01T00:00:00.000Z
 lang: cn
 categories:
