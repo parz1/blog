@@ -3,7 +3,7 @@
   "search": {
     "title": "検索",
     "description": "サイト内コンテンツを検索",
-    "placeholder": "記事、メモ、Concepts、Projects を検索...",
+    "placeholder": "記事、メモ、Concepts、Entities、Projects を検索...",
     "empty": "一致するコンテンツはありません。"
   },
   "menu": {
@@ -18,8 +18,12 @@
     "logsDescription": "開発ログ、設定メモ、学習の記録",
     "crap": "デタラメ",
     "crapDescription": "ランダムなものとナンセンス",
+    "knowledge": "Knowledge",
+    "knowledgeDescription": "Concepts と Entities をまとめた知識ベース",
     "concepts": "Concepts",
     "conceptsDescription": "変化し続ける概念ノートと研究ノード",
+    "entities": "Entities",
+    "entitiesDescription": "名前を持つ対象、形式、ツール、組織、標準の索引",
     "projects": "Projects",
     "projectsDescription": "開発中のツール、実験、プロダクト",
     "about": "私について",
@@ -340,6 +344,54 @@
       "noMentions": "この概念に言及している書き物はまだありません。",
       "relatedProjects": "関連プロジェクト",
       "noGraphLinks": "この概念にはまだ表示できるリンクがありません。"
+    }
+  },
+  "entities": {
+    "kicker": "Entity index",
+    "description": "ファイル形式、ソフトウェア、ツール、標準、データセット、組織、プロダクト、人物など、名前を持つ具体的な対象を記録します。Entities は Concepts と接続しますが、Concepts の代わりではありません。",
+    "filters": {
+      "kind": "種類",
+      "tag": "タグ"
+    },
+    "kinds": {
+      "format": "形式",
+      "software": "ソフトウェア",
+      "tool": "ツール",
+      "library": "ライブラリ",
+      "standard": "標準",
+      "dataset": "データセット",
+      "instrument": "測定ツール",
+      "organization": "組織",
+      "person": "人物",
+      "product": "プロダクト",
+      "protocol": "プロトコル",
+      "other": "その他"
+    },
+    "status": {
+      "active": "active",
+      "legacy": "legacy",
+      "deprecated": "deprecated",
+      "unknown": "unknown"
+    },
+    "empty": {
+      "title": "Entity が見つかりません",
+      "description": "別の種類やタグで絞り込んでみてください。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "Entity が見つかりません",
+        "description": "探している entity ページはまだ存在しません。"
+      },
+      "backToEntities": "Entities に戻る",
+      "emptyBody": "この entity にはまだ本文がありません。",
+      "details": "詳細",
+      "kind": "種類",
+      "status": "状態",
+      "updated": "更新",
+      "aliases": "別名",
+      "relatedConcepts": "関連 Concepts",
+      "relatedEntities": "関連 Entities",
+      "externalLinks": "外部リンク"
     }
   },
   "projects": {

@@ -92,9 +92,20 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     ],
   },
   {
-    label: t('menu.concepts'),
-    to: localePath('/concepts'),
-    active: isActivePath('/concepts'),
+    label: t('menu.knowledge'),
+    active: isActivePath('/concepts') || isActivePath('/entities'),
+    children: [
+      {
+        label: t('menu.concepts'),
+        to: localePath('/concepts'),
+        description: t('menu.conceptsDescription'),
+      },
+      {
+        label: t('menu.entities'),
+        to: localePath('/entities'),
+        description: t('menu.entitiesDescription'),
+      },
+    ],
   },
   {
     label: t('menu.lab'),

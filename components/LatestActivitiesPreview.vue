@@ -2,7 +2,7 @@
 const { locale } = useI18n()
 
 const { data: articles } = await useAsyncData<SiteArticle[]>(
-  'latest-activities-preview',
+  () => `latest-activities-preview-${locale.value}`,
   async () => {
     const [posts, logs] = await Promise.all([
       queryCollection('posts').order('published', 'DESC').all(),
@@ -18,9 +18,6 @@ const { data: articles } = await useAsyncData<SiteArticle[]>(
     ]
 
     return mergeLocalizedArticles(allArticles, locale.value).slice(0, 6)
-  },
-  {
-    watch: [() => locale.value],
   },
 )
 </script>

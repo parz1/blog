@@ -3,7 +3,7 @@
   "search": {
     "title": "Search",
     "description": "Search site content",
-    "placeholder": "Search articles, notes, concepts, projects...",
+    "placeholder": "Search articles, notes, concepts, entities, projects...",
     "empty": "No matching content."
   },
   "menu": {
@@ -18,8 +18,12 @@
     "logsDescription": "Devlogs, setup notes, and learning traces",
     "crap": "Crap",
     "crapDescription": "Random stuff and nonsense",
+    "knowledge": "Knowledge",
+    "knowledgeDescription": "Concepts and entities in the knowledge base",
     "concepts": "Concepts",
     "conceptsDescription": "Evolving concept notes and research nodes",
+    "entities": "Entities",
+    "entitiesDescription": "Named objects, formats, tools, organizations, and standards",
     "projects": "Projects",
     "projectsDescription": "Active tools, experiments, and product work",
     "about": "About Me",
@@ -340,6 +344,54 @@
       "noMentions": "No writing mentions this concept yet.",
       "relatedProjects": "Related projects",
       "noGraphLinks": "This concept does not have visible links yet."
+    }
+  },
+  "entities": {
+    "kicker": "Entity index",
+    "description": "A registry of named objects: file formats, software, tools, standards, datasets, organizations, products, and people. Entities connect to concepts, but do not replace them.",
+    "filters": {
+      "kind": "kind",
+      "tag": "tag"
+    },
+    "kinds": {
+      "format": "format",
+      "software": "software",
+      "tool": "tool",
+      "library": "library",
+      "standard": "standard",
+      "dataset": "dataset",
+      "instrument": "instrument",
+      "organization": "organization",
+      "person": "person",
+      "product": "product",
+      "protocol": "protocol",
+      "other": "other"
+    },
+    "status": {
+      "active": "active",
+      "legacy": "legacy",
+      "deprecated": "deprecated",
+      "unknown": "unknown"
+    },
+    "empty": {
+      "title": "No entities found",
+      "description": "Try a different kind or tag filter."
+    },
+    "detail": {
+      "notFound": {
+        "title": "Entity not found",
+        "description": "The entity page you are looking for does not exist yet."
+      },
+      "backToEntities": "Back to Entities",
+      "emptyBody": "This entity note is still empty.",
+      "details": "Details",
+      "kind": "Kind",
+      "status": "Status",
+      "updated": "Updated",
+      "aliases": "Aliases",
+      "relatedConcepts": "Related concepts",
+      "relatedEntities": "Related entities",
+      "externalLinks": "External links"
     }
   },
   "projects": {

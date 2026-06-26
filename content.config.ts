@@ -42,6 +42,46 @@ export default defineContentConfig({
         lang: z.enum(['cn', 'ja', 'en']).default('en').optional(),
       }),
     }),
+    entities: defineCollection({
+      type: 'page',
+      source: 'entities/*.md',
+      schema: z.object({
+        title: z.string(),
+        slug: z.string(),
+        summary: z.string().optional(),
+        kind: z.enum([
+          'format',
+          'software',
+          'tool',
+          'library',
+          'standard',
+          'dataset',
+          'instrument',
+          'organization',
+          'person',
+          'product',
+          'protocol',
+          'other',
+        ]),
+        status: z
+          .enum(['active', 'legacy', 'deprecated', 'unknown'])
+          .default('active'),
+        tags: z.array(z.string()).optional(),
+        updated: z.string(),
+        aliases: z.array(z.string()).optional(),
+        relatedConcepts: z.array(z.string()).optional(),
+        relatedEntities: z.array(z.string()).optional(),
+        externalLinks: z
+          .array(
+            z.object({
+              label: z.string(),
+              url: z.string(),
+            }),
+          )
+          .optional(),
+        lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
+      }),
+    }),
     projects: defineCollection({
       type: 'page',
       source: 'projects/*.md',

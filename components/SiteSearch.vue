@@ -5,13 +5,19 @@ import type {
   ContentSearchLink,
 } from '@nuxt/ui'
 
-type SearchCollection = 'posts' | 'logs' | 'crap' | 'concepts' | 'projects'
+type SearchCollection =
+  | 'posts'
+  | 'logs'
+  | 'crap'
+  | 'concepts'
+  | 'entities'
+  | 'projects'
 
 type SearchCollectionConfig = {
   collection: SearchCollection
   labelKey: string
   icon: string
-  routeBase: 'blog' | 'concepts' | 'projects'
+  routeBase: 'blog' | 'concepts' | 'entities' | 'projects'
 }
 
 type SearchSection = {
@@ -67,6 +73,12 @@ const collections: SearchCollectionConfig[] = [
     routeBase: 'concepts',
   },
   {
+    collection: 'entities',
+    labelKey: 'menu.entities',
+    icon: 'i-lucide-box',
+    routeBase: 'entities',
+  },
+  {
     collection: 'projects',
     labelKey: 'menu.projects',
     icon: 'i-lucide-folder-kanban',
@@ -116,9 +128,11 @@ const toSearchRoute = (
   const path =
     config.routeBase === 'concepts'
       ? `/concepts/${slug}`
-      : config.routeBase === 'projects'
-        ? `/projects/${slug}`
-        : `/blog/${slug}`
+      : config.routeBase === 'entities'
+        ? `/entities/${slug}`
+        : config.routeBase === 'projects'
+          ? `/projects/${slug}`
+          : `/blog/${slug}`
 
   return localizeSearchRoute(`${path}${getHash(section.id)}`)
 }
@@ -170,22 +184,26 @@ const { data: searchItems, status } = await useLazyAsyncData(
       logSections,
       crapSections,
       conceptSections,
+      entitySections,
       projectSections,
       posts,
       logs,
       crap,
       concepts,
+      entities,
       projects,
     ] = await Promise.all([
       queryCollectionSearchSections('posts'),
       queryCollectionSearchSections('logs'),
       queryCollectionSearchSections('crap'),
       queryCollectionSearchSections('concepts'),
+      queryCollectionSearchSections('entities'),
       queryCollectionSearchSections('projects'),
       queryCollection('posts').all(),
       queryCollection('logs').all(),
       queryCollection('crap').all(),
       queryCollection('concepts').all(),
+      queryCollection('entities').all(),
       queryCollection('projects').all(),
     ])
 
@@ -197,6 +215,11 @@ const { data: searchItems, status } = await useLazyAsyncData(
         conceptSections,
         concepts,
         collectionConfigByName.concepts,
+      ),
+      entities: mapSections(
+        entitySections,
+        entities,
+        collectionConfigByName.entities,
       ),
       projects: mapSections(
         projectSections,
@@ -211,6 +234,7 @@ const { data: searchItems, status } = await useLazyAsyncData(
       logs: [],
       crap: [],
       concepts: [],
+      entities: [],
       projects: [],
     }),
     server: false,
@@ -290,10 +314,21 @@ const links = computed<ContentSearchLink[]>(() => [
     ],
   },
   {
-    label: t('menu.concepts'),
-    description: t('menu.conceptsDescription'),
-    to: localePath('/concepts'),
+    label: t('menu.knowledge'),
+    description: t('menu.knowledgeDescription'),
     icon: 'i-lucide-network',
+    children: [
+      {
+        label: t('menu.concepts'),
+        description: t('menu.conceptsDescription'),
+        to: localePath('/concepts'),
+      },
+      {
+        label: t('menu.entities'),
+        description: t('menu.entitiesDescription'),
+        to: localePath('/entities'),
+      },
+    ],
   },
   {
     label: t('menu.projects'),

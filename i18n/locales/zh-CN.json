@@ -3,7 +3,7 @@
   "search": {
     "title": "搜索",
     "description": "搜索站内内容",
-    "placeholder": "搜索文章、札记、概念、项目...",
+    "placeholder": "搜索文章、札记、概念、实体、项目...",
     "empty": "没有匹配的内容。"
   },
   "menu": {
@@ -18,8 +18,12 @@
     "logsDescription": "开发记录、配置笔记和学习过程",
     "crap": "扯",
     "crapDescription": "扯淡随机的东西",
+    "knowledge": "知识库",
+    "knowledgeDescription": "概念和实体组成的知识库索引",
     "concepts": "概念",
     "conceptsDescription": "持续演化的概念笔记和研究节点",
+    "entities": "实体",
+    "entitiesDescription": "具体命名对象、格式、工具、组织和标准的索引",
     "projects": "项目",
     "projectsDescription": "正在开发的工具、实验和产品工作",
     "about": "关于",
@@ -340,6 +344,54 @@
       "noMentions": "还没有写作提到这个概念。",
       "relatedProjects": "相关项目",
       "noGraphLinks": "这个概念还没有可见连接。"
+    }
+  },
+  "entities": {
+    "kicker": "实体索引",
+    "description": "记录具体命名对象：文件格式、软件、工具、标准、数据集、组织、产品和人物。它们连接概念，但不替代概念。",
+    "filters": {
+      "kind": "类型",
+      "tag": "标签"
+    },
+    "kinds": {
+      "format": "格式",
+      "software": "软件",
+      "tool": "工具",
+      "library": "库",
+      "standard": "标准",
+      "dataset": "数据集",
+      "instrument": "测量工具",
+      "organization": "组织",
+      "person": "人物",
+      "product": "产品",
+      "protocol": "协议",
+      "other": "其他"
+    },
+    "status": {
+      "active": "活跃",
+      "legacy": "遗留",
+      "deprecated": "废弃",
+      "unknown": "未知"
+    },
+    "empty": {
+      "title": "没有找到实体",
+      "description": "试试换一个类型或标签筛选。"
+    },
+    "detail": {
+      "notFound": {
+        "title": "没有找到这个实体",
+        "description": "你正在寻找的实体页还不存在。"
+      },
+      "backToEntities": "返回实体",
+      "emptyBody": "这个实体还没有正文。",
+      "details": "实体信息",
+      "kind": "类型",
+      "status": "状态",
+      "updated": "更新",
+      "aliases": "别名",
+      "relatedConcepts": "相关概念",
+      "relatedEntities": "相关实体",
+      "externalLinks": "外部链接"
     }
   },
   "projects": {
