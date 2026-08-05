@@ -6,7 +6,7 @@
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "gallery:import": "node .local/scripts/gallery-import.mjs",
-    "gallery:publish": "pnpm gallery:import --auto-write-content && git add content/gallery/ public/gallery/",
+    "gallery:publish": "sh -c '[ $# -eq 0 ] && set -- ./imports; pnpm gallery:import --auto-write-content \"$@\" && git add content/gallery/ public/gallery/' --",
     "generate": "nuxt generate",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",

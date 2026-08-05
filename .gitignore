@@ -13,3 +13,6 @@ dist
 
 .data
 .local
+
+# 原始照片暂存区（gallery:publish 的输入，不进仓库）
+imports/
