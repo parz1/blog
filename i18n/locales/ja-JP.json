@@ -308,6 +308,11 @@
       "tags": "タグ"
     }
   },
+  "gallery": {
+    "label": "Gallery",
+    "title": "Copies of world",
+    "description": "レンズは、光と時間と秩序をサンプリングする方法である。"
+  },
   "concepts": {
     "kicker": "Digital garden",
     "description": "研究、エンジニアリング、プロダクト思考、世界観に影響する概念を育てていくノートです。完成した定義ではなく、作業中の思考ノードとして扱います。",

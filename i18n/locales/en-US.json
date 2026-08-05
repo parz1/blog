@@ -308,6 +308,11 @@
       "tags": "Tags"
     }
   },
+  "gallery": {
+    "label": "Gallery",
+    "title": "Copies of world",
+    "description": "The lens samples light, time, and order."
+  },
   "concepts": {
     "kicker": "Digital garden",
     "description": "Evolving notes around the concepts that shape my research, engineering, product thinking, and worldview. These are working nodes, not final definitions.",

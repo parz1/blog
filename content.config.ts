@@ -154,5 +154,48 @@ export default defineContentConfig({
         published: z.string().datetime(),
       }),
     }),
+    gallery: defineCollection({
+      type: 'page',
+      source: 'gallery/*.md',
+      schema: z.object({
+        slug: z.string(),
+        lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
+        title: z.string(),
+        caption: z.string().optional(),
+        date: z.string().optional(),
+        time: z.string().optional(),
+        location: z.string().optional(),
+        published: z.string().datetime(),
+        media: z.array(
+          z.object({
+            id: z.string(),
+            title: z.string().optional(),
+            alt: z.string().optional(),
+            image: z.string(),
+            imageUrl: z.string().optional(),
+            liveVideo: z.string().optional(),
+            liveVideoUrl: z.string().optional(),
+            width: z.number(),
+            height: z.number(),
+            takenAt: z.string(),
+            camera: z
+              .object({
+                model: z.string().optional(),
+                lens: z.string().optional(),
+                focalLength: z.string().optional(),
+                aperture: z.string().optional(),
+                iso: z.string().optional(),
+                shutter: z.string().optional(),
+                ev: z.string().optional(),
+                resolution: z.string().optional(),
+                colorProfile: z.string().optional(),
+                liveDuration: z.string().optional(),
+                format: z.string().optional(),
+              })
+              .optional(),
+          }),
+        ),
+      }),
+    }),
   },
 })

@@ -308,6 +308,11 @@
       "tags": "标签"
     }
   },
+  "gallery": {
+    "label": "Gallery",
+    "title": "Copies of world",
+    "description": "镜头是对光、时间与秩序的取样方式。"
+  },
   "concepts": {
     "kicker": "数字花园",
     "description": "围绕研究、工程、产品思考和世界观持续演化的概念笔记。这里不是最终定义，而是仍在工作的思考节点。",
