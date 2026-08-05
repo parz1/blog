@@ -1,8 +1,8 @@
 ---
 slug: kashiwa-campus
 lang: en
-title: Coordinates in Blue
-caption: The sky reads like an unfinished coordinate system.
+title: early summer
+caption: "the sky is an unfinished\ncoordinate system"
 date: 'May 11, 2026'
 time: '12:55'
 location: Kashiwa

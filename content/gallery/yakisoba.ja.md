@@ -1,8 +1,8 @@
 ---
 slug: yakisoba
 lang: ja
-title: アルミ箔の熱力学
-caption: 熱、塩分、紙皿が、アルミ箔の中で短い平衡に達する。
+title: 春の昼
+caption: "アルミ箔の中で\n熱と塩が釣り合う"
 date: 'April 25, 2026'
 time: '13:04'
 published: '2026-04-25T04:04:47.000Z'

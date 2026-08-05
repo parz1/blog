@@ -1,8 +1,8 @@
 ---
 slug: kashiwa-campus
 lang: cn
-title: 一片蓝的坐标
-caption: 天空像未写完的坐标系。
+title: 初夏
+caption: "天空如一张\n未写完的坐标纸"
 date: 'May 11, 2026'
 time: '12:55'
 location: Kashiwa

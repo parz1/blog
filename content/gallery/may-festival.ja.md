@@ -1,8 +1,8 @@
 ---
 slug: may-festival
 lang: ja
-title: 門前の余光
-caption: 午後が本郷の門を、静止した時間の短い断片にする。
+title: 午後
+caption: "門の光は\n静止した時間に停まる"
 date: 'May 17, 2026'
 time: '14:33'
 location: Hongo

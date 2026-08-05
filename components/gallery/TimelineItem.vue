@@ -106,6 +106,7 @@ const openMedia = (event: MouseEvent, media: GalleryMedia, index: number) => {
   color: var(--ui-text-muted);
   font-size: 0.82rem;
   line-height: 1.6;
+  white-space: pre-line;
 }
 
 .media-strip {

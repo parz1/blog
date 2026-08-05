@@ -1,8 +1,8 @@
 ---
 slug: haagen-dazs
 lang: ja
-title: 糖分の垂直構造
-caption: 糖分は重力に逆らうように積み上がる。
+title: 夜食
+caption: "糖分は重力に逆らい\n積み上がる"
 date: 'May 5, 2026'
 time: '20:05'
 published: '2026-05-05T11:05:43.000Z'

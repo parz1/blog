@@ -1,8 +1,8 @@
 ---
 slug: stressed
 lang: ja
-title: 手首のノイズ
-caption: 身体の信号は、まず画面に届く。
+title: 夕暮れ
+caption: "手首のノイズは\n私より先に着く"
 date: 'April 23, 2026'
 time: '17:24'
 published: '2026-04-23T08:24:52.000Z'

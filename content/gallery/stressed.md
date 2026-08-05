@@ -1,8 +1,8 @@
 ---
 slug: stressed
 lang: cn
-title: 腕上的噪声
-caption: 身体的信号先抵达屏幕。
+title: 暮归
+caption: "手腕的噪声\n先于我到家"
 date: 'April 23, 2026'
 time: '17:24'
 published: '2026-04-23T08:24:52.000Z'

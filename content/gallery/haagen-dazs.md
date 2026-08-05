@@ -1,8 +1,8 @@
 ---
 slug: haagen-dazs
 lang: cn
-title: 糖分的垂直结构
-caption: 糖分沿着重力向上堆叠。
+title: 夜食
+caption: "糖分逆着重力\n向上堆叠"
 date: 'May 5, 2026'
 time: '20:05'
 published: '2026-05-05T11:05:43.000Z'

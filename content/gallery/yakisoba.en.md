@@ -1,8 +1,8 @@
 ---
 slug: yakisoba
 lang: en
-title: Thermodynamics in Foil
-caption: 'Heat, salt, and a paper plate reach a brief equilibrium inside foil.'
+title: spring noon
+caption: "in foil, heat and salt\nreach equilibrium"
 date: 'April 25, 2026'
 time: '13:04'
 published: '2026-04-25T04:04:47.000Z'

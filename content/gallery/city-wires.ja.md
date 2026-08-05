@@ -1,8 +1,8 @@
 ---
 slug: city-wires
 lang: ja
-title: 灰空の回路
-caption: 都市は空を、いくつかのほぼ直線へ切り分ける。
+title: 曇り空
+caption: "電線が空を\n直線に切る"
 date: 'May 18, 2026'
 time: '06:27'
 location: Tokyo

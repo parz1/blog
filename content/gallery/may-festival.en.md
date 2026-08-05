@@ -1,8 +1,8 @@
 ---
 slug: may-festival
 lang: en
-title: Afterlight at the Gate
-caption: Afternoon turns the Hongo gate into a small segment of still time.
+title: afternoon
+caption: "light on the gate\nstops into still time"
 date: 'May 17, 2026'
 time: '14:33'
 location: Hongo

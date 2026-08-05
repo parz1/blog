@@ -1,8 +1,8 @@
 ---
 slug: kashiwa-campus
 lang: ja
-title: 青の座標
-caption: 空はまだ書き終えていない座標系のようだった。
+title: 初夏
+caption: "空は書きかけの\n座標系"
 date: 'May 11, 2026'
 time: '12:55'
 location: Kashiwa

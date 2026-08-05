@@ -1,8 +1,8 @@
 ---
 slug: stressed
 lang: en
-title: Noise on the Wrist
-caption: 'The body''s signal reaches the screen first.'
+title: dusk
+caption: "the wrist's noise\narrives before I do"
 date: 'April 23, 2026'
 time: '17:24'
 published: '2026-04-23T08:24:52.000Z'

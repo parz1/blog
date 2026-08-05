@@ -1,8 +1,8 @@
 ---
 slug: city-wires
 lang: en
-title: Circuits in Grey Sky
-caption: The city cuts the sky into nearly straight lines.
+title: overcast
+caption: "the wires cut the sky\ninto straight lines"
 date: 'May 18, 2026'
 time: '06:27'
 location: Tokyo

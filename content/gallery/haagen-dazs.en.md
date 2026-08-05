@@ -1,8 +1,8 @@
 ---
 slug: haagen-dazs
 lang: en
-title: Vertical Structure of Sugar
-caption: Sugar stacks upward against gravity.
+title: night dessert
+caption: "sugar stacks upward,\nagainst gravity"
 date: 'May 5, 2026'
 time: '20:05'
 published: '2026-05-05T11:05:43.000Z'

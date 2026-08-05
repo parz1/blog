@@ -1,8 +1,8 @@
 ---
 slug: city-wires
 lang: cn
-title: 灰天的回路
-caption: 城市把天空切成若干条近似直线。
+title: 阴天
+caption: "电线将天空\n切成直线"
 date: 'May 18, 2026'
 time: '06:27'
 location: Tokyo

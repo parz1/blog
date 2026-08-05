@@ -1,8 +1,8 @@
 ---
 slug: yakisoba
 lang: cn
-title: 铝箔里的热力学
-caption: 热量、盐分和纸盘，在铝箔里达成短暂平衡。
+title: 春昼
+caption: "铝箔里\n热与盐达成平衡"
 date: 'April 25, 2026'
 time: '13:04'
 published: '2026-04-25T04:04:47.000Z'

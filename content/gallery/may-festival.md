@@ -1,8 +1,8 @@
 ---
 slug: may-festival
 lang: cn
-title: 门前的余光
-caption: 午后把本乡的门照成一小段静止的时间。
+title: 午后
+caption: "门前的光\n停成一截静止的时间"
 date: 'May 17, 2026'
 time: '14:33'
 location: Hongo
