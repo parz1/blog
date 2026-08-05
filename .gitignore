@@ -16,3 +16,6 @@ dist
 
 # 原始照片暂存区（gallery:publish 的输入，不进仓库）
 imports/
+
+# Live 视频走 R2 CDN，本地 mp4 不进仓库
+public/gallery/*-live.mp4

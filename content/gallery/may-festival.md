@@ -12,7 +12,9 @@ media:
       title: IMG_2927
       alt: 午后光线里的东京大学校门和砖色建筑。
       image: /gallery/IMG_2927-preview.jpg
+      imageUrl: 'https://pics.parz1.minerei.dev/gallery/public/IMG_2927/preview.jpg'
       liveVideo: /gallery/IMG_2927-live.mp4
+      liveVideoUrl: 'https://pics.parz1.minerei.dev/gallery/public/IMG_2927/live.mp4'
       width: 1350
       height: 1800
       takenAt: '2026-05-17T05:33:39.000Z'

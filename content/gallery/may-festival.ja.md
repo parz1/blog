@@ -12,7 +12,9 @@ media:
       title: IMG_2927
       alt: 午後の光の中にある東京大学の門とレンガ色の建物。
       image: /gallery/IMG_2927-preview.jpg
+      imageUrl: 'https://pics.parz1.minerei.dev/gallery/public/IMG_2927/preview.jpg'
       liveVideo: /gallery/IMG_2927-live.mp4
+      liveVideoUrl: 'https://pics.parz1.minerei.dev/gallery/public/IMG_2927/live.mp4'
       width: 1350
       height: 1800
       takenAt: '2026-05-17T05:33:39.000Z'
