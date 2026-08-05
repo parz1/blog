@@ -2,7 +2,7 @@
 title: 拯救我的 Obsidian 字体显示效果
 slug: obsidian-css-font
 description: Obsidian 字体渲染优化小记
-published: 2025/09/28
+published: 2025-09-28T00:00:00.000Z
 lang: cn
 ---
 

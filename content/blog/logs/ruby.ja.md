@@ -2,7 +2,7 @@
 title: 漢字にルビを振る
 slug: ruby
 description: 漢字にルビを振ることについての考察
-published: 2025/08/28
+published: 2025-08-28T00:00:00.000Z
 lang: ja
 tags:
   - ルビ

@@ -1,7 +1,7 @@
 ---
 title: 'Markdown 中文示例'
 description: '欢迎使用Markdown编辑内容，以下是一些基本的Markdown元素使用示例。'
-published: 2023/11/22
+published: 2023-11-22T00:00:00.000Z
 slug: 'markdown-cn'
 lang: cn
 ---

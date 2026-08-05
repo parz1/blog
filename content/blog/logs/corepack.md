@@ -3,7 +3,7 @@ title: Corepack
 slug: corepack
 description: What is corepack
 notice: This paragraph is mostly written by ChatGPT.
-published: 2024/05/24
+published: 2024-05-24T00:00:00.000Z
 lang: cn
 ---
 

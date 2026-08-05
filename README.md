@@ -1,42 +1,80 @@
-# Nuxt 3 Minimal Starter
+# parz1 ZHOU — Personal Site & Digital Garden
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A content-first personal site built with **Nuxt 4**, **Nuxt Content v3** and **Tailwind CSS / Nuxt UI**. It mixes a trilingual blog (posts / logs / snippets) with a digital garden of interlinked concept notes, entities, and project pages. Content is authored in **Obsidian** — `content/` doubles as an Obsidian vault.
+
+Live at: https://parz1.goder.club
+
+## Stack
+
+- **Framework** — Nuxt 4 (Vue 3, TypeScript), pnpm-managed
+- **Content** — @nuxt/content v3 with a Zod-validated multi-collection schema
+- **UI** — Nuxt UI, Tailwind CSS 4, SCSS, GitHub-flavoured markdown typography
+- **i18n** — @nuxtjs/i18n (English / 简体中文 / 日本語); content localized per-language as separate markdown variants
+- **CMS** — Nuxt Studio (GitHub-backed editing), optional
+- **Analytics** — @vercel/analytics + speed-insights
+
+## Content collections
+
+| Collection | Path                  | Purpose                                                |
+| ---------- | --------------------- | ------------------------------------------------------ |
+| `posts`    | `content/blog/posts/` | Full essays                                            |
+| `logs`     | `content/blog/logs/`  | Dev / build logs                                       |
+| `crap`     | `content/blog/crap/`  | Loose thoughts                                         |
+| `concepts` | `content/concepts/`   | Digital-garden notes, linked via `[[wikilinks]]`       |
+| `entities` | `content/entities/`   | Knowledge-graph nodes (tools, standards, instruments…) |
+| `projects` | `content/projects/`   | Projects bound to GitHub repos                         |
+
+Schemas and validation live in [`content.config.ts`](./content.config.ts).
+
+### Obsidian authoring
+
+`content/` is an Obsidian vault (config in `content/.obsidian/`). The `content:file:beforeParse` hook (`utils/rubyHook.ts`) converts on build:
+
+- `{漢字|かな}` → `<ruby>` furigana annotations
+- `[[wikilink]]` → internal links to `/concepts/…` or `/blog/…`
 
 ## Setup
 
-Make sure to install the dependencies:
+Use pnpm (the lockfile is pinned; hoisting is required by some native deps):
 
 ```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
 pnpm install --shamefully-hoist
 ```
 
-## Development Server
-
-Start the development server on http://localhost:3000
+## Development
 
 ```bash
-npm run dev
+pnpm dev        # dev server on http://localhost:3000
+pnpm build      # production build
+pnpm generate   # static export (nuxt generate)
+pnpm preview    # serve the production build locally
 ```
 
-## Production
-
-Build the application for production:
+After adding Nuxt modules or changing content collections, refresh generated typings:
 
 ```bash
-npm run build
+pnpm exec nuxt prepare
 ```
 
-Locally preview production build:
+## Quality
 
 ```bash
-npm run preview
+pnpm lint          # oxlint
+pnpm lint:fix
+pnpm format        # oxfmt (writes)
+pnpm format:check
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Configuration & secrets
+
+Copy `.env.example` to `.env` and fill in what you need:
+
+- `NUXT_GITHUB_TOKEN` — server-side GitHub status for project pages (no anonymous fallback)
+- `STUDIO_*` — Nuxt Studio GitHub OAuth + access control
+- `GALLERY_R2_*` — optional Cloudflare R2 upload pipeline for the gallery
+
+## Documentation
+
+- [`docs/gallery-media-workflow.md`](./docs/gallery-media-workflow.md) — gallery media pipeline
+- [`docs/concept-note-template.md`](./docs/concept-note-template.md) — concept-note template
+- [`AGENTS.md`](./AGENTS.md) — repository guidelines for agents & contributors

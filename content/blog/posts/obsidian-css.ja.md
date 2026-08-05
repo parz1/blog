@@ -2,7 +2,7 @@
 title: Obsidian のフォント描画を救え
 slug: obsidian-css-font
 description: Obsidian フォントレンダリング最適化メモ
-published: 2025/09/28
+published: 2025-09-28T00:00:00.000Z
 lang: ja
 ---
 

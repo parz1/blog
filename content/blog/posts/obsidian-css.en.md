@@ -2,7 +2,7 @@
 title: Sharpening Obsidian Font Rendering
 slug: obsidian-css-font
 description: Notes on improving Obsidian font rendering
-published: 2025/09/28
+published: 2025-09-28T00:00:00.000Z
 lang: en
 ---
 

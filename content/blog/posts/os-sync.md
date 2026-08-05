@@ -2,7 +2,7 @@
 title: 并发中的同步互斥
 slug: os-sync
 description: 软硬件解决互斥、信号量解决、经典问题、管程
-published: 2024/04/26
+published: 2024-04-26T00:00:00.000Z
 lang: cn
 tags:
   - OS

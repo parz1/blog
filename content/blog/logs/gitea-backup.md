@@ -2,7 +2,7 @@
 title: Gitea Docker 的升级、备份和恢复
 slug: gitea-backup
 description: 用 docker-compose 自动升级，定时自动执行备份和上传
-published: 2024/06/06
+published: 2024-06-06T00:00:00.000Z
 lang: cn
 tags:
   - gitea
