@@ -63,6 +63,27 @@ export default defineCachedEventHandler(
     const query = getQuery(event)
     const owner = parseName(query.owner, 'minerei-devs')
     const repoName = parseName(query.repo, 'leclog')
+    const repoKey = `${owner}/${repoName}`
+
+    // Only allow repos declared in the projects collection, so this endpoint
+    // cannot be used as an open proxy against the server's GitHub token.
+    const projects = await queryCollection(event, 'projects')
+      .select('repo')
+      .all()
+    const allowedRepos = new Set(
+      projects
+        .map((project) =>
+          project.repo ? `${project.repo.owner}/${project.repo.name}` : null,
+        )
+        .filter((value): value is string => value !== null),
+    )
+    if (!allowedRepos.has(repoKey)) {
+      throw createError({
+        statusCode: 403,
+        statusMessage: `Repository ${repoKey} is not in the allowlist`,
+      })
+    }
+
     const baseUrl = `https://api.github.com/repos/${owner}/${repoName}`
     const headers = githubHeaders(token)
 

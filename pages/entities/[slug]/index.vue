@@ -54,6 +54,11 @@ const groupBySlug = <T extends LinkableContent>(items: T[]) => {
 }
 
 const entity = computed(() => pickLocalized(entities.value ?? []))
+
+if (!entity.value) {
+  setResponseStatus(404)
+}
+
 const renderedLang = computed(() =>
   toHtmlLang(entity.value?.lang ?? locale.value),
 )

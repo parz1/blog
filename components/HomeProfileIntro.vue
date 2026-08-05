@@ -375,7 +375,7 @@ const techItems: TechCloudItem[] = [
         {{ t('home.profile.tech.description') }}
       </p>
 
-      <TechPhysicsCloud :items="techItems" />
+      <LazyTechPhysicsCloud :items="techItems" />
     </div>
   </section>
 </template>

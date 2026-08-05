@@ -121,6 +121,10 @@ const currentConceptVariants = computed(() =>
 
 const doc = computed(() => pickLocalized(currentConceptVariants.value))
 
+if (!doc.value) {
+  setResponseStatus(404)
+}
+
 const renderedLang = computed(() => toHtmlLang(doc.value?.lang ?? locale.value))
 
 const conceptNodes = computed<ConceptNode[]>(() =>

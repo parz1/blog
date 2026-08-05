@@ -94,6 +94,10 @@ const doc = computed(() => {
   return merged[0] ?? null
 })
 
+if (!doc.value) {
+  setResponseStatus(404)
+}
+
 const renderedLang = computed(() => toHtmlLang(doc.value?.lang ?? locale.value))
 
 const pickLocalized = <T extends { lang?: string }>(group: T[]) => {

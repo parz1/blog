@@ -61,6 +61,11 @@ const pickLocalized = <T extends { lang?: string }>(group: T[]) => {
 }
 
 const project = computed(() => pickLocalized(projects.value ?? []))
+
+if (!project.value) {
+  setResponseStatus(404)
+}
+
 const renderedLang = computed(() =>
   toHtmlLang(project.value?.lang ?? locale.value),
 )
