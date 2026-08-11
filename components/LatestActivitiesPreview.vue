@@ -4,20 +4,14 @@ const { locale } = useI18n()
 const { data: articles } = await useAsyncData<SiteArticle[]>(
   () => `latest-activities-preview-${locale.value}`,
   async () => {
-    const [posts, logs] = await Promise.all([
-      queryCollection('posts').order('published', 'DESC').all(),
-      queryCollection('logs').order('published', 'DESC').all(),
-    ])
+    const allArticles = await queryCollection('articles')
+      .order('published', 'DESC')
+      .all()
 
-    const allArticles = [
-      ...posts.map((article) => ({
-        ...article,
-        activityKind: 'post' as const,
-      })),
-      ...logs.map((article) => ({ ...article, activityKind: 'log' as const })),
-    ]
-
-    return mergeLocalizedArticles(allArticles, locale.value).slice(0, 6)
+    return mergeLocalizedArticles(
+      allArticles.filter((article) => article.kind !== 'crap'),
+      locale.value,
+    ).slice(0, 6)
   },
 )
 </script>

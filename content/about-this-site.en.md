@@ -62,14 +62,13 @@ The content layer is built on **Nuxt Content 3**. Its schema lives in `content.c
 
 Current collections:
 
-| Collection | Source                    | Purpose                              |
-| ---------- | ------------------------- | ------------------------------------ |
-| `pages`    | `content/*.md`            | Top-level pages such as about        |
-| `projects` | `content/projects/*.md`   | Projects and portfolio entries       |
-| `concepts` | `content/concepts/*.md`   | Concept nodes and knowledge graph    |
-| `posts`    | `content/blog/posts/*.md` | Formal articles                      |
-| `logs`     | `content/blog/logs/*.md`  | Technical logs and process records   |
-| `crap`     | `content/blog/crap/*.md`  | Lighter notes and incomplete records |
+| Collection | Source                       | Purpose                                             |
+| ---------- | ---------------------------- | --------------------------------------------------- |
+| `pages`    | `content/*.md`               | Top-level pages such as about                       |
+| `projects` | `content/projects/*.md`      | Projects and portfolio entries                      |
+| `concepts` | `content/concepts/*.md`      | Concept nodes and knowledge graph                   |
+| `articles` | `content/blog/articles/*.md` | Essays, notes, and loose writing selected by `kind` |
+| `columns`  | `content/blog/columns/*.md`  | Ordered public learning paths and planned chapters  |
 
 Each collection has a schema. For example, projects require fields such as `title`, `slug`, `summary`, `status`, `updated`, and GitHub repo metadata. Concepts include `state`, `relations`, `relatedProjects`, and `aliases`.
 
@@ -124,7 +123,7 @@ This lets project pages show live-ish open-source status instead of only static 
 
 ### Sitemap route
 
-`server/routes/sitemap.xml.ts` generates the sitemap with the `sitemap` package. The configured hostname is `https://parz1.goder.club`.
+`server/routes/sitemap.xml.ts` generates the sitemap with the `sitemap` package. The configured hostname is `https://parz1.minerei.dev`.
 
 ### Local gallery uploader
 

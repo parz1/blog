@@ -14,7 +14,11 @@ const {
   async () => {
     // 暂停 2 秒
     await new Promise((resolve) => setTimeout(resolve, 3000))
-    return queryCollection('posts').limit(5).order('published', 'DESC').all()
+    return queryCollection('articles')
+      .where('kind', '=', 'post')
+      .limit(5)
+      .order('published', 'DESC')
+      .all()
   },
   { lazy: true, server: false },
 )
@@ -26,7 +30,11 @@ const {
 } = await useAsyncData(
   'latest-posts',
   async () => {
-    return queryCollection('posts').limit(5).order('published', 'DESC').all()
+    return queryCollection('articles')
+      .where('kind', '=', 'post')
+      .limit(5)
+      .order('published', 'DESC')
+      .all()
   },
   { lazy: true, server: true },
 )

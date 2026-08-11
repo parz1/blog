@@ -1,4 +1,5 @@
 ---
+kind: post
 title: Obsidian のフォント描画を救え
 slug: obsidian-css-font
 description: Obsidian フォントレンダリング最適化メモ

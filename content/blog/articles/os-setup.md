@@ -1,4 +1,5 @@
 ---
+kind: log
 title: 'OS 实验 - 使用 Docker 编译内核'
 description: '使用 Docker + qemu 快速编译内核并实现自定义系统调用'
 published: 2024-03-31T00:00:00.000Z

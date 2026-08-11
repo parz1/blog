@@ -62,14 +62,13 @@ UI は主に以下で構成されています。
 
 現在の collection は以下です。
 
-| Collection | Source                    | 用途                           |
-| ---------- | ------------------------- | ------------------------------ |
-| `pages`    | `content/*.md`            | about などのトップレベルページ |
-| `projects` | `content/projects/*.md`   | プロジェクトとポートフォリオ   |
-| `concepts` | `content/concepts/*.md`   | 概念ノードと知識グラフ         |
-| `posts`    | `content/blog/posts/*.md` | 比較的まとまった記事           |
-| `logs`     | `content/blog/logs/*.md`  | 技術ログと作業記録             |
-| `crap`     | `content/blog/crap/*.md`  | 軽量なメモや未完成の記録       |
+| Collection | Source                       | 用途                                        |
+| ---------- | ---------------------------- | ------------------------------------------- |
+| `pages`    | `content/*.md`               | about などのトップレベルページ              |
+| `projects` | `content/projects/*.md`      | プロジェクトとポートフォリオ                |
+| `concepts` | `content/concepts/*.md`      | 概念ノードと知識グラフ                      |
+| `articles` | `content/blog/articles/*.md` | `kind` で記事、メモ、断片を区別する writing |
+| `columns`  | `content/blog/columns/*.md`  | 順序を持つ公開学習ルートと予定章            |
 
 各 collection には schema があります。たとえば project には `title`、`slug`、`summary`、`status`、`updated`、GitHub repo 情報が必要です。concept には `state`、`relations`、`relatedProjects`、`aliases` などがあります。
 
@@ -124,7 +123,7 @@ Markdown の処理は `nuxt.config.ts` の `content.build.markdown` で設定し
 
 ### Sitemap route
 
-`server/routes/sitemap.xml.ts` は `sitemap` package で sitemap を生成します。hostname は `https://parz1.goder.club` です。
+`server/routes/sitemap.xml.ts` は `sitemap` package で sitemap を生成します。hostname は `https://parz1.minerei.dev` です。
 
 ### Local gallery uploader
 

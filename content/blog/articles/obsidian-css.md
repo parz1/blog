@@ -1,4 +1,5 @@
 ---
+kind: post
 title: 拯救我的 Obsidian 字体显示效果
 slug: obsidian-css-font
 description: Obsidian 字体渲染优化小记

@@ -75,19 +75,20 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     active: isActivePath('/blog'),
     children: [
       {
+        label: t('menu.columns'),
+        to: localePath('/blog/columns'),
+      },
+      {
         label: t('menu.posts'),
         to: localePath('/blog/posts'),
-        description: t('menu.postsDescription'),
       },
       {
         label: t('menu.logs'),
         to: localePath('/blog/logs'),
-        description: t('menu.logsDescription'),
       },
       {
         label: t('menu.crap'),
         to: localePath('/blog/crap'),
-        description: t('menu.crapDescription'),
       },
     ],
   },

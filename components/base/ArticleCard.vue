@@ -45,7 +45,7 @@ const languageBadges = computed(() => {
 })
 
 const activityBadge = computed(() => {
-  switch (props.article.activityKind) {
+  switch (props.article.kind) {
     case 'post':
       return {
         color: 'primary',
@@ -76,7 +76,7 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
         `/blog/${article.slug ?? (article.path || '').split('/').pop()}`,
       )
     "
-    class="group"
+    class="group block cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50"
   >
     <article
       :lang="articleLang"

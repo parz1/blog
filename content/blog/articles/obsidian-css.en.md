@@ -1,4 +1,5 @@
 ---
+kind: post
 title: Sharpening Obsidian Font Rendering
 slug: obsidian-css-font
 description: Notes on improving Obsidian font rendering

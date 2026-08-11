@@ -1,4 +1,5 @@
 ---
+kind: log
 title: Gitea Docker 的升级、备份和恢复
 slug: gitea-backup
 description: 用 docker-compose 自动升级，定时自动执行备份和上传

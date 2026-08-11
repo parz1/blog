@@ -1,4 +1,5 @@
 ---
+kind: log
 title: 把博客接到 Nuxt Studio 和 Oxc
 slug: nuxt-studio-oxc
 description: 记录这次升级 Nuxt、整理工具链、接入 Nuxt Studio，并顺手调整博客字体的过程。

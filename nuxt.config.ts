@@ -68,7 +68,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    baseUrl: 'https://parz1.goder.club',
+    baseUrl: 'https://parz1.minerei.dev',
     // strategy: 'no_prefix',
     // detectBrowserLanguage: {
     //   useCookie: true,
