@@ -78,18 +78,12 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
         >
           {{ article.description }}
         </p>
-        <div
+        <ArticleTagList
           v-if="!compact && article.tags?.length"
-          class="mt-2 flex max-w-full flex-nowrap gap-1.5 overflow-hidden"
-        >
-          <span
-            v-for="tag in article.tags"
-            :key="tag"
-            class="shrink-0 rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-800 dark:text-gray-400"
-          >
-            {{ tag }}
-          </span>
-        </div>
+          :tags="article.tags"
+          appearance="overview"
+          class="mt-2"
+        />
       </div>
     </article>
   </NuxtLink>

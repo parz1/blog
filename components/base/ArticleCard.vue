@@ -131,21 +131,12 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
       >
         {{ article.description }}
       </p>
-      <div
+      <ArticleTagList
         v-if="article.tags?.length"
-        class="mt-2 flex max-w-full flex-nowrap gap-2 overflow-hidden text-xs text-gray-500 dark:text-gray-400"
-      >
-        <UBadge
-          v-for="tag in article.tags"
-          :key="tag"
-          color="neutral"
-          class="shrink-0"
-          size="md"
-          variant="soft"
-        >
-          {{ tag }}
-        </UBadge>
-      </div>
+        :tags="article.tags"
+        appearance="card"
+        class="mt-2"
+      />
     </article>
   </NuxtLink>
 </template>
