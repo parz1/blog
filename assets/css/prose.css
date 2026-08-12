@@ -59,7 +59,7 @@
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {
-  text-wrap: balance;
+  text-wrap: wrap;
   letter-spacing: 0;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .prose a.concept-wikilink {
-  @apply rounded-md bg-gray-100 px-1.5 py-0.5 font-sans text-sm font-medium no-underline text-gray-800 transition-colors hover:bg-primary-50 hover:text-primary-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-primary-950 dark:hover:text-primary-300;
+  @apply font-medium text-gray-900 underline decoration-gray-300 decoration-1 underline-offset-4 transition-colors hover:text-primary-700 hover:decoration-primary-400 dark:text-gray-100 dark:decoration-gray-700 dark:hover:text-primary-300 dark:hover:decoration-primary-600;
 }
 
 .prose a.article-wikilink {
@@ -90,13 +90,13 @@
 
 /* 标题尺寸与锚点滚动偏移（有固定头部时很关键） */
 .prose h1 {
-  @apply text-3xl font-extrabold mt-8 mb-4 scroll-mt-24;
+  @apply text-3xl font-extrabold mt-10 mb-4 scroll-mt-24;
 }
 .prose h2 {
-  @apply text-3xl font-bold leading-9 mt-4 mb-4 scroll-mt-24;
+  @apply text-3xl font-bold leading-9 mt-10 mb-4 scroll-mt-24;
 }
 .prose :where(h3, h4, h5, h6) {
-  @apply text-xl font-bold mt-4 mb-2 scroll-mt-24;
+  @apply text-xl font-bold mt-8 mb-2 scroll-mt-24;
 }
 
 /* nuxt/content 的锚链图标隐藏，hover 再显 */
@@ -139,8 +139,18 @@
 
 /* 代码块圆角和阴影，内部 code 去掉背景 */
 .prose pre {
-  @apply rounded-2xl shadow-sm overflow-x-auto;
+  @apply rounded-lg shadow-sm overflow-x-auto;
   max-width: 100%;
+}
+.prose pre.shiki {
+  color: #24292e;
+  background-color: #f6f8fa;
+  border: 1px solid #d8dee4;
+}
+.dark .prose pre.shiki {
+  color: #f0f3f6;
+  background-color: #0a0c10;
+  border-color: #30363d;
 }
 .prose pre code {
   @apply bg-transparent p-0;
@@ -220,7 +230,7 @@
 }
 
 .content-title {
-  text-wrap: balance;
+  text-wrap: wrap;
   letter-spacing: 0;
 }
 

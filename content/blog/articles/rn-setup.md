@@ -1,4 +1,5 @@
 ---
+kind: log
 title: 'RN 安卓开发指南:rocket:'
 description: 'A simple way to convert a SVG to PNG using Canvas'
 published: 2023-06-20T00:00:00.000Z

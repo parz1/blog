@@ -6,9 +6,8 @@ import type {
 } from '@nuxt/ui'
 
 type SearchCollection =
-  | 'posts'
-  | 'logs'
-  | 'crap'
+  | 'articles'
+  | 'columns'
   | 'concepts'
   | 'entities'
   | 'projects'
@@ -17,7 +16,7 @@ type SearchCollectionConfig = {
   collection: SearchCollection
   labelKey: string
   icon: string
-  routeBase: 'blog' | 'concepts' | 'entities' | 'projects'
+  routeBase: 'blog' | 'columns' | 'concepts' | 'entities' | 'projects'
 }
 
 type SearchSection = {
@@ -49,22 +48,16 @@ const searchTerm = ref('')
 
 const collections: SearchCollectionConfig[] = [
   {
-    collection: 'posts',
-    labelKey: 'menu.posts',
+    collection: 'articles',
+    labelKey: 'menu.blog',
     icon: 'i-lucide-file-text',
     routeBase: 'blog',
   },
   {
-    collection: 'logs',
-    labelKey: 'menu.logs',
-    icon: 'i-lucide-notebook-text',
-    routeBase: 'blog',
-  },
-  {
-    collection: 'crap',
-    labelKey: 'menu.crap',
-    icon: 'i-lucide-message-square-text',
-    routeBase: 'blog',
+    collection: 'columns',
+    labelKey: 'menu.columns',
+    icon: 'i-lucide-list-tree',
+    routeBase: 'columns',
   },
   {
     collection: 'concepts',
@@ -132,7 +125,9 @@ const toSearchRoute = (
         ? `/entities/${slug}`
         : config.routeBase === 'projects'
           ? `/projects/${slug}`
-          : `/blog/${slug}`
+          : config.routeBase === 'columns'
+            ? `/blog/columns/${slug}`
+            : `/blog/${slug}`
 
   return localizeSearchRoute(`${path}${getHash(section.id)}`)
 }
@@ -180,37 +175,40 @@ const { data: searchItems, status } = await useLazyAsyncData(
   'site-search-items',
   async () => {
     const [
-      postSections,
-      logSections,
-      crapSections,
+      articleSections,
+      columnSections,
       conceptSections,
       entitySections,
       projectSections,
-      posts,
-      logs,
-      crap,
+      articles,
+      columns,
       concepts,
       entities,
       projects,
     ] = await Promise.all([
-      queryCollectionSearchSections('posts'),
-      queryCollectionSearchSections('logs'),
-      queryCollectionSearchSections('crap'),
+      queryCollectionSearchSections('articles'),
+      queryCollectionSearchSections('columns'),
       queryCollectionSearchSections('concepts'),
       queryCollectionSearchSections('entities'),
       queryCollectionSearchSections('projects'),
-      queryCollection('posts').all(),
-      queryCollection('logs').all(),
-      queryCollection('crap').all(),
+      queryCollection('articles').all(),
+      queryCollection('columns').all(),
       queryCollection('concepts').all(),
       queryCollection('entities').all(),
       queryCollection('projects').all(),
     ])
 
     return {
-      posts: mapSections(postSections, posts, collectionConfigByName.posts),
-      logs: mapSections(logSections, logs, collectionConfigByName.logs),
-      crap: mapSections(crapSections, crap, collectionConfigByName.crap),
+      articles: mapSections(
+        articleSections,
+        articles,
+        collectionConfigByName.articles,
+      ),
+      columns: mapSections(
+        columnSections,
+        columns,
+        collectionConfigByName.columns,
+      ),
       concepts: mapSections(
         conceptSections,
         concepts,
@@ -230,9 +228,8 @@ const { data: searchItems, status } = await useLazyAsyncData(
   },
   {
     default: () => ({
-      posts: [],
-      logs: [],
-      crap: [],
+      articles: [],
+      columns: [],
       concepts: [],
       entities: [],
       projects: [],
@@ -296,6 +293,11 @@ const links = computed<ContentSearchLink[]>(() => [
     to: localePath('/blog'),
     icon: 'i-lucide-library',
     children: [
+      {
+        label: t('menu.columns'),
+        description: t('menu.columnsDescription'),
+        to: localePath('/blog/columns'),
+      },
       {
         label: t('menu.posts'),
         description: t('menu.postsDescription'),

@@ -4,12 +4,12 @@ const { locale } = useI18n()
 const { data: articles } = await useAsyncData<SiteArticle[]>(
   'logs-preview',
   async () => {
-    const logs = await queryCollection('logs').order('published', 'DESC').all()
+    const logs = await queryCollection('articles')
+      .where('kind', '=', 'log')
+      .order('published', 'DESC')
+      .all()
 
-    return mergeLocalizedArticles(
-      logs.map((article) => ({ ...article, activityKind: 'log' as const })),
-      locale.value,
-    ).slice(0, 5)
+    return mergeLocalizedArticles(logs, locale.value).slice(0, 5)
   },
   {
     watch: [() => locale.value],

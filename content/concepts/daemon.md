@@ -58,7 +58,7 @@ This connects to [[protocol]] because many daemons communicate through a defined
 
 Daemons also show up in scheduling and automation. A cron-like service, sync engine, notification process, or indexing service may not have a visible UI, but it changes what the system can do over time.
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is visibility. Daemons are useful because they disappear into the background, but that same invisibility makes them harder to reason about.
 

@@ -1,4 +1,5 @@
 ---
+kind: crap
 tags: []
 categories: []
 title: 電子ペットは許されるのか

@@ -1,4 +1,5 @@
 ---
+kind: log
 title: Corepack
 slug: corepack
 description: What is corepack

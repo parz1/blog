@@ -1,5 +1,35 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 
+const articleSchema = z.object({
+  title: z.string(),
+  slug: z.string().optional(),
+  kind: z.enum(['post', 'log', 'crap']),
+  lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
+  description: z.string().optional(),
+  notice: z.string().optional(),
+  categories: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+  cover: z.string().optional(),
+  published: z.string().datetime(),
+})
+
+const columnChapterSchema = z
+  .object({
+    id: z.string(),
+    workingTitle: z.string(),
+    summary: z.string().optional(),
+    state: z.enum(['planned', 'learning', 'writing', 'published', 'revising']),
+    articleSlug: z.string().optional(),
+    role: z.enum(['core', 'supplemental']).default('core').optional(),
+  })
+  .refine(
+    (chapter) => chapter.state !== 'published' || Boolean(chapter.articleSlug),
+    {
+      message: 'Published chapters must reference an articleSlug',
+      path: ['articleSlug'],
+    },
+  )
+
 export default defineContentConfig({
   collections: {
     pages: defineCollection({
@@ -109,49 +139,36 @@ export default defineContentConfig({
         lang: z.enum(['cn', 'ja', 'en']).default('en').optional(),
       }),
     }),
-    posts: defineCollection({
+    articles: defineCollection({
       type: 'page',
-      source: 'blog/posts/*.md',
-      schema: z.object({
-        title: z.string(),
-        slug: z.string().optional(),
-        lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
-        description: z.string().optional(),
-        notice: z.string().optional(),
-        categories: z.array(z.string()).optional(),
-        tags: z.array(z.string()).optional(),
-        cover: z.string().optional(),
-        published: z.string().datetime(),
-      }),
+      source: 'blog/articles/*.md',
+      schema: articleSchema,
     }),
-    logs: defineCollection({
+    columns: defineCollection({
       type: 'page',
-      source: 'blog/logs/*.md',
+      source: 'blog/columns/*.md',
       schema: z.object({
         title: z.string(),
-        slug: z.string().optional(),
+        slug: z.string(),
         lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
-        description: z.string().optional(),
-        notice: z.string().optional(),
-        categories: z.array(z.string()).optional(),
-        tags: z.array(z.string()).optional(),
+        description: z.string(),
+        status: z.enum(['active', 'completed', 'paused']),
+        author: z.string().optional(),
+        started: z.number().int().optional(),
+        question: z.string().optional(),
+        thesis: z.string().optional(),
+        scope: z.array(z.string()).optional(),
+        updated: z.string(),
         cover: z.string().optional(),
-        published: z.string().datetime(),
-      }),
-    }),
-    crap: defineCollection({
-      type: 'page',
-      source: 'blog/crap/*.md',
-      schema: z.object({
-        title: z.string(),
-        slug: z.string().optional(),
-        lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
-        description: z.string().optional(),
-        notice: z.string().optional(),
-        categories: z.array(z.string()).optional(),
         tags: z.array(z.string()).optional(),
-        cover: z.string().optional(),
-        published: z.string().datetime(),
+        sections: z.array(
+          z.object({
+            id: z.string(),
+            title: z.string(),
+            description: z.string().optional(),
+            chapters: z.array(columnChapterSchema),
+          }),
+        ),
       }),
     }),
     gallery: defineCollection({

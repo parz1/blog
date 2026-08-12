@@ -1,4 +1,5 @@
 ---
+kind: post
 title: 并发中的同步互斥
 slug: os-sync
 description: 软硬件解决互斥、信号量解决、经典问题、管程

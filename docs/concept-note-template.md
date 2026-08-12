@@ -15,13 +15,13 @@ lang: en
 
 ## Current understanding
 
-What do I currently think this concept means?
+What do I currently think this concept means, and where are its boundaries?
 
 ## Why I care
 
 Why does it matter for my research, engineering, product thinking, or worldview?
 
-## Perspectives / lenses
+## Perspectives / lenses (optional)
 
 -
 
@@ -29,15 +29,15 @@ Why does it matter for my research, engineering, product thinking, or worldview?
 
 -
 
-## Tensions
+## Tensions and trade-offs (optional)
 
--
+Which values, requirements, or interpretations pull against each other within this concept? These are not necessarily opposing concepts.
+
+## Sources and evidence (optional)
+
+Prefer inline links or footnotes next to claims. Use this section only when a short annotated reading trail adds value.
 
 ## Open questions
-
--
-
-## Related projects / notes
 
 -
 

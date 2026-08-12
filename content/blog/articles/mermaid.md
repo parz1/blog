@@ -1,4 +1,5 @@
 ---
+kind: log
 title: Use mermaid in nuxt
 slug: mermaid
 description: 在 Nuxt3 中使用 mermaid

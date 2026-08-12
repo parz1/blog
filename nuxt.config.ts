@@ -1,4 +1,13 @@
+import { fileURLToPath } from 'node:url'
+
 import { rubyHook } from './utils/rubyHook'
+
+// Nuxt Content's development checksum does not include `content:file:*` hooks.
+// Version this marker path when syntax hooks change so previously parsed
+// documents cannot leave stale wiki links in the development cache.
+const contentSyntaxCacheMarker = fileURLToPath(
+  new URL('./utils/contentSyntaxV1.mjs', import.meta.url),
+)
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -43,7 +52,6 @@ export default defineNuxtConfig({
         '@vueuse/core',
         'd3-geo',
         'maplibre-gl',
-        'mermaid',
         'vue3-marquee',
       ],
     },
@@ -68,7 +76,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    baseUrl: 'https://parz1.goder.club',
+    baseUrl: 'https://parz1.minerei.dev',
     // strategy: 'no_prefix',
     // detectBrowserLanguage: {
     //   useCookie: true,
@@ -110,6 +118,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         remarkPlugins: {
+          [contentSyntaxCacheMarker]: {},
           'remark-math': {},
           'remark-emoji': {},
           'remark-gfm': {},
@@ -118,7 +127,11 @@ export default defineNuxtConfig({
           'rehype-katex': { output: 'html' },
         },
         highlight: {
-          theme: 'github-dark-high-contrast',
+          theme: {
+            default: 'github-light',
+            light: 'github-light',
+            dark: 'github-dark-high-contrast',
+          },
           langs: [
             'zsh',
             'c',

@@ -1,4 +1,5 @@
 ---
+kind: post
 title: 这个网站的技术解析
 slug: about-this-site
 description: 从 Nuxt 前端、内容系统、Nitro 后端、媒体管线到构建和托管，整理这个个人站的技术结构。
@@ -45,14 +46,13 @@ UI 层主要由 Nuxt UI、Tailwind CSS 4、自定义 Vue components，以及 Mar
 
 当前主要 collection：
 
-| Collection | Source                    | 用途                 |
-| ---------- | ------------------------- | -------------------- |
-| `pages`    | `content/*.md`            | 顶层说明页           |
-| `projects` | `content/projects/*.md`   | 项目和作品集         |
-| `concepts` | `content/concepts/*.md`   | 概念节点和知识图谱   |
-| `posts`    | `content/blog/posts/*.md` | 正式文章             |
-| `logs`     | `content/blog/logs/*.md`  | 技术过程和阶段记录   |
-| `crap`     | `content/blog/crap/*.md`  | 更轻量、不完整的记录 |
+| Collection | Source                       | 用途                             |
+| ---------- | ---------------------------- | -------------------------------- |
+| `pages`    | `content/*.md`               | 顶层说明页                       |
+| `projects` | `content/projects/*.md`      | 项目和作品集                     |
+| `concepts` | `content/concepts/*.md`      | 概念节点和知识图谱               |
+| `articles` | `content/blog/articles/*.md` | 通过 `kind` 区分文章、札记和散记 |
+| `columns`  | `content/blog/columns/*.md`  | 有顺序的公开学习路径和计划章节   |
 
 每个 collection 都有 schema。例如 `projects` 要求 `title`、`slug`、`summary`、`status`、`updated` 和 GitHub repo 信息；`concepts` 则有 `state`、`relations`、`relatedProjects` 和 `aliases`。
 

@@ -86,7 +86,7 @@ It also decides the [[baseline]]. A frame that asks whether Random Forest is bet
 
 This also connects to [[fitting]], because fitting is only one step inside a framed and protocol-driven experiment. The frame decides why a model is being fitted at all; the protocol decides which data can be used for fitting and how the fitted model will be evaluated.
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is that framing can feel premature. Early curiosity is often messy, and forcing a frame too early can hide interesting directions. But without any frame, the work may never produce an interpretable result.
 

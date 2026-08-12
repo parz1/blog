@@ -62,14 +62,13 @@ UI 层主要由这些部分组成：
 
 当前站点把内容分成几类 collection：
 
-| Collection | Source                    | 用途                             |
-| ---------- | ------------------------- | -------------------------------- |
-| `pages`    | `content/*.md`            | about、about site 这类顶层说明页 |
-| `projects` | `content/projects/*.md`   | 项目和作品集                     |
-| `concepts` | `content/concepts/*.md`   | 概念节点和知识图谱               |
-| `posts`    | `content/blog/posts/*.md` | 正式文章                         |
-| `logs`     | `content/blog/logs/*.md`  | 技术过程和阶段记录               |
-| `crap`     | `content/blog/crap/*.md`  | 更轻量、不一定完整的记录         |
+| Collection | Source                       | 用途                             |
+| ---------- | ---------------------------- | -------------------------------- |
+| `pages`    | `content/*.md`               | about、about site 这类顶层说明页 |
+| `projects` | `content/projects/*.md`      | 项目和作品集                     |
+| `concepts` | `content/concepts/*.md`      | 概念节点和知识图谱               |
+| `articles` | `content/blog/articles/*.md` | 通过 `kind` 区分文章、札记和散记 |
+| `columns`  | `content/blog/columns/*.md`  | 有顺序的公开学习路径和计划章节   |
 
 每个 collection 都有 schema。比如 `projects` 要求 `title`、`slug`、`summary`、`status`、`updated` 和 GitHub repo 信息；`concepts` 则有 `state`、`relations`、`relatedProjects` 和 `aliases`。
 
@@ -128,7 +127,7 @@ Markdown 构建管线配置在 `nuxt.config.ts` 的 `content.build.markdown`。
 
 `server/routes/sitemap.xml.ts` 生成 sitemap。
 
-当前 sitemap 使用 `sitemap` 包输出 XML，hostname 配置为 `https://parz1.goder.club`，并包含首页、blog、demo 等入口。
+当前 sitemap 使用 `sitemap` 包输出 XML，hostname 配置为 `https://parz1.minerei.dev`，并包含首页、blog、demo 等入口。
 
 ### Local gallery uploader
 
@@ -237,8 +236,8 @@ node .output/server/index.mjs
 
 站点配置里的公开域名信号：
 
-- i18n base URL: `https://parz1.goder.club`
-- sitemap hostname: `https://parz1.goder.club`
+- i18n base URL: `https://parz1.minerei.dev`
+- sitemap hostname: `https://parz1.minerei.dev`
 - 简历页 portfolio URL: `https://parz1.minerei.dev`
 
 仓库里没有单独的 `vercel.json`、`netlify.toml` 或 `wrangler.toml`，所以这页不假设具体 CI/CD 配置。能确定的是：应用本身按 Nitro node-server 方式构建，可以被部署到支持 Node/Nitro 的平台；媒体对象可接 Cloudflare R2；前端分析接入了 Vercel Analytics。

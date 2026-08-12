@@ -1,4 +1,5 @@
 ---
+kind: post
 title: 进程间通信
 slug: os-ipc
 description: 进程的三种通信方式

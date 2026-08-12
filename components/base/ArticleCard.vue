@@ -45,7 +45,7 @@ const languageBadges = computed(() => {
 })
 
 const activityBadge = computed(() => {
-  switch (props.article.activityKind) {
+  switch (props.article.kind) {
     case 'post':
       return {
         color: 'primary',
@@ -76,7 +76,7 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
         `/blog/${article.slug ?? (article.path || '').split('/').pop()}`,
       )
     "
-    class="group"
+    class="group block cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50"
   >
     <article
       :lang="articleLang"
@@ -127,24 +127,16 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
       </h2>
       <p
         v-if="article.description"
-        class="content-description relative z-10 mt-1 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+        class="content-description relative z-10 mt-1 line-clamp-2 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
       >
         {{ article.description }}
       </p>
-      <div
+      <ArticleTagList
         v-if="article.tags?.length"
-        class="mt-2 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400"
-      >
-        <UBadge
-          v-for="tag in article.tags"
-          :key="tag"
-          color="neutral"
-          size="md"
-          variant="soft"
-        >
-          {{ tag }}
-        </UBadge>
-      </div>
+        :tags="article.tags"
+        appearance="card"
+        class="mt-2"
+      />
     </article>
   </NuxtLink>
 </template>

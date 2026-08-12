@@ -12,6 +12,10 @@
     "demoDescription": "小さなインタラクションとレンダリング実験",
     "lab": "Lab",
     "blog": "ブログ",
+    "overview": "総覧",
+    "overviewDescription": "連載・記事・メモ・断片をまとめた編集的な入口",
+    "columns": "連載",
+    "columnsDescription": "学びながら章ごとに育てる学習ルート",
     "posts": "記事",
     "postsDescription": "整理した長文とまとまった考え",
     "logs": "メモ",
@@ -295,8 +299,25 @@
     "kicker": "Writing",
     "description": "記事、メモ、ゆるい断片を時系列でまとめた書き物の流れです。",
     "all": "すべて",
+    "overview": {
+      "updated": "最終更新 {date}",
+      "featuredColumn": "連載 · {title}",
+      "columnCarousel": "連載カルーセル",
+      "previousColumn": "前の連載",
+      "nextColumn": "次の連載",
+      "goToColumn": "連載「{title}」へ切り替える",
+      "chapterCount": "全 {total} 本",
+      "latestArticles": "最新記事",
+      "latestLogs": "最近のメモ",
+      "latestCrap": "雑記",
+      "viewAllColumns": "すべての連載",
+      "viewAllPosts": "すべての記事",
+      "viewAllLogs": "すべてのメモ",
+      "viewAllCrap": "すべての断片"
+    },
     "sidebar": {
       "onThisPage": "目次",
+      "column": "連載",
       "concepts": "関連する概念",
       "noConcepts": "No concepts yet.",
       "backlinks": "バックリンク",
@@ -308,6 +329,49 @@
       "tags": "タグ"
     }
   },
+  "columns": {
+    "kicker": "テーマ別執筆",
+    "title": "連載",
+    "description": "長く問い続けるテーマから、論考と改訂を重ねて理解を形にする連載です。",
+    "emptyTitle": "連載はまだありません",
+    "emptyDescription": "次の学習ルートがここに表示されます。",
+    "notFound": "連載が見つかりません",
+    "backToColumns": "連載一覧へ戻る",
+    "updated": "{date} 更新",
+    "progress": "{total} 章中 {published} 章を公開",
+    "progressLabel": "連載の進捗",
+    "currently": "現在",
+    "roadmapKicker": "学習ルート",
+    "roadmap": "ロードマップ",
+    "totalChapters": "全 {total} 章",
+    "chapterProgress": "第 {current} / {total} 章",
+    "articleNavigation": "連載記事のナビゲーション",
+    "previousChapter": "前の章",
+    "nextChapter": "次の章",
+    "supplemental": "補足",
+    "researchSeries": "テーマ研究",
+    "editorialQuestion": "今号の問い",
+    "discussionScope": "議論の範囲",
+    "articlesAndArguments": "論考と議論",
+    "continuouslyRevised": "継続改訂",
+    "started": "{year}年創刊",
+    "forthcoming": "近日公開",
+    "publishedEssays": "公開 {published} 本 · 全 {total} 本",
+    "essayCount": "全 {total} 本",
+    "evolvingNote": "この連載は、読書・執筆・改訂を通して成長し続けます。",
+    "status": {
+      "active": "更新中",
+      "completed": "完結",
+      "paused": "休止中"
+    },
+    "chapterState": {
+      "planned": "予定",
+      "learning": "学習中",
+      "writing": "執筆中",
+      "published": "公開済み",
+      "revising": "改訂中"
+    }
+  },
   "gallery": {
     "label": "Gallery",
     "title": "Copies of world",
@@ -316,6 +380,49 @@
   "concepts": {
     "kicker": "Digital garden",
     "description": "研究、エンジニアリング、プロダクト思考、世界観に影響する概念を育てていくノートです。完成した定義ではなく、作業中の思考ノードとして扱います。",
+    "guide": {
+      "title": "コンセプトカードの読み方",
+      "description": "コンセプトカードは百科事典の項目ではなく、現時点での理解を残す作業スナップショットです。出典は追跡可能性を与えますが、自動的に権威を与えるものではありません。視点、緊張・トレードオフ、独立した出典欄は必要な場合だけ使います。",
+      "flow": {
+        "ariaLabel": "根拠と視点から現在の理解をつくり、つながり、トレードオフ、問いへ展開し、変化の記録を通して更新する構造",
+        "inputs": "形づくり、支えるもの",
+        "outputs": "展開と検証"
+      },
+      "sections": {
+        "understanding": {
+          "title": "現在の理解",
+          "description": "永続的な結論ではなく、いま採用している定義と境界を示します。"
+        },
+        "why": {
+          "title": "なぜ気になるのか",
+          "description": "研究、エンジニアリング、プロダクト思考、世界観にとっての意味を記します。"
+        },
+        "sources": {
+          "title": "根拠と出典（任意）",
+          "description": "事実、定義、見解の違いを追跡可能にします。可能なら関連する記述の近くで引用します。"
+        },
+        "perspectives": {
+          "title": "視点（任意）",
+          "description": "異なる役割、尺度、分野のレンズから同じ概念を見ます。"
+        },
+        "connections": {
+          "title": "つながり",
+          "description": "ほかの概念や実践との関係を記し、知識ネットワークに位置づけます。"
+        },
+        "tensions": {
+          "title": "緊張とトレードオフ（任意）",
+          "description": "反対語の一覧ではなく、概念の内部で引っ張り合う価値や要件を記します。"
+        },
+        "questions": {
+          "title": "未解決の問い",
+          "description": "現在の説明でまだ扱えないことを残し、次に育てる入口にします。"
+        },
+        "evolution": {
+          "title": "変化の記録",
+          "description": "理解がいつ、なぜ変わったかを記し、修正の過程を見えるようにします。"
+        }
+      }
+    },
     "filters": {
       "state": "状態",
       "tag": "タグ"

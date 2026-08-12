@@ -1,8 +1,8 @@
 # parz1 ZHOU — Personal Site & Digital Garden
 
-A content-first personal site built with **Nuxt 4**, **Nuxt Content v3** and **Tailwind CSS / Nuxt UI**. It mixes a trilingual blog (posts / logs / snippets) with a digital garden of interlinked concept notes, entities, and project pages. Content is authored in **Obsidian** — `content/` doubles as an Obsidian vault.
+A content-first personal site built with **Nuxt 4**, **Nuxt Content v3** and **Tailwind CSS / Nuxt UI**. It mixes a trilingual article stream and public learning series with a digital garden of interlinked concept notes, entities, and project pages. Content is authored in **Obsidian** — `content/` doubles as an Obsidian vault.
 
-Live at: https://parz1.goder.club
+Live at: https://parz1.minerei.dev
 
 ## Stack
 
@@ -15,14 +15,13 @@ Live at: https://parz1.goder.club
 
 ## Content collections
 
-| Collection | Path                  | Purpose                                                |
-| ---------- | --------------------- | ------------------------------------------------------ |
-| `posts`    | `content/blog/posts/` | Full essays                                            |
-| `logs`     | `content/blog/logs/`  | Dev / build logs                                       |
-| `crap`     | `content/blog/crap/`  | Loose thoughts                                         |
-| `concepts` | `content/concepts/`   | Digital-garden notes, linked via `[[wikilinks]]`       |
-| `entities` | `content/entities/`   | Knowledge-graph nodes (tools, standards, instruments…) |
-| `projects` | `content/projects/`   | Projects bound to GitHub repos                         |
+| Collection | Path                     | Purpose                                                |
+| ---------- | ------------------------ | ------------------------------------------------------ |
+| `articles` | `content/blog/articles/` | Essays, logs, and loose thoughts selected by `kind`    |
+| `columns`  | `content/blog/columns/`  | Ordered public learning paths and planned chapters     |
+| `concepts` | `content/concepts/`      | Digital-garden notes, linked via `[[wikilinks]]`       |
+| `entities` | `content/entities/`      | Knowledge-graph nodes (tools, standards, instruments…) |
+| `projects` | `content/projects/`      | Projects bound to GitHub repos                         |
 
 Schemas and validation live in [`content.config.ts`](./content.config.ts).
 

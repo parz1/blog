@@ -1,4 +1,5 @@
 ---
+kind: log
 title: 'OpenFace2x 在 macOS 的安装复盘'
 description: '包含完整命令清单与报错修复细节的 OpenFace2x macOS 安装复盘'
 published: 2026-05-28T00:00:00.000Z

@@ -1,4 +1,5 @@
 ---
+kind: post
 title: Technical notes about this site
 slug: about-this-site
 description: A technical overview of this personal site, from Nuxt frontend and content modeling to Nitro backend, media pipeline, build, and hosting.
@@ -45,14 +46,13 @@ The content layer is based on **Nuxt Content 3**, with schemas defined in `conte
 
 Main collections:
 
-| Collection | Source                    | Purpose                            |
-| ---------- | ------------------------- | ---------------------------------- |
-| `pages`    | `content/*.md`            | Top-level pages                    |
-| `projects` | `content/projects/*.md`   | Projects and portfolio entries     |
-| `concepts` | `content/concepts/*.md`   | Concept nodes and knowledge graph  |
-| `posts`    | `content/blog/posts/*.md` | Formal articles                    |
-| `logs`     | `content/blog/logs/*.md`  | Technical logs and process records |
-| `crap`     | `content/blog/crap/*.md`  | Lighter and less complete notes    |
+| Collection | Source                       | Purpose                                             |
+| ---------- | ---------------------------- | --------------------------------------------------- |
+| `pages`    | `content/*.md`               | Top-level pages                                     |
+| `projects` | `content/projects/*.md`      | Projects and portfolio entries                      |
+| `concepts` | `content/concepts/*.md`      | Concept nodes and knowledge graph                   |
+| `articles` | `content/blog/articles/*.md` | Essays, notes, and loose writing selected by `kind` |
+| `columns`  | `content/blog/columns/*.md`  | Ordered public learning paths and planned chapters  |
 
 Each collection has a schema. For example, `projects` requires fields such as `title`, `slug`, `summary`, `status`, `updated`, and GitHub repo metadata; `concepts` includes `state`, `relations`, `relatedProjects`, and `aliases`.
 

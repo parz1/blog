@@ -243,41 +243,45 @@ onBeforeUnmount(() => {
           <li
             v-for="{ id, text, children } in tocLinks"
             :key="id"
-            class="mb-2 ml-0 cursor-pointer list-none text-sm last:mb-0"
+            class="mb-2 ml-0 list-none text-sm last:mb-0"
             :class="{
               'font-semibold text-gray-950 dark:text-gray-50':
                 id === effectiveId,
               'text-gray-900 dark:text-gray-100': id === topLevelId,
             }"
-            :aria-current="id === effectiveId ? 'true' : 'false'"
-            @click="onClick(id)"
           >
-            <span
+            <button
               :id="`toc-${id}`"
-              class="block truncate px-2 py-1"
+              type="button"
+              class="block w-full truncate rounded px-2 py-1 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
               :title="text"
+              :aria-current="id === effectiveId ? 'location' : undefined"
+              @click="onClick(id)"
             >
               {{ text }}
-            </span>
+            </button>
             <ul v-if="children" class="my-2 ml-3 min-w-0">
               <li
                 v-for="{ id: childId, text: childText } in children"
                 :key="childId"
-                class="mb-2 ml-0 cursor-pointer list-none text-xs last:mb-0"
+                class="mb-2 ml-0 list-none text-xs last:mb-0"
                 :class="{
                   'font-semibold text-gray-950 dark:text-gray-50':
                     childId === effectiveId,
                 }"
-                :aria-current="childId === effectiveId ? 'true' : 'false'"
-                @click.stop="onClick(childId)"
               >
-                <span
+                <button
                   :id="`toc-${childId}`"
-                  class="block truncate px-2 py-1"
+                  type="button"
+                  class="block w-full truncate rounded px-2 py-1 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                   :title="childText"
+                  :aria-current="
+                    childId === effectiveId ? 'location' : undefined
+                  "
+                  @click.stop="onClick(childId)"
                 >
                   {{ childText }}
-                </span>
+                </button>
               </li>
             </ul>
           </li>

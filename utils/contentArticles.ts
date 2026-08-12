@@ -59,6 +59,75 @@ export const mergeLocalizedArticles = <T extends SiteArticle>(
     )
 }
 
+export const mergeLocalizedColumns = <T extends SiteColumn>(
+  columns: T[],
+  locale: string,
+) => {
+  const groups = new Map<string, T[]>()
+
+  for (const column of columns) {
+    if (!groups.has(column.slug)) groups.set(column.slug, [])
+    groups.get(column.slug)!.push(column)
+  }
+
+  const localeCode = normalizeContentLocale(locale)
+
+  return Array.from(groups.values())
+    .map((group) => {
+      const availableLangs = Array.from(
+        new Set(
+          group
+            .map((entry) => entry.lang?.toLowerCase())
+            .filter((lang): lang is string => Boolean(lang)),
+        ),
+      )
+
+      const primary =
+        group.find((entry) => entry.lang?.toLowerCase() === localeCode) ??
+        group.find((entry) => entry.lang?.toLowerCase() === 'en') ??
+        group[0]
+
+      return { ...primary, availableLangs }
+    })
+    .toSorted(
+      (a, b) =>
+        new Date(b.updated ?? '').getTime() -
+        new Date(a.updated ?? '').getTime(),
+    )
+}
+
+export const flattenColumnChapters = (column: SiteColumn) =>
+  column.sections.flatMap((section) =>
+    section.chapters.map((chapter) => ({
+      ...chapter,
+      sectionId: section.id,
+      sectionTitle: section.title,
+    })),
+  )
+
+export const findArticleColumnMembership = (
+  columns: SiteColumn[],
+  articleSlug: string,
+) => {
+  for (const column of columns) {
+    const chapters = flattenColumnChapters(column)
+    const chapterIndex = chapters.findIndex(
+      (chapter) => chapter.articleSlug === articleSlug,
+    )
+
+    if (chapterIndex !== -1) {
+      return {
+        column,
+        chapter: chapters[chapterIndex],
+        chapterIndex,
+        chapters,
+      }
+    }
+  }
+
+  return null
+}
+
 export const extractConceptSlugsFromContent = (
   value: unknown,
   slugs = new Set<string>(),

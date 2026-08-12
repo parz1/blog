@@ -63,17 +63,9 @@ const { data: mentionSources } = await useAsyncData<MentionSource[]>(
     const currentSlug = slug.value
     if (!currentSlug) return []
 
-    const [posts, logs, crap] = await Promise.all([
-      queryCollection('posts').order('published', 'DESC').all(),
-      queryCollection('logs').order('published', 'DESC').all(),
-      queryCollection('crap').order('published', 'DESC').all(),
-    ])
-
-    const sources = [
-      ...posts.map((source) => ({ ...source, kind: 'post' as const })),
-      ...logs.map((source) => ({ ...source, kind: 'log' as const })),
-      ...crap.map((source) => ({ ...source, kind: 'crap' as const })),
-    ]
+    const sources = await queryCollection('articles')
+      .order('published', 'DESC')
+      .all()
 
     return sources
       .filter((source) => extractConceptSlugs(source.body).has(currentSlug))

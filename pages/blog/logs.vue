@@ -4,12 +4,12 @@ const { locale, t } = useI18n()
 const { data: articles } = await useAsyncData<SiteArticle[]>(
   'logs-posts',
   async () => {
-    const logs = await queryCollection('logs').order('published', 'DESC').all()
+    const logs = await queryCollection('articles')
+      .where('kind', '=', 'log')
+      .order('published', 'DESC')
+      .all()
 
-    return mergeLocalizedArticles(
-      logs.map((article) => ({ ...article, activityKind: 'log' as const })),
-      locale.value,
-    )
+    return mergeLocalizedArticles(logs, locale.value)
   },
   {
     lazy: false,
@@ -19,31 +19,15 @@ const { data: articles } = await useAsyncData<SiteArticle[]>(
 </script>
 
 <template>
-  <main class="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-0">
-    <header class="mb-10">
-      <p
-        class="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400"
-      >
-        {{ t('blog.kicker') }}
-      </p>
-      <h1
-        class="font-serif text-4xl font-semibold text-gray-950 dark:text-gray-50"
-      >
-        {{ t('menu.logs') }}
-      </h1>
-      <p
-        class="mt-4 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-400"
-      >
-        {{ t('menu.logsDescription') }}
-      </p>
-    </header>
-
-    <BlogListTitle class="mb-8" />
-
+  <BlogOverviewShell
+    :title="t('menu.logs')"
+    :description="t('menu.logsDescription')"
+    narrow
+  >
     <ul class="space-y-2">
       <li v-for="article in articles" :key="article.slug ?? article.path">
         <BaseArticleCard :article="article" />
       </li>
     </ul>
-  </main>
+  </BlogOverviewShell>
 </template>

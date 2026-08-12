@@ -71,7 +71,7 @@ In KNN, fitting is much lighter. The model mostly keeps the training examples. T
 
 In preprocessing objects such as scalers or PCA, fitting may not use labels at all. A scaler can fit by estimating means and variances. PCA can fit by estimating directions of variation. They are still fitted because their later behavior depends on statistics learned from data.
 
-## Tensions
+## Tensions and trade-offs
 
 The word "fit" can be misleading because it sounds like one universal operation. In practice, it is an interface-level word. The shared idea is data-informed state; the implementation depends on the estimator.
 

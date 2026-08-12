@@ -46,7 +46,7 @@ This connects to [[physicalism]] because metacognition should not be treated as 
 
 It also points toward future notes on memory systems, workflow, fatigue, interaction, and personal OS. In those contexts, metacognition becomes less of a philosophical term and more of a design requirement.
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is that metacognition can become performative. A system can make someone feel reflective while only adding more labels, dashboards, or self-surveillance. Reflection is useful only when it changes the next action or improves the next question.
 

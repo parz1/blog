@@ -4,7 +4,7 @@ import type { Collections } from '@nuxt/content'
 
 type SitemapLink = { url: string; changefreq: string; priority: number }
 
-const HOSTNAME = 'https://parz1.goder.club'
+const HOSTNAME = 'https://parz1.minerei.dev'
 
 // Must mirror the `locales` array in nuxt.config.ts. The default locale (en)
 // has no URL prefix under the `prefix_except_default` strategy.
@@ -17,6 +17,7 @@ const LOCALES = [
 const STATIC_ROUTES: SitemapLink[] = [
   { url: '/', changefreq: 'daily', priority: 1 },
   { url: '/blog', changefreq: 'daily', priority: 0.8 },
+  { url: '/blog/columns', changefreq: 'weekly', priority: 0.8 },
   { url: '/blog/posts', changefreq: 'daily', priority: 0.7 },
   { url: '/blog/logs', changefreq: 'weekly', priority: 0.7 },
   { url: '/blog/crap', changefreq: 'weekly', priority: 0.3 },
@@ -34,9 +35,8 @@ const STATIC_ROUTES: SitemapLink[] = [
 // locale prefix; localized variants of the same slug share one URL and resolve
 // content per locale at runtime (see utils/contentArticles.ts).
 const CONTENT_ROUTES: Record<string, string> = {
-  posts: '/blog',
-  logs: '/blog',
-  crap: '/blog',
+  articles: '/blog',
+  columns: '/blog/columns',
   concepts: '/concepts',
   entities: '/entities',
   projects: '/projects',
@@ -61,8 +61,9 @@ export default defineEventHandler(async (event) => {
       .select('slug')
       .all()
 
-    for (const { slug } of docs) {
-      if (!slug) continue
+    const slugs = new Set(docs.map((doc) => doc.slug).filter(Boolean))
+
+    for (const slug of slugs) {
       const encoded = encodeURIComponent(slug)
       for (const { prefix } of LOCALES) {
         links.push({

@@ -12,6 +12,10 @@
     "demoDescription": "Small interaction and rendering experiments",
     "lab": "Lab",
     "blog": "Blog",
+    "overview": "Overview",
+    "overviewDescription": "An editorial overview of series, essays, notes, and fragments",
+    "columns": "Series",
+    "columnsDescription": "Learning paths that grow chapter by chapter",
     "posts": "Essays",
     "postsDescription": "Polished long-form writing and complete ideas",
     "logs": "Notes",
@@ -295,8 +299,25 @@
     "kicker": "Writing",
     "description": "Essays, notes, and loose fragments collected in one chronological stream.",
     "all": "All",
+    "overview": {
+      "updated": "Overview updated {date}",
+      "featuredColumn": "Series · {title}",
+      "columnCarousel": "Series carousel",
+      "previousColumn": "Previous series",
+      "nextColumn": "Next series",
+      "goToColumn": "Go to series {title}",
+      "chapterCount": "{total} essays",
+      "latestArticles": "Latest essays",
+      "latestLogs": "Recent notes",
+      "latestCrap": "Loose thoughts",
+      "viewAllColumns": "View all series",
+      "viewAllPosts": "All essays",
+      "viewAllLogs": "All notes",
+      "viewAllCrap": "All fragments"
+    },
     "sidebar": {
       "onThisPage": "On this page",
+      "column": "Series",
       "concepts": "Concepts",
       "noConcepts": "No concepts yet.",
       "backlinks": "Backlinks",
@@ -308,6 +329,49 @@
       "tags": "Tags"
     }
   },
+  "columns": {
+    "kicker": "Editorial series",
+    "title": "Series",
+    "description": "Long-running inquiries shaped into arguments, essays, and continually revised understanding.",
+    "emptyTitle": "No series yet",
+    "emptyDescription": "The next learning path will appear here.",
+    "notFound": "Series not found",
+    "backToColumns": "Back to Series",
+    "updated": "Updated {date}",
+    "progress": "{published} of {total} chapters published",
+    "progressLabel": "Series progress",
+    "currently": "Currently",
+    "roadmapKicker": "Learning path",
+    "roadmap": "Roadmap",
+    "totalChapters": "{total} chapters",
+    "chapterProgress": "Chapter {current} of {total}",
+    "articleNavigation": "Series chapter navigation",
+    "previousChapter": "Previous chapter",
+    "nextChapter": "Next chapter",
+    "supplemental": "Supplemental",
+    "researchSeries": "Research series",
+    "editorialQuestion": "Question of this issue",
+    "discussionScope": "Scope",
+    "articlesAndArguments": "Essays and arguments",
+    "continuouslyRevised": "Continuously revised",
+    "started": "Est. {year}",
+    "forthcoming": "Forthcoming",
+    "publishedEssays": "{published} published · {total} essays",
+    "essayCount": "{total} essays",
+    "evolvingNote": "This series continues to grow through reading, writing, and revision.",
+    "status": {
+      "active": "In progress",
+      "completed": "Completed",
+      "paused": "Paused"
+    },
+    "chapterState": {
+      "planned": "Planned",
+      "learning": "Learning",
+      "writing": "Writing",
+      "published": "Published",
+      "revising": "Revising"
+    }
+  },
   "gallery": {
     "label": "Gallery",
     "title": "Copies of world",
@@ -316,6 +380,49 @@
   "concepts": {
     "kicker": "Digital garden",
     "description": "Evolving notes around the concepts that shape my research, engineering, product thinking, and worldview. These are working nodes, not final definitions.",
+    "guide": {
+      "title": "How to read a concept card",
+      "description": "A concept card is not an encyclopedia entry. It is a working snapshot of an idea at its current stage. Sources make it traceable, not automatically authoritative; perspectives, tensions, and a separate sources section remain optional.",
+      "flow": {
+        "ariaLabel": "Evidence and perspectives shape the current understanding, which opens into connections, trade-offs, and questions, then changes through revision",
+        "inputs": "Shapes and grounds",
+        "outputs": "Extends and tests"
+      },
+      "sections": {
+        "understanding": {
+          "title": "Current understanding",
+          "description": "The definition and boundaries I am willing to use now, without presenting them as permanent conclusions."
+        },
+        "why": {
+          "title": "Why I care",
+          "description": "Why the concept belongs in my research, engineering, product thinking, or worldview."
+        },
+        "sources": {
+          "title": "Evidence and sources (optional)",
+          "description": "Makes facts, definitions, and disagreements traceable; cite close to the relevant claim when possible."
+        },
+        "perspectives": {
+          "title": "Perspectives (optional)",
+          "description": "Different roles, scales, or disciplinary lenses through which to view the concept."
+        },
+        "connections": {
+          "title": "Connections",
+          "description": "Places the concept in a knowledge network by relating it to other ideas and practices."
+        },
+        "tensions": {
+          "title": "Tensions and trade-offs (optional)",
+          "description": "Values or requirements that pull against each other within the concept, not a list of its opposites."
+        },
+        "questions": {
+          "title": "Open questions",
+          "description": "What the current account cannot yet explain and where the note might grow next."
+        },
+        "evolution": {
+          "title": "Evolution",
+          "description": "When and why the understanding changed, keeping the revision process visible."
+        }
+      }
+    },
     "filters": {
       "state": "state",
       "tag": "tag"

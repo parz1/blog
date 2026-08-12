@@ -1,4 +1,5 @@
 ---
+kind: post
 title: このサイトの技術解析
 slug: about-this-site
 description: Nuxt のフロントエンド、コンテンツモデル、Nitro バックエンド、メディア処理、ビルド、ホスティングまで、この個人サイトの技術構成を整理する。
@@ -45,14 +46,13 @@ UI 層は Nuxt UI、Tailwind CSS 4、自作 Vue components、Markdown content co
 
 主な collection：
 
-| Collection | Source                    | 用途                         |
-| ---------- | ------------------------- | ---------------------------- |
-| `pages`    | `content/*.md`            | トップレベルページ           |
-| `projects` | `content/projects/*.md`   | プロジェクトとポートフォリオ |
-| `concepts` | `content/concepts/*.md`   | 概念ノードと知識グラフ       |
-| `posts`    | `content/blog/posts/*.md` | 比較的まとまった記事         |
-| `logs`     | `content/blog/logs/*.md`  | 技術ログと作業記録           |
-| `crap`     | `content/blog/crap/*.md`  | 軽量で未完成に近いメモ       |
+| Collection | Source                       | 用途                                        |
+| ---------- | ---------------------------- | ------------------------------------------- |
+| `pages`    | `content/*.md`               | トップレベルページ                          |
+| `projects` | `content/projects/*.md`      | プロジェクトとポートフォリオ                |
+| `concepts` | `content/concepts/*.md`      | 概念ノードと知識グラフ                      |
+| `articles` | `content/blog/articles/*.md` | `kind` で記事、メモ、断片を区別する writing |
+| `columns`  | `content/blog/columns/*.md`  | 順序を持つ公開学習ルートと予定章            |
 
 各 collection には schema があります。たとえば `projects` には `title`、`slug`、`summary`、`status`、`updated`、GitHub repo 情報が必要です。`concepts` には `state`、`relations`、`relatedProjects`、`aliases` などがあります。
 
