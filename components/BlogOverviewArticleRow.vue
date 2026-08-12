@@ -74,18 +74,18 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
         </h3>
         <p
           v-if="article.description"
-          class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400"
+          class="mt-1 line-clamp-2 text-sm leading-5 text-gray-500 dark:text-gray-400"
         >
           {{ article.description }}
         </p>
         <div
           v-if="!compact && article.tags?.length"
-          class="mt-2 flex flex-wrap gap-1.5"
+          class="mt-2 flex max-w-full flex-nowrap gap-1.5 overflow-hidden"
         >
           <span
-            v-for="tag in article.tags.slice(0, 5)"
+            v-for="tag in article.tags"
             :key="tag"
-            class="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+            class="shrink-0 rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-800 dark:text-gray-400"
           >
             {{ tag }}
           </span>

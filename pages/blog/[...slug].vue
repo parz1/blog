@@ -16,6 +16,9 @@ const route = useRoute()
 const localePath = useLocalePath()
 const { locale, t } = useI18n()
 
+// Layout experiment: set to false to restore the previous 42rem header width.
+const ARTICLE_HEADER_FULL_WIDTH_EXPERIMENT = true
+
 const openSidebarSections = reactive<Record<SidebarSection, boolean>>({
   concepts: true,
   backlinks: true,
@@ -422,8 +425,16 @@ useHead(() => ({
         {{ t('menu.blog') }}
       </NuxtLink>
 
-      <header :lang="renderedLang" class="mb-7 max-w-[41rem] xl:max-w-[42rem]">
-        <div class="mb-4 flex flex-wrap items-center gap-3">
+      <header
+        :lang="renderedLang"
+        class="mb-12 lg:mb-16"
+        :class="
+          ARTICLE_HEADER_FULL_WIDTH_EXPERIMENT
+            ? 'lg:max-w-none'
+            : 'max-w-[41rem] xl:max-w-[42rem]'
+        "
+      >
+        <div class="mb-2.5 flex flex-wrap items-center gap-3">
           <UBadge v-if="kindLabel" color="neutral" variant="subtle">
             {{ kindLabel }}
           </UBadge>
@@ -435,7 +446,7 @@ useHead(() => ({
         <NuxtLink
           v-if="columnMembership"
           :to="localePath(`/blog/columns/${columnMembership.column.slug}`)"
-          class="mb-4 inline-flex items-center gap-2 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+          class="mb-2.5 inline-flex items-center gap-2 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
         >
           <UIcon name="i-lucide-list-tree" class="size-4" />
           <span>{{ columnMembership.column.title }}</span>
@@ -451,21 +462,21 @@ useHead(() => ({
         </NuxtLink>
 
         <h1
-          class="content-title font-serif text-4xl font-semibold leading-tight text-gray-950 dark:text-gray-50"
+          class="content-title font-serif text-4xl font-semibold leading-[1.1] text-gray-950 lg:text-5xl dark:text-gray-50"
         >
           {{ doc.title }}
         </h1>
 
         <p
           v-if="doc.description"
-          class="content-description mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400"
+          class="content-description mt-3 text-lg leading-8 text-gray-600 dark:text-gray-400"
         >
           {{ doc.description }}
         </p>
 
         <div
           v-if="doc.notice"
-          class="mt-5 flex items-start gap-2 text-sm leading-6 text-gray-500 dark:text-gray-500"
+          class="mt-3 flex items-start gap-2 text-sm leading-6 text-gray-500 dark:text-gray-500"
         >
           <UIcon
             name="i-carbon-ai"
@@ -474,7 +485,7 @@ useHead(() => ({
           <p>{{ doc.notice }}</p>
         </div>
 
-        <div v-if="doc.tags?.length" class="mt-5 flex flex-wrap gap-2">
+        <div v-if="doc.tags?.length" class="mt-3 flex flex-wrap gap-2">
           <UBadge
             v-for="tag in doc.tags"
             :key="tag"

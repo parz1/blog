@@ -70,7 +70,7 @@ It also protects the [[baseline]] comparison. If the baseline and new method use
 
 This connects directly to [[fitting]] in machine learning. A model may be fitted as one step in a larger evaluation protocol. The protocol decides which data can be used for fitting, which data must be held out, whether cross validation is used, which metrics matter, and when the final test set can be touched.
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is that protocols can create trust only when people actually follow them. A written protocol can look rigorous while still hiding leakage, ambiguous steps, or selective reporting.
 

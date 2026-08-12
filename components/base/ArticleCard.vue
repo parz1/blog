@@ -127,18 +127,19 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
       </h2>
       <p
         v-if="article.description"
-        class="content-description relative z-10 mt-1 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+        class="content-description relative z-10 mt-1 line-clamp-2 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
       >
         {{ article.description }}
       </p>
       <div
         v-if="article.tags?.length"
-        class="mt-2 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400"
+        class="mt-2 flex max-w-full flex-nowrap gap-2 overflow-hidden text-xs text-gray-500 dark:text-gray-400"
       >
         <UBadge
           v-for="tag in article.tags"
           :key="tag"
           color="neutral"
+          class="shrink-0"
           size="md"
           variant="soft"
         >

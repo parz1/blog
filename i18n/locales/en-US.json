@@ -380,6 +380,49 @@
   "concepts": {
     "kicker": "Digital garden",
     "description": "Evolving notes around the concepts that shape my research, engineering, product thinking, and worldview. These are working nodes, not final definitions.",
+    "guide": {
+      "title": "How to read a concept card",
+      "description": "A concept card is not an encyclopedia entry. It is a working snapshot of an idea at its current stage. Sources make it traceable, not automatically authoritative; perspectives, tensions, and a separate sources section remain optional.",
+      "flow": {
+        "ariaLabel": "Evidence and perspectives shape the current understanding, which opens into connections, trade-offs, and questions, then changes through revision",
+        "inputs": "Shapes and grounds",
+        "outputs": "Extends and tests"
+      },
+      "sections": {
+        "understanding": {
+          "title": "Current understanding",
+          "description": "The definition and boundaries I am willing to use now, without presenting them as permanent conclusions."
+        },
+        "why": {
+          "title": "Why I care",
+          "description": "Why the concept belongs in my research, engineering, product thinking, or worldview."
+        },
+        "sources": {
+          "title": "Evidence and sources (optional)",
+          "description": "Makes facts, definitions, and disagreements traceable; cite close to the relevant claim when possible."
+        },
+        "perspectives": {
+          "title": "Perspectives (optional)",
+          "description": "Different roles, scales, or disciplinary lenses through which to view the concept."
+        },
+        "connections": {
+          "title": "Connections",
+          "description": "Places the concept in a knowledge network by relating it to other ideas and practices."
+        },
+        "tensions": {
+          "title": "Tensions and trade-offs (optional)",
+          "description": "Values or requirements that pull against each other within the concept, not a list of its opposites."
+        },
+        "questions": {
+          "title": "Open questions",
+          "description": "What the current account cannot yet explain and where the note might grow next."
+        },
+        "evolution": {
+          "title": "Evolution",
+          "description": "When and why the understanding changed, keeping the revision process visible."
+        }
+      }
+    },
     "filters": {
       "state": "state",
       "tag": "tag"

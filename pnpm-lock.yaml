@@ -63,6 +63,9 @@ importers:
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(vue-router@5.0.7(@vue/compiler-sfc@3.5.34)(vue@3.5.34(typescript@5.9.3)))(vue@3.5.34(typescript@5.9.3))
+      '@vercel/beautiful-mermaid':
+        specifier: ^0.1.5
+        version: 0.1.5
       '@vercel/speed-insights':
         specifier: ^1.2.0
         version: 1.2.0(vue-router@5.0.7(@vue/compiler-sfc@3.5.34)(vue@3.5.34(typescript@5.9.3)))(vue@3.5.34(typescript@5.9.3))
@@ -402,6 +405,13 @@ packages:
 
   '@colordx/core@5.4.3':
     resolution: {integrity: sha512-kIxYSfA5T8HXjav55UaaH/o/cKivF6jCCGIb8eqtcsfI46wsvlSiT8jMDyrl779qLec3c2c2oHBZo4oAhvbjrQ==}
+
+  '@dagrejs/dagre@1.1.8':
+    resolution: {integrity: sha512-5SEDlndt4W/LaVzPYJW+bSmSEZc9EzTf8rJ20WCKvjS5EAZAN0b+x0Yww7VMT4R3Wootkg+X9bUfUxazYw6Blw==}
+
+  '@dagrejs/graphlib@2.2.4':
+    resolution: {integrity: sha512-mepCf/e9+SKYy1d02/UkvSy6+6MoyXhVxP8lLDfA7BPE1X1d4dR0sZznmbM8/XVJ1GPM+Svnx7Xj6ZweByWUkw==}
+    engines: {node: '>17.0.0'}
 
   '@deck.gl/core@9.3.2':
     resolution: {integrity: sha512-32Va3np0Zdlz/LBNtDWCs4EkKqdHmXcbGmVp4+7i1Cpdza8y8CFmJs2VPOmSX1fwHvNCGkAZV/SFZOfDb2INsg==}
@@ -3599,6 +3609,9 @@ packages:
         optional: true
       vue-router:
         optional: true
+
+  '@vercel/beautiful-mermaid@0.1.5':
+    resolution: {integrity: sha512-GAM0bsZUxq8mVzml3B2YbW3E+TkTzQ8VC+LopMk7dk3IA+K5UcPUnAoN6zCgXQMtZH4sn/keQQqbpeTBjkLnaQ==}
 
   '@vercel/nft@1.5.0':
     resolution: {integrity: sha512-IWTDeIoWhQ7ZtRO/JRKH+jhmeQvZYhtGPmzw/QGDY+wDCQqfm25P9yIdoAFagu4fWsK4IwZXDFIjrmp5rRm/sA==}
@@ -8222,6 +8235,12 @@ snapshots:
 
   '@colordx/core@5.4.3': {}
 
+  '@dagrejs/dagre@1.1.8':
+    dependencies:
+      '@dagrejs/graphlib': 2.2.4
+
+  '@dagrejs/graphlib@2.2.4': {}
+
   '@deck.gl/core@9.3.2':
     dependencies:
       '@loaders.gl/core': 4.4.2
@@ -11267,6 +11286,10 @@ snapshots:
     optionalDependencies:
       vue: 3.5.34(typescript@5.9.3)
       vue-router: 5.0.7(@vue/compiler-sfc@3.5.34)(vue@3.5.34(typescript@5.9.3))
+
+  '@vercel/beautiful-mermaid@0.1.5':
+    dependencies:
+      '@dagrejs/dagre': 1.1.8
 
   '@vercel/nft@1.5.0(rollup@4.60.3)':
     dependencies:

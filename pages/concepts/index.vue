@@ -20,6 +20,10 @@ const states: Array<ConceptState | 'all'> = [
   'shifting',
 ]
 
+const guideInputs = ['why', 'sources', 'perspectives'] as const
+
+const guideOutputs = ['connections', 'tensions', 'questions'] as const
+
 const stateLabel = (state: ConceptState | 'all') =>
   state === 'all' ? t('blog.all') : t(`concepts.states.${state}`)
 
@@ -91,6 +95,130 @@ useHead({
         {{ t('concepts.description') }}
       </p>
     </header>
+
+    <details
+      class="group mb-10 rounded-xl border border-gray-200 bg-gray-50/70 open:bg-gray-50 dark:border-gray-800 dark:bg-gray-900/40 dark:open:bg-gray-900/60"
+    >
+      <summary
+        class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-medium text-gray-800 marker:content-none dark:text-gray-200"
+      >
+        <span>{{ t('concepts.guide.title') }}</span>
+        <UIcon
+          name="i-lucide-chevron-down"
+          class="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-180"
+        />
+      </summary>
+
+      <div class="border-t border-gray-200 px-5 py-5 dark:border-gray-800">
+        <p class="max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400">
+          {{ t('concepts.guide.description') }}
+        </p>
+
+        <div class="mt-6" :aria-label="t('concepts.guide.flow.ariaLabel')">
+          <p
+            class="mb-3 text-center text-xs font-medium uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500"
+          >
+            {{ t('concepts.guide.flow.inputs') }}
+          </p>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <article
+              v-for="section in guideInputs"
+              :key="section"
+              class="rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-950/60"
+            >
+              <h3
+                class="text-sm font-semibold text-gray-900 dark:text-gray-100"
+              >
+                {{ t(`concepts.guide.sections.${section}.title`) }}
+              </h3>
+              <p
+                class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400"
+              >
+                {{ t(`concepts.guide.sections.${section}.description`) }}
+              </p>
+            </article>
+          </div>
+
+          <div
+            class="flex justify-center py-2 text-gray-300 dark:text-gray-600"
+          >
+            <UIcon name="i-lucide-arrow-down" class="size-4" />
+          </div>
+
+          <article
+            class="mx-auto max-w-md rounded-xl border border-primary-200 bg-primary-50/70 px-5 py-4 text-center dark:border-primary-900 dark:bg-primary-950/40"
+          >
+            <h3
+              class="text-sm font-semibold text-primary-950 dark:text-primary-100"
+            >
+              {{ t('concepts.guide.sections.understanding.title') }}
+            </h3>
+            <p
+              class="mt-1 text-xs leading-5 text-primary-800/80 dark:text-primary-300/80"
+            >
+              {{ t('concepts.guide.sections.understanding.description') }}
+            </p>
+          </article>
+
+          <div
+            class="flex justify-center py-2 text-gray-300 dark:text-gray-600"
+          >
+            <UIcon name="i-lucide-git-fork" class="size-4" />
+          </div>
+
+          <p
+            class="mb-3 text-center text-xs font-medium uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500"
+          >
+            {{ t('concepts.guide.flow.outputs') }}
+          </p>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <article
+              v-for="section in guideOutputs"
+              :key="section"
+              class="rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-950/60"
+            >
+              <h3
+                class="text-sm font-semibold text-gray-900 dark:text-gray-100"
+              >
+                {{ t(`concepts.guide.sections.${section}.title`) }}
+              </h3>
+              <p
+                class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400"
+              >
+                {{ t(`concepts.guide.sections.${section}.description`) }}
+              </p>
+            </article>
+          </div>
+
+          <div
+            class="flex justify-center py-2 text-gray-300 dark:text-gray-600"
+          >
+            <UIcon name="i-lucide-arrow-down" class="size-4" />
+          </div>
+
+          <article
+            class="mx-auto flex max-w-md items-start gap-3 rounded-lg border border-dashed border-gray-300 px-4 py-3 dark:border-gray-700"
+          >
+            <UIcon
+              name="i-lucide-rotate-ccw"
+              class="mt-0.5 size-4 shrink-0 text-gray-400"
+            />
+            <div>
+              <h3
+                class="text-sm font-semibold text-gray-900 dark:text-gray-100"
+              >
+                {{ t('concepts.guide.sections.evolution.title') }}
+              </h3>
+              <p
+                class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400"
+              >
+                {{ t('concepts.guide.sections.evolution.description') }}
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </details>
 
     <section
       class="mb-8 space-y-4 border-y border-gray-200 py-4 dark:border-gray-800"

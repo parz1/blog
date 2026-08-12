@@ -38,7 +38,7 @@ This node connects to [[metacognition]] because reflection about thinking is sti
 
 It will probably connect to future notes on embodiment, fatigue, interaction, memory systems, multimodal sensing, and AI-native software. For now, it is an anchor for a larger question: how can personal and cognitive phenomena be handled technically without flattening them?
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is reduction. A physicalist framing can make a system more concrete, but it can also encourage bad shortcuts: treating what is measurable as what matters, or treating model outputs as if they were the phenomenon itself.
 

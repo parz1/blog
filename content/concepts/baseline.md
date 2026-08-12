@@ -76,7 +76,7 @@ The comparison also depends on [[protocol]]. A baseline is only useful if it is 
 
 This also connects to [[fitting]]. A baseline model may still need to be fitted, but fitting alone does not make something a baseline. It becomes a baseline because the experiment uses it as a reference point.
 
-## Tensions
+## Tensions and trade-offs
 
 The main tension is baseline quality. A weak baseline can make a new method look better than it really is. A too-strong or poorly matched baseline can make a useful method look worse than it is.
 

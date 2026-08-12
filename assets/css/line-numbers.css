@@ -10,5 +10,9 @@ code .line::before {
   margin-right: 1rem;
   display: inline-block;
   text-align: right;
-  color: rgba(214, 214, 214, 0.4);
+  color: rgb(27 31 35 / 32%);
+}
+
+.dark code .line::before {
+  color: rgb(214 214 214 / 40%);
 }

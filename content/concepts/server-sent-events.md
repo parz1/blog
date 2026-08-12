@@ -71,7 +71,7 @@ SSE is often compared with WebSockets. A useful rule of thumb:
 - Use ordinary HTTP responses when the client only needs the final result.
 - Use `fetch()` streaming or `ReadableStream` when the client needs custom stream handling instead of the `EventSource` event model.
 
-## Tensions
+## Tensions and trade-offs
 
 The simplicity is also the limit. SSE is not a replacement for WebSockets when the application is truly interactive in both directions, such as multiplayer state synchronization, collaborative editing, or high-frequency client input.
 

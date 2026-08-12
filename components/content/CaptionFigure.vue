@@ -54,7 +54,6 @@ const items = computed<FigureImage[]>(() => {
       {
         src: props.src,
         alt: props.alt,
-        caption: props.caption,
         width: props.width,
         height: props.height,
       },
