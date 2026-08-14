@@ -3,6 +3,13 @@ const localePath = useLocalePath()
 
 const demos = [
   {
+    title: 'Python Runner',
+    description:
+      'Run Python, NumPy and Matplotlib locally in a browser Web Worker.',
+    icon: 'i-lucide-terminal-square',
+    to: '/demo/python',
+  },
+  {
     title: 'Flow',
     description: 'A Vue Flow interaction surface.',
     icon: 'i-lucide-git-branch',
