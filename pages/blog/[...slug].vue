@@ -371,10 +371,6 @@ useHead(() => ({
       href: canonicalUrl.value,
     },
     ...alternateLinks.value,
-    {
-      rel: 'stylesheet',
-      href: 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css',
-    },
   ],
   script: articleJsonLd.value
     ? [

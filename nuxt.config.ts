@@ -187,6 +187,7 @@ export default defineNuxtConfig({
   },
 
   css: [
+    'katex/dist/katex.min.css',
     '~/assets/css/main.css',
     '~/assets/css/line-numbers.css',
     'maplibre-gl/dist/maplibre-gl.css',

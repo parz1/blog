@@ -87,6 +87,9 @@ importers:
       github-markdown-css:
         specifier: ^5.9.0
         version: 5.9.0
+      katex:
+        specifier: ^0.16.46
+        version: 0.16.46
       maplibre-gl:
         specifier: ^5.24.0
         version: 5.24.0
