@@ -1,11 +1,30 @@
 <script setup lang="ts">
+import python from '@shikijs/langs/python'
+import githubDarkHighContrast from '@shikijs/themes/github-dark-high-contrast'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
+
 import type {
   PythonRunnerPhase,
   PythonRunnerRequest,
   PythonRunnerResponse,
 } from '~/typings/python-runner'
 
-const defaultCode = `import numpy as np
+type RunnerPreset = 'linear-regression' | 'single-neuron'
+type RunnerVariant = 'standalone' | 'article'
+
+const props = withDefaults(
+  defineProps<{
+    preset?: RunnerPreset
+    variant?: RunnerVariant
+  }>(),
+  {
+    preset: 'linear-regression',
+    variant: 'standalone',
+  },
+)
+
+const linearRegressionCode = `import numpy as np
 import matplotlib.pyplot as plt
 
 rng = np.random.default_rng(7)
@@ -52,6 +71,69 @@ axes[1].set_yscale("log")
 figure.tight_layout()
 # Runner 会自动捕获当前 figure，无需调用 plt.show()`
 
+const singleNeuronCode = `import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(7)
+negative = rng.normal(loc=(-1.2, -1.0), scale=0.55, size=(40, 2))
+positive = rng.normal(loc=(1.0, 1.2), scale=0.55, size=(40, 2))
+
+x = np.vstack((negative, positive))
+y = np.concatenate((np.zeros(40), np.ones(40)))
+
+w = np.zeros(2)
+b = 0.0
+learning_rate = 0.2
+loss_history = []
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+for step in range(200):
+    z = x @ w + b
+    probability = sigmoid(z)
+    loss = -np.mean(
+        y * np.log(probability + 1e-9)
+        + (1 - y) * np.log(1 - probability + 1e-9)
+    )
+    loss_history.append(loss)
+
+    error = probability - y
+    dw = x.T @ error / len(x)
+    db = np.mean(error)
+    w -= learning_rate * dw
+    b -= learning_rate * db
+
+    if step in (0, 9, 49, 199):
+        print(f"step={step + 1:03d} loss={loss:.6f}")
+
+prediction = sigmoid(x @ w + b) >= 0.5
+accuracy = np.mean(prediction == y)
+print(f"w={w.round(3)}, b={b:.3f}, accuracy={accuracy:.1%}")
+
+figure, axes = plt.subplots(1, 2, figsize=(9, 3.6))
+
+axes[0].scatter(negative[:, 0], negative[:, 1], label="class 0")
+axes[0].scatter(positive[:, 0], positive[:, 1], label="class 1")
+boundary_x = np.linspace(x[:, 0].min(), x[:, 0].max(), 100)
+boundary_y = -(w[0] * boundary_x + b) / w[1]
+axes[0].plot(boundary_x, boundary_y, color="#f97316", label="p = 0.5")
+axes[0].set_title("One neuron, one boundary")
+axes[0].set_xlabel("x1")
+axes[0].set_ylabel("x2")
+axes[0].legend()
+
+axes[1].plot(loss_history, color="#10b981")
+axes[1].set_title("Binary cross-entropy")
+axes[1].set_xlabel("step")
+axes[1].set_ylabel("loss")
+
+figure.tight_layout()
+# Runner 会自动捕获当前 figure，无需调用 plt.show()`
+
+const getPresetCode = () =>
+  props.preset === 'single-neuron' ? singleNeuronCode : linearRegressionCode
+
 type RunnerState = 'idle' | 'loading' | 'running' | 'ready' | 'error'
 type OutputBlock =
   | {
@@ -66,12 +148,69 @@ type OutputBlock =
       alt: string
     }
 
-const code = ref(defaultCode)
+const code = ref(getPresetCode())
 const output = ref<OutputBlock[]>([])
 const state = ref<RunnerState>('idle')
 const activeRequestId = ref(0)
+const editorInput = ref<HTMLTextAreaElement>()
+const editorHighlight = ref<HTMLElement>()
+const highlightedCode = ref('')
 let outputId = 0
 let worker: Worker | undefined
+let highlighter: Awaited<ReturnType<typeof createHighlighterCore>> | undefined
+
+const escapeHtml = (value: string) =>
+  value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+
+const updateHighlight = () => {
+  const source = `${code.value}\n`
+  highlightedCode.value = highlighter
+    ? highlighter.codeToHtml(source, {
+        lang: 'python',
+        theme: 'github-dark-high-contrast',
+      })
+    : `<pre><code>${escapeHtml(source)}</code></pre>`
+}
+
+const syncEditorScroll = () => {
+  if (!editorInput.value || !editorHighlight.value) return
+  editorHighlight.value.scrollTop = editorInput.value.scrollTop
+  editorHighlight.value.scrollLeft = editorInput.value.scrollLeft
+}
+
+const insertIndent = (event: KeyboardEvent) => {
+  if (event.key !== 'Tab' || event.altKey || event.ctrlKey || event.metaKey) {
+    return
+  }
+
+  event.preventDefault()
+  const input = editorInput.value
+  if (!input) return
+
+  const start = input.selectionStart
+  const end = input.selectionEnd
+  code.value = `${code.value.slice(0, start)}    ${code.value.slice(end)}`
+
+  nextTick(() => {
+    input.setSelectionRange(start + 4, start + 4)
+  })
+}
+
+watch(code, () => {
+  updateHighlight()
+  nextTick(syncEditorScroll)
+})
+
+onMounted(async () => {
+  updateHighlight()
+
+  highlighter = await createHighlighterCore({
+    themes: [githubDarkHighContrast],
+    langs: [python],
+    engine: createJavaScriptRegexEngine(),
+  })
+  updateHighlight()
+})
 
 const stateLabel = computed(() => {
   const labels: Record<RunnerState, string> = {
@@ -211,20 +350,28 @@ const reset = () => {
   worker?.terminate()
   worker = undefined
   activeRequestId.value += 1
-  code.value = defaultCode
+  code.value = getPresetCode()
   clearOutput()
   state.value = 'idle'
 }
 
 onBeforeUnmount(() => {
   worker?.terminate()
+  highlighter?.dispose()
   clearOutput()
 })
 </script>
 
 <template>
-  <section class="runner-shell" aria-labelledby="python-runner-title">
-    <header class="runner-header">
+  <section
+    class="runner-shell not-prose"
+    :class="`runner-shell--${variant}`"
+    :aria-labelledby="
+      variant === 'standalone' ? 'python-runner-title' : undefined
+    "
+    :aria-label="variant === 'article' ? 'Python Runner' : undefined"
+  >
+    <header v-if="variant === 'standalone'" class="runner-header">
       <div>
         <p class="runner-kicker">Browser runtime</p>
         <h2 id="python-runner-title" class="runner-title">Python Runner</h2>
@@ -236,47 +383,72 @@ onBeforeUnmount(() => {
     </header>
 
     <div class="runner-toolbar" role="toolbar" aria-label="Python 运行控制">
-      <UButton
-        icon="i-lucide-play"
-        :loading="isBusy"
-        :disabled="isBusy || !code.trim()"
-        @click="run"
-      >
-        运行
-      </UButton>
-      <UButton
-        icon="i-lucide-square"
-        color="neutral"
-        variant="soft"
-        :disabled="!isBusy"
-        @click="stop"
-      >
-        停止
-      </UButton>
-      <UButton
-        icon="i-lucide-rotate-ccw"
-        color="neutral"
-        variant="ghost"
-        :disabled="isBusy"
-        @click="reset"
-      >
-        重置
-      </UButton>
+      <div v-if="variant === 'article'" class="runner-compact-status">
+        <span>Python Runner</span>
+        <UBadge :color="stateColor" variant="subtle">
+          {{ stateLabel }}
+        </UBadge>
+      </div>
 
-      <span class="runner-note">
+      <div class="runner-actions">
+        <UButton
+          icon="i-lucide-play"
+          :loading="isBusy"
+          :disabled="isBusy || !code.trim()"
+          @click="run"
+        >
+          运行
+        </UButton>
+        <UButton
+          icon="i-lucide-square"
+          color="neutral"
+          variant="soft"
+          :disabled="!isBusy"
+          @click="stop"
+        >
+          停止
+        </UButton>
+        <UButton
+          icon="i-lucide-rotate-ccw"
+          color="neutral"
+          variant="ghost"
+          :disabled="isBusy"
+          @click="reset"
+        >
+          重置
+        </UButton>
+      </div>
+
+      <span v-if="variant === 'standalone'" class="runner-note">
         首次运行需要加载 Pyodide、NumPy 与 Matplotlib
       </span>
     </div>
 
     <div class="runner-grid">
       <label class="runner-panel">
-        <span class="runner-panel-label">Python</span>
-        <textarea
-          v-model="code"
-          class="runner-editor"
-          spellcheck="false"
-          aria-label="Python 代码"
-        />
+        <span v-if="variant === 'standalone'" class="runner-panel-label">
+          Python
+        </span>
+        <div class="runner-editor-stage">
+          <div
+            ref="editorHighlight"
+            class="runner-highlight"
+            aria-hidden="true"
+            v-html="highlightedCode"
+          />
+          <textarea
+            ref="editorInput"
+            v-model="code"
+            class="runner-editor"
+            wrap="off"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            aria-label="Python 代码"
+            @keydown="insertIndent"
+            @scroll="syncEditorScroll"
+          />
+        </div>
       </label>
 
       <section class="runner-panel" aria-live="polite">
@@ -293,7 +465,7 @@ onBeforeUnmount(() => {
               :class="{ 'runner-output-error': block.type === 'error' }"
               >{{ block.text }}</pre
             >
-            <figure v-else class="runner-figure">
+            <figure v-else-if="block.type === 'figure'" class="runner-figure">
               <img :src="block.url" :alt="block.alt" />
             </figure>
           </template>
@@ -305,11 +477,16 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .runner-shell {
+  container-type: inline-size;
   overflow: hidden;
   border: 1px solid var(--ui-border);
   border-radius: 0.75rem;
   background: var(--ui-bg);
   box-shadow: 0 20px 60px rgb(15 23 42 / 8%);
+}
+
+.runner-shell--article {
+  box-shadow: 0 10px 30px rgb(15 23 42 / 6%);
 }
 
 .runner-header,
@@ -348,6 +525,29 @@ onBeforeUnmount(() => {
   padding-block: 0.75rem;
 }
 
+.runner-shell--article .runner-toolbar {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 0.75rem;
+}
+
+.runner-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.runner-compact-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.25rem;
+  color: var(--ui-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 .runner-note {
   margin-left: auto;
 }
@@ -356,6 +556,10 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   min-height: 40rem;
+}
+
+.runner-shell--article .runner-grid {
+  min-height: 32rem;
 }
 
 .runner-panel {
@@ -376,7 +580,7 @@ onBeforeUnmount(() => {
   color: rgb(148 163 184);
 }
 
-.runner-editor,
+.runner-editor-stage,
 .runner-output {
   width: 100%;
   min-height: 0;
@@ -392,9 +596,107 @@ onBeforeUnmount(() => {
   tab-size: 4;
 }
 
+.runner-editor-stage {
+  position: relative;
+  overflow: hidden;
+}
+
+.runner-highlight,
 .runner-editor {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  white-space: pre;
+}
+
+.runner-highlight {
+  pointer-events: none;
+}
+
+.runner-highlight :deep(pre) {
+  min-width: max-content;
+  min-height: 100%;
+  max-width: none;
+  margin: 0;
   padding: 1rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+  font: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+
+.runner-highlight :deep(code) {
+  font: inherit;
+}
+
+.runner-editor {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  outline: none;
   resize: none;
+  color: transparent;
+  background: transparent;
+  font: inherit;
+  line-height: inherit;
+  tab-size: inherit;
+  caret-color: rgb(240 243 246);
+  -webkit-text-fill-color: transparent;
+}
+
+.runner-editor::selection {
+  background: rgb(56 139 253 / 38%);
+}
+
+.runner-editor,
+.runner-output {
+  scrollbar-color: rgb(100 116 139 / 65%) transparent;
+  scrollbar-width: thin;
+}
+
+.runner-highlight {
+  scrollbar-width: none;
+}
+
+.runner-editor::-webkit-scrollbar,
+.runner-output::-webkit-scrollbar {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.runner-highlight::-webkit-scrollbar {
+  display: none;
+}
+
+.runner-editor::-webkit-scrollbar-track,
+.runner-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.runner-editor::-webkit-scrollbar-thumb,
+.runner-output::-webkit-scrollbar-thumb {
+  border: 0.1875rem solid transparent;
+  border-radius: 999px;
+  background: rgb(100 116 139 / 65%);
+  background-clip: content-box;
+}
+
+.runner-editor::-webkit-scrollbar-thumb:hover,
+.runner-output::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184 / 82%);
+  background-clip: content-box;
+}
+
+.runner-editor::-webkit-scrollbar-corner,
+.runner-output::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .runner-output {
@@ -431,7 +733,7 @@ onBeforeUnmount(() => {
   height: auto;
 }
 
-@media (max-width: 48rem) {
+@container (max-width: 42rem) {
   .runner-header,
   .runner-toolbar {
     align-items: flex-start;
@@ -455,6 +757,25 @@ onBeforeUnmount(() => {
     min-height: 14rem;
     border-top: 1px solid rgb(148 163 184 / 22%);
     border-left: 0;
+  }
+
+  .runner-shell--article .runner-panel {
+    min-height: 22rem;
+  }
+
+  .runner-shell--article .runner-panel + .runner-panel {
+    min-height: 12rem;
+  }
+}
+
+@container (max-width: 30rem) {
+  .runner-shell--article .runner-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .runner-shell--article .runner-actions {
+    justify-content: space-between;
   }
 }
 </style>

@@ -1,54 +1,96 @@
 ---
 title: 深度学习：Basics
 slug: deep-learning-basics
-description: 从表示、优化与泛化开始，建立可以继续理解现代模型的基础。
+description: 从单个神经元到多层感知机，理解神经网络如何完成前向计算、反向传播与参数更新。
 status: active
 author: parz1
 started: 2026
-question: 当模型说自己“学会”了，它究竟改变了什么？
-thesis: 深度学习不是一组框架 API，而是一套关于表示、优化与泛化的共同语言。
+question: 一个线性模型不够的时候怎么办？
+thesis: 神经网络不是一组框架 API，而是可以被拆解、求导、组合和训练的计算单元。
 scope:
-  - 表示
-  - 张量
-  - 优化
-  - 梯度
-  - 泛化
-updated: '2026-08-10'
+  - 神经元
+  - 激活函数
+  - 多层感知机
+  - 计算图
+  - 反向传播
+  - 自动微分
+updated: '2026-08-18'
 lang: cn
 tags:
   - deep-learning
   - machine-learning
 sections:
-  - id: foundations
-    title: 定义：学习意味着什么
-    description: 先建立模型、数据、目标与误差之间的基本关系。
+  - id: from-linear-model-to-neuron
+    title: 起点：从线性模型到神经元
+    description: 从逻辑回归出发，理解激活函数与非线性表示为什么必要。
     chapters:
-      - id: what-is-learning
-        workingTitle: 什么是学习
-        summary: 从函数、数据与目标出发，理解模型改变的究竟是什么。
+      - id: from-logistic-regression-to-neuron
+        workingTitle: 从逻辑回归到神经元
+        summary: 拆开一个 Sigmoid 神经元，理解它与逻辑回归共享的计算与梯度更新。
+        state: published
+        articleSlug: from-logistic-regression-to-neuron
+        role: core
+      - id: activation-functions
+        workingTitle: 激活函数
+        summary: 比较 Sigmoid、Tanh、ReLU 与 GELU 的形状、梯度和使用场景。
         state: planned
         role: core
-  - id: computation
-    title: 机制：表示如何被计算与更新
-    description: 从张量与计算图进入梯度驱动的优化过程。
-    chapters:
-      - id: tensors-and-autograd
-        workingTitle: 张量、计算图与自动微分
-        summary: 张量如何承载表示，计算图如何组织变化与梯度。
+      - id: why-deep
+        workingTitle: 为什么需要深度
+        summary: 从 XOR 出发，理解非线性与表示能力之间的关系。
         state: planned
         role: core
-      - id: optimization
-        workingTitle: 优化、损失函数与梯度下降
-        summary: 训练目标如何被定义，参数又如何沿梯度逐步更新。
+  - id: network-mechanics
+    title: 机制：多层网络如何计算与求导
+    description: 把神经元组织成多层感知机，再沿计算图追踪梯度。
+    chapters:
+      - id: multi-layer-perceptron
+        workingTitle: 多层感知机
+        summary: 隐藏层如何把多个神经元组织成可以学习复杂边界的网络。
         state: planned
         role: core
-  - id: generalization
-    title: 判断：模型何时真正学会
-    description: 讨论训练结果如何越过样本，成为可迁移的能力。
+      - id: forward-propagation
+        workingTitle: 前向传播
+        summary: 数据如何逐层变换为预测，张量形状又如何随之变化。
+        state: planned
+        role: core
+      - id: computational-graph
+        workingTitle: 计算图
+        summary: 把一次预测拆成节点与依赖关系，为反向传播建立地图。
+        state: planned
+        role: core
+      - id: chain-rule
+        workingTitle: 链式法则
+        summary: 局部导数如何沿复合函数传递，最终连接损失与每一个参数。
+        state: planned
+        role: core
+      - id: backpropagation
+        workingTitle: 反向传播
+        summary: 手推一个极小网络，理解梯度如何从损失返回前面的层。
+        state: planned
+        role: core
+  - id: implementation
+    title: 实现：从 NumPy 到自动微分
+    description: 先自己写出网络，再理解框架替我们完成了什么。
     chapters:
-      - id: generalization
-        workingTitle: 泛化、正则化与过拟合
-        summary: 为什么训练集上的成功不等于模型获得了可靠能力。
+      - id: numpy-neural-network
+        workingTitle: 用 NumPy 实现神经网络
+        summary: 不使用深度学习框架，实现 forward、loss、backward 与 update。
+        state: planned
+        role: core
+      - id: automatic-differentiation
+        workingTitle: 自动微分
+        summary: 从计算图理解 autograd 如何系统地计算梯度。
+        state: planned
+        role: core
+      - id: pytorch-basics
+        workingTitle: PyTorch 基础
+        summary: 理解 Tensor、Module、Parameter 与 autograd 的职责边界。
+        state: planned
+        role: core
+      - id: training-loop
+        workingTitle: 训练循环
+        summary: 把数据、前向传播、损失、反向传播与参数更新连成完整循环。
         state: planned
         role: core
 ---
