@@ -117,6 +117,16 @@ const referencedConcepts = computed<ArticleConceptReference[]>(() =>
 
 const currentArticleSlug = computed(() => doc.value?.slug ?? slug.value ?? '')
 
+const { views: articleViews } = useArticleViews(currentArticleSlug)
+const formattedArticleViews = computed(() => {
+  if (articleViews.value === null) return ''
+
+  return new Intl.NumberFormat(locale.value, {
+    notation: articleViews.value >= 10_000 ? 'compact' : 'standard',
+    maximumFractionDigits: 1,
+  }).format(articleViews.value)
+})
+
 const visibleColumns = computed(() =>
   mergeLocalizedColumns(columnVariants.value ?? [], locale.value),
 )
@@ -437,6 +447,18 @@ useHead(() => ({
           <time class="text-sm text-gray-500 dark:text-gray-400">
             {{ publishedDate }}
           </time>
+          <span
+            v-if="articleViews !== null"
+            aria-live="polite"
+            class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
+          >
+            <UIcon name="i-lucide-eye" class="size-4" />
+            {{
+              t('blog.views', {
+                count: formattedArticleViews,
+              })
+            }}
+          </span>
         </div>
 
         <NuxtLink

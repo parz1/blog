@@ -299,6 +299,7 @@
     "kicker": "Writing",
     "description": "記事、メモ、ゆるい断片を時系列でまとめた書き物の流れです。",
     "all": "すべて",
+    "views": "{count} 回閲覧",
     "overview": {
       "updated": "最終更新 {date}",
       "featuredColumn": "連載 · {title}",

@@ -105,24 +105,28 @@ watchEffect(() => {
     class="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
     :class="size === 'expanded' ? 'h-[34rem]' : 'h-72'"
   >
-    <VueFlow
-      v-if="relatedConcepts.length"
-      v-model="elements"
-      :nodes-draggable="false"
-      :nodes-connectable="false"
-      :elements-selectable="false"
-      :pan-on-drag="false"
-      :zoom-on-scroll="false"
-      :zoom-on-pinch="false"
-      :zoom-on-double-click="false"
-      :fit-view-on-init="false"
-      :default-viewport="{
-        x: 0,
-        y: 0,
-        zoom: size === 'expanded' ? 1 : 0.9,
-      }"
-      class="concept-local-graph"
-    />
+    <ClientOnly v-if="relatedConcepts.length">
+      <VueFlow
+        v-model="elements"
+        :nodes-draggable="false"
+        :nodes-connectable="false"
+        :elements-selectable="false"
+        :pan-on-drag="false"
+        :zoom-on-scroll="false"
+        :zoom-on-pinch="false"
+        :zoom-on-double-click="false"
+        :fit-view-on-init="false"
+        :default-viewport="{
+          x: 0,
+          y: 0,
+          zoom: size === 'expanded' ? 1 : 0.9,
+        }"
+        class="concept-local-graph"
+      />
+      <template #fallback>
+        <div class="size-full bg-gray-50/50 dark:bg-gray-900/20" />
+      </template>
+    </ClientOnly>
     <div
       v-else
       class="flex h-full items-center justify-center px-6 text-center text-sm text-gray-500 dark:text-gray-400"

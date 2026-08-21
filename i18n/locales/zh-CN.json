@@ -299,6 +299,7 @@
     "kicker": "写作",
     "description": "文章、札记和一些松散片段，按时间组织在同一个写作流里。",
     "all": "全部",
+    "views": "{count} 次阅读",
     "overview": {
       "updated": "总览更新于 {date}",
       "featuredColumn": "专栏 · {title}",

@@ -11,9 +11,12 @@ tags:
 updated: 2026-08-21
 linkedConcepts:
   - sigmoid
+  - logistic-regression
 relations:
   - concept: sigmoid
     type: relates
+  - concept: logistic-regression
+    type: appears-in
 relatedProjects: []
 aliases:
   - binary cross-entropy

@@ -11,9 +11,12 @@ tags:
 updated: 2026-08-21
 linkedConcepts:
   - binary-cross-entropy
+  - logistic-regression
 relations:
   - concept: binary-cross-entropy
     type: relates
+  - concept: logistic-regression
+    type: appears-in
 relatedProjects: []
 aliases:
   - logistic function
@@ -30,6 +33,9 @@ Sigmoid 是一个把任意实数压缩到 $0$ 和 $1$ 之间的函数：
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
 $$
+
+::MathFigure{preset="sigmoid"}
+::
 
 可以先把它理解成一个“平滑的概率开关”：输入 $z$ 越大，输出越接近 $1$；输入越小，输出越接近 $0$；当 $z=0$ 时，输出恰好是 $0.5$。
 
@@ -70,7 +76,7 @@ $$
 
 ## 连接
 
-Sigmoid 经常与[[binary-cross-entropy|二元交叉熵]]一起出现。前者负责产生 $0$ 到 $1$ 之间的输出，后者负责衡量这个输出与真实二元标签有多不一致。
+Sigmoid 经常与[[binary-cross-entropy|二元交叉熵]]一起出现。前者负责产生 $0$ 到 $1$ 之间的输出，后者负责衡量这个输出与真实二元标签有多不一致。把它们接在线性组合之后，就得到[[logistic-regression|逻辑回归]]。
 
 把线性组合、Sigmoid 和二元交叉熵接在一起，就得到经典的逻辑回归训练过程：
 

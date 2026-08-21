@@ -1,229 +1,258 @@
-<script lang="ts" setup>
-// @ts-nocheck
-import * as THREE from 'three'
-import { Raycaster, Vector2 } from 'three'
+<script setup lang="ts">
 import { geoMercator } from 'd3-geo'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'three'
 
-// 引入鼠标控制系统
+type Position = [number, number]
+type LinearRing = Position[]
+type PolygonCoordinates = LinearRing[]
+type MultiPolygonCoordinates = PolygonCoordinates[]
 
-const canvasRef = ref<HTMLCanvasElement>()
-const map = new THREE.Object3D()
-const objectTable = {} as Record<string, THREE.Object3D>
-const objectWeakMap = new WeakMap<THREE.Object3D, Record<string, any>>()
+type GeoFeature = {
+  type: 'Feature'
+  properties: {
+    name?: string
+    center?: Position
+    [key: string]: unknown
+  }
+  geometry:
+    | { type: 'Polygon'; coordinates: PolygonCoordinates }
+    | { type: 'MultiPolygon'; coordinates: MultiPolygonCoordinates }
+}
 
-onMounted(() => {
-  // canvasRef.value!.setAttribute('width', window.innerWidth.toString())
-  // canvasRef.value!.setAttribute('height', window.innerHeight.toString())
-  const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    1,
-    250,
-  )
-  camera.position.set(5, 5, 10)
-  camera.lookAt(0, 0, 0)
+type GeoFeatureCollection = {
+  type: 'FeatureCollection'
+  features: GeoFeature[]
+}
 
-  console.log(canvasRef.value)
-  const renderer = new THREE.WebGLRenderer({
-    // alpha: true,
-    antialias: true,
-    canvas: canvasRef.value,
-  })
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  // document.body.appendChild(renderer.domElement)
+const sceneContainer = ref<HTMLElement | null>(null)
+const errorMessage = ref('')
+const loading = ref(true)
+const activeRegion = ref('移动指针以查看区域')
+let runtime: ThreeSceneRuntime | undefined
+let removePointerListener: (() => void) | undefined
 
-  $fetch('/hangzhou.json').then((data) => {
-    console.log(data)
+const createShape = (
+  rings: PolygonCoordinates,
+  projection: ReturnType<typeof geoMercator>,
+) => {
+  const shape = new THREE.Shape()
 
-    // 创建地理投影
-    const projection = geoMercator()
-      .center([121.27069, 29.162932])
-      .rotate([Math.PI / 2, Math.PI / 2])
-      .translate([0, 0])
-
-    // 设定投影比例
-    // const geoPathGenerator = geoPath().projection(projection).pointRadius(1)
-
-    // const shapeArray = geoPathGenerator(data)
-
-    // 将 GeoJSON 转化为 Three.js 几何体
-    // const geometry = new GeoJsonGeometry(shapeArray)
-    const geo_data = data
-    geo_data.features.forEach((e) => {
-      const province = new THREE.Object3D()
-      const coors = e.geometry.coordinates
-      coors.forEach((multipolygon) => {
-        multipolygon.forEach((polygon) => {
-          const shape = new THREE.Shape()
-          const lineMaterial = new THREE.LineBasicMaterial({
-            color: '#FFF',
-            linewidth: 2,
-          })
-          const lineGeometry = new THREE.BufferGeometry()
-          const line_vertices = []
-          for (let i = 0; i < polygon.length; i++) {
-            const [x, y] = projection(polygon[i])
-            if (i === 0) {
-              shape.moveTo(x, -y)
-            }
-            shape.lineTo(x, -y)
-            line_vertices.push(new THREE.Vector3(x, -y, 1.01))
-          }
-          lineGeometry.setFromPoints(line_vertices)
-
-          const bottomLineMaterial = new THREE.LineBasicMaterial({
-            color: '#000',
-            linewidth: 2,
-          })
-          const bottomLineGeometry = new THREE.BufferGeometry()
-          const Bottom_Line_vertices = []
-          for (let i = 0; i < polygon.length; i++) {
-            const [x, y] = projection(polygon[i])
-            if (i === 0) {
-              shape.moveTo(x, -y)
-            }
-            shape.lineTo(x, -y)
-            Bottom_Line_vertices.push(new THREE.Vector3(x, -y, 0.01))
-          }
-          bottomLineGeometry.setFromPoints(Bottom_Line_vertices)
-
-          const extrudeSettings = {
-            depth: 1,
-            bevelEnabled: false,
-          }
-          const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-          const material = new THREE.MeshBasicMaterial({
-            color: '#069EF2',
-            transparent: true,
-            opacity: 0.4,
-            side: THREE.DoubleSide,
-          })
-          const mesh = new THREE.Mesh(geometry, material)
-          province.add(mesh)
-          const line = new THREE.Line(lineGeometry, lineMaterial)
-          province.add(line)
-          const bottomLine = new THREE.Line(
-            bottomLineGeometry,
-            bottomLineMaterial,
-          )
-          province.add(bottomLine)
-        })
-      })
-      objectWeakMap.set(province, {
-        properties: e.properties,
-      })
-      if (e.properties.center) {
-        const [x, y] = projection(e.properties.center)
-        province.name = e.properties.name
-        objectTable[e.properties.name as string] = province
-        objectWeakMap.set(province, { properties: { _centroid: [x, y] } })
-      }
-      map.add(province)
+  rings.forEach((ring, ringIndex) => {
+    const path = ringIndex === 0 ? shape : new THREE.Path()
+    ring.forEach((coordinate, pointIndex) => {
+      const projected = projection(coordinate)
+      if (!projected) return
+      const [x, y] = projected
+      if (pointIndex === 0) path.moveTo(x, -y)
+      else path.lineTo(x, -y)
     })
-    map.rotation.x = -(Math.PI / 2)
-    // map.rotation.y = (Math.PI / 4)
-    // map.rotation.z = -(Math.PI / 2)
-    scene.add(map)
+    if (ringIndex > 0) shape.holes.push(path as THREE.Path)
   })
 
-  // function getLight() {
-  //   const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1.1)
-  //   directionalLight.position.set(300, 1000, 500)
-  //   directionalLight.target.position.set(0, 0, 0)
-  //   directionalLight.castShadow = true
+  return shape
+}
 
-  //   const d = 300
-  //   const fov = 45 // 拍摄距离  视野角值越大，场景中的物体越小
-  //   const near = 1 // 相机离视体积最近的距离
-  //   const far = 1000// 相机离视体积最远的距离
-  //   const aspect = window.innerWidth / window.innerHeight // 纵横比
-  //   directionalLight.shadow.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-  //   directionalLight.shadow.bias = 0.0001
-  //   directionalLight.shadow.mapSize.width = directionalLight.shadow.mapSize.height = 1024
-  //   scene.add(directionalLight)
+const createFittedProjection = (data: GeoFeatureCollection) => {
+  const positions: Position[] = []
 
-  //   const light = new THREE.AmbientLight(0xFFFFFF, 0.6)
-  //   scene.add(light)
-  // }
-  // getLight()
+  for (const feature of data.features) {
+    const polygons =
+      feature.geometry.type === 'Polygon'
+        ? [feature.geometry.coordinates]
+        : feature.geometry.coordinates
 
-  // 构建辅助系统
-  function buildAuxSystem() {
-    const axisHelper = new THREE.AxesHelper(500)
-    scene.add(axisHelper)
-    const gridHelper = new THREE.GridHelper(600, 60)
-    scene.add(gridHelper)
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.enableDamping = true
-    controls.dampingFactor = 0.25
-    controls.rotateSpeed = 0.35
-  }
-  buildAuxSystem()
-
-  // 鼠标交互
-  const raycaster = new Raycaster()
-  const pointer = new Vector2()
-  function onPointerMove(event) {
-    // calculate pointer position in normalized device coordinates
-    // (-1 to +1) for both components
-
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1
-
-    render()
-  }
-  let selecetdObj = null as any
-  function render() {
-    // update the picking ray with the camera and pointer position
-    raycaster.setFromCamera(pointer, camera)
-
-    // calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObjects(scene.children)
-    // console.log(intersects)
-    if (!intersects.length) {
-      return
+    for (const rings of polygons) {
+      for (const ring of rings) positions.push(...ring)
     }
-    for (let i = 0; i < intersects.length; i++) {
-      // intersects[i].object.material.color.set(0xFF0000)
-      if (intersects[i].object.type === 'Mesh') {
-        // if (objectWeakMap.get(intersects[i].object)) {
-        if (selecetdObj) {
-          selecetdObj.material.color = new THREE.Color('#069EF2')
+  }
+
+  if (!positions.length) throw new Error('GeoJSON 中没有可绘制的坐标。')
+
+  let longitudeMin = Infinity
+  let longitudeMax = -Infinity
+  let latitudeMin = Infinity
+  let latitudeMax = -Infinity
+  for (const [longitude, latitude] of positions) {
+    longitudeMin = Math.min(longitudeMin, longitude)
+    longitudeMax = Math.max(longitudeMax, longitude)
+    latitudeMin = Math.min(latitudeMin, latitude)
+    latitudeMax = Math.max(latitudeMax, latitude)
+  }
+
+  const center: Position = [
+    (longitudeMin + longitudeMax) / 2,
+    (latitudeMin + latitudeMax) / 2,
+  ]
+  const projection = geoMercator().center(center).translate([0, 0]).scale(1)
+  let xMin = Infinity
+  let xMax = -Infinity
+  let yMin = Infinity
+  let yMax = -Infinity
+  for (const position of positions) {
+    const point = projection(position)
+    if (!point) continue
+    xMin = Math.min(xMin, point[0])
+    xMax = Math.max(xMax, point[0])
+    yMin = Math.min(yMin, point[1])
+    yMax = Math.max(yMax, point[1])
+  }
+  const scale = Math.min(10 / (xMax - xMin), 8 / (yMax - yMin))
+
+  return projection
+    .scale(scale)
+    .translate([(-scale * (xMin + xMax)) / 2, (-scale * (yMin + yMax)) / 2])
+}
+
+onMounted(async () => {
+  const container = sceneContainer.value
+  if (!container) return
+
+  try {
+    const sceneRuntime = createThreeSceneRuntime({
+      container,
+      near: 0.1,
+      far: 250,
+    })
+    runtime = sceneRuntime
+    const { scene, camera, controls, renderer } = sceneRuntime
+    camera.position.set(4, 6, 9)
+    controls.target.set(0, 0, 0)
+    controls.rotateSpeed = 0.5
+
+    scene.add(new THREE.HemisphereLight(0xdbeafe, 0x0f172a, 1.7))
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2)
+    keyLight.position.set(6, 10, 8)
+    scene.add(keyLight)
+
+    const data = await $fetch<GeoFeatureCollection>('/hangzhou.json')
+    if (sceneRuntime.isDisposed()) return
+
+    const projection = createFittedProjection(data)
+
+    const mapGroup = new THREE.Group()
+    mapGroup.rotation.x = -Math.PI / 2
+
+    for (const feature of data.features) {
+      const polygons =
+        feature.geometry.type === 'Polygon'
+          ? [feature.geometry.coordinates]
+          : feature.geometry.coordinates
+
+      for (const rings of polygons) {
+        const geometry = new THREE.ExtrudeGeometry(
+          createShape(rings, projection),
+          {
+            depth: 0.55,
+            bevelEnabled: false,
+          },
+        )
+        const material = new THREE.MeshStandardMaterial({
+          color: 0x0ea5e9,
+          emissive: 0x082f49,
+          emissiveIntensity: 0.25,
+          roughness: 0.72,
+          metalness: 0.04,
+          side: THREE.DoubleSide,
+        })
+        const mesh = new THREE.Mesh(geometry, material)
+        mesh.userData.regionName = feature.properties.name ?? '未知区域'
+        mapGroup.add(mesh)
+
+        const edges = new THREE.LineSegments(
+          new THREE.EdgesGeometry(geometry, 24),
+          new THREE.LineBasicMaterial({ color: 0xe0f2fe }),
+        )
+        mapGroup.add(edges)
+      }
+    }
+
+    scene.add(mapGroup)
+    scene.add(new THREE.GridHelper(18, 18, 0x475569, 0x1e293b))
+    loading.value = false
+
+    const raycaster = new THREE.Raycaster()
+    const pointer = new THREE.Vector2()
+    let selectedMesh: THREE.Mesh | undefined
+
+    const onPointerMove = (event: PointerEvent) => {
+      const bounds = renderer.domElement.getBoundingClientRect()
+      pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1
+      pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1
+      raycaster.setFromCamera(pointer, camera)
+
+      const intersection = raycaster
+        .intersectObject(mapGroup, true)
+        .find((entry) => entry.object instanceof THREE.Mesh)
+      const nextMesh = intersection?.object as THREE.Mesh | undefined
+      if (nextMesh === selectedMesh) return
+
+      if (selectedMesh) {
+        const previousMaterial = selectedMesh.material
+        if (previousMaterial instanceof THREE.MeshStandardMaterial) {
+          previousMaterial.color.setHex(0x0ea5e9)
         }
-        intersects[i].object.material.color = new THREE.Color('#FF0000')
-        selecetdObj = intersects[i].object
+      }
 
-        // }
-
-        renderer.render(scene, camera)
+      selectedMesh = nextMesh
+      if (!selectedMesh) {
+        activeRegion.value = '移动指针以查看区域'
         return
       }
+
+      const material = selectedMesh.material
+      if (material instanceof THREE.MeshStandardMaterial) {
+        material.color.setHex(0xf97316)
+      }
+      activeRegion.value = String(selectedMesh.userData.regionName)
     }
-  }
 
-  window.addEventListener('pointermove', onPointerMove)
-
-  function animate() {
-    requestAnimationFrame(animate)
-    // render()
-    renderer.render(scene, camera)
+    renderer.domElement.addEventListener('pointermove', onPointerMove)
+    removePointerListener = () =>
+      renderer.domElement.removeEventListener('pointermove', onPointerMove)
+  } catch (error) {
+    loading.value = false
+    errorMessage.value =
+      error instanceof Error ? error.message : '地理 3D 场景初始化失败。'
   }
-  animate()
+})
+
+onBeforeUnmount(() => {
+  removePointerListener?.()
+  removePointerListener = undefined
+  runtime?.dispose()
+  runtime = undefined
 })
 </script>
 
 <template>
-  <div>
-    <BaseMemory class="absolute bg-white p-4" />
-    <canvas id="canvas" ref="canvasRef"></canvas>
-  </div>
-</template>
+  <main class="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-gray-950">
+    <div ref="sceneContainer" class="absolute inset-0" />
 
-<style lang="scss" scoped>
-#canvas {
-  width: 100vw;
-  height: 100vh;
-}
-</style>
+    <div
+      class="pointer-events-none absolute top-4 left-4 z-10 sm:top-6 sm:left-6"
+    >
+      <div
+        class="rounded-xl border border-white/10 bg-gray-950/75 px-4 py-3 text-white shadow-xl backdrop-blur"
+      >
+        <p class="text-xs uppercase tracking-[0.16em] text-gray-400">
+          Three.js Geo
+        </p>
+        <p class="mt-1 font-medium">{{ activeRegion }}</p>
+        <p v-if="loading" class="mt-1 text-xs text-gray-400">正在生成几何体…</p>
+      </div>
+    </div>
+
+    <div
+      v-if="errorMessage"
+      class="absolute inset-0 z-20 grid place-items-center bg-gray-950 p-6"
+    >
+      <UAlert
+        class="max-w-lg"
+        color="error"
+        variant="subtle"
+        title="无法启动地理场景"
+        :description="errorMessage"
+      />
+    </div>
+  </main>
+</template>

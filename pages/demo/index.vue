@@ -3,6 +3,13 @@ const localePath = useLocalePath()
 
 const demos = [
   {
+    title: 'Math Figures',
+    description:
+      'Interactive, reusable 2D figures with a path toward WebGL surfaces.',
+    icon: 'i-lucide-chart-spline',
+    to: '/demo/math',
+  },
+  {
     title: 'Python Runner',
     description:
       'Run Python, NumPy and Matplotlib locally in a browser Web Worker.',

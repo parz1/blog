@@ -299,6 +299,7 @@
     "kicker": "Writing",
     "description": "Essays, notes, and loose fragments collected in one chronological stream.",
     "all": "All",
+    "views": "{count} views",
     "overview": {
       "updated": "Overview updated {date}",
       "featuredColumn": "Series · {title}",
