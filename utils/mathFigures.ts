@@ -26,13 +26,13 @@ export const mathFigurePresets: Record<
 > = {
   sigmoid: {
     kind: 'curve-2d',
-    title: 'Sigmoid 函数',
-    description: '移动指针或拖动滑块，观察输入 z 如何变成 0 到 1 之间的输出。',
+    title: '从对数几率到概率',
+    description: '移动指针或拖动滑块，观察对数几率 z 怎样变成概率 p。',
     caption:
-      'Sigmoid 在 z = 0 时输出 0.5；输入越大，输出越接近 1，输入越小，输出越接近 0。',
+      'z 表示类别 1 的对数几率；Sigmoid 在 z = 0 时输出概率 0.5，并保留分数原有的大小顺序。',
     formula: 'σ(z) = 1 / (1 + e⁻ᶻ)',
-    xLabel: '输入 z',
-    yLabel: '输出 σ(z)',
+    xLabel: '对数几率 z',
+    yLabel: '概率 p = σ(z)',
     domain: [-6, 6],
     range: [0, 1],
     xTicks: [-6, -4, -2, 0, 2, 4, 6],

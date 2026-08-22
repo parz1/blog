@@ -1,5 +1,19 @@
 {
   "hello": "你好",
+  "shareableText": {
+    "select": "选择这段重点文字",
+    "actions": "重点文字操作",
+    "copy": "复制",
+    "copied": "已复制",
+    "share": "分享",
+    "ready": "完成"
+  },
+  "conceptHover": {
+    "label": "概念便签",
+    "open": "点击进入概念卡片",
+    "noSummary": "这个概念还没有摘要。",
+    "missing": "这个概念节点还没有建立。"
+  },
   "search": {
     "title": "搜索",
     "description": "搜索站内内容",

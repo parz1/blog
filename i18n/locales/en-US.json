@@ -1,5 +1,19 @@
 {
   "hello": "Hello",
+  "shareableText": {
+    "select": "Select this highlighted passage",
+    "actions": "Highlighted passage actions",
+    "copy": "Copy",
+    "copied": "Copied",
+    "share": "Share",
+    "ready": "Done"
+  },
+  "conceptHover": {
+    "label": "Concept note",
+    "open": "Open the concept card",
+    "noSummary": "This concept does not have a summary yet.",
+    "missing": "This concept node has not been created yet."
+  },
   "search": {
     "title": "Search",
     "description": "Search site content",

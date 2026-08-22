@@ -4,6 +4,7 @@ import defaultSocialImage from '~/assets/avatar.jpg'
 type ArticleConceptReference = {
   slug: string
   title: string
+  summary?: string
   state?: string
   exists: boolean
 }
@@ -109,6 +110,7 @@ const referencedConcepts = computed<ArticleConceptReference[]>(() =>
     return {
       slug: conceptSlug,
       title: concept?.title ?? conceptSlug,
+      summary: concept?.summary,
       state: concept?.state,
       exists: Boolean(concept),
     }
@@ -528,6 +530,8 @@ useHead(() => ({
               <div class="text-xl">Document is empty</div>
             </template>
           </ContentRenderer>
+
+          <ConceptHoverCards :concepts="referencedConcepts" />
 
           <nav
             v-if="columnNavigation?.previous || columnNavigation?.next"

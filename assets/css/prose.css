@@ -68,7 +68,64 @@
 }
 
 .prose a.concept-wikilink {
-  @apply font-medium text-gray-900 underline decoration-gray-300 decoration-1 underline-offset-4 transition-colors hover:text-primary-700 hover:decoration-primary-400 dark:text-gray-100 dark:decoration-gray-700 dark:hover:text-primary-300 dark:hover:decoration-primary-600;
+  position: relative;
+  z-index: 0;
+  padding-inline: 0.08em;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  background-image:
+    linear-gradient(
+      175deg,
+      transparent 0 30%,
+      rgb(250 204 21 / 0.38) 30% 56%,
+      transparent 56% 100%
+    ),
+    linear-gradient(
+      183deg,
+      transparent 0 64%,
+      rgb(250 204 21 / 0.52) 64% 96%,
+      transparent 96% 100%
+    );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    color 150ms ease,
+    filter 150ms ease;
+}
+
+.prose a.concept-wikilink:hover,
+.prose a.concept-wikilink:focus-visible {
+  color: #713f12;
+  filter: saturate(1.18);
+}
+
+.prose a.concept-wikilink:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid rgb(234 179 8 / 0.42);
+  outline-offset: 3px;
+}
+
+.dark .prose a.concept-wikilink {
+  color: inherit;
+  background-image:
+    linear-gradient(
+      175deg,
+      transparent 0 30%,
+      rgb(202 138 4 / 0.34) 30% 56%,
+      transparent 56% 100%
+    ),
+    linear-gradient(
+      183deg,
+      transparent 0 64%,
+      rgb(202 138 4 / 0.48) 64% 96%,
+      transparent 96% 100%
+    );
+}
+
+.dark .prose a.concept-wikilink:hover,
+.dark .prose a.concept-wikilink:focus-visible {
+  color: #fde68a;
 }
 
 .prose a.article-wikilink {
@@ -154,34 +211,6 @@
 }
 .prose pre code {
   @apply bg-transparent p-0;
-}
-
-/* 表格（如果你用自定义 ProseTable.vue，可删掉此段以免冲突） */
-/* 更美观的 Prose 表格 */
-.prose table {
-  @apply w-full text-center border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden mx-auto;
-  border-collapse: collapse;
-  max-width: 100%;
-}
-
-/* 表头 */
-.prose thead th {
-  @apply px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800;
-}
-
-/* 单元格 */
-.prose tbody td {
-  @apply px-4 py-3 text-sm text-gray-800 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700;
-}
-
-/* 隔行条纹 */
-.prose tbody tr:nth-child(even) td {
-  @apply bg-gray-50 dark:bg-gray-900/40;
-}
-
-/* Hover 行高亮 */
-.prose tbody tr:hover td {
-  @apply bg-primary-50 dark:bg-primary-900/30 transition-colors;
 }
 
 /* 图片/图注 */

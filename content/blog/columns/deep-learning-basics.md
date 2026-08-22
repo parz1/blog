@@ -14,7 +14,7 @@ scope:
   - 计算图
   - 反向传播
   - 自动微分
-updated: '2026-08-18'
+updated: '2026-08-21'
 lang: cn
 tags:
   - deep-learning
@@ -22,11 +22,11 @@ tags:
 sections:
   - id: from-linear-model-to-neuron
     title: 起点：从线性模型到神经元
-    description: 从逻辑回归出发，理解激活函数与非线性表示为什么必要。
+    description: 从规则、数据与参数的边界出发，理解人工神经元为何出现，以及非线性表示为什么必要。
     chapters:
       - id: from-logistic-regression-to-neuron
-        workingTitle: 从逻辑回归到神经元
-        summary: 拆开一个 Sigmoid 神经元，理解它与逻辑回归共享的计算与梯度更新。
+        workingTitle: 从逻辑回归到神经元：机器究竟学到了什么
+        summary: 先建立机器学习的能力边界，追溯人工神经元的起源，再拆开它与逻辑回归共享的计算和参数更新。
         state: published
         articleSlug: from-logistic-regression-to-neuron
         role: core

@@ -1,5 +1,19 @@
 {
   "hello": "こんにちは",
+  "shareableText": {
+    "select": "この強調部分を選択",
+    "actions": "強調部分の操作",
+    "copy": "コピー",
+    "copied": "コピー済み",
+    "share": "共有",
+    "ready": "完了"
+  },
+  "conceptHover": {
+    "label": "概念メモ",
+    "open": "クリックして概念カードを開く",
+    "noSummary": "この概念にはまだ要約がありません。",
+    "missing": "この概念ノードはまだ作成されていません。"
+  },
   "search": {
     "title": "検索",
     "description": "サイト内コンテンツを検索",
