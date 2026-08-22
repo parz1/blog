@@ -6,7 +6,7 @@ import { rubyHook } from './utils/rubyHook'
 // Version this marker path when syntax hooks change so previously parsed
 // documents cannot leave stale wiki links in the development cache.
 const contentSyntaxCacheMarker = fileURLToPath(
-  new URL('./utils/contentSyntaxV1.mjs', import.meta.url),
+  new URL('./utils/contentSyntaxV2.mjs', import.meta.url),
 )
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({

@@ -22,6 +22,34 @@ export function rubyHook(file: { id: string; body: string }) {
     return key
   }
 
+  const renderWikilink = (content: string, strong = false) => {
+    const [rawTarget, rawLabel] = content.split('|')
+    const target = (rawTarget ?? '').trim()
+    const articleMatch = target.match(/^(?:blog|article|post|log|crap):(.+)$/)
+
+    if (articleMatch?.[1]) {
+      const slug = toArticleSlug(articleMatch[1])
+      if (!slug) return
+
+      const label = (rawLabel ?? articleMatch[1]).trim()
+      const className = strong
+        ? 'article-wikilink article-wikilink--strong'
+        : 'article-wikilink'
+
+      return `<a href="/blog/${encodeURIComponent(slug)}" class="${className}">${escapeHtml(label)}</a>`
+    }
+
+    const slug = toConceptSlug(target)
+    if (!slug) return
+
+    const label = (rawLabel ?? target).trim()
+    const className = strong
+      ? 'concept-wikilink concept-wikilink--strong'
+      : 'concept-wikilink'
+
+    return `<a href="/concepts/${encodeURIComponent(slug)}" class="${className}">${escapeHtml(label)}</a>`
+  }
+
   // 1) 保护 “恰好三个反引号”的代码块：```lang\n ... \n```（不匹配 ````）
   //    - 支持可选语言标记、可选行尾空格、Win/Unix 换行
   const tripleFence =
@@ -35,29 +63,16 @@ export function rubyHook(file: { id: string; body: string }) {
   })
 
   file.body = file.body.replace(
+    /(\*\*|__)\[\[([^\]\n]+)\]\]\1/g,
+    (match, _marker: string, content: string) =>
+      renderWikilink(content, true) ?? match,
+  )
+
+  file.body = file.body.replace(
     /\\?\[\[([^\]\n]+)\]\]/g,
     (match, content: string) => {
       if (match.startsWith('\\')) return match.slice(1)
-
-      const [rawTarget, rawLabel] = content.split('|')
-      const target = (rawTarget ?? '').trim()
-      const articleMatch = target.match(/^(?:blog|article|post|log|crap):(.+)$/)
-
-      if (articleMatch?.[1]) {
-        const slug = toArticleSlug(articleMatch[1])
-        if (!slug) return match
-
-        const label = (rawLabel ?? articleMatch[1]).trim()
-
-        return `<a href="/blog/${encodeURIComponent(slug)}" class="article-wikilink">${escapeHtml(label)}</a>`
-      }
-
-      const slug = toConceptSlug(target)
-      if (!slug) return match
-
-      const label = (rawLabel ?? target).trim()
-
-      return `<a href="/concepts/${encodeURIComponent(slug)}" class="concept-wikilink">${escapeHtml(label)}</a>`
+      return renderWikilink(content) ?? match
     },
   )
 
