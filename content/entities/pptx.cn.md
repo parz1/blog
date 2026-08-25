@@ -15,7 +15,8 @@ aliases:
   - Office Open XML presentation
 relatedConcepts:
   - raster
-relatedEntities: []
+relatedEntities:
+  - pdf
 externalLinks:
   - label: Microsoft Learn
     url: https://learn.microsoft.com/en-us/office/open-xml/presentation/structure-of-a-presentationml-document
