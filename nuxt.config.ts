@@ -1,13 +1,12 @@
-import { fileURLToPath } from 'node:url'
-
 import { rubyHook } from './utils/rubyHook'
 
 // Nuxt Content's development checksum does not include `content:file:*` hooks.
 // Version this marker path when syntax hooks change so previously parsed
 // documents cannot leave stale wiki links in the development cache.
-const contentSyntaxCacheMarker = fileURLToPath(
-  new URL('./utils/contentSyntaxV2.mjs', import.meta.url),
-)
+const contentSyntaxCacheMarker = new URL(
+  './utils/contentSyntaxV2.mjs',
+  import.meta.url,
+).href
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -122,7 +121,10 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         remarkPlugins: {
-          [contentSyntaxCacheMarker]: {},
+          [contentSyntaxCacheMarker]: {
+            src: '~/utils/contentSyntaxV2.mjs',
+            options: {},
+          },
           'remark-math': {},
           'remark-emoji': {},
           'remark-gfm': {},

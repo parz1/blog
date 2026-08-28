@@ -20,6 +20,254 @@
     "placeholder": "記事、メモ、Concepts、Entities、Projects を検索...",
     "empty": "一致するコンテンツはありません。"
   },
+  "faceLandmarkLab": {
+    "metaTitle": "Face Landmark Lab",
+    "title": "Camera & Landmark Lab",
+    "description": "顔をキャラクターとして演じさせる前に、入力を信頼できる状態にします。最初の実験では、ローカルカメラ、478 点のフェイスメッシュ、各推論フレームの時間を可視化します。",
+    "actions": {
+      "start": "ローカルカメラを開始",
+      "stop": "カメラを停止"
+    },
+    "status": {
+      "idle": "準備完了 · カメラ停止中",
+      "loading": "ローカルモデルを準備中",
+      "searching": "カメラ作動中 · 顔を探索中",
+      "tracking": "顔をトラッキング中",
+      "error": "入力を利用できません"
+    },
+    "camera": "カメラ入力 · ミラー",
+    "searching": "顔を探索中",
+    "empty": {
+      "title": "開始するまでカメラはオフです",
+      "description": "ブラウザが権限を確認します。フレームはローカルで処理され、アップロードされません。"
+    },
+    "signalQuality": "Signal quality",
+    "derived": "推定値 · モデル信頼度ではありません",
+    "metrics": {
+      "cameraFps": "Camera FPS",
+      "inferenceFps": "Inference FPS",
+      "inferenceTime": "Inference time",
+      "faces": "Faces"
+    },
+    "pipeline": {
+      "camera": "Camera frame",
+      "worker": "Local worker",
+      "landmarks": "Face landmarks"
+    },
+    "privacy": {
+      "title": "ローカル処理のみ",
+      "description": "動画フレームと顔データは、このブラウザタブ内だけで処理されます。停止するとカメラストリームを解放します。",
+      "network": "トラッキング送信なし"
+    }
+  },
+  "headYawLab": {
+    "metaTitle": "Head Yaw Lab",
+    "title": "Head Yaw Lab",
+    "description": "顔の変換行列から得た頭部方向を、校正でき、観察でき、滑らかに正面へ戻る制御信号に整えます。",
+    "actions": {
+      "start": "ローカルカメラを開始",
+      "stop": "カメラを停止",
+      "calibrate": "ニュートラルを校正",
+      "reset": "校正をリセット"
+    },
+    "status": {
+      "idle": "準備完了 · カメラ停止中",
+      "loading": "ローカル姿勢モデルを準備中",
+      "uncalibrated": "顔を検出 · ニュートラルを校正してください",
+      "tracking": "Yaw 信号を出力中",
+      "lost": "顔を見失いました · ゆっくり正面へ戻ります",
+      "error": "姿勢入力を利用できません"
+    },
+    "camera": "姿勢入力 · ミラー",
+    "empty": {
+      "title": "ニュートラルを決めてから、回転信号を観察します",
+      "description": "カメラを正面から見て校正してください。映像と姿勢データはブラウザ内だけで処理されます。"
+    },
+    "instrument": {
+      "title": "Yaw レスポンス",
+      "left": "左",
+      "neutral": "正面",
+      "right": "右"
+    },
+    "raw": "校正後の生値",
+    "filtered": "平滑化出力",
+    "trace": "生値と平滑化出力",
+    "conditioning": "信号調整",
+    "controls": {
+      "deadZone": "デッドゾーン",
+      "smoothing": "平滑化時間",
+      "return": "ロスト時の復帰"
+    },
+    "neutral": "ニュートラル基準",
+    "note": {
+      "title": "計測値から制御信号へ",
+      "description": "デッドゾーンで正面付近の微振動を抑え、時間ベースのフィルターで連続性を保ち、顔を見失っても出力を急にゼロへ戻しません。"
+    }
+  },
+  "gazeLab": {
+    "metaTitle": "Gaze Lab",
+    "title": "Gaze Lab",
+    "description": "目頭・目尻とまぶたが作る局所座標で虹彩位置を測り、まばたきや片目の信号低下に応じて両眼融合の重みを調整します。",
+    "actions": {
+      "start": "ローカルカメラを開始",
+      "stop": "カメラを停止",
+      "calibrate": "中央視線を校正",
+      "reset": "校正をリセット"
+    },
+    "status": {
+      "idle": "準備完了 · カメラ停止中",
+      "loading": "ローカル視線モデルを準備中",
+      "searching": "両目と虹彩を検出中",
+      "uncalibrated": "虹彩を追跡中 · 中央を見て校正してください",
+      "tracking": "両眼視線信号を出力中",
+      "low": "眼の信号が弱いため出力の重みを下げています",
+      "error": "視線入力を利用できません"
+    },
+    "camera": "眼の入力 · ミラー",
+    "empty": {
+      "title": "中央を見てから両眼の基準を校正します",
+      "description": "カメラ映像と虹彩データはこのブラウザ内だけで処理され、アップロードされません。"
+    },
+    "field": {
+      "title": "平滑化した注視点"
+    },
+    "eyes": {
+      "title": "左右眼の独立信号",
+      "left": "左目",
+      "right": "右目",
+      "confidence": "信頼度",
+      "openness": "開眼度",
+      "blink": "まばたき"
+    },
+    "separation": {
+      "title": "頭部方向と視線の分離",
+      "description": "上のマーカーは顔全体の回転行列、下のマーカーは眼の輪郭に対する虹彩位置だけから計算されます。"
+    },
+    "controls": {
+      "title": "信号調整",
+      "sensitivity": "感度",
+      "smoothing": "平滑化時間",
+      "threshold": "最小信頼度"
+    },
+    "note": {
+      "title": "粗い視線推定であり、アイトラッカーではありません",
+      "description": "通常の RGB カメラは照明、眼鏡、遮蔽、目の形、頭部角度の影響を受けます。キャラクター表現には使えますが、精密な注視計測には適しません。"
+    }
+  },
+  "faceStateLab": {
+    "metaTitle": "Face State Lab",
+    "title": "Face State Lab",
+    "description": "調整済みの頭部姿勢、両眼視線、表情信号を一つの再利用可能な FaceState にまとめ、将来の 2D 表現層から MediaPipe の詳細を切り離します。",
+    "actions": {
+      "start": "ローカルカメラを開始",
+      "stop": "カメラを停止",
+      "calibrate": "ニュートラル状態を校正",
+      "reset": "リセット"
+    },
+    "status": {
+      "idle": "準備完了 · カメラ停止中",
+      "loading": "ローカル状態パイプラインを準備中",
+      "searching": "完全な顔信号を待っています",
+      "uncalibrated": "FaceState 準備完了 · ニュートラルを校正してください",
+      "tracking": "FaceState をリアルタイム出力中",
+      "error": "顔状態入力を利用できません"
+    },
+    "camera": "検出入力 · ミラー",
+    "empty": {
+      "title": "生の検出結果から安定した契約を作ります",
+      "description": "カメラ開始後、landmarks、姿勢行列、blendshape をローカルで一つの FaceState に変換します。"
+    },
+    "monitor": {
+      "title": "FaceState 信号モニター"
+    },
+    "contract": {
+      "title": "リアルタイム公開状態"
+    },
+    "detection": {
+      "title": "生の検出サマリー",
+      "quality": "信号品質",
+      "landmarks": "ランドマーク",
+      "blendshapes": "Blendshape",
+      "matrix": "姿勢行列",
+      "inference": "推論時間",
+      "fps": "推論 FPS"
+    },
+    "boundary": {
+      "title": "レイヤー間の境界",
+      "detection": "検出レイヤー",
+      "state": "状態解釈レイヤー",
+      "performer": "2D パフォーマンス写像",
+      "description": "MediaPipe の形式を知るのは状態解釈レイヤーだけです。次のパペット層は FaceState のみを受け取ります。"
+    },
+    "note": {
+      "title": "検出実装を交換しても状態契約は維持できます",
+      "description": "診断プロキシは FaceState の直接可視化であり、キャラクタースタイル、ばね運動、演技マッピングは含みません。"
+    }
+  },
+  "puppetLab": {
+    "metaTitle": "2D パペット・ラボ",
+    "title": "2D パペット・ラボ",
+    "description": "統合された FaceState を意図的に設計した演技マッピングに通し、オリジナルの SVG 紙人形を動かします。各パーツが異なる速さで反応し、動きをキャラクター性へ変換します。",
+    "actions": {
+      "start": "カメラを開始して演じる",
+      "stop": "停止",
+      "calibrate": "ニュートラルを校正"
+    },
+    "mode": {
+      "label": "表示モード"
+    },
+    "status": {
+      "idle": "パペット待機中 · カメラはオフ",
+      "loading": "ローカル演技パイプラインを準備中",
+      "searching": "カメラ接続済み · 顔を探索中",
+      "uncalibrated": "パペット接続済み · ニュートラル校正を推奨",
+      "performing": "FaceState が 2D キャラクターを駆動中",
+      "error": "演技入力を利用できません"
+    },
+    "stage": "2D パペット出力",
+    "empty": {
+      "title": "3D 入力に 2D の個性を与える",
+      "description": "カメラを開始すると、頭部姿勢、視線、まばたき、口の表情がレイヤー別のスプリングを通してオリジナルの紙人形を動かします。"
+    },
+    "layers": {
+      "eyes": "視線とまばたき",
+      "face": "顔とパーツ",
+      "hair": "前髪の遅れ"
+    },
+    "note": {
+      "title": "ブラウザ内でローカル描画されるオリジナル 2D キャラクター",
+      "description": "カメラと顔データはアップロードされません。Live2D モデルやフレームごとの画像生成を使わず、SVG レイヤーをリアルタイム変形します。"
+    }
+  },
+  "performerLab": {
+    "metaTitle": "3D パフォーマー・ラボ",
+    "title": "3D パフォーマー・ラボ",
+    "description": "ローカルカメラを一度だけ取得し、Face / Hand Landmarker から 3D 演技プロキシを構築します。顔の 478 × XYZ、変換行列、全 blendshape を保持し、意味状態は置き換えではなく注釈として追加します。",
+    "actions": {
+      "start": "3D トラッキングを開始",
+      "stop": "停止",
+      "calibrate": "舞台のニュートラルを校正",
+      "reset": "校正をリセット"
+    },
+    "status": {
+      "idle": "演技プロキシ待機中 · カメラはオフ",
+      "loading": "Face と Hand モデルを読み込み中",
+      "searching": "追跡パイプライン接続済み · 頭部または手を探索中",
+      "uncalibrated": "3D プロキシ確立済み · ニュートラル校正を推奨",
+      "tracking": "PerformerState3D をリアルタイム出力中",
+      "error": "3D トラッキング入力を利用できません"
+    },
+    "camera": "共有カメラ観測",
+    "stage": "3D 演技プロキシ",
+    "empty": {
+      "title": "1 台のカメラ、2 つの検出器、1 つの共有フレーム",
+      "description": "各カメラフレームを分離した Face / Hand worker に複製し、1 つの TrackingFrame に統合します。映像と追跡データはアップロードされません。"
+    },
+    "note": {
+      "title": "同じ観測から異なるキャラクターシステムへ分岐できる",
+      "description": "現在の紙人形は FaceState を使い続けます。空間ルートは同じ TrackingFrame から PerformerState3D を構築し、次の 3D-to-2D 投影実験へ進みます。"
+    }
+  },
   "menu": {
     "home": "ホーム",
     "demo": "デモ",

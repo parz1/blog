@@ -38,6 +38,7 @@
     "@deck.gl/mapbox": "^9.3.2",
     "@iconify-json/carbon": "^1.2.21",
     "@intlify/message-compiler": "^11.4.2",
+    "@mediapipe/tasks-vision": "^1.0.1",
     "@nuxt/content": "^3.13.0",
     "@nuxt/ui": "^4.7.1",
     "@nuxtjs/i18n": "^10.3.0",

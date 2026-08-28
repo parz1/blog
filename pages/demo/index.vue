@@ -3,6 +3,48 @@ const localePath = useLocalePath()
 
 const demos = [
   {
+    title: '3D Performer Lab',
+    description:
+      'Extract one shared Face + Hand observation frame into a visible 3D performance rig.',
+    icon: 'i-lucide-person-standing',
+    to: '/demo/performer-3d-lab',
+  },
+  {
+    title: '2D Puppet Lab',
+    description:
+      'Translate FaceState into an original SVG paper character with layered spring dynamics.',
+    icon: 'i-lucide-sparkles',
+    to: '/demo/puppet-lab',
+  },
+  {
+    title: 'Face State Lab',
+    description:
+      'Unify conditioned head, gaze and expression signals behind one reusable FaceState contract.',
+    icon: 'i-lucide-braces',
+    to: '/demo/face-state-lab',
+  },
+  {
+    title: 'Gaze Lab',
+    description:
+      'Fuse both irises into a confidence-aware gaze signal, separate from head yaw.',
+    icon: 'i-lucide-eye',
+    to: '/demo/gaze-lab',
+  },
+  {
+    title: 'Head Yaw Lab',
+    description:
+      'Calibrate and condition MediaPipe head pose into a stable, inspectable yaw control signal.',
+    icon: 'i-lucide-axis-3d',
+    to: '/demo/head-yaw-lab',
+  },
+  {
+    title: 'Face Landmark Lab',
+    description:
+      'A local-first camera and MediaPipe landmark inspection surface for Parallax Persona.',
+    icon: 'i-lucide-scan-face',
+    to: '/demo/face-landmark-lab',
+  },
+  {
     title: 'Math Figures',
     description:
       'Interactive, reusable 2D figures with a path toward WebGL surfaces.',

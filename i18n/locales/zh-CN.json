@@ -20,6 +20,254 @@
     "placeholder": "搜索文章、札记、概念、实体、项目...",
     "empty": "没有匹配的内容。"
   },
+  "faceLandmarkLab": {
+    "metaTitle": "人脸关键点实验室",
+    "title": "摄像头与关键点实验室",
+    "description": "在让一张脸成为角色之前，输入必须先值得信任。第一个实验会直接展示本地摄像头、478 点人脸网格，以及每一帧推理的时间状态。",
+    "actions": {
+      "start": "开启本地摄像头",
+      "stop": "停止摄像头"
+    },
+    "status": {
+      "idle": "准备就绪 · 摄像头未开启",
+      "loading": "正在准备本地模型",
+      "searching": "摄像头已开启 · 正在寻找人脸",
+      "tracking": "正在跟踪人脸",
+      "error": "输入不可用"
+    },
+    "camera": "摄像头输入 · 镜像",
+    "searching": "正在寻找人脸",
+    "empty": {
+      "title": "只有点击开始后才会开启摄像头",
+      "description": "浏览器会先请求权限。视频帧仅在本地处理，不会上传。"
+    },
+    "signalQuality": "信号质量",
+    "derived": "推导值 · 非模型置信度",
+    "metrics": {
+      "cameraFps": "摄像头 FPS",
+      "inferenceFps": "推理 FPS",
+      "inferenceTime": "推理耗时",
+      "faces": "人脸数量"
+    },
+    "pipeline": {
+      "camera": "摄像头画面",
+      "worker": "本地 Worker",
+      "landmarks": "人脸关键点"
+    },
+    "privacy": {
+      "title": "仅在本地处理",
+      "description": "视频帧和人脸数据只存在于当前浏览器标签页。停止实验后会释放摄像头流。",
+      "network": "不上传跟踪数据"
+    }
+  },
+  "headYawLab": {
+    "metaTitle": "头部偏航实验室",
+    "title": "头部偏航实验室",
+    "description": "把人脸变换矩阵中的头部朝向，整理成可校准、可观察、会平滑回正的控制信号。",
+    "actions": {
+      "start": "开启本地摄像头",
+      "stop": "停止摄像头",
+      "calibrate": "校准中立脸",
+      "reset": "重置校准"
+    },
+    "status": {
+      "idle": "准备就绪 · 摄像头未开启",
+      "loading": "正在准备本地姿态模型",
+      "uncalibrated": "检测到人脸 · 请校准中立脸",
+      "tracking": "偏航信号稳定输出中",
+      "lost": "人脸丢失 · 正在缓慢回正",
+      "error": "姿态输入不可用"
+    },
+    "camera": "姿态输入 · 镜像",
+    "empty": {
+      "title": "先建立中立脸，再观察转头信号",
+      "description": "正视摄像头后点击校准。视频和姿态数据仅在本地浏览器处理。"
+    },
+    "instrument": {
+      "title": "偏航响应",
+      "left": "左转",
+      "neutral": "中立",
+      "right": "右转"
+    },
+    "raw": "校准后原始值",
+    "filtered": "平滑输出",
+    "trace": "原始值与平滑输出",
+    "conditioning": "信号调节",
+    "controls": {
+      "deadZone": "死区",
+      "smoothing": "平滑时间",
+      "return": "丢失回正"
+    },
+    "neutral": "中立基线",
+    "note": {
+      "title": "从测量变成控制信号",
+      "description": "死区抑制中立位置的微抖；时间滤波保持连续；人脸丢失后输出不会骤然归零。"
+    }
+  },
+  "gazeLab": {
+    "metaTitle": "视线实验室",
+    "title": "视线实验室",
+    "description": "测量虹膜在眼角与眼睑构成的局部坐标中的位置，并在眨眼或单眼信号变弱时动态调整双眼融合权重。",
+    "actions": {
+      "start": "开启本地摄像头",
+      "stop": "停止摄像头",
+      "calibrate": "校准中心视线",
+      "reset": "重置校准"
+    },
+    "status": {
+      "idle": "准备就绪 · 摄像头未开启",
+      "loading": "正在准备本地视线模型",
+      "searching": "正在寻找双眼与虹膜",
+      "uncalibrated": "虹膜已跟踪 · 请注视中心并校准",
+      "tracking": "双眼视线信号输出中",
+      "low": "眼部信号较弱 · 正在降低输出权重",
+      "error": "视线输入不可用"
+    },
+    "camera": "眼部输入 · 镜像",
+    "empty": {
+      "title": "先注视中心，再校准双眼基线",
+      "description": "摄像头画面与虹膜数据只在当前浏览器中处理，不会上传。"
+    },
+    "field": {
+      "title": "平滑注视点"
+    },
+    "eyes": {
+      "title": "左右眼独立信号",
+      "left": "左眼",
+      "right": "右眼",
+      "confidence": "置信度",
+      "openness": "睁眼程度",
+      "blink": "眨眼"
+    },
+    "separation": {
+      "title": "头部与视线分离",
+      "description": "上方标记来自整张脸的旋转矩阵；下方标记只来自虹膜相对于眼部轮廓的位置。"
+    },
+    "controls": {
+      "title": "信号调节",
+      "sensitivity": "灵敏度",
+      "smoothing": "平滑时间",
+      "threshold": "最低置信度"
+    },
+    "note": {
+      "title": "这是粗粒度视线估计，不是眼动仪",
+      "description": "普通 RGB 摄像头会受光线、眼镜、遮挡、眼型和头部角度影响；这个信号适合驱动角色表演，不适合精密注视测量。"
+    }
+  },
+  "faceStateLab": {
+    "metaTitle": "人脸状态实验室",
+    "title": "人脸状态实验室",
+    "description": "把头部姿态、双眼视线和表情信号收束成一个可复用、可校准的 FaceState，让后续二维表演层不需要理解 MediaPipe。",
+    "actions": {
+      "start": "开启本地摄像头",
+      "stop": "停止摄像头",
+      "calibrate": "校准中立状态",
+      "reset": "重置"
+    },
+    "status": {
+      "idle": "准备就绪 · 摄像头未开启",
+      "loading": "正在准备本地状态管线",
+      "searching": "正在等待完整人脸信号",
+      "uncalibrated": "FaceState 已建立 · 请校准中立状态",
+      "tracking": "FaceState 实时输出中",
+      "error": "人脸状态输入不可用"
+    },
+    "camera": "检测输入 · 镜像",
+    "empty": {
+      "title": "从原始检测结果建立稳定契约",
+      "description": "开启摄像头后，landmarks、姿态矩阵和 blendshape 会在本地转换为统一 FaceState。"
+    },
+    "monitor": {
+      "title": "FaceState 信号监视器"
+    },
+    "contract": {
+      "title": "实时公共状态"
+    },
+    "detection": {
+      "title": "原始检测摘要",
+      "quality": "信号质量",
+      "landmarks": "关键点",
+      "blendshapes": "Blendshape",
+      "matrix": "姿态矩阵",
+      "inference": "推理耗时",
+      "fps": "推理 FPS"
+    },
+    "boundary": {
+      "title": "层之间的边界",
+      "detection": "检测层",
+      "state": "状态解释层",
+      "performer": "二维表演映射层",
+      "description": "只有状态解释层知道 MediaPipe 的数据格式；下一阶段的纸偶只消费 FaceState。"
+    },
+    "note": {
+      "title": "检测实现可以替换，状态契约保持稳定",
+      "description": "调试代理只是 FaceState 的直接可视化，不包含角色风格、弹簧动力学或表演映射。"
+    }
+  },
+  "puppetLab": {
+    "metaTitle": "二维纸偶实验室",
+    "title": "二维纸偶实验室",
+    "description": "让统一的 FaceState 穿过一层有意设计的表演映射，驱动原创 SVG 纸偶。不同部位以不同速度响应，真人动作由此变成二维角色的性格。",
+    "actions": {
+      "start": "开启摄像头并表演",
+      "stop": "停止",
+      "calibrate": "校准中立状态"
+    },
+    "mode": {
+      "label": "显示模式"
+    },
+    "status": {
+      "idle": "纸偶待机 · 摄像头未开启",
+      "loading": "正在准备本地表演管线",
+      "searching": "摄像头已开启 · 正在寻找人脸",
+      "uncalibrated": "纸偶已连接 · 建议先校准中立状态",
+      "performing": "FaceState 正在驱动二维角色",
+      "error": "表演输入不可用"
+    },
+    "stage": "二维纸偶输出",
+    "empty": {
+      "title": "让三维输入获得二维性格",
+      "description": "开启摄像头后，头部朝向、视线、眨眼和嘴部表情会通过弹簧动力学驱动这个原创纸偶。"
+    },
+    "layers": {
+      "eyes": "视线与眨眼",
+      "face": "脸部与五官",
+      "hair": "前发滞后"
+    },
+    "note": {
+      "title": "浏览器本地渲染的原创二维角色",
+      "description": "摄像头与人脸数据不会上传；角色由 SVG 图层实时变形，不使用 Live2D 模型，也不逐帧生成图片。"
+    }
+  },
+  "performerLab": {
+    "metaTitle": "三维表演代理实验室",
+    "title": "三维表演代理实验室",
+    "description": "同一份本地摄像头画面只提取一次，再由 Face 与 Hand Landmarker 共同建立三维表演代理。Face 的 478 × XYZ、变换矩阵和全部 blendshape 会被完整保留，语义状态只是附加解释。",
+    "actions": {
+      "start": "开启三维追踪",
+      "stop": "停止",
+      "calibrate": "校准舞台中立位",
+      "reset": "重置校准"
+    },
+    "status": {
+      "idle": "表演代理待机 · 摄像头未开启",
+      "loading": "正在加载 Face 与 Hand 模型",
+      "searching": "追踪管线已开启 · 正在寻找头部或双手",
+      "uncalibrated": "三维代理已建立 · 建议校准中立位",
+      "tracking": "PerformerState3D 实时输出中",
+      "error": "三维追踪输入不可用"
+    },
+    "camera": "共享摄像头观测",
+    "stage": "三维表演代理",
+    "empty": {
+      "title": "一个摄像头，两种检测，共享一帧",
+      "description": "开启后，每个摄像头帧会复制给隔离的 Face 与 Hand worker，再合并成一个 TrackingFrame；视频和追踪数据不会上传。"
+    },
+    "note": {
+      "title": "同一份观测，允许分叉出不同的角色路线",
+      "description": "当前二维纸偶继续消费 FaceState；新的空间路线从相同 TrackingFrame 构建 PerformerState3D，下一阶段再进行 3D-to-2D 投影。"
+    }
+  },
   "menu": {
     "home": "首页",
     "demo": "演示",

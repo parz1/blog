@@ -20,6 +20,254 @@
     "placeholder": "Search articles, notes, concepts, entities, projects...",
     "empty": "No matching content."
   },
+  "faceLandmarkLab": {
+    "metaTitle": "Face Landmark Lab",
+    "title": "Camera & Landmark Lab",
+    "description": "Before a face can perform as a character, the input has to be trustworthy. This first experiment exposes the local camera, the 478-point face mesh, and the timing of every inference frame.",
+    "actions": {
+      "start": "Start local camera",
+      "stop": "Stop camera"
+    },
+    "status": {
+      "idle": "Ready — camera is off",
+      "loading": "Preparing local model",
+      "searching": "Camera active — finding a face",
+      "tracking": "Face tracked",
+      "error": "Input unavailable"
+    },
+    "camera": "Camera input · mirrored",
+    "searching": "Finding a face",
+    "empty": {
+      "title": "The camera stays off until you start",
+      "description": "Your browser will ask for permission. Frames are processed locally and are never uploaded."
+    },
+    "signalQuality": "Signal quality",
+    "derived": "Derived · not model confidence",
+    "metrics": {
+      "cameraFps": "Camera FPS",
+      "inferenceFps": "Inference FPS",
+      "inferenceTime": "Inference time",
+      "faces": "Faces"
+    },
+    "pipeline": {
+      "camera": "Camera frame",
+      "worker": "Local worker",
+      "landmarks": "Face landmarks"
+    },
+    "privacy": {
+      "title": "Local processing only",
+      "description": "Video frames and face data stay inside this browser tab. Stopping the experiment releases the camera stream.",
+      "network": "No tracking upload"
+    }
+  },
+  "headYawLab": {
+    "metaTitle": "Head Yaw Lab",
+    "title": "Head Yaw Lab",
+    "description": "Turn head orientation from the face transform matrix into a calibrated, inspectable control signal that settles home smoothly.",
+    "actions": {
+      "start": "Start local camera",
+      "stop": "Stop camera",
+      "calibrate": "Calibrate neutral",
+      "reset": "Reset calibration"
+    },
+    "status": {
+      "idle": "Ready · camera is off",
+      "loading": "Preparing the local pose model",
+      "uncalibrated": "Face found · calibrate a neutral pose",
+      "tracking": "Yaw signal is live",
+      "lost": "Face lost · easing back to neutral",
+      "error": "Pose input unavailable"
+    },
+    "camera": "Pose input · mirrored",
+    "empty": {
+      "title": "Set a neutral face, then inspect the turn signal",
+      "description": "Look straight at the camera and calibrate. Video and pose data stay inside this browser."
+    },
+    "instrument": {
+      "title": "Yaw response",
+      "left": "Left",
+      "neutral": "Neutral",
+      "right": "Right"
+    },
+    "raw": "Calibrated raw",
+    "filtered": "Smoothed output",
+    "trace": "Raw and smoothed output",
+    "conditioning": "Signal conditioning",
+    "controls": {
+      "deadZone": "Dead zone",
+      "smoothing": "Smoothing time",
+      "return": "Lost-face return"
+    },
+    "neutral": "Neutral baseline",
+    "note": {
+      "title": "From measurement to control signal",
+      "description": "A dead zone quiets neutral jitter, time-based filtering preserves continuity, and face loss never snaps the output to zero."
+    }
+  },
+  "gazeLab": {
+    "metaTitle": "Gaze Lab",
+    "title": "Gaze Lab",
+    "description": "Measure each iris inside the local frame formed by its eye corners and lids, then adapt binocular fusion when a blink or weak eye makes one side unreliable.",
+    "actions": {
+      "start": "Start local camera",
+      "stop": "Stop camera",
+      "calibrate": "Calibrate center gaze",
+      "reset": "Reset calibration"
+    },
+    "status": {
+      "idle": "Ready · camera is off",
+      "loading": "Preparing the local gaze model",
+      "searching": "Looking for both eyes and irises",
+      "uncalibrated": "Irises tracked · look at center and calibrate",
+      "tracking": "Binocular gaze signal is live",
+      "low": "Eye signal is weak · reducing output weight",
+      "error": "Gaze input unavailable"
+    },
+    "camera": "Eye input · mirrored",
+    "empty": {
+      "title": "Look at center, then calibrate both eyes",
+      "description": "Camera frames and iris data are processed only inside this browser and are never uploaded."
+    },
+    "field": {
+      "title": "Smoothed gaze point"
+    },
+    "eyes": {
+      "title": "Independent eye signals",
+      "left": "Left eye",
+      "right": "Right eye",
+      "confidence": "Confidence",
+      "openness": "Openness",
+      "blink": "Blink"
+    },
+    "separation": {
+      "title": "Head and gaze separation",
+      "description": "The upper marker comes from whole-face rotation; the lower marker comes only from each iris relative to its eye contour."
+    },
+    "controls": {
+      "title": "Signal conditioning",
+      "sensitivity": "Sensitivity",
+      "smoothing": "Smoothing time",
+      "threshold": "Minimum confidence"
+    },
+    "note": {
+      "title": "Coarse gaze estimation, not an eye tracker",
+      "description": "A normal RGB camera is affected by lighting, glasses, occlusion, eye anatomy, and head angle. This signal is useful for character performance, not precision fixation measurement."
+    }
+  },
+  "faceStateLab": {
+    "metaTitle": "Face State Lab",
+    "title": "Face State Lab",
+    "description": "Collapse conditioned head pose, binocular gaze, and expression signals into one reusable, calibrated FaceState so the future 2D performer never needs to understand MediaPipe.",
+    "actions": {
+      "start": "Start local camera",
+      "stop": "Stop camera",
+      "calibrate": "Calibrate neutral state",
+      "reset": "Reset"
+    },
+    "status": {
+      "idle": "Ready · camera is off",
+      "loading": "Preparing the local state pipeline",
+      "searching": "Waiting for a complete face signal",
+      "uncalibrated": "FaceState ready · calibrate a neutral state",
+      "tracking": "FaceState is live",
+      "error": "Face state input unavailable"
+    },
+    "camera": "Detection input · mirrored",
+    "empty": {
+      "title": "Build a stable contract from raw detection",
+      "description": "After the camera starts, landmarks, the pose matrix, and blendshapes are converted locally into one FaceState."
+    },
+    "monitor": {
+      "title": "FaceState signal monitor"
+    },
+    "contract": {
+      "title": "Live public state"
+    },
+    "detection": {
+      "title": "Raw detection summary",
+      "quality": "Signal quality",
+      "landmarks": "Landmarks",
+      "blendshapes": "Blendshapes",
+      "matrix": "Pose matrix",
+      "inference": "Inference time",
+      "fps": "Inference FPS"
+    },
+    "boundary": {
+      "title": "Boundary between layers",
+      "detection": "Detection layer",
+      "state": "State interpretation layer",
+      "performer": "2D performance mapping",
+      "description": "Only the interpretation layer knows the MediaPipe data format. The next puppet layer consumes FaceState alone."
+    },
+    "note": {
+      "title": "Detection can change while the state contract stays stable",
+      "description": "The diagnostic proxy is a direct FaceState visualization. It contains no character styling, spring dynamics, or performance mapping."
+    }
+  },
+  "puppetLab": {
+    "metaTitle": "2D Puppet Lab",
+    "title": "2D Puppet Lab",
+    "description": "Pass the unified FaceState through a deliberately designed performance map to drive an original SVG paper puppet. Different parts respond at different speeds, translating motion into character.",
+    "actions": {
+      "start": "Start camera & perform",
+      "stop": "Stop",
+      "calibrate": "Calibrate neutral state"
+    },
+    "mode": {
+      "label": "Display mode"
+    },
+    "status": {
+      "idle": "Puppet idle · camera is off",
+      "loading": "Preparing the local performance pipeline",
+      "searching": "Camera online · looking for a face",
+      "uncalibrated": "Puppet connected · neutral calibration recommended",
+      "performing": "FaceState is driving the 2D character",
+      "error": "Performance input unavailable"
+    },
+    "stage": "Two-dimensional puppet output",
+    "empty": {
+      "title": "Give three-dimensional input a two-dimensional personality",
+      "description": "Start the camera to drive this original puppet with head pose, gaze, blinks and mouth expression through layered spring dynamics."
+    },
+    "layers": {
+      "eyes": "Gaze and blink",
+      "face": "Face and features",
+      "hair": "Front hair lag"
+    },
+    "note": {
+      "title": "An original 2D character rendered locally in the browser",
+      "description": "Camera and face data never upload. SVG layers deform in real time, without Live2D models or per-frame image generation."
+    }
+  },
+  "performerLab": {
+    "metaTitle": "3D Performer Lab",
+    "title": "3D Performer Lab",
+    "description": "Extract the local camera once, then build a 3D performance proxy with Face and Hand Landmarker. All 478 face XYZ values, the transform matrix and every blendshape remain intact; semantic states are annotations, not replacements.",
+    "actions": {
+      "start": "Start 3D tracking",
+      "stop": "Stop",
+      "calibrate": "Calibrate stage neutral",
+      "reset": "Reset calibration"
+    },
+    "status": {
+      "idle": "Performer proxy idle · camera is off",
+      "loading": "Loading Face and Hand models",
+      "searching": "Tracking pipeline online · looking for head or hands",
+      "uncalibrated": "3D proxy established · neutral calibration recommended",
+      "tracking": "PerformerState3D is streaming",
+      "error": "3D tracking input unavailable"
+    },
+    "camera": "Shared camera observation",
+    "stage": "Three-dimensional performer proxy",
+    "empty": {
+      "title": "One camera, two detectors, one shared frame",
+      "description": "Each camera frame is cloned to isolated Face and Hand workers, then merged into one TrackingFrame. Video and tracking data never upload."
+    },
+    "note": {
+      "title": "One observation can branch into different character systems",
+      "description": "The current puppet keeps consuming FaceState. The spatial branch builds PerformerState3D from the same TrackingFrame, ready for a later 3D-to-2D projection lab."
+    }
+  },
   "menu": {
     "home": "Home",
     "demo": "Demo",
