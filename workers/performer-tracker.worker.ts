@@ -18,12 +18,7 @@ import type {
   TrackingHandedness,
 } from '../typings/performer-lab'
 
-type MediaPipeWorkerScope = DedicatedWorkerGlobalScope & {
-  import: (url: string) => Promise<unknown>
-}
-
-const workerScope = self as unknown as MediaPipeWorkerScope
-workerScope.import = (url) => import(/* @vite-ignore */ url)
+const workerScope = self as DedicatedWorkerGlobalScope
 
 let faceLandmarker: FaceLandmarker | undefined
 let handLandmarker: HandLandmarker | undefined
@@ -50,7 +45,9 @@ const initializeTask = async (
   setStage: (stage: PerformerTrackerWorkerStage) => void,
 ) => {
   setStage('resolve-wasm')
-  const vision = await FilesetResolver.forVisionTasks(request.wasmBaseUrl, true)
+  // Vite emits this as a classic worker. Match it with MediaPipe's classic
+  // loader instead of asking `importScripts()` to parse an ESM file.
+  const vision = await FilesetResolver.forVisionTasks(request.wasmBaseUrl)
   vision.wasmLoaderPath = `${vision.wasmLoaderPath}?v=1.0.1`
 
   setStage('load-model')

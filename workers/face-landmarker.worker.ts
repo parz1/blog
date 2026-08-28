@@ -13,15 +13,7 @@ import type {
   FaceLandmarkerWorkerStage,
 } from '../typings/face-lab'
 
-type MediaPipeWorkerScope = DedicatedWorkerGlobalScope & {
-  import: (url: string) => Promise<unknown>
-}
-
-const workerScope = self as unknown as MediaPipeWorkerScope
-// MediaPipe 1.0.1 calls `self.import()` when a module worker cannot use
-// `importScripts()`. Vite exposes a truthy non-function at that property in dev,
-// so provide the dynamic importer MediaPipe expects.
-workerScope.import = (url) => import(/* @vite-ignore */ url)
+const workerScope = self as DedicatedWorkerGlobalScope
 let landmarker: FaceLandmarker | undefined
 let previousLandmarks: Float32Array | undefined
 
@@ -36,7 +28,9 @@ const createLandmarker = async (
   setStage: (stage: FaceLandmarkerWorkerStage) => void,
 ) => {
   setStage('resolve-wasm')
-  const vision = await FilesetResolver.forVisionTasks(wasmBaseUrl, true)
+  // Vite emits this as a classic worker. Use MediaPipe's classic WASM loader
+  // so `importScripts()` never has to parse the ESM loader's `import.meta`.
+  const vision = await FilesetResolver.forVisionTasks(wasmBaseUrl)
   vision.wasmLoaderPath = `${vision.wasmLoaderPath}?v=1.0.1`
 
   setStage('load-model')
