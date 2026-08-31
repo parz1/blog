@@ -40,6 +40,9 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    worker: {
+      format: 'es',
+    },
     optimizeDeps: {
       include: [
         '@deck.gl/layers',
