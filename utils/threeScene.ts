@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import WebGL from 'three/addons/capabilities/WebGL.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
-type ThreeSceneRuntimeOptions = {
+export type ThreeSceneRuntimeOptions = {
   container: HTMLElement
   fov?: number
   near?: number
@@ -13,27 +13,25 @@ type ThreeSceneRuntimeOptions = {
 }
 
 type FrameHandler = (delta: number, elapsed: number) => void
+type RenderHandler = (delta: number, elapsed: number) => void
 type ResizeHandler = (size: {
   width: number
   height: number
   pixelRatio: number
 }) => void
 
-const disposeSceneResources = (scene: THREE.Scene) => {
+export const disposeThreeObjectResources = (object: THREE.Object3D) => {
   const geometries = new Set<THREE.BufferGeometry>()
   const materials = new Set<THREE.Material>()
   const textures = new Set<THREE.Texture>()
 
-  scene.traverse((object) => {
-    if (
-      'geometry' in object &&
-      object.geometry instanceof THREE.BufferGeometry
-    ) {
-      geometries.add(object.geometry)
+  object.traverse((child) => {
+    if ('geometry' in child && child.geometry instanceof THREE.BufferGeometry) {
+      geometries.add(child.geometry)
     }
 
-    if (!('material' in object)) return
-    const objectMaterial = object.material
+    if (!('material' in child)) return
+    const objectMaterial = child.material
     const objectMaterials = Array.isArray(objectMaterial)
       ? objectMaterial
       : [objectMaterial]
@@ -48,9 +46,13 @@ const disposeSceneResources = (scene: THREE.Scene) => {
     }
   })
 
-  if (scene.background instanceof THREE.Texture) textures.add(scene.background)
-  if (scene.environment instanceof THREE.Texture) {
-    textures.add(scene.environment)
+  if (object instanceof THREE.Scene) {
+    if (object.background instanceof THREE.Texture) {
+      textures.add(object.background)
+    }
+    if (object.environment instanceof THREE.Texture) {
+      textures.add(object.environment)
+    }
   }
 
   for (const geometry of geometries) geometry.dispose()
@@ -78,6 +80,7 @@ export const createThreeSceneRuntime = (options: ThreeSceneRuntimeOptions) => {
   const controls = new OrbitControls(camera, renderer.domElement)
   const timer = new THREE.Timer()
   let frameHandler: FrameHandler | undefined
+  let renderHandler: RenderHandler | undefined
   let resizeHandler: ResizeHandler | undefined
   let lastSize = { width: 1, height: 1, pixelRatio: 1 }
   let disposed = false
@@ -117,8 +120,10 @@ export const createThreeSceneRuntime = (options: ThreeSceneRuntimeOptions) => {
     timer.update(timestamp)
     const delta = Math.min(timer.getDelta(), 0.1)
     controls.update(delta)
-    frameHandler?.(delta, timer.getElapsed())
-    renderer.render(scene, camera)
+    const elapsed = timer.getElapsed()
+    frameHandler?.(delta, elapsed)
+    if (renderHandler) renderHandler(delta, elapsed)
+    else renderer.render(scene, camera)
   })
 
   const dispose = () => {
@@ -128,7 +133,7 @@ export const createThreeSceneRuntime = (options: ThreeSceneRuntimeOptions) => {
     renderer.setAnimationLoop(null)
     controls.dispose()
     timer.dispose()
-    disposeSceneResources(scene)
+    disposeThreeObjectResources(scene)
     renderer.dispose()
     renderer.forceContextLoss()
     renderer.domElement.remove()
@@ -141,6 +146,9 @@ export const createThreeSceneRuntime = (options: ThreeSceneRuntimeOptions) => {
     controls,
     setFrameHandler(handler?: FrameHandler) {
       frameHandler = handler
+    },
+    setRenderHandler(handler?: RenderHandler) {
+      renderHandler = handler
     },
     setResizeHandler(handler?: ResizeHandler) {
       resizeHandler = handler
