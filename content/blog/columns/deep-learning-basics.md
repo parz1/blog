@@ -14,7 +14,7 @@ scope:
   - 计算图
   - 反向传播
   - 自动微分
-updated: '2026-08-21'
+updated: '2026-08-29'
 lang: cn
 tags:
   - deep-learning
@@ -31,13 +31,14 @@ sections:
         articleSlug: from-logistic-regression-to-neuron
         role: core
       - id: activation-functions
-        workingTitle: 激活函数
-        summary: 比较 Sigmoid、Tanh、ReLU 与 GELU 的形状、梯度和使用场景。
-        state: planned
+        workingTitle: 激活函数：神经网络为什么需要非线性
+        summary: 从 XOR 与线性变换的边界出发，比较 Sigmoid、Tanh、ReLU 与 GELU 的输出、梯度和使用位置。
+        state: published
+        articleSlug: activation-functions
         role: core
       - id: why-deep
         workingTitle: 为什么需要深度
-        summary: 从 XOR 出发，理解非线性与表示能力之间的关系。
+        summary: 从宽度、深度与层级表示出发，理解多层组合怎样逐步形成复杂函数。
         state: planned
         role: core
   - id: network-mechanics
