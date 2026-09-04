@@ -268,6 +268,187 @@
       "description": "当前二维纸偶继续消费 FaceState；新的空间路线从相同 TrackingFrame 构建 PerformerState3D，下一阶段再进行 3D-to-2D 投影。"
     }
   },
+  "demoHub": {
+    "eyebrow": "实验索引",
+    "title": "Demos",
+    "description": "关于感知、渲染、计算与网页行为的交互实验。它们按照问题领域整理成实验室栏目，而不再是一条冗长的测试列表。",
+    "featured": "精选实验",
+    "experiments": "项实验",
+    "categoryNav": "Demo 分类",
+    "carousel": {
+      "label": "精选 Demo 轮播",
+      "previous": "上一个 Demo",
+      "next": "下一个 Demo",
+      "slides": {
+        "cameraLab": {
+          "meta": "摄影 · 交互光学",
+          "alt": "Camera Lab 2.0 的真实室内场景和相机取景预览"
+        },
+        "performer": {
+          "meta": "视觉 · 三维表演",
+          "alt": "三维表演实验室的运行界面"
+        },
+        "threeRuntime": {
+          "meta": "Vue · Three.js",
+          "alt": "Vue Three 运行时的三维场景示例"
+        },
+        "maplibre": {
+          "meta": "地图 · WebGL",
+          "alt": "MapLibre 航线可视化的运行界面"
+        }
+      }
+    },
+    "stats": {
+      "experiments": "实验",
+      "categories": "栏目"
+    },
+    "status": {
+      "featured": "精选",
+      "stable": "稳定",
+      "experimental": "实验中"
+    },
+    "categories": {
+      "learning": {
+        "title": "学习仪器",
+        "description": "亲手改变概念参数，并立刻看到光学、数学曲面等知识产生的结果。"
+      },
+      "vision": {
+        "title": "视觉与表演",
+        "description": "在本地把人脸、视线、姿态和手部观测整理成可复用控制信号。"
+      },
+      "spatial": {
+        "title": "空间计算",
+        "description": "三维场景、地理投影，以及支撑这些实验的渲染运行时。"
+      },
+      "interaction": {
+        "title": "网页交互",
+        "description": "关于滚动、滑动、布局和浏览器原生组件行为的小型研究。"
+      }
+    },
+    "items": {
+      "cameraLab": {
+        "title": "摄像机实验室",
+        "description": "在真实感室内场景中拖动机位，用虚线画幅与成片预览理解焦段、光圈、快门和 ISO。"
+      },
+      "math": {
+        "title": "数学图形",
+        "description": "用于数学解释的可复用二维交互图形和 WebGL 曲面。"
+      },
+      "python": {
+        "title": "Python Runner",
+        "description": "在浏览器 Web Worker 中本地运行 Python、NumPy 与 Matplotlib。"
+      },
+      "flow": {
+        "title": "Flow",
+        "description": "用于图结构与连接交互实验的精简 Vue Flow 画布。"
+      },
+      "performer": {
+        "title": "三维表演实验室",
+        "description": "把共享的人脸与手部观测帧转换成可见的三维表演骨架。"
+      },
+      "puppet": {
+        "title": "二维纸偶实验室",
+        "description": "用 FaceState 和分层弹簧动力学驱动原创纸偶角色。"
+      },
+      "faceState": {
+        "title": "人脸状态实验室",
+        "description": "把头部、视线和表情信号统一到可复用的状态契约中。"
+      },
+      "gaze": {
+        "title": "视线实验室",
+        "description": "融合双眼虹膜，建立独立于头部偏航的置信度视线信号。"
+      },
+      "headYaw": {
+        "title": "头部偏航实验室",
+        "description": "校准并调理头部姿态，得到稳定、可检查的偏航信号。"
+      },
+      "landmarks": {
+        "title": "人脸关键点实验室",
+        "description": "直接在浏览器中检查本地摄像头与 MediaPipe 人脸关键点。"
+      },
+      "threeRuntime": {
+        "title": "Vue Three 运行时",
+        "description": "围绕 Three.js 场景封装的生命周期安全 Vue 组件与组合式 API。"
+      },
+      "geo": {
+        "title": "Three.js 地理",
+        "description": "使用 Three.js 渲染地理挤出与投影实验。"
+      },
+      "maptalks": {
+        "title": "Maptalks 图层",
+        "description": "结合自定义标记与多种渲染器的分层地图实验。"
+      },
+      "maplibre": {
+        "title": "MapLibre 航线",
+        "description": "使用 MapLibre 与 deck.gl 绘制城市之间的航线路径。"
+      },
+      "scrolls": {
+        "title": "滚动",
+        "description": "连续滚动与方向滚动行为的小型沙盒。"
+      },
+      "swiper": {
+        "title": "Swiper",
+        "description": "带有 Vue 控制面板和插槽实验的 Swiper Element 封装。"
+      }
+    }
+  },
+  "cameraLab": {
+    "metaTitle": "摄像机实验室",
+    "back": "全部 Demos",
+    "eyebrow": "摄影 · 交互光学",
+    "title": "摄像机实验室",
+    "description": "在真实感室内场景中移动机位、观察虚线画幅，并用独立的最终成片预览理解焦段、光圈、快门与 ISO。",
+    "viewfinder": "实时取景器",
+    "finalFrame": "最终成片",
+    "lessonLabel": "选择课程",
+    "reset": "重置相机",
+    "keepSubjectSize": "移动相机，让主体保持相同大小",
+    "simulationNote": "这是教学模型，不是物理相机标定工具。",
+    "assetCredit": "场景资产与许可",
+    "modes": {
+      "explore": "探索场景",
+      "camera": "移动相机",
+      "exploreHint": "拖动旋转场景，滚轮缩放，右键平移。",
+      "cameraHint": "在地面上拖动蓝色相机，虚线画幅与成片会同步更新。"
+    },
+    "assets": {
+      "loading": "正在加载真实场景… {progress}%",
+      "error": "场景模型加载失败，已切换到基础摄影棚。"
+    },
+    "meter": { "balanced": "曝光平衡" },
+    "controls": {
+      "focal": "焦段",
+      "aperture": "光圈",
+      "shutter": "快门",
+      "iso": "ISO"
+    },
+    "lessons": {
+      "focal": {
+        "short": "焦段",
+        "title": "焦段改变取景角度",
+        "body": "从广角移动到长焦。锁定主体大小后，虚拟相机会向后移动，此时背景相对主体逐渐变大。",
+        "fact": "透视变化来自相机位置变化，并不是镜头本身把空间压扁了。"
+      },
+      "aperture": {
+        "short": "光圈",
+        "title": "光圈在景深与进光量间取舍",
+        "body": "减小 f 值会扩大入瞳，让画面更亮，同时使偏离对焦平面的物体更加柔化。",
+        "fact": "相同 f 值并不保证不同传感器尺寸和拍摄距离下拥有完全相同的景深。"
+      },
+      "shutter": {
+        "short": "快门",
+        "title": "快门记录一段时间",
+        "body": "放慢快门会增加进光量。旋转标记在曝光期间积累更多位置，因此留下更长的可见轨迹。",
+        "fact": "运动模糊还取决于主体速度、相机运动、焦段和最终观看尺寸。"
+      },
+      "iso": {
+        "short": "ISO",
+        "title": "ISO 放大已经捕获的信号",
+        "body": "提高 ISO 会放大捕获后的渲染信号，画面变亮，暗部的颗粒也会更加明显。",
+        "fact": "ISO 不会让更多光子到达传感器；曝光量由光圈和快门时间控制。"
+      }
+    }
+  },
   "menu": {
     "home": "首页",
     "demo": "演示",

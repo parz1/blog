@@ -268,6 +268,187 @@
       "description": "現在の紙人形は FaceState を使い続けます。空間ルートは同じ TrackingFrame から PerformerState3D を構築し、次の 3D-to-2D 投影実験へ進みます。"
     }
   },
+  "demoHub": {
+    "eyebrow": "実験インデックス",
+    "title": "Demos",
+    "description": "知覚、レンダリング、計算、Web の振る舞いを扱うインタラクティブな実験を、長いテスト一覧ではなく閲覧しやすい Lab として整理しました。",
+    "featured": "注目の実験",
+    "experiments": "件の実験",
+    "categoryNav": "デモのカテゴリー",
+    "carousel": {
+      "label": "注目デモのカルーセル",
+      "previous": "前のデモ",
+      "next": "次のデモ",
+      "slides": {
+        "cameraLab": {
+          "meta": "写真 · インタラクティブ光学",
+          "alt": "Camera Lab 2.0 のリアルな室内シーンと完成写真プレビュー"
+        },
+        "performer": {
+          "meta": "ビジョン · 3D パフォーマンス",
+          "alt": "3D パフォーマー・ラボの実行画面"
+        },
+        "threeRuntime": {
+          "meta": "Vue · Three.js",
+          "alt": "Vue Three Runtime で動く 3D シーン"
+        },
+        "maplibre": {
+          "meta": "地図 · WebGL",
+          "alt": "MapLibre Flight のルート可視化画面"
+        }
+      }
+    },
+    "stats": {
+      "experiments": "実験",
+      "categories": "カテゴリー"
+    },
+    "status": {
+      "featured": "注目",
+      "stable": "安定",
+      "experimental": "実験中"
+    },
+    "categories": {
+      "learning": {
+        "title": "学習ツール",
+        "description": "光学や数理曲面などの概念を操作し、その結果をすぐに確かめます。"
+      },
+      "vision": {
+        "title": "ビジョンと演技",
+        "description": "顔、視線、姿勢、手の観測を再利用可能な信号に変えるローカル中心の実験です。"
+      },
+      "spatial": {
+        "title": "空間コンピューティング",
+        "description": "3D シーン、地理投影、それらを支えるレンダリング runtime を扱います。"
+      },
+      "interaction": {
+        "title": "Web インタラクション",
+        "description": "スクロール、スワイプ、レイアウト、ブラウザネイティブの挙動を調べる小さな実験です。"
+      }
+    },
+    "items": {
+      "cameraLab": {
+        "title": "カメラ・ラボ",
+        "description": "リアルな室内でカメラを動かし、破線の画角と完成写真プレビューで焦点距離、絞り、シャッター、ISO を学びます。"
+      },
+      "math": {
+        "title": "数理図形",
+        "description": "数理説明に使える再利用可能な 2D インタラクションと WebGL 曲面です。"
+      },
+      "python": {
+        "title": "Python Runner",
+        "description": "ブラウザの Web Worker 内で Python、NumPy、Matplotlib をローカル実行します。"
+      },
+      "flow": {
+        "title": "Flow",
+        "description": "グラフと接続を試すためのコンパクトな Vue Flow サーフェスです。"
+      },
+      "performer": {
+        "title": "3D パフォーマー・ラボ",
+        "description": "共有された顔と手の観測フレームを、見える 3D 演技リグに変換します。"
+      },
+      "puppet": {
+        "title": "2D パペット・ラボ",
+        "description": "FaceState とレイヤー別スプリングでオリジナルの紙人形を動かします。"
+      },
+      "faceState": {
+        "title": "Face State Lab",
+        "description": "頭部、視線、表情の調整済み信号を一つの再利用可能な契約に統合します。"
+      },
+      "gaze": {
+        "title": "Gaze Lab",
+        "description": "両目の虹彩から頭部 yaw と独立した信頼度付き視線信号を作ります。"
+      },
+      "headYaw": {
+        "title": "Head Yaw Lab",
+        "description": "頭部姿勢を校正・調整し、安定して確認できる yaw 信号にします。"
+      },
+      "landmarks": {
+        "title": "Face Landmark Lab",
+        "description": "ローカルカメラと MediaPipe の顔ランドマークをブラウザで確認します。"
+      },
+      "threeRuntime": {
+        "title": "Vue Three Runtime",
+        "description": "Three.js シーンを安全に扱う Vue コンポーネントと composable レイヤーです。"
+      },
+      "geo": {
+        "title": "Three.js Geo",
+        "description": "Three.js で地理的な押し出しと投影を描画する実験です。"
+      },
+      "maptalks": {
+        "title": "Maptalks Layers",
+        "description": "カスタムマーカーと複数 renderer を組み合わせる地図レイヤー実験です。"
+      },
+      "maplibre": {
+        "title": "MapLibre Flight",
+        "description": "MapLibre と deck.gl で都市間ルートを可視化します。"
+      },
+      "scrolls": {
+        "title": "Scrolls",
+        "description": "連続スクロールと方向別スクロールの小さなサンドボックスです。"
+      },
+      "swiper": {
+        "title": "Swiper",
+        "description": "Vue の操作パネルと slot 実験を備えた Swiper Element ラッパーです。"
+      }
+    }
+  },
+  "cameraLab": {
+    "metaTitle": "カメラ・ラボ",
+    "back": "すべての Demos",
+    "eyebrow": "写真 · インタラクティブ光学",
+    "title": "カメラ・ラボ",
+    "description": "リアルな室内を移動し、破線の画角を確認しながら、独立した完成写真プレビューで焦点距離、絞り、シャッター、ISO を学びます。",
+    "viewfinder": "ライブビュー",
+    "finalFrame": "完成写真",
+    "lessonLabel": "レッスンを選択",
+    "reset": "カメラをリセット",
+    "keepSubjectSize": "カメラを動かして被写体の大きさを保つ",
+    "simulationNote": "物理カメラの校正ではなく、学習用モデルです。",
+    "assetCredit": "シーン素材とライセンス",
+    "modes": {
+      "explore": "シーンを探索",
+      "camera": "カメラを移動",
+      "exploreHint": "ドラッグで回転、ホイールでズーム、右ドラッグで平行移動します。",
+      "cameraHint": "青いカメラを床の上でドラッグすると、破線の画角と完成写真が同期して更新されます。"
+    },
+    "assets": {
+      "loading": "リアルなシーンを読み込み中… {progress}%",
+      "error": "シーンモデルを読み込めないため、基本スタジオを表示しています。"
+    },
+    "meter": { "balanced": "適正露出" },
+    "controls": {
+      "focal": "焦点距離",
+      "aperture": "絞り",
+      "shutter": "シャッター",
+      "iso": "ISO"
+    },
+    "lessons": {
+      "focal": {
+        "short": "焦点距離",
+        "title": "焦点距離は画角を変える",
+        "body": "広角から望遠へ動かします。被写体サイズを固定すると仮想カメラが後退し、背景が被写体に対して大きく見えます。",
+        "fact": "遠近感が変わるのはカメラ位置が変わるためで、レンズ自体が空間を圧縮するわけではありません。"
+      },
+      "aperture": {
+        "short": "絞り",
+        "title": "絞りは光量と深度を交換する",
+        "body": "小さい f 値は入射瞳を広げて画面を明るくし、ピント面から離れた対象をより柔らかくします。",
+        "fact": "同じ f 値でも、センサーサイズや撮影距離が違えば被写界深度は同一になりません。"
+      },
+      "shutter": {
+        "short": "シャッター",
+        "title": "シャッター速度は時間幅を記録する",
+        "body": "シャッターを遅くすると光量が増え、回転マーカーの位置が露光中に蓄積されて長い軌跡になります。",
+        "fact": "モーションブラーは時間だけでなく、被写体速度、手ブレ、焦点距離、表示サイズにも左右されます。"
+      },
+      "iso": {
+        "short": "ISO",
+        "title": "ISO は取得済みの信号を増幅する",
+        "body": "ISO を上げると撮影後の信号が明るくなり、特に暗部で粒状感も目立つようになります。",
+        "fact": "ISO はセンサーに届く光子を増やしません。露光量は絞りとシャッター時間で決まります。"
+      }
+    }
+  },
   "menu": {
     "home": "ホーム",
     "demo": "デモ",

@@ -268,6 +268,187 @@
       "description": "The current puppet keeps consuming FaceState. The spatial branch builds PerformerState3D from the same TrackingFrame, ready for a later 3D-to-2D projection lab."
     }
   },
+  "demoHub": {
+    "eyebrow": "Lab index",
+    "title": "Demos",
+    "description": "Interactive studies in perception, rendering, computation, and web behavior—organized as a browsable lab rather than one long test list.",
+    "featured": "Featured study",
+    "experiments": "experiments",
+    "categoryNav": "Demo categories",
+    "carousel": {
+      "label": "Featured demo carousel",
+      "previous": "Previous demo",
+      "next": "Next demo",
+      "slides": {
+        "cameraLab": {
+          "meta": "Photography · Interactive optics",
+          "alt": "Camera Lab 2.0 realistic interior scene and final-frame preview"
+        },
+        "performer": {
+          "meta": "Vision · 3D performance",
+          "alt": "The 3D Performer Lab interface in use"
+        },
+        "threeRuntime": {
+          "meta": "Vue · Three.js",
+          "alt": "A 3D scene running in the Vue Three Runtime"
+        },
+        "maplibre": {
+          "meta": "Maps · WebGL",
+          "alt": "The MapLibre Flight route visualization in use"
+        }
+      }
+    },
+    "stats": {
+      "experiments": "Experiments",
+      "categories": "Categories"
+    },
+    "status": {
+      "featured": "Featured",
+      "stable": "Stable",
+      "experimental": "Experimental"
+    },
+    "categories": {
+      "learning": {
+        "title": "Learning instruments",
+        "description": "Manipulate a concept and see the consequence immediately, from optics to mathematical surfaces."
+      },
+      "vision": {
+        "title": "Vision & performance",
+        "description": "Local-first experiments that turn face, gaze, pose, and hand observations into reusable signals."
+      },
+      "spatial": {
+        "title": "Spatial computing",
+        "description": "Three-dimensional scenes, geographic projections, and the rendering runtime beneath them."
+      },
+      "interaction": {
+        "title": "Web interactions",
+        "description": "Small studies in scrolling, swiping, layout, and browser-native component behavior."
+      }
+    },
+    "items": {
+      "cameraLab": {
+        "title": "Camera Lab",
+        "description": "Drag a camera through a realistic interior and use its dashed frustum and final-frame preview to learn focal length, aperture, shutter speed, and ISO."
+      },
+      "math": {
+        "title": "Math Figures",
+        "description": "Reusable interactive 2D figures and WebGL surfaces for mathematical explanations."
+      },
+      "python": {
+        "title": "Python Runner",
+        "description": "Run Python, NumPy, and Matplotlib locally inside a browser Web Worker."
+      },
+      "flow": {
+        "title": "Flow",
+        "description": "A compact Vue Flow surface for graph and connection experiments."
+      },
+      "performer": {
+        "title": "3D Performer Lab",
+        "description": "Turn one shared face-and-hand observation frame into a visible 3D performance rig."
+      },
+      "puppet": {
+        "title": "2D Puppet Lab",
+        "description": "Drive an original paper character with FaceState and layered spring dynamics."
+      },
+      "faceState": {
+        "title": "Face State Lab",
+        "description": "Unify conditioned head, gaze, and expression signals behind one reusable contract."
+      },
+      "gaze": {
+        "title": "Gaze Lab",
+        "description": "Fuse both irises into a confidence-aware gaze signal separate from head yaw."
+      },
+      "headYaw": {
+        "title": "Head Yaw Lab",
+        "description": "Calibrate and condition head pose into a stable, inspectable yaw signal."
+      },
+      "landmarks": {
+        "title": "Face Landmark Lab",
+        "description": "Inspect a local camera and MediaPipe face landmarks directly in the browser."
+      },
+      "threeRuntime": {
+        "title": "Vue Three Runtime",
+        "description": "A lifecycle-safe Vue component and composable layer around a Three.js scene."
+      },
+      "geo": {
+        "title": "Three.js Geo",
+        "description": "A geographic extrusion and projection experiment rendered with Three.js."
+      },
+      "maptalks": {
+        "title": "Maptalks Layers",
+        "description": "Layered map experiments with custom markers and mixed renderers."
+      },
+      "maplibre": {
+        "title": "MapLibre Flight",
+        "description": "A MapLibre and deck.gl route visualization between cities."
+      },
+      "scrolls": {
+        "title": "Scrolls",
+        "description": "A small sandbox for continuous and directional scrolling behavior."
+      },
+      "swiper": {
+        "title": "Swiper",
+        "description": "A Swiper Element wrapper with a Vue control panel and slot experiments."
+      }
+    }
+  },
+  "cameraLab": {
+    "metaTitle": "Camera Lab",
+    "back": "All demos",
+    "eyebrow": "Photography · Interactive optics",
+    "title": "Camera Lab",
+    "description": "Move through a realistic interior, inspect the dashed camera frustum, and use an independent final-frame preview to learn focal length, aperture, shutter speed, and ISO.",
+    "viewfinder": "Live viewfinder",
+    "finalFrame": "Final frame",
+    "lessonLabel": "Choose a lesson",
+    "reset": "Reset camera",
+    "keepSubjectSize": "Keep the subject the same size by moving the camera",
+    "simulationNote": "A teaching model, not a physical camera calibration.",
+    "assetCredit": "Scene assets and licenses",
+    "modes": {
+      "explore": "Explore scene",
+      "camera": "Move camera",
+      "exploreHint": "Drag to orbit, scroll to zoom, and right-drag to pan.",
+      "cameraHint": "Drag the blue camera across the floor; the dashed frame and final image update together."
+    },
+    "assets": {
+      "loading": "Loading the realistic scene… {progress}%",
+      "error": "The scene model could not load, so the basic studio is shown instead."
+    },
+    "meter": { "balanced": "Balanced" },
+    "controls": {
+      "focal": "Focal length",
+      "aperture": "Aperture",
+      "shutter": "Shutter",
+      "iso": "ISO"
+    },
+    "lessons": {
+      "focal": {
+        "short": "Focal",
+        "title": "Focal length changes the angle of view",
+        "body": "Move from wide angle to telephoto. When subject size is locked, the virtual camera moves back and the background grows relative to the subject.",
+        "fact": "Perspective changes because camera position changes—not because the lens compresses space by itself."
+      },
+      "aperture": {
+        "short": "Aperture",
+        "title": "Aperture trades depth for light",
+        "body": "A smaller f-number opens the entrance pupil, brightens the image, and makes objects away from the focus plane softer.",
+        "fact": "The same f-number does not guarantee identical depth of field across every sensor size and shooting distance."
+      },
+      "shutter": {
+        "short": "Shutter",
+        "title": "Shutter speed records a span of time",
+        "body": "Slow the shutter to admit more light. The rotating marker begins to leave a longer visible trail as its positions accumulate during the exposure.",
+        "fact": "Motion blur depends on subject speed, camera motion, focal length, and viewing size as well as shutter time."
+      },
+      "iso": {
+        "short": "ISO",
+        "title": "ISO amplifies the captured signal",
+        "body": "Raise ISO to brighten the rendered signal after capture. Grain becomes more visible, especially in darker parts of the frame.",
+        "fact": "ISO does not bring more photons to the sensor; aperture and shutter time control that exposure."
+      }
+    }
+  },
   "menu": {
     "home": "Home",
     "demo": "Demo",

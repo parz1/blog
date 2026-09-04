@@ -1,49 +1,53 @@
-# Parallax Persona UI Design QA
+# Design QA — Demo Hub and Camera Lab 2.0
 
-- Source visual truth: blog overview in dark theme
-- Implementation reference: 3D Performer Lab in dark theme
-- Comparison method: side-by-side captures from the same local browser session
-- Viewport: 1265 × 712 CSS px
-- Source pixels: 1265 × 712
-- Implementation pixels: 1265 × 712
-- Density normalization: both captures use the same browser, viewport, CSS size, and 1× screenshot output
-- State: dark theme, camera idle, desktop
+## Visual truth
 
-## Full-view comparison evidence
+- Demo Hub reference: `/private/tmp/demo-hub-carousel-detail.png`
+- Camera Lab reference: `/private/tmp/camera-lab-covers/focal-wide.png`
+- Demo Hub implementation: `/private/tmp/demo-hub-2-qa-aligned.png`
+- Camera Lab implementation: `/private/tmp/camera-lab-2-qa-aligned.png`
+- Side-by-side comparisons: `/private/tmp/demo-hub-comparison.png` and `/private/tmp/camera-lab-comparison.png`
 
-The blog overview and the redesigned 3D Performer Lab were compared in one side-by-side image. The Lab now follows the blog's serif display typography, neutral black/gray palette, blue interaction accent, restrained rounded borders, header spacing, and low-elevation surfaces. The wider workbench is intentional because the camera and 3D renderer need more horizontal room than editorial content.
+All desktop comparison captures use the same 1280 × 720 browser viewport and resolve to 1265 × 712 screenshots at 1× density. The implementation captures were scrolled to the same content state as their references.
 
-## Focused region comparison evidence
+## Full-view comparison
 
-A separate crop was not needed: the shared header, page title, descriptive copy, primary button, status bar, border treatment, and first workbench row are all legible at the full-view scale. Camera and WebGL content intentionally remain on a dark rendering surface in both site themes.
+### Demo Hub
 
-## Findings
+- Preserved the existing dark editorial palette, serif display typography, max-width content rhythm, carousel geometry, tag treatment, and category card grid.
+- Corrected the carousel semantics: the four slides now represent Camera Lab, 3D Performer Lab, Vue Three Runtime, and MapLibre Flight instead of four parameter states from one demo.
+- Replaced the Camera Lab procedural cover with an actual Camera Lab 2.0 runtime capture and used actual runtime captures for all other slides.
+- The carousel remains aligned with the category section and its navigation does not overlap the descriptive panel.
 
-No actionable P0, P1, or P2 differences remain.
+### Camera Lab
 
-- Typography: Source Serif 4 display headings and Inter body text match the rest of the blog; Lab titles no longer use the oversized exhibition scale.
-- Spacing and layout: top spacing, title-to-description rhythm, and restrained container radii match the blog. Six Lab routes have no horizontal overflow at desktop or 390 px mobile width.
-- Colors and tokens: orange presentation accents were removed. Site UI tokens drive page, panel, text, and border colors; blue is reserved for actions and live data.
-- Image and asset quality: no new image assets were introduced. Existing video, Canvas, SVG puppet, and Three.js output remain native to their rendering layers.
-- Copy and content: decorative eyebrow labels, pipeline slogans, numbered module labels, redundant architecture blocks, and repeated footer explanations were removed. Operational labels and privacy/accuracy caveats remain.
+- The intentional 2.0 redesign keeps the original dark lab visual language and compact control density while replacing the abstract scene with a realistic interior.
+- The scene camera is visible in the overview, and its dashed frustum remains legible against both the light rug and dark walls.
+- The final-frame preview has a stable 3:2 crop, readable exposure metadata, and separate camera-position readouts.
+- Explore and camera-move controls are visually distinct and remain available before the scene canvas.
+- No visible clipping, accidental overlap, or broken padding was found at the desktop target.
 
-## Comparison history
+## Focused responsive check
 
-1. Initial P2 findings: orange eyebrow accents competed with the content; titles were substantially larger than the blog; console-style numbering and pipeline copy made the workbench feel generated and over-explained; light-theme rendering inherited dark-only text colors.
-2. Fixes: introduced a shared Lab theme based on existing blog tokens, reduced title scale, removed decorative and repeated copy, simplified panels and status bars, replaced orange with blue, and added explicit contrast for dark camera/rendering surfaces.
-3. Post-fix evidence: the combined comparison shows consistent typography, palette, spacing, border treatment, and hierarchy. Light theme, dark theme, all six routes, and 390 px responsive layouts were checked after the fixes.
+- Demo Hub mobile capture: `/private/tmp/demo-hub-2-mobile.png` at 390 × 844.
+- Camera Lab mobile capture: `/private/tmp/camera-lab-2-mobile.png` at 390 × 844.
+- Camera Lab reports `scrollWidth === clientWidth` (375 px after browser chrome), so there is no horizontal page overflow.
+- The scene remains usable as the first mobile interaction surface; the final-frame panel and parameter controls continue below it in document order.
 
-## Interaction and runtime checks
+## Interaction and runtime verification
 
-- Navigated all six Face/Performer Lab routes.
-- Verified debug/clean controls remain present on Puppet Lab.
-- Verified the Three.js canvas mounts on Performer Lab.
-- Verified theme switching in dark and light modes.
-- Checked browser console warnings and errors: none.
-- Camera permission was not requested during visual QA; tracking behavior and camera processing code were not changed by this pass.
+- Carousel next/dot controls switch between different demo titles, routes, metadata, tags, and covers.
+- Camera-move mode changed the scene-camera readout from X/Z `5.8 / 7.2 m` to `5.7 / 4.6 m` during a drag.
+- Explore-mode orbiting left the photographed camera position unchanged.
+- Setting ISO to 6400 updated the final-frame metadata to `50 mm · f/4 · 1/125 · ISO 6400`.
+- The GLB sofa and HDR environment completed loading; browser error logs were empty on desktop and mobile.
+- Production build, Oxlint, and Oxfmt all passed. Build output contains only existing Nuxt Studio and bundle-size warnings.
 
-## Follow-up polish
+## QA history
 
-- P3: Localized explanatory copy could be shortened in a separate editorial pass without changing the UI structure.
+1. First R2 upload used JPEG screenshot bytes with a PNG content type, producing broken carousel images.
+2. Converted every cover to real PNG data, re-uploaded them, and added an asset revision query.
+3. Rechecked the carousel in the browser; all four covers render correctly.
+4. Replaced the first clipped Camera Lab crop with a complete desktop runtime screenshot and rechecked its carousel composition.
 
 final result: passed

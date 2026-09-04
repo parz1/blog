@@ -21,4 +21,5 @@ imports/
 # Live 视频走 R2 CDN，本地 mp4 不进仓库
 public/gallery/*-live.mp4
 .vercel
+.playwright-cli/
 .env*
