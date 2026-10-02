@@ -389,6 +389,10 @@
       "swiper": {
         "title": "Swiper",
         "description": "A Swiper Element wrapper with a Vue control panel and slot experiments."
+      },
+      "live2d": {
+        "title": "Live2D interactive stage",
+        "description": "Follow the pointer, or turn on your camera to animate the character with your head, eyes and mouth."
       }
     }
   },
@@ -415,7 +419,9 @@
       "loading": "Loading the realistic scene… {progress}%",
       "error": "The scene model could not load, so the basic studio is shown instead."
     },
-    "meter": { "balanced": "Balanced" },
+    "meter": {
+      "balanced": "Balanced"
+    },
     "controls": {
       "focal": "Focal length",
       "aperture": "Aperture",
@@ -497,13 +503,14 @@
       "focus": {
         "heading": "Currently working on",
         "items": {
-          "memory": {
-            "title": "Minerei / Kotolog",
-            "description": "An AI-native personal system that brings together tasks, logs, and long-term memory."
+          "personalDevelopment": {
+            "title": "Personal projects",
+            "description": "Starting with what I want to use every day, I build and refine tools that support everyday life and learning.",
+            "action": "Explore products"
           },
           "research": {
             "title": "Research",
-            "description": "Human-centered AI, personal systems, and interaction-aware data that can become useful product workflows."
+            "description": "I use multimodal data to estimate and analyze human states, exploring how to detect and understand changes over time."
           },
           "engineering": {
             "title": "Engineering",
@@ -513,7 +520,6 @@
       },
       "tech": {
         "heading": "Currently using",
-        "description": "Not a complete stack list, but the tools I keep reaching for while connecting research, product work, and personal systems.",
         "stackLabel": "Tech stack",
         "lanes": {
           "research": "Research",
@@ -1030,5 +1036,55 @@
     "contentYouAreLookingForDoesNotExist": "The content you are looking for does not exist.",
     "readMore": "Read More",
     "availableLanguages": "Available Languages"
+  },
+  "live2dLab": {
+    "title": "Live2D interactive stage",
+    "description": "Follow the pointer, or turn on your camera to animate the character with your head, eyes and mouth.",
+    "stage": "Live2D character stage",
+    "controls": "Character controls",
+    "mode": {
+      "label": "Interaction",
+      "pointer": "Pointer",
+      "camera": "Camera",
+      "pointerHint": "Move your pointer across the stage. Tap the character to try expressions and motions.",
+      "cameraHint": "Face the camera, calibrate, then try turning your head, blinking and opening your mouth."
+    },
+    "actions": {
+      "startCamera": "Turn on camera",
+      "stopCamera": "Stop camera",
+      "calibrate": "Calibrate neutral pose",
+      "calibrated": "Recalibrate",
+      "playMotion": "Play motion",
+      "resetExpression": "Reset expression",
+      "retry": "Reload"
+    },
+    "status": {
+      "loading": "Loading character",
+      "ready": "Character ready",
+      "error": "Character failed to load"
+    },
+    "expressions": {
+      "title": "Expressions and motions",
+      "description": "Try the sample character’s expressions.",
+      "item": "Expression {number}"
+    },
+    "camera": {
+      "title": "Camera preview",
+      "preview": "Mirrored local camera preview",
+      "idle": "Camera is off",
+      "loading": "Starting",
+      "searching": "Looking for a face",
+      "tracked": "Face detected",
+      "calibrated": "Calibrated",
+      "privacy": "Video is processed in your browser and is never uploaded.",
+      "error": "Camera tracking is unavailable."
+    },
+    "errors": {
+      "load": "The character could not load. Check your connection or WebGL support and try again.",
+      "motion": "The motion could not load. Please try again.",
+      "expression": "The expression could not load. Please try again."
+    },
+    "fps": "{value} FPS",
+    "terms": "Sample model terms"
   }
 }

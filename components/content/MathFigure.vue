@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { MathCurve2DPreset } from '~/utils/mathFigures'
+import type { MathCurve2DPreset, MathCurveTone } from '~/utils/mathFigures'
+import { resolveLocalizedText } from '~/utils/mathFigures'
 
 const props = withDefaults(
   defineProps<{
@@ -20,8 +21,26 @@ const plotBottom = 270
 const plotWidth = viewWidth - plotLeft - plotRight
 const plotHeight = plotBottom - plotTop
 
+const { locale } = useI18n()
+
 const definition = computed<MathCurve2DPreset | undefined>(() =>
   getMathFigurePreset(props.preset),
+)
+
+const text = (value: Parameters<typeof resolveLocalizedText>[0]) =>
+  resolveLocalizedText(value, locale.value)
+
+const title = computed(() => text(definition.value?.title))
+const description = computed(() => text(definition.value?.description))
+const caption = computed(() => text(definition.value?.caption))
+const xAxisLabel = computed(() => text(definition.value?.xLabel))
+const yAxisLabel = computed(() => text(definition.value?.yLabel))
+const legendLabel = computed(() =>
+  locale.value.startsWith('en')
+    ? 'Curve legend'
+    : locale.value.startsWith('ja')
+      ? '凡例'
+      : '曲线图例',
 )
 
 const selectedX = ref(0)
@@ -50,26 +69,87 @@ const scaleY = (value: number) => {
   return plotBottom - ((value - minimum) / (maximum - minimum)) * plotHeight
 }
 
-const curvePath = computed(() => {
+const curvePaths = computed(() => {
   const current = definition.value
-  if (!current) return ''
+  if (!current) return []
+
+  const series = current.series ?? [
+    {
+      label: current.title,
+      evaluate: current.evaluate,
+      tone: 'primary' as const,
+    },
+  ]
 
   const [minimum, maximum] = current.domain
-  return Array.from({ length: current.samples + 1 }, (_, index) => {
-    const x = minimum + ((maximum - minimum) * index) / current.samples
-    const command = index === 0 ? 'M' : 'L'
-    return `${command}${scaleX(x).toFixed(2)},${scaleY(current.evaluate(x)).toFixed(2)}`
-  }).join(' ')
+
+  return series.map((item) => ({
+    ...item,
+    label: text(item.label),
+    path: Array.from({ length: current.samples + 1 }, (_, index) => {
+      const x = minimum + ((maximum - minimum) * index) / current.samples
+      const command = index === 0 ? 'M' : 'L'
+      return `${command}${scaleX(x).toFixed(2)},${scaleY(item.evaluate(x)).toFixed(2)}`
+    }).join(' '),
+  }))
 })
 
 const selectedY = computed(
   () => definition.value?.evaluate(selectedX.value) ?? 0,
 )
 
+const inputSymbol = computed(() => definition.value?.inputSymbol ?? 'z')
+const inputLabel = computed(() => {
+  const resolved = text(definition.value?.inputLabel)
+  if (resolved) return resolved
+  return locale.value.startsWith('en')
+    ? 'input z'
+    : locale.value.startsWith('ja')
+      ? '入力 z'
+      : '输入 z'
+})
+const isMultiSeries = computed(() => curvePaths.value.length > 1)
+
 const selectedPoint = computed(() => ({
   x: scaleX(selectedX.value),
   y: scaleY(selectedY.value),
 }))
+
+const selectedSeries = computed(() =>
+  curvePaths.value.map((curve) => ({
+    label: curve.label,
+    tone: curve.tone,
+    value: curve.evaluate(selectedX.value),
+    x: scaleX(selectedX.value),
+    y: scaleY(curve.evaluate(selectedX.value)),
+  })),
+)
+
+const toneStrokeClass = (tone: MathCurveTone | undefined) => {
+  switch (tone) {
+    case 'amber':
+      return 'stroke-amber-500 dark:stroke-amber-400'
+    case 'emerald':
+      return 'stroke-emerald-600 dark:stroke-emerald-400'
+    case 'violet':
+      return 'stroke-violet-500 dark:stroke-violet-400'
+    default:
+      return 'stroke-primary-600 dark:stroke-primary-400'
+  }
+}
+
+const toneFillClass = (tone: MathCurveTone | undefined) => {
+  switch (tone) {
+    case 'amber':
+      return 'bg-amber-500 dark:bg-amber-400'
+    case 'emerald':
+      return 'bg-emerald-600 dark:bg-emerald-400'
+    case 'violet':
+      return 'bg-violet-500 dark:bg-violet-400'
+    default:
+      return 'bg-primary-600 dark:bg-primary-400'
+  }
+}
 
 const formatInput = (value: number) => {
   const normalized = Math.abs(value) < 0.05 ? 0 : value
@@ -133,12 +213,12 @@ const stopDragging = (event: PointerEvent) => {
         <span
           class="shrink-0 text-sm font-semibold leading-5 text-gray-950 dark:text-gray-50"
         >
-          {{ definition.title }}
+          {{ title }}
         </span>
         <span
           class="hidden min-w-0 truncate text-xs leading-5 text-gray-500 lg:inline dark:text-gray-500"
         >
-          {{ definition.description }}
+          {{ description }}
         </span>
       </div>
 
@@ -153,12 +233,14 @@ const stopDragging = (event: PointerEvent) => {
           class="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 font-mono text-[11px] leading-4 tabular-nums text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
           aria-live="polite"
         >
-          <span class="text-gray-500">z</span>
+          <span class="text-gray-500">{{ inputSymbol }}</span>
           {{ formatInput(selectedX) }}
-          <span class="mx-1 text-gray-300 dark:text-gray-700">→</span>
-          <span class="text-primary-700 dark:text-primary-300">
-            {{ formatOutput(selectedY) }}
-          </span>
+          <template v-if="!isMultiSeries">
+            <span class="mx-1 text-gray-300 dark:text-gray-700">→</span>
+            <span class="text-primary-700 dark:text-primary-300">
+              {{ formatOutput(selectedY) }}
+            </span>
+          </template>
         </output>
       </div>
     </header>
@@ -170,7 +252,7 @@ const stopDragging = (event: PointerEvent) => {
         :class="interactive ? 'cursor-crosshair' : ''"
         :viewBox="`0 0 ${viewWidth} ${viewHeight}`"
         role="img"
-        :aria-label="`${definition.title}：${definition.caption}`"
+        :aria-label="`${title}: ${caption}`"
         @pointerdown="startDragging"
         @pointermove="updateFromPointer"
         @pointerup="stopDragging"
@@ -253,22 +335,24 @@ const stopDragging = (event: PointerEvent) => {
             text-anchor="middle"
             class="fill-gray-600 text-[13px] font-medium dark:fill-gray-400"
           >
-            {{ definition.xLabel }}
+            {{ xAxisLabel }}
           </text>
           <text
             :transform="`translate(17 ${plotTop + plotHeight / 2}) rotate(-90)`"
             text-anchor="middle"
             class="fill-gray-600 text-[13px] font-medium dark:fill-gray-400"
           >
-            {{ definition.yLabel }}
+            {{ yAxisLabel }}
           </text>
         </g>
 
         <g :clip-path="`url(#${clipId})`">
           <path
-            :d="curvePath"
+            v-for="curve in curvePaths"
+            :key="curve.label"
+            :d="curve.path"
             fill="none"
-            class="stroke-primary-600 dark:stroke-primary-400"
+            :class="toneStrokeClass(curve.tone)"
             stroke-width="3"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -279,13 +363,14 @@ const stopDragging = (event: PointerEvent) => {
             <line
               :x1="selectedPoint.x"
               :x2="selectedPoint.x"
-              :y1="selectedPoint.y"
+              :y1="isMultiSeries ? plotTop : selectedPoint.y"
               :y2="plotBottom"
               class="stroke-primary-300 dark:stroke-primary-800"
               stroke-dasharray="5 5"
               vector-effect="non-scaling-stroke"
             />
             <line
+              v-if="!isMultiSeries"
               :x1="plotLeft"
               :x2="selectedPoint.x"
               :y1="selectedPoint.y"
@@ -295,16 +380,41 @@ const stopDragging = (event: PointerEvent) => {
               vector-effect="non-scaling-stroke"
             />
             <circle
-              :cx="selectedPoint.x"
-              :cy="selectedPoint.y"
-              r="6"
-              class="fill-white stroke-primary-600 dark:fill-gray-950 dark:stroke-primary-400"
+              v-for="point in selectedSeries"
+              :key="`point-${point.label}`"
+              :cx="point.x"
+              :cy="point.y"
+              :r="isMultiSeries ? 5 : 6"
+              class="fill-white dark:fill-gray-950"
+              :class="toneStrokeClass(point.tone)"
               stroke-width="3"
               vector-effect="non-scaling-stroke"
             />
           </g>
         </g>
       </svg>
+    </div>
+
+    <div
+      v-if="curvePaths.length > 1"
+      class="flex flex-wrap gap-x-4 gap-y-1 px-3 pb-2 text-xs text-gray-600 dark:text-gray-400 sm:px-4"
+      :aria-label="legendLabel"
+    >
+      <span
+        v-for="item in selectedSeries"
+        :key="`legend-${item.label}`"
+        class="inline-flex items-center gap-1.5"
+      >
+        <span
+          class="h-2 w-2 rounded-full"
+          :class="toneFillClass(item.tone)"
+          aria-hidden="true"
+        />
+        {{ item.label }}
+        <span class="font-mono tabular-nums text-gray-500 dark:text-gray-500">
+          {{ formatOutput(item.value) }}
+        </span>
+      </span>
     </div>
 
     <div
@@ -316,7 +426,7 @@ const stopDragging = (event: PointerEvent) => {
           :for="`${clipId}-input`"
           class="shrink-0 text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          输入 z
+          {{ inputLabel }}
         </label>
         <input
           :id="`${clipId}-input`"
@@ -326,7 +436,11 @@ const stopDragging = (event: PointerEvent) => {
           :min="definition.domain[0]"
           :max="definition.domain[1]"
           :step="definition.step"
-          :aria-valuetext="`z 等于 ${formatInput(selectedX)}，输出等于 ${formatOutput(selectedY)}`"
+          :aria-valuetext="
+            isMultiSeries
+              ? `${inputSymbol} 等于 ${formatInput(selectedX)}`
+              : `${inputSymbol} 等于 ${formatInput(selectedX)}，输出等于 ${formatOutput(selectedY)}`
+          "
         />
         <output
           :for="`${clipId}-input`"
@@ -340,7 +454,7 @@ const stopDragging = (event: PointerEvent) => {
     <figcaption
       class="border-t border-gray-200 bg-gray-50/70 px-3 py-2.5 text-xs leading-5 text-gray-600 dark:border-gray-800 dark:bg-gray-900/40 dark:text-gray-400 sm:px-4"
     >
-      {{ definition.caption }}
+      {{ caption }}
     </figcaption>
   </figure>
 

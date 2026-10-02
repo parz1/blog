@@ -31,9 +31,13 @@ const focusItems = [
     descriptionKey: 'home.profile.focus.items.engineering.description',
   },
   {
-    icon: 'i-lucide-database',
-    titleKey: 'home.profile.focus.items.memory.title',
-    descriptionKey: 'home.profile.focus.items.memory.description',
+    icon: 'i-lucide-sprout',
+    titleKey: 'home.profile.focus.items.personalDevelopment.title',
+    descriptionKey: 'home.profile.focus.items.personalDevelopment.description',
+    link: {
+      to: '/projects',
+      labelKey: 'home.profile.focus.items.personalDevelopment.action',
+    },
   },
 ]
 
@@ -361,6 +365,18 @@ const techItems: TechCloudItem[] = [
           <p class="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
             {{ t(item.descriptionKey) }}
           </p>
+          <UButton
+            v-if="item.link"
+            :to="localePath(item.link.to)"
+            color="neutral"
+            variant="link"
+            size="xs"
+            icon="i-lucide-arrow-right"
+            trailing
+            class="mt-2 px-0"
+          >
+            {{ t(item.link.labelKey) }}
+          </UButton>
         </div>
       </div>
     </div>
@@ -371,9 +387,6 @@ const techItems: TechCloudItem[] = [
       >
         {{ t('home.profile.tech.heading') }}
       </h2>
-      <p class="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
-        {{ t('home.profile.tech.description') }}
-      </p>
 
       <LazyTechPhysicsCloud :items="techItems" />
     </div>

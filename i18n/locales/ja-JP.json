@@ -389,6 +389,10 @@
       "swiper": {
         "title": "Swiper",
         "description": "Vue の操作パネルと slot 実験を備えた Swiper Element ラッパーです。"
+      },
+      "live2d": {
+        "title": "Live2D インタラクティブステージ",
+        "description": "マウスでキャラクターを動かしたり、カメラで顔・目・口の動きを反映できます。"
       }
     }
   },
@@ -415,7 +419,9 @@
       "loading": "リアルなシーンを読み込み中… {progress}%",
       "error": "シーンモデルを読み込めないため、基本スタジオを表示しています。"
     },
-    "meter": { "balanced": "適正露出" },
+    "meter": {
+      "balanced": "適正露出"
+    },
     "controls": {
       "focal": "焦点距離",
       "aperture": "絞り",
@@ -497,23 +503,23 @@
       "focus": {
         "heading": "いま取り組んでいること",
         "items": {
-          "memory": {
-            "title": "Minerei / Kotolog",
-            "description": "タスク、記録、長期記憶を結びつける AI-native な personal system。"
+          "personalDevelopment": {
+            "title": "個人開発",
+            "description": "自分が日々使いたいものを起点に、暮らしや学びを支える道具を作り、育てています。",
+            "action": "プロダクトを見る"
           },
           "research": {
             "title": "研究",
-            "description": "人間中心の AI、personal system、プロダクト workflow につながるインタラクションデータ。"
+            "description": "マルチモーダルデータを用いて人の状態を推定・分析し、その変化を捉える研究に取り組んでいます。"
           },
           "engineering": {
             "title": "エンジニアリング",
-            "description": "フルスタックとローカル AI pipeline で、アイデアを素早く実用できる形にします。"
+            "description": "Web・デスクトップ・モバイルまで、プラットフォームを問わず、アイデアを動くプロダクトにしています。"
           }
         }
       },
       "tech": {
         "heading": "いま使っているもの",
-        "description": "完全なスタック一覧ではなく、研究、プロダクト、個人システムをつなぐときによく使う道具です。",
         "stackLabel": "技術スタック",
         "lanes": {
           "research": "研究",
@@ -1030,5 +1036,55 @@
     "contentYouAreLookingForDoesNotExist": "お探しのコンテンツは存在しません。",
     "readMore": "続きを読む",
     "availableLanguages": "利用可能な言語"
+  },
+  "live2dLab": {
+    "title": "Live2D インタラクティブステージ",
+    "description": "マウスでキャラクターを動かしたり、カメラで顔・目・口の動きを反映できます。",
+    "stage": "Live2D キャラクターステージ",
+    "controls": "キャラクター操作",
+    "mode": {
+      "label": "操作方法",
+      "pointer": "マウス",
+      "camera": "カメラ",
+      "pointerHint": "マウスで視線を動かし、キャラクターをタップして表情やモーションを試せます。",
+      "cameraHint": "カメラを正面に向けて調整し、首を振る・瞬き・口の動きを試してください。"
+    },
+    "actions": {
+      "startCamera": "カメラを開始",
+      "stopCamera": "カメラを停止",
+      "calibrate": "ニュートラル姿勢を調整",
+      "calibrated": "再調整",
+      "playMotion": "モーションを再生",
+      "resetExpression": "表情をリセット",
+      "retry": "再読み込み"
+    },
+    "status": {
+      "loading": "キャラクターを読み込み中",
+      "ready": "キャラクターの準備完了",
+      "error": "キャラクターを読み込めませんでした"
+    },
+    "expressions": {
+      "title": "表情とモーション",
+      "description": "サンプルキャラクターの表情を試せます。",
+      "item": "表情 {number}"
+    },
+    "camera": {
+      "title": "カメラプレビュー",
+      "preview": "カメラのミラープレビュー",
+      "idle": "カメラ停止中",
+      "loading": "起動中",
+      "searching": "顔を検出中",
+      "tracked": "顔を検出しました",
+      "calibrated": "調整済み",
+      "privacy": "映像はブラウザ内で処理され、アップロードされません。",
+      "error": "カメラ追跡を利用できません。"
+    },
+    "errors": {
+      "load": "キャラクターを読み込めません。接続や WebGL の対応を確認して再試行してください。",
+      "motion": "モーションを読み込めません。もう一度お試しください。",
+      "expression": "表情を読み込めません。もう一度お試しください。"
+    },
+    "fps": "{value} FPS",
+    "terms": "サンプルモデル利用規約"
   }
 }

@@ -389,6 +389,10 @@
       "swiper": {
         "title": "Swiper",
         "description": "带有 Vue 控制面板和插槽实验的 Swiper Element 封装。"
+      },
+      "live2d": {
+        "title": "Live2D 互动舞台",
+        "description": "让角色跟随鼠标，或开启摄像头体验头部、眼睛与嘴部联动。"
       }
     }
   },
@@ -415,7 +419,9 @@
       "loading": "正在加载真实场景… {progress}%",
       "error": "场景模型加载失败，已切换到基础摄影棚。"
     },
-    "meter": { "balanced": "曝光平衡" },
+    "meter": {
+      "balanced": "曝光平衡"
+    },
     "controls": {
       "focal": "焦段",
       "aperture": "光圈",
@@ -497,13 +503,14 @@
       "focus": {
         "heading": "我正在做",
         "items": {
-          "memory": {
-            "title": "Minerei / Kotolog",
-            "description": "一个结合任务、记录与长期记忆的 AI-native personal system。"
+          "personalDevelopment": {
+            "title": "个人开发",
+            "description": "从自己每天想用的东西出发，开发并持续完善支持生活与学习的工具。",
+            "action": "查看产品"
           },
           "research": {
             "title": "研究",
-            "description": "人本 AI、personal system，以及能进入产品工作流的交互数据。"
+            "description": "利用多模态数据推定与分析人的状态，探索如何捕捉和理解状态的变化。"
           },
           "engineering": {
             "title": "工程",
@@ -513,7 +520,6 @@
       },
       "tech": {
         "heading": "我正在使用这些",
-        "description": "这些不是完整清单，更像我现在把研究、产品和个人系统拼起来时会反复拿起的工具。",
         "stackLabel": "技术栈",
         "lanes": {
           "research": "研究",
@@ -1030,5 +1036,55 @@
     "contentYouAreLookingForDoesNotExist": "您正在寻找的内容不存在。",
     "readMore": "阅读更多",
     "availableLanguages": "可用语言"
+  },
+  "live2dLab": {
+    "title": "Live2D 互动舞台",
+    "description": "让角色跟随鼠标，或开启摄像头体验头部、眼睛与嘴部联动。",
+    "stage": "Live2D 角色舞台",
+    "controls": "角色控制",
+    "mode": {
+      "label": "驱动方式",
+      "pointer": "鼠标跟随",
+      "camera": "摄像头",
+      "pointerHint": "在舞台上移动鼠标，点击角色试试表情和动作。",
+      "cameraHint": "正对摄像头，校准后尝试转头、眨眼和张嘴。"
+    },
+    "actions": {
+      "startCamera": "开启摄像头",
+      "stopCamera": "停止摄像头",
+      "calibrate": "校准中立姿态",
+      "calibrated": "重新校准",
+      "playMotion": "播放动作",
+      "resetExpression": "重置表情",
+      "retry": "重新加载"
+    },
+    "status": {
+      "loading": "正在加载角色",
+      "ready": "角色已就绪",
+      "error": "角色加载失败"
+    },
+    "expressions": {
+      "title": "表情与动作",
+      "description": "试试示例角色的不同表情。",
+      "item": "表情 {number}"
+    },
+    "camera": {
+      "title": "摄像头预览",
+      "preview": "本地摄像头镜像预览",
+      "idle": "摄像头未开启",
+      "loading": "正在启动",
+      "searching": "寻找面部",
+      "tracked": "已识别人脸",
+      "calibrated": "已校准",
+      "privacy": "画面仅在你的浏览器中处理，不会上传。",
+      "error": "摄像头追踪暂时不可用。"
+    },
+    "errors": {
+      "load": "角色未能加载。请检查网络或 WebGL 支持后重试。",
+      "motion": "动作未能加载，请稍后重试。",
+      "expression": "表情未能加载，请稍后重试。"
+    },
+    "fps": "{value} FPS",
+    "terms": "示例模型使用条款"
   }
 }

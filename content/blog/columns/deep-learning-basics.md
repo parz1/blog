@@ -14,7 +14,7 @@ scope:
   - 计算图
   - 反向传播
   - 自动微分
-updated: '2026-08-29'
+updated: '2026-09-14'
 lang: cn
 tags:
   - deep-learning
@@ -31,8 +31,8 @@ sections:
         articleSlug: from-logistic-regression-to-neuron
         role: core
       - id: activation-functions
-        workingTitle: 激活函数：神经网络为什么需要非线性
-        summary: 从 XOR 与线性变换的边界出发，比较 Sigmoid、Tanh、ReLU 与 GELU 的输出、梯度和使用位置。
+        workingTitle: 激活函数：让模型自己学特征
+        summary: 逻辑回归分不开的数据，传统做法是人工加特征。隐藏层把这件事交给模型，激活函数保证学出的特征不会退化成线性组合。
         state: published
         articleSlug: activation-functions
         role: core

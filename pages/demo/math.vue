@@ -30,6 +30,47 @@ useHead({ title: 'Math Figure Demo' })
         二维函数
       </h2>
       <MathFigure preset="sigmoid" />
+      <MathFigure preset="threshold-to-sigmoid" />
+      <MathFigure preset="activation-functions" />
+      <MathFigure preset="relu-xor-bend" />
+      <MathFigure preset="linear-vs-band" />
+      <MathFigure preset="two-hinges-band" />
+    </section>
+
+    <section class="mt-14" aria-labelledby="math-plot">
+      <h2
+        id="math-plot"
+        class="mb-3 font-serif text-2xl font-semibold text-gray-950 dark:text-gray-50"
+      >
+        平面图
+      </h2>
+      <p
+        class="mb-6 max-w-3xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+      >
+        没有卡片外壳的二维图，用点、直线和半平面着色。适合决策边界这类示意图。
+      </p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <Plot
+          :points="[
+            { x: 0, y: 0, cls: 0 },
+            { x: 0, y: 1, cls: 0 },
+            { x: 1, y: 0, cls: 0 },
+            { x: 1, y: 1, cls: 1 },
+          ]"
+          :line="[1, 1, -1.5]"
+          caption="AND：只有 (1,1) 在 z>0 一侧。"
+        />
+        <Plot
+          :points="[
+            { x: 0, y: 0, cls: 0 },
+            { x: 0, y: 1, cls: 1 },
+            { x: 1, y: 0, cls: 1 },
+            { x: 1, y: 1, cls: 1 },
+          ]"
+          :line="[1, 1, -0.5]"
+          caption="OR：只有 (0,0) 在 z<0 一侧。"
+        />
+      </div>
     </section>
 
     <section class="mt-14" aria-labelledby="math-figure-3d">

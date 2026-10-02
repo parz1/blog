@@ -11,6 +11,7 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "preview": "nuxt preview",
+    "test:live2d": "node --experimental-strip-types --test tests/live2d-face-parameters.test.ts",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
@@ -59,6 +60,8 @@
     "mermaid": "^11.17.2",
     "nuxt-studio": "^1.7.0",
     "pg": "^8.23.0",
+    "pixi-live2d-display": "0.4.0",
+    "pixi.js": "6.5.10",
     "rehype-katex": "^7.0.1",
     "remark-emoji": "^4.0.1",
     "remark-gfm": "^4.0.1",

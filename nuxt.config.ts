@@ -24,6 +24,11 @@ export default defineNuxtConfig({
 
   studio: {
     route: '/_studio',
+    // Studio's dev mode writes edits straight back into content/*.md, which
+    // has repeatedly mangled published articles (frontmatter and MDC blocks
+    // get reformatted on save). Keep the editor, but never let it touch the
+    // working tree: with dev: false it goes through the git flow instead.
+    dev: false,
     repository: {
       provider: 'github',
       owner: 'parz1',

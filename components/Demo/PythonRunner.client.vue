@@ -10,7 +10,11 @@ import type {
   PythonRunnerResponse,
 } from '~/typings/python-runner'
 
-type RunnerPreset = 'linear-regression' | 'single-neuron'
+type RunnerPreset =
+  | 'linear-regression'
+  | 'single-neuron'
+  | 'comfort-band'
+  | 'xor-relu'
 type RunnerVariant = 'standalone' | 'article'
 
 const props = withDefaults(
@@ -131,8 +135,218 @@ axes[1].set_ylabel("loss")
 figure.tight_layout()
 # Runner 会自动捕获当前 figure，无需调用 plt.show()`
 
-const getPresetCode = () =>
-  props.preset === 'single-neuron' ? singleNeuronCode : linearRegressionCode
+const xorReluCode = `import numpy as np
+import matplotlib.pyplot as plt
+
+points = np.array([
+    [0.0, 0.0],
+    [0.0, 1.0],
+    [1.0, 0.0],
+    [1.0, 1.0],
+])
+labels = np.array([0, 1, 1, 0])
+
+
+def relu(z):
+    return np.maximum(0.0, z)
+
+
+def linear_score(x1, x2):
+    return x1 + x2 - 0.7
+
+
+def relu_edge(x1, x2):
+    return relu(x1 - x2) + relu(x2 - x1)
+
+
+grid = np.linspace(-0.25, 1.55, 240)
+xx, yy = np.meshgrid(grid, grid)
+
+figure, axes = plt.subplots(1, 2, figsize=(9, 3.8))
+panels = [
+    (axes[0], linear_score, 0.0, "Linear: total brightness"),
+    (axes[1], relu_edge, 0.5, "ReLU: either-way contrast"),
+]
+
+for ax, fn, level, title in panels:
+    zz = fn(xx, yy)
+    ax.contourf(
+        xx,
+        yy,
+        zz,
+        levels=[-10, level, 10],
+        colors=["#dbeafe", "#fed7aa"],
+    )
+    ax.contour(xx, yy, zz, levels=[level], colors="#111111", linewidths=1.8)
+    ax.scatter(
+        points[labels == 0, 0],
+        points[labels == 0, 1],
+        s=70,
+        facecolors="white",
+        edgecolors="#2563eb",
+        linewidths=1.8,
+        label="y = 0",
+        zorder=3,
+    )
+    ax.scatter(
+        points[labels == 1, 0],
+        points[labels == 1, 1],
+        s=70,
+        color="#f97316",
+        edgecolors="#9a3412",
+        linewidths=0.6,
+        label="y = 1",
+        zorder=3,
+    )
+    ax.set_title(title)
+    ax.set_xlabel("x1 (left)")
+    ax.set_ylabel("x2 (right)")
+    ax.set_aspect("equal")
+    ax.set_xlim(-0.25, 1.55)
+    ax.set_ylim(-0.25, 1.55)
+    ax.legend(loc="lower left", fontsize=8)
+
+for name, fn in (("linear", linear_score), ("edge", relu_edge)):
+    values = [fn(*point) for point in points]
+    print(name, [round(float(value), 3) for value in values])
+
+figure.tight_layout()
+# Runner 会自动捕获当前 figure，无需调用 plt.show()`
+
+const comfortBandCode = `import numpy as np
+import matplotlib.pyplot as plt
+
+
+def relu(z):
+    return np.maximum(0.0, z)
+
+
+# Target: comfortable when the temperature is between 18 and 24 degrees.
+def target(x):
+    return ((x >= 18.0) & (x <= 24.0)).astype(float)
+
+
+# 1) Logistic-regression score on the raw input x.
+#    Monotone in x, so z >= 0 is always a ray.
+def raw_score(x):
+    return 0.15 * (22.0 - x)
+
+
+# 2) Same model, but the input is (x, x^2). The weights are still linear;
+#    the hand-made feature x^2 does the bending.
+def square_score(x):
+    w1, w2, b = 42.0, -1.0, -432.0      # = -(x - 18)(x - 24)
+    return (w1 * x + w2 * x ** 2 + b) / 4.5
+
+
+# 3) One hidden layer with two ReLU units. The kinks sit at 22 and 20,
+#    set by the hidden weights instead of chosen by hand.
+def relu_score(x):
+    h1 = relu(x - 22.0)
+    h2 = relu(20.0 - x)
+    return 2.0 - h1 - h2
+
+
+grid = np.linspace(14.0, 28.0, 561)
+samples = np.array([12.0, 16.0, 19.0, 21.0, 23.0, 26.0, 30.0])
+
+panels = [
+    (raw_score, "input x"),
+    (square_score, "input (x, x^2)"),
+    (relu_score, "two ReLU units"),
+]
+
+figure, axes = plt.subplots(1, 3, figsize=(11, 3.6), sharey=True)
+for ax, (fn, title) in zip(axes, panels):
+    scores = fn(grid)
+    ax.fill_between(grid, -4.5, 4.5, where=scores >= 0.0, color="#fed7aa", step="mid")
+    ax.plot(grid, target(grid) * 2.0, color="#10b981", lw=2.0, label="target x 2")
+    ax.plot(grid, scores, color="#2563eb", lw=2.2, label="score z")
+    ax.axhline(0.0, color="#111111", lw=1.0)
+    ax.set_title(title)
+    ax.set_xlabel("temperature (C)")
+    ax.set_ylim(-4.5, 4.5)
+axes[0].set_ylabel("score")
+axes[0].legend(loc="lower left", fontsize=8)
+
+expected = target(samples).astype(int)
+print("samples ", samples.tolist())
+print("expected", expected.tolist())
+for fn, title in panels:
+    predicted = (fn(samples) >= 0.0).astype(int)
+    wrong = int(np.sum(predicted != expected))
+    print(f"{title:15s} predicted {predicted.tolist()} wrong {wrong}")
+
+figure.tight_layout()
+# The runner captures the current figure automatically; no plt.show() needed.`
+
+const presetCode: Record<RunnerPreset, string> = {
+  'linear-regression': linearRegressionCode,
+  'single-neuron': singleNeuronCode,
+  'comfort-band': comfortBandCode,
+  'xor-relu': xorReluCode,
+}
+
+const getPresetCode = () => presetCode[props.preset]
+
+const { locale } = useI18n()
+
+const runnerCopy = {
+  en: {
+    idle: 'Not started',
+    loading: 'Loading runtime',
+    running: 'Running',
+    ready: 'Ready',
+    error: 'Run failed',
+    toolbar: 'Python run controls',
+    run: 'Run',
+    stop: 'Stop',
+    reset: 'Reset',
+    firstRun: 'The first run downloads Pyodide, NumPy and Matplotlib',
+    codeLabel: 'Python code',
+    placeholder: 'Text and figures appear here after you run the code.',
+    workerFailed: 'Failed to load the Python worker',
+    stopped: 'Run stopped; the next run reloads Python.',
+  },
+  ja: {
+    idle: '未実行',
+    loading: 'ランタイムを読み込み中',
+    running: '実行中',
+    ready: '準備完了',
+    error: '実行に失敗',
+    toolbar: 'Python 実行コントロール',
+    run: '実行',
+    stop: '停止',
+    reset: 'リセット',
+    firstRun: '初回実行時に Pyodide・NumPy・Matplotlib を読み込みます',
+    codeLabel: 'Python コード',
+    placeholder: 'コードを実行すると、テキストと図がここに表示されます。',
+    workerFailed: 'Python Worker の読み込みに失敗しました',
+    stopped: '実行を停止しました。次回は Python を読み込み直します。',
+  },
+  zh: {
+    idle: '未启动',
+    loading: '加载运行时',
+    running: '运行中',
+    ready: '就绪',
+    error: '运行失败',
+    toolbar: 'Python 运行控制',
+    run: '运行',
+    stop: '停止',
+    reset: '重置',
+    firstRun: '首次运行需要加载 Pyodide、NumPy 与 Matplotlib',
+    codeLabel: 'Python 代码',
+    placeholder: '运行代码后，文本与图表会显示在这里。',
+    workerFailed: 'Python Worker 加载失败',
+    stopped: '运行已停止；下次运行会重新加载 Python。',
+  },
+} as const
+
+const rc = computed(() => {
+  if (locale.value.startsWith('en')) return runnerCopy.en
+  if (locale.value.startsWith('ja')) return runnerCopy.ja
+  return runnerCopy.zh
+})
 
 type RunnerState = 'idle' | 'loading' | 'running' | 'ready' | 'error'
 type OutputBlock =
@@ -212,17 +426,7 @@ onMounted(async () => {
   updateHighlight()
 })
 
-const stateLabel = computed(() => {
-  const labels: Record<RunnerState, string> = {
-    idle: '未启动',
-    loading: '加载运行时',
-    running: '运行中',
-    ready: '就绪',
-    error: '运行失败',
-  }
-
-  return labels[state.value]
-})
+const stateLabel = computed(() => rc.value[state.value])
 
 const stateColor = computed(() => {
   const colors = {
@@ -314,7 +518,7 @@ const createWorker = () => {
 
   nextWorker.addEventListener('error', (event) => {
     state.value = 'error'
-    appendOutput(event.message || 'Python Worker 加载失败', 'stderr')
+    appendOutput(event.message || rc.value.workerFailed, 'stderr')
   })
 
   return nextWorker
@@ -343,7 +547,7 @@ const stop = () => {
   worker = undefined
   activeRequestId.value += 1
   state.value = 'idle'
-  appendOutput('运行已停止；下次运行会重新加载 Python。', 'stderr')
+  appendOutput(rc.value.stopped, 'stderr')
 }
 
 const reset = () => {
@@ -382,7 +586,7 @@ onBeforeUnmount(() => {
       </UBadge>
     </header>
 
-    <div class="runner-toolbar" role="toolbar" aria-label="Python 运行控制">
+    <div class="runner-toolbar" role="toolbar" :aria-label="rc.toolbar">
       <div v-if="variant === 'article'" class="runner-compact-status">
         <span>Python Runner</span>
         <UBadge :color="stateColor" variant="subtle">
@@ -397,7 +601,7 @@ onBeforeUnmount(() => {
           :disabled="isBusy || !code.trim()"
           @click="run"
         >
-          运行
+          {{ rc.run }}
         </UButton>
         <UButton
           icon="i-lucide-square"
@@ -406,7 +610,7 @@ onBeforeUnmount(() => {
           :disabled="!isBusy"
           @click="stop"
         >
-          停止
+          {{ rc.stop }}
         </UButton>
         <UButton
           icon="i-lucide-rotate-ccw"
@@ -415,12 +619,12 @@ onBeforeUnmount(() => {
           :disabled="isBusy"
           @click="reset"
         >
-          重置
+          {{ rc.reset }}
         </UButton>
       </div>
 
       <span v-if="variant === 'standalone'" class="runner-note">
-        首次运行需要加载 Pyodide、NumPy 与 Matplotlib
+        {{ rc.firstRun }}
       </span>
     </div>
 
@@ -444,7 +648,7 @@ onBeforeUnmount(() => {
             spellcheck="false"
             autocapitalize="off"
             autocomplete="off"
-            aria-label="Python 代码"
+            :aria-label="rc.codeLabel"
             @keydown="insertIndent"
             @scroll="syncEditorScroll"
           />
@@ -455,7 +659,7 @@ onBeforeUnmount(() => {
         <span class="runner-panel-label">Output</span>
         <div class="runner-output">
           <p v-if="!output.length" class="runner-output-empty">
-            运行代码后，文本与图表会显示在这里。
+            {{ rc.placeholder }}
           </p>
 
           <template v-for="block in output" :key="block.id">
@@ -463,8 +667,7 @@ onBeforeUnmount(() => {
               v-if="block.type === 'text' || block.type === 'error'"
               class="runner-output-text"
               :class="{ 'runner-output-error': block.type === 'error' }"
-              >{{ block.text }}</pre
-            >
+              >{{ block.text }}</pre>
             <figure v-else-if="block.type === 'figure'" class="runner-figure">
               <img :src="block.url" :alt="block.alt" />
             </figure>

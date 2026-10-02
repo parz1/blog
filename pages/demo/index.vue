@@ -10,9 +10,9 @@ const categorizedDemos = computed(() =>
 )
 
 const featuredDemoIds = [
+  'threeRuntime',
   'cameraLab',
   'performer',
-  'threeRuntime',
   'maplibre',
 ] as const
 

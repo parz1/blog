@@ -71,6 +71,14 @@ export const demoCatalog: DemoCatalogItem[] = [
     tags: ['Face State', 'Motion'],
   },
   {
+    id: 'live2d',
+    category: 'vision',
+    icon: 'i-lucide-sparkles',
+    to: '/demo/live2d',
+    status: 'experimental',
+    tags: ['Live2D', 'MediaPipe'],
+  },
+  {
     id: 'faceState',
     category: 'vision',
     icon: 'i-lucide-braces',
