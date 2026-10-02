@@ -393,6 +393,10 @@
       "live2d": {
         "title": "Live2D インタラクティブステージ",
         "description": "マウスでキャラクターを動かしたり、カメラで顔・目・口の動きを反映できます。"
+      },
+      "avatar3d": {
+        "title": "3D アバターステージ",
+        "description": "イラストから 3D へ。視点を回して表情を試したり、カメラで頭・目・口を動かしたりできます。"
       }
     }
   },
@@ -1086,5 +1090,73 @@
     },
     "fps": "{value} FPS",
     "terms": "サンプルモデル利用規約"
+  },
+  "vrmLab": {
+    "title": "3D アバターステージ",
+    "description": "イラストから 3D へ。視点を回して表情を試したり、カメラで頭・目・口を動かしたりできます。",
+    "stage": "3D アバターステージ",
+    "controls": "アバター操作",
+    "fps": "{value} FPS",
+    "loadingProgress": "モデルデータ {value}%",
+    "status": {
+      "loading": "アバターを読み込み中",
+      "ready": "アバターの準備完了",
+      "error": "読み込みに失敗しました"
+    },
+    "mode": {
+      "label": "操作方法",
+      "preview": "インタラクティブ",
+      "camera": "カメラ",
+      "previewHint": "ドラッグで回転、スクロールで拡大縮小。ポインターを動かすと視線が追従します。",
+      "cameraHint": "カメラに正面を向けて調整し、首振り・まばたき・口の動きを試してください。"
+    },
+    "view": {
+      "label": "表示範囲"
+    },
+    "actions": {
+      "retry": "再読み込み",
+      "full": "全身",
+      "portrait": "上半身",
+      "resetExpression": "表情をリセット",
+      "startCamera": "カメラを開始",
+      "stopCamera": "カメラを停止",
+      "calibrate": "正面の姿勢を調整",
+      "calibrated": "再調整",
+      "chooseFile": "VRM ファイルを選択",
+      "useSample": "サンプルに戻す"
+    },
+    "expressions": {
+      "title": "表情",
+      "description": "表情はモデルによって異なります。表情によっては、まばたきや口の動きが一時的に抑制されます。",
+      "neutral": "通常",
+      "happy": "喜び",
+      "angry": "怒り",
+      "sad": "悲しみ",
+      "relaxed": "リラックス",
+      "surprised": "驚き"
+    },
+    "model": {
+      "title": "モデルを変更",
+      "importHint": "PC 上の .vrm ファイルを読み込みます（64 MB まで、テクスチャ内蔵）。ローカルで動作し、アップロードされません。",
+      "local": "ローカルモデル",
+      "sample": "公式サンプル",
+      "credit": "サンプルの出典とライセンス"
+    },
+    "camera": {
+      "title": "カメラプレビュー",
+      "idle": "カメラ停止中",
+      "loading": "起動中",
+      "searching": "顔を検出中",
+      "tracked": "顔を検出しました",
+      "calibrated": "調整済み",
+      "error": "カメラ追跡を利用できません。",
+      "preview": "ローカルカメラのミラープレビュー",
+      "privacy": "映像はブラウザ内で処理され、アップロードされません。"
+    },
+    "errors": {
+      "invalidFile": "テクスチャ内蔵の VRM 0.x / 1.0 モデルを選んでください（64 MB まで）。",
+      "externalResources": "外部リソースが必要なモデルです。テクスチャとデータを内蔵した VRM を書き出してください。",
+      "loadFailed": "アバターを読み込めませんでした。接続と WebGL 2 対応を確認して再試行してください。"
+    }
   }
 }

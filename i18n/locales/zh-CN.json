@@ -393,6 +393,10 @@
       "live2d": {
         "title": "Live2D 互动舞台",
         "description": "让角色跟随鼠标，或开启摄像头体验头部、眼睛与嘴部联动。"
+      },
+      "avatar3d": {
+        "title": "3D 虚拟人舞台",
+        "description": "从平面的插画走进 3D：旋转查看角色、切换表情，或开启摄像头驱动头部、眼睛和嘴部。"
       }
     }
   },
@@ -1086,5 +1090,73 @@
     },
     "fps": "{value} FPS",
     "terms": "示例模型使用条款"
+  },
+  "vrmLab": {
+    "title": "3D 虚拟人舞台",
+    "description": "从平面的插画走进 3D：旋转查看角色、切换表情，或开启摄像头驱动头部、眼睛和嘴部。",
+    "stage": "3D 角色舞台",
+    "controls": "角色控制",
+    "fps": "{value} FPS",
+    "loadingProgress": "模型数据 {value}%",
+    "status": {
+      "loading": "正在加载角色",
+      "ready": "角色已就绪",
+      "error": "角色加载失败"
+    },
+    "mode": {
+      "label": "驱动方式",
+      "preview": "互动预览",
+      "camera": "摄像头",
+      "previewHint": "拖动旋转视角，滚轮缩放；移动鼠标让角色看向你。",
+      "cameraHint": "正对摄像头，校准后尝试转头、眨眼和张嘴。"
+    },
+    "view": {
+      "label": "查看角色"
+    },
+    "actions": {
+      "retry": "重新加载",
+      "full": "全身视角",
+      "portrait": "半身视角",
+      "resetExpression": "重置表情",
+      "startCamera": "开启摄像头",
+      "stopCamera": "停止摄像头",
+      "calibrate": "校准中立姿态",
+      "calibrated": "重新校准",
+      "chooseFile": "选择 VRM 文件",
+      "useSample": "还原示例模型"
+    },
+    "expressions": {
+      "title": "角色表情",
+      "description": "可用表情随模型而变化；某些表情会暂时覆盖眨眼或口型。",
+      "neutral": "中立",
+      "happy": "开心",
+      "angry": "生气",
+      "sad": "难过",
+      "relaxed": "放松",
+      "surprised": "惊讶"
+    },
+    "model": {
+      "title": "更换模型",
+      "importHint": "读取你电脑中的 .vrm 文件（最多 64 MB，包含贴图），仅在本地运行，不会上传。",
+      "local": "本地模型",
+      "sample": "官方示例",
+      "credit": "示例模型来源与许可"
+    },
+    "camera": {
+      "title": "摄像头预览",
+      "idle": "摄像头未开启",
+      "loading": "正在启动",
+      "searching": "寻找面部",
+      "tracked": "已识别人脸",
+      "calibrated": "已校准",
+      "error": "摄像头追踪暂时不可用。",
+      "preview": "本地摄像头镜像预览",
+      "privacy": "画面仅在你的浏览器中处理，不会上传。"
+    },
+    "errors": {
+      "invalidFile": "请选择包含贴图的 VRM 0.x / 1.0 模型，文件大小不超过 64 MB。",
+      "externalResources": "这个模型依赖外部资源，请导出包含贴图和数据的 VRM 文件。",
+      "loadFailed": "角色未能加载。请检查网络与 WebGL 2 支持后重试。"
+    }
   }
 }

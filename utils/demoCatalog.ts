@@ -79,6 +79,14 @@ export const demoCatalog: DemoCatalogItem[] = [
     tags: ['Live2D', 'MediaPipe'],
   },
   {
+    id: 'avatar3d',
+    category: 'vision',
+    icon: 'i-lucide-person-standing',
+    to: '/demo/avatar-3d',
+    status: 'experimental',
+    tags: ['VRM', 'Three.js'],
+  },
+  {
     id: 'faceState',
     category: 'vision',
     icon: 'i-lucide-braces',

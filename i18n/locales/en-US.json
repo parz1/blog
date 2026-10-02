@@ -393,6 +393,10 @@
       "live2d": {
         "title": "Live2D interactive stage",
         "description": "Follow the pointer, or turn on your camera to animate the character with your head, eyes and mouth."
+      },
+      "avatar3d": {
+        "title": "3D Avatar Stage",
+        "description": "Step into 3D: orbit the avatar, try expressions, or use your camera to animate the head, eyes, and mouth."
       }
     }
   },
@@ -1086,5 +1090,73 @@
     },
     "fps": "{value} FPS",
     "terms": "Sample model terms"
+  },
+  "vrmLab": {
+    "title": "3D Avatar Stage",
+    "description": "Step into 3D: orbit the avatar, try expressions, or use your camera to animate the head, eyes, and mouth.",
+    "stage": "3D avatar stage",
+    "controls": "Avatar controls",
+    "fps": "{value} FPS",
+    "loadingProgress": "Model data {value}%",
+    "status": {
+      "loading": "Loading avatar",
+      "ready": "Avatar ready",
+      "error": "Unable to load avatar"
+    },
+    "mode": {
+      "label": "Control mode",
+      "preview": "Interactive preview",
+      "camera": "Camera",
+      "previewHint": "Drag to orbit, scroll to zoom, and move your pointer to guide the avatar’s gaze.",
+      "cameraHint": "Face the camera, calibrate, then try turning your head, blinking, and opening your mouth."
+    },
+    "view": {
+      "label": "View avatar"
+    },
+    "actions": {
+      "retry": "Reload",
+      "full": "Full body",
+      "portrait": "Portrait",
+      "resetExpression": "Reset expression",
+      "startCamera": "Start camera",
+      "stopCamera": "Stop camera",
+      "calibrate": "Calibrate neutral pose",
+      "calibrated": "Recalibrate",
+      "chooseFile": "Choose VRM file",
+      "useSample": "Restore sample"
+    },
+    "expressions": {
+      "title": "Expressions",
+      "description": "Available expressions depend on the model. Some expressions temporarily override blinking or mouth movement.",
+      "neutral": "Neutral",
+      "happy": "Happy",
+      "angry": "Angry",
+      "sad": "Sad",
+      "relaxed": "Relaxed",
+      "surprised": "Surprised"
+    },
+    "model": {
+      "title": "Change avatar",
+      "importHint": "Read a .vrm file from your computer (up to 64 MB, with embedded textures). It runs locally and is never uploaded.",
+      "local": "Local model",
+      "sample": "Official sample",
+      "credit": "Sample source and license"
+    },
+    "camera": {
+      "title": "Camera preview",
+      "idle": "Camera off",
+      "loading": "Starting",
+      "searching": "Looking for a face",
+      "tracked": "Face detected",
+      "calibrated": "Calibrated",
+      "error": "Camera tracking is unavailable.",
+      "preview": "Local mirrored camera preview",
+      "privacy": "Video is processed in your browser and is never uploaded."
+    },
+    "errors": {
+      "invalidFile": "Choose a VRM 0.x / 1.0 model with embedded textures, no larger than 64 MB.",
+      "externalResources": "This model requires external resources. Export a VRM with embedded textures and data.",
+      "loadFailed": "Unable to load the avatar. Check your connection and WebGL 2 support, then retry."
+    }
   }
 }
