@@ -1,4 +1,9 @@
-export type DemoCategoryId = 'learning' | 'vision' | 'spatial' | 'interaction'
+export type DemoCategoryId =
+  | 'learning'
+  | 'vision'
+  | 'spatial'
+  | 'interaction'
+  | 'materials'
 
 export type DemoStatus = 'featured' | 'stable' | 'experimental'
 
@@ -19,9 +24,18 @@ export const demoCategories: {
   { id: 'vision', icon: 'i-lucide-scan-face' },
   { id: 'spatial', icon: 'i-lucide-box' },
   { id: 'interaction', icon: 'i-lucide-mouse-pointer-2' },
+  { id: 'materials', icon: 'i-lucide-layers' },
 ]
 
 export const demoCatalog: DemoCatalogItem[] = [
+  {
+    id: 'materialLab',
+    category: 'materials',
+    icon: 'i-lucide-layers',
+    to: '/demo/materials',
+    status: 'experimental',
+    tags: ['Paper', 'Foil', 'WebGL'],
+  },
   {
     id: 'cameraLab',
     category: 'learning',

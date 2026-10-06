@@ -13,7 +13,8 @@
     "preview": "nuxt preview",
     "test:live2d": "node --experimental-strip-types --test tests/live2d-face-parameters.test.ts",
     "postinstall": "nuxt prepare",
-    "test:vrm": "node --experimental-strip-types --test tests/vrm-*.test.ts"
+    "test:vrm": "node --experimental-strip-types --test tests/vrm-*.test.ts",
+    "test:materials": "node --experimental-strip-types --test tests/material-*.test.ts"
   },
   "devDependencies": {
     "@fontsource/fira-code": "^5.3.0",

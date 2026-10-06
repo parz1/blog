@@ -323,6 +323,10 @@
       "interaction": {
         "title": "Web interactions",
         "description": "Small studies in scrolling, swiping, layout, and browser-native component behavior."
+      },
+      "materials": {
+        "title": "Materials",
+        "description": "Paper, foil, and printed surfaces. Explore how texture and light shape a material."
       }
     },
     "items": {
@@ -397,6 +401,10 @@
       "avatar3d": {
         "title": "3D Avatar Stage",
         "description": "Step into 3D: orbit the avatar, try expressions, or use your camera to animate the head, eyes, and mouth."
+      },
+      "materialLab": {
+        "title": "Material table",
+        "description": "One sheet, one light. Turn a sample to explore paper grain, fibers, and the shifting colors of holographic foil."
       }
     }
   },
@@ -1157,6 +1165,161 @@
       "invalidFile": "Choose a VRM 0.x / 1.0 model with embedded textures, no larger than 64 MB.",
       "externalResources": "This model requires external resources. Export a VRM with embedded textures and data.",
       "loadFailed": "Unable to load the avatar. Check your connection and WebGL 2 support, then retry."
+    }
+  },
+  "materialLab": {
+    "title": "Material table",
+    "eyebrow": "Materials · Volume 01",
+    "description": "One sheet, one light. Turn a sample to explore paper grain, fibers, and the shifting colors of holographic foil.",
+    "back": "All demos",
+    "loading": "Preparing the samples…",
+    "choose": "Choose a material",
+    "reset": "Reset angle",
+    "sheetLabel": "{material} sample. Drag or use arrow keys to tilt.",
+    "drag": "Drag the sample into the light",
+    "observation": "Surface notes",
+    "printMode": "Printed content",
+    "modes": {
+      "blank": "Blank",
+      "type": "Type",
+      "pattern": "Pattern"
+    },
+    "light": "Light direction",
+    "lightHint": "Move the light and watch the same surface catch it differently.",
+    "texture": "Texture strength",
+    "keyboard": "Keyboard: focus the sample, then use arrow keys to tilt. Shift moves faster; Home resets the angle.",
+    "fallback": "A simplified material preview is active. Real-time surface lighting is unavailable in this browser.",
+    "seriesNote": "Materials / 01 — Paper & foil. These samples are visual approximations. Translucency, embossing, and gold stamping are future explorations.",
+    "samples": {
+      "book": {
+        "name": "Book paper",
+        "description": "Warm, fine-grained paper with a hint of pulp. Compare the bare surface with the same letters printed on it."
+      },
+      "kraft": {
+        "name": "Kraft paper",
+        "description": "Coarse fibers and dark flecks in brown pulp. Tilt the sheet to see its surface and substantial edge."
+      },
+      "cotton": {
+        "name": "Watercolor paper",
+        "description": "Pale paper with a pronounced, uneven tooth. Move the light to reveal the lit and shaded sides of the grain."
+      },
+      "foil": {
+        "name": "Holographic foil",
+        "description": "Color bands, fine grooves, and scattered glints. Turn slowly and watch the colors pass beneath the print."
+      }
+    },
+    "print": {
+      "collection": "Material studies",
+      "title": "Paper, in light.",
+      "body": "Fibers leave a texture. Light reveals a surface. Every turn brings a little change.",
+      "pattern": "Line · Order · Light",
+      "footer": "Same print. Different surface."
+    },
+    "pipeline": {
+      "eyebrow": "From parameters to pixels",
+      "title": "Inside the render",
+      "modeLabel": "Viewing mode",
+      "modes": {
+        "final": "Final result",
+        "steps": "Walk through",
+        "inspect": "Inspect outputs"
+      },
+      "hints": {
+        "final": "Select a node to learn what it does. Disable a contribution to compare the final image. Connections show data dependencies.",
+        "steps": "Walk from base color to print. Height and normal steps show data maps; the lighting step shows the composite. Steps temporarily control the switches.",
+        "inspect": "Select any node to inspect its output. Data maps hide print; surface textures stay fixed when the light moves."
+      },
+      "graph": "Material computation dependency graph",
+      "off": "Disabled",
+      "enabled": "Enable contribution",
+      "input": "Input",
+      "output": "Output",
+      "previous": "Previous",
+      "next": "Next",
+      "contributions": "Contributions",
+      "restore": "Restore all",
+      "technical": "Calculation and model limits",
+      "seed": "Texture seed",
+      "seedHint": "Seed {seed}. Kept unchanged across steps and switches so you can compare the same patch.",
+      "unavailable": "Inspecting the pipeline requires WebGL. The simplified preview cannot show intermediate calculations.",
+      "kinds": {
+        "shader": "Compute",
+        "overlay": "Overlay"
+      },
+      "preview": {
+        "label": "Showing",
+        "final": "Composite",
+        "lit": "Illuminated surface",
+        "fallback": "Simplified material preview"
+      },
+      "paperLimit": "Model limits: procedurally generated paper, without calibration against real samples. Height has no millimeter scale and normal strength is artistic. Transmission, fiber scattering and physical thickness are not modeled.",
+      "foilLimit": "Model limits: rainbow colors use a cosine RGB approximation with separately added grooves. This is neither diffraction derived from groove spacing and wavelength nor thin-film interference.",
+      "execution": "This graph shows dependencies, not one GPU pass per node. One fragment shader draws the surface; HTML / SVG print is overlaid. CSS supplies the edges, shadow and tilt, outside the data maps.",
+      "nodes": {
+        "base": {
+          "title": "Base color",
+          "body": "Start with the sample color, without fibers, relief or lighting.",
+          "input": "Sample preset",
+          "output": "Base color",
+          "technical": "RGB is an authored preset, not a measurement of real paper reflectance. With other contributions disabled, this is a uniform surface."
+        },
+        "fibers": {
+          "title": "Fibers & pigment",
+          "body": "Add grain, pulp variation, fibers and kraft flecks to the base color. This changes color, not normals.",
+          "input": "Base color, seed, surface coordinates",
+          "output": "Textured color",
+          "technical": "Fibers are short strands within fixed grid cells. Grain and pigment variation use noise at multiple scales. Disabling this restores uniform color while relief can remain active."
+        },
+        "height": {
+          "title": "Surface height",
+          "body": "Black is lower and white is higher: a relative field used to construct relief, not a lit photograph.",
+          "input": "Seed, surface coordinates, texture strength",
+          "output": "Relative height map",
+          "technical": "Three noise scales are weighted by 0.3, 0.5 and 0.2. Disabling relief produces mid-gray height and flat normals. The silhouette and actual geometry do not change."
+        },
+        "normal": {
+          "title": "Surface normals",
+          "body": "Turn local slopes into directions. RGB encodes X, Y and Z; a flat plane appears blue-purple.",
+          "input": "Local height differences",
+          "output": "Normal direction map",
+          "technical": "Finite differences at fixed UV offsets approximate slopes, followed by scaling and normalization. Colors encode N × 0.5 + 0.5. These are local material normals, before sample tilt or lighting."
+        },
+        "lighting": {
+          "title": "Lighting",
+          "body": "Color and normals meet here. Move the light to reveal relief; inspection shows only directional illumination.",
+          "input": "Textured color, normals, light, tilt",
+          "output": "Directional light map",
+          "technical": "The directional term is max(dot(N, L), 0), with a fixed ambient contribution in the composite. Disabling lighting removes light response; the map becomes white, representing a multiplier of 1."
+        },
+        "grooves": {
+          "title": "Fine grooves",
+          "body": "Generate narrow directional stripes. Inspection maps them to grayscale; disabling them gives mid-gray.",
+          "input": "Surface coordinates, noise, texture strength",
+          "output": "Groove map",
+          "technical": "Sine stripes add small brightness changes to the card. They are independent of rainbow colors and do not generate wave-optical diffraction. Texture strength controls visibility."
+        },
+        "spectrum": {
+          "title": "Angle-dependent color",
+          "body": "Vary rainbow color with position, tilt and light direction. Disabling it restores the gray base.",
+          "input": "Base color, surface coordinates, light, tilt",
+          "output": "Rainbow-mixed color",
+          "technical": "Three phase-offset cosine curves approximate RGB, then blend with the gray base. Phase is an artistic parameter, without a measured wavelength or groove spacing."
+        },
+        "highlights": {
+          "title": "Reflection & glints",
+          "body": "Combine base, rainbow and grooves with shading, highlights and glints. Inspection isolates added highlights.",
+          "input": "Rainbow color, grooves, light, tilt, seed",
+          "output": "Highlight contribution",
+          "technical": "A power of the reflected direction, an authored bright band and sparse glints approximate reflection. Disabling this removes shading and highlights; angle-dependent rainbow color has its own switch."
+        },
+        "print": {
+          "title": "Print overlay",
+          "body": "Place type or line art above the rendered surface. The print selector below chooses content; Blank adds nothing.",
+          "input": "Illuminated surface, print content",
+          "output": "Composite",
+          "technical": "HTML / SVG overlays the canvas. Ink does not absorb or alter surface reflection, so this is not a physical printing model. Disabling it hides the overlay."
+        }
+      }
     }
   }
 }
