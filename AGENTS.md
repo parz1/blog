@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-Nuxt 4 boots from `app.vue`, with file-based routes in `pages/` and shared shells in `layouts/`. UI elements live in `components/`, composables in `composables/`, and shared helpers in `utils/` plus TypeScript defs in `typings/`. Markdown is maintained in the sibling `../folio/content/` workspace (override with `CONTENT_WORKSPACE_DIR`), selected by its `publication.json`. The in-repo `content/` is a rollback copy, not the default source. Production consumes a validated release prepared before build; schemas stay in `content.config.ts`. See `docs/blog-content-deployment.md`. Vite-managed assets go in `assets/`, passthrough files in `public/`, localization resources in `lang/` and `i18n/`, and any server handlers in `server/`.
+Nuxt 4 boots from `app.vue`, with file-based routes in `pages/` and shared shells in `layouts/`. UI elements live in `components/`, composables in `composables/`, and shared helpers in `utils/` plus TypeScript defs in `typings/`. Markdown is maintained in the sibling `../folio/content/` workspace (override with `CONTENT_WORKSPACE_DIR`). Local development discovers Markdown automatically, including drafts; releases collect only `status: published` and generate `publication.json`. The in-repo `content/` is a rollback copy, not the default source. Production reads validated runtime releases with a build-time fallback; schemas stay in `content.config.ts`. See `docs/content-writing.md`. Vite-managed assets go in `assets/`, passthrough files in `public/`, localization resources in `lang/` and `i18n/`, and any server handlers in `server/`.
 
 ## Build, Test, and Development Commands
 

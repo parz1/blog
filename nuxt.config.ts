@@ -1,4 +1,5 @@
 import { rubyHook } from './utils/rubyHook'
+import { withLifecycleStatus } from './utils/contentLifecycle.mjs'
 import { fileURLToPath } from 'node:url'
 
 const cloudflarePreview =
@@ -202,6 +203,9 @@ export default defineNuxtConfig({
   hooks: {
     'content:file:beforeParse'({ file }) {
       rubyHook(file)
+    },
+    'content:file:afterParse'({ content }) {
+      Object.assign(content, withLifecycleStatus(content))
     },
   },
 
