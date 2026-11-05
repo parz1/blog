@@ -51,7 +51,10 @@ async function createRuntime() {
       (process.env.UPSTASH_REDIS_REST_URL &&
         process.env.UPSTASH_REDIS_REST_TOKEN)
     )
-      redis = Redis.fromEnv()
+      redis = Redis.fromEnv({
+        retry: false,
+        signal: () => AbortSignal.timeout(2000),
+      })
   } catch {
     /* Shared cache is optional; it must never gate reading. */
   }
