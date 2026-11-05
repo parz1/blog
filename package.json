@@ -4,7 +4,7 @@
     "build:cloudflare-preview": "node --experimental-strip-types scripts/blog-content.mjs prepare && node scripts/build-cloudflare-preview.mjs",
     "preview:cloudflare": "wrangler dev --config wrangler.preview.json --port 8787",
     "deploy:cloudflare-preview": "node scripts/deploy-cloudflare-preview.mjs",
-    "build": "node --experimental-strip-types scripts/blog-content.mjs prepare && node --experimental-strip-types scripts/prepare-folio-runtime.mjs && nuxt build",
+    "build": "node --experimental-strip-types scripts/blog-content.mjs prepare && node --experimental-strip-types scripts/prepare-folio-runtime.mjs && nuxt build && node scripts/check-folio-build.mjs",
     "dev": "nuxt dev",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",

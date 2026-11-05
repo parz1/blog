@@ -15,6 +15,7 @@ export default defineNitroPlugin((nitro) => {
     response.headers ||= {}
     response.headers['x-folio-release'] = record.snapshot.id
     response.headers['x-folio-state'] = record.degraded ? 'stale' : 'fresh'
+    response.headers['x-folio-source'] = record.source
     response.headers['cache-control'] =
       response.statusCode === 200 && !record.degraded
         ? 'public, max-age=0, s-maxage=15, must-revalidate'
