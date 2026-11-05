@@ -17,8 +17,9 @@ type CacheResult = {
   verifiedAt: number
   source: string
   degraded: boolean
+  persistence: string
 }
-let runtime: Promise<ReturnType<typeof createFolioCache>> | undefined
+let runtime: ReturnType<typeof createRuntime> | undefined
 async function createRuntime() {
   const bootstrap =
     await useStorage('assets:folio').getItem<FolioSnapshot>('fallback.json')
@@ -74,7 +75,7 @@ async function createRuntime() {
     }
     return Buffer.concat(chunks)
   }
-  return createFolioCache({
+  const cache = createFolioCache({
     bootstrap,
     channel: configured
       ? async () =>
@@ -87,6 +88,14 @@ async function createRuntime() {
       return JSON.parse(bytes.toString('utf8'))
     },
     compile: compileRelease,
+    onError: (stage: string, error: { code?: string; name?: string }) =>
+      console.warn(
+        '[folio]',
+        stage,
+        /^[A-Z0-9_]+$/.test(error?.code || '')
+          ? error.code
+          : error?.name || 'unavailable',
+      ),
     read:
       redis || postgres
         ? async () => {
@@ -129,14 +138,19 @@ async function createRuntime() {
           }
         : undefined,
   })
+  return {
+    ...cache,
+    persistence: redis ? 'redis' : postgres ? 'postgres' : 'memory',
+  }
 }
 export function getFolioSnapshot(event: H3Event): Promise<CacheResult> {
   return (event.context.folioSnapshot ||= (async () => {
     const cache = await (runtime ||= createRuntime())
-    return cache.get((task: Promise<unknown>) => {
+    const record = await cache.get((task: Promise<unknown>) => {
       if (process.env.VERCEL === '1') vercelWaitUntil(task)
       else event.waitUntil(task)
     })
+    return { ...record, persistence: cache.persistence }
   })())
 }
 export function queryRuntimeCollection<K extends keyof Collections>(
