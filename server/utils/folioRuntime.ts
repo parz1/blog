@@ -55,7 +55,10 @@ async function createRuntime() {
   } catch {
     /* Shared cache is optional; it must never gate reading. */
   }
-  const postgresUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL
+  const postgresUrl =
+    process.env.FOLIO_CACHE_DATABASE_URL ||
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL
   const postgres =
     !redis && postgresUrl ? postgresPersistence(postgresUrl, key) : undefined
   async function download(path: string, max: number) {

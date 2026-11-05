@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process'
 if (process.env.VERCEL || process.env.NITRO_PRESET === 'vercel') {
   const env = { ...process.env, NUXT_FOLIO_ORIGIN: '' }
   for (const key of [
+    'FOLIO_CACHE_DATABASE_URL',
     'POSTGRES_URL',
     'DATABASE_URL',
     'KV_REST_API_URL',

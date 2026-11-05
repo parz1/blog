@@ -10,6 +10,7 @@
 - 请求固定一个快照，不能让正文、署名、列表或反链混用不同发布。回退通过更高 generation 指向旧版本，拒绝乱序的旧 generation。
 - 通常请求只读内存。首次恢复共享快照最多前台等 1 秒，刷新最多前台等 600 毫秒，其余注册到 Vercel `waitUntil`。刷新失败保留原快照，5 秒后可重试。客户端使用 ETag，版本未变化时返回 304，避免每次导航重复传输完整快照。
 - 共享最近成功版本优先使用现有 Redis；无 Redis 时使用已配置的 PostgreSQL 独立 `blog_folio_cache_v1.snapshots` 表。压缩内容带校验，按 origin/rendererContract 隔离，写入使用 generation CAS，较慢实例不能覆盖新版本。不自动执行迁移，不使用函数临时磁盘保存唯一副本。
+- 自动派生 preview 数据库不一定已有缓存迁移。可以设置独立的 `FOLIO_CACHE_DATABASE_URL` 指向已迁移的缓存库，避免依赖部署集成临时替换的数据库连接；预览与正式仍按 origin 隔离 key。
 - Vercel 使用 `@vercel/functions` 的平台 `waitUntil`，确保响应发出后刷新及持久缓存写入继续执行；不能只把 Promise 存入框架内存。其他 Node 宿主使用 Nitro 生命周期接口。
 - 内存和共享缓存同时不可用时，回到随部署附带的完整公开快照。旧文章继续 200；这不是最新内容的跨供应商永久可用保证。共享存储失效或冷启动可能显示更旧的保底版。
 
