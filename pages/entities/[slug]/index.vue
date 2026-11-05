@@ -16,19 +16,19 @@ const slug = computed(() => {
 
 const { data: entities, refresh } = await useAsyncData(
   `entity-detail-${slug.value}`,
-  () => queryCollection('entities').where('slug', '=', slug.value).all(),
+  () => querySiteContent('entities').where('slug', '=', slug.value).all(),
   { lazy: false },
 )
 
 const { data: allEntities } = await useAsyncData(
   'entities-detail-all',
-  () => queryCollection('entities').order('updated', 'DESC').all(),
+  () => querySiteContent('entities').order('updated', 'DESC').all(),
   { lazy: false },
 )
 
 const { data: concepts } = await useAsyncData(
   'entities-detail-concepts',
-  () => queryCollection('concepts').order('updated', 'DESC').all(),
+  () => querySiteContent('concepts').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

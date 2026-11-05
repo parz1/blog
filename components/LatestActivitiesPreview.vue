@@ -4,7 +4,7 @@ const { locale } = useI18n()
 const { data: articles } = await useAsyncData<SiteArticle[]>(
   () => `latest-activities-preview-${locale.value}`,
   async () => {
-    const allArticles = await queryCollection('articles')
+    const allArticles = await querySiteContent('articles')
       .order('published', 'DESC')
       .all()
 

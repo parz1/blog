@@ -45,6 +45,7 @@ const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
 const searchTerm = ref('')
+const folioRelease = useState('folio-release', () => '')
 
 const collections: SearchCollectionConfig[] = [
   {
@@ -186,16 +187,16 @@ const { data: searchItems, status } = await useLazyAsyncData(
       entities,
       projects,
     ] = await Promise.all([
-      queryCollectionSearchSections('articles'),
-      queryCollectionSearchSections('columns'),
-      queryCollectionSearchSections('concepts'),
-      queryCollectionSearchSections('entities'),
-      queryCollectionSearchSections('projects'),
-      queryCollection('articles').all(),
-      queryCollection('columns').all(),
-      queryCollection('concepts').all(),
-      queryCollection('entities').all(),
-      queryCollection('projects').all(),
+      querySiteContentSearchSections('articles'),
+      querySiteContentSearchSections('columns'),
+      querySiteContentSearchSections('concepts'),
+      querySiteContentSearchSections('entities'),
+      querySiteContentSearchSections('projects'),
+      querySiteContent('articles').all(),
+      querySiteContent('columns').all(),
+      querySiteContent('concepts').all(),
+      querySiteContent('entities').all(),
+      querySiteContent('projects').all(),
     ])
 
     return {
@@ -235,6 +236,7 @@ const { data: searchItems, status } = await useLazyAsyncData(
       projects: [],
     }),
     server: false,
+    watch: [folioRelease],
   },
 )
 

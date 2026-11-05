@@ -3,7 +3,7 @@ const { locale, t } = useI18n()
 
 const { data: columnVariants } = await useAsyncData<SiteColumn[]>(
   'columns-index',
-  () => queryCollection('columns').order('updated', 'DESC').all(),
+  () => querySiteContent('columns').order('updated', 'DESC').all(),
 )
 
 const columns = computed(() =>

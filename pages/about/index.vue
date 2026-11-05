@@ -3,7 +3,7 @@ const localePath = useLocalePath()
 const { locale, t } = useI18n()
 
 const { data: pages } = await useAsyncData('about-page-variants', () =>
-  queryCollection('pages').where('slug', '=', 'about').all(),
+  querySiteContent('pages').where('slug', '=', 'about').all(),
 )
 
 const page = computed(() => {

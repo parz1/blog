@@ -40,26 +40,26 @@ const { data: variants, refresh } = await useAsyncData<SiteArticle[]>(
   async () => {
     if (!slug.value) return []
 
-    return queryCollection('articles').where('slug', '=', slug.value).all()
+    return querySiteContent('articles').where('slug', '=', slug.value).all()
   },
   { lazy: false },
 )
 
 const { data: concepts } = await useAsyncData(
   'article-detail-concepts',
-  () => queryCollection('concepts').order('updated', 'DESC').all(),
+  () => querySiteContent('concepts').order('updated', 'DESC').all(),
   { lazy: false },
 )
 
 const { data: backlinkSources } = await useAsyncData<ArticleBacklink[]>(
   'article-backlink-sources',
-  () => queryCollection('articles').order('published', 'DESC').all(),
+  () => querySiteContent('articles').order('published', 'DESC').all(),
   { lazy: false },
 )
 
 const { data: columnVariants } = await useAsyncData<SiteColumn[]>(
   'article-column-sources',
-  () => queryCollection('columns').order('updated', 'DESC').all(),
+  () => querySiteContent('columns').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

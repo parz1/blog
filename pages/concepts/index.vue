@@ -5,7 +5,7 @@ const { locale, t } = useI18n()
 
 const { data: concepts } = await useAsyncData(
   'concepts-index',
-  () => queryCollection('concepts').order('updated', 'DESC').all(),
+  () => querySiteContent('concepts').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

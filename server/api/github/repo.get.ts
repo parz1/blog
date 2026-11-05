@@ -1,3 +1,5 @@
+import { queryRuntimeCollection } from '../../utils/folioRuntime'
+
 type GitHubRepo = {
   default_branch: string
   description: string | null
@@ -67,7 +69,7 @@ export default defineCachedEventHandler(
 
     // Only allow repos declared in the projects collection, so this endpoint
     // cannot be used as an open proxy against the server's GitHub token.
-    const projects = await queryCollection(event, 'projects')
+    const projects = await queryRuntimeCollection(event, 'projects')
       .select('repo')
       .all()
     const allowedRepos = new Set(

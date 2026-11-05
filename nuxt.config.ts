@@ -212,10 +212,12 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
+    folioOrigin: '',
     githubToken: cloudflarePreview
       ? ''
       : process.env.NUXT_GITHUB_TOKEN || process.env.GITHUB_TOKEN,
     public: {
+      folioRuntime: Boolean(process.env.NUXT_FOLIO_ORIGIN),
       analyticsProvider: cloudflarePreview ? 'cloudflare' : 'vercel',
       cloudflareAnalyticsToken: '',
     },
@@ -226,6 +228,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    serverAssets: [{ baseName: 'folio', dir: '.local/folio-runtime' }],
     ...(cloudflarePreview
       ? {
           preset: 'cloudflare-module',
@@ -241,15 +244,17 @@ export default defineNuxtConfig({
         }
       : {}),
     prerender: {
-      routes: [
-        '/',
-        '/zh-CN',
-        '/ja',
-        '/sitemap.xml',
-        ...(cloudflarePreview
-          ? JSON.parse(process.env.BLOG_PREVIEW_PRERENDER_ROUTES || '[]')
-          : []),
-      ],
+      crawlLinks: false,
+      ignore: cloudflarePreview ? [] : ['/', '/zh-CN', '/ja', '/sitemap.xml'],
+      routes: cloudflarePreview
+        ? [
+            '/',
+            '/zh-CN',
+            '/ja',
+            '/sitemap.xml',
+            ...JSON.parse(process.env.BLOG_PREVIEW_PRERENDER_ROUTES || '[]'),
+          ]
+        : [],
     },
   },
 

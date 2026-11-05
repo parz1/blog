@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis'
-import { queryCollection } from '@nuxt/content/server'
+import { queryRuntimeCollection } from './folioRuntime'
 import { createError, getRequestHeader, getRouterParam, type H3Event } from 'h3'
 
 const ARTICLE_VIEW_KEY_PREFIX = 'article:views:'
@@ -40,7 +40,7 @@ export const requireArticleSlug = async (event: H3Event) => {
     })
   }
 
-  const articles = await queryCollection(event, 'articles')
+  const articles = await queryRuntimeCollection(event, 'articles')
     .where('slug', '=', slug)
     .select('slug')
     .all()

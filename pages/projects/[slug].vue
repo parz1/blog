@@ -46,7 +46,7 @@ const slug = computed(() => {
 
 const { data: projects, refresh: refreshProjects } = await useAsyncData(
   `project-detail-${slug.value}`,
-  () => queryCollection('projects').where('slug', '=', slug.value).all(),
+  () => querySiteContent('projects').where('slug', '=', slug.value).all(),
   { lazy: false },
 )
 

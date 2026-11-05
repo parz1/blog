@@ -10,7 +10,7 @@ const { locale, t } = useI18n()
 
 const { data: galleryDocs } = await useAsyncData(
   'gallery-collection',
-  () => queryCollection('gallery').order('published', 'DESC').all(),
+  () => querySiteContent('gallery').order('published', 'DESC').all(),
   { lazy: false },
 )
 

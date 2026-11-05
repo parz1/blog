@@ -7,12 +7,12 @@ const slug = computed(() => String(route.params.slug ?? ''))
 
 const { data: columnVariants, refresh } = await useAsyncData<SiteColumn[]>(
   () => `column-${slug.value}`,
-  () => queryCollection('columns').where('slug', '=', slug.value).all(),
+  () => querySiteContent('columns').where('slug', '=', slug.value).all(),
 )
 
 const { data: articleVariants } = await useAsyncData<SiteArticle[]>(
   'column-article-sources',
-  () => queryCollection('articles').order('published', 'DESC').all(),
+  () => querySiteContent('articles').order('published', 'DESC').all(),
 )
 
 const column = computed(

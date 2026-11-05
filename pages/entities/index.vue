@@ -17,7 +17,7 @@ const { locale, t } = useI18n()
 
 const { data: entities } = await useAsyncData(
   'entities-index',
-  () => queryCollection('entities').order('updated', 'DESC').all(),
+  () => querySiteContent('entities').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

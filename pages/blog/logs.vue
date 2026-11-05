@@ -4,7 +4,7 @@ const { locale, t } = useI18n()
 const { data: articles } = await useAsyncData<SiteArticle[]>(
   'logs-posts',
   async () => {
-    const logs = await queryCollection('articles')
+    const logs = await querySiteContent('articles')
       .where('kind', '=', 'log')
       .order('published', 'DESC')
       .all()

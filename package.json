@@ -4,7 +4,7 @@
     "build:cloudflare-preview": "node --experimental-strip-types scripts/blog-content.mjs prepare && node scripts/build-cloudflare-preview.mjs",
     "preview:cloudflare": "wrangler dev --config wrangler.preview.json --port 8787",
     "deploy:cloudflare-preview": "node scripts/deploy-cloudflare-preview.mjs",
-    "build": "node --experimental-strip-types scripts/blog-content.mjs prepare && nuxt build",
+    "build": "node --experimental-strip-types scripts/blog-content.mjs prepare && node --experimental-strip-types scripts/prepare-folio-runtime.mjs && nuxt build",
     "dev": "nuxt dev",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
@@ -21,7 +21,8 @@
     "content:workspace": "node --experimental-strip-types scripts/content-workspace.mjs",
     "test:workspace": "node --experimental-strip-types --test tests/content-workspace.test.mjs",
     "test:authors": "node --experimental-strip-types --test tests/content-authors.test.ts",
-    "postinstall": "node scripts/prepare-content-types.mjs"
+    "postinstall": "node scripts/prepare-content-types.mjs",
+    "test:folio": "node --experimental-strip-types --test tests/folio-*.test.mjs"
   },
   "devDependencies": {
     "@fontsource/fira-code": "^5.3.0",
@@ -54,6 +55,7 @@
     "@nuxt/content": "^3.16.0",
     "@nuxt/ui": "^4.11.0",
     "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/mdc": "0.23.1",
     "@shikijs/langs": "^4.4.3",
     "@shikijs/themes": "^4.4.3",
     "@upstash/redis": "^1.38.3",
@@ -69,6 +71,7 @@
     "maptalks": "1.0.0-rc.32",
     "maptalks.wmts": "^1.0.3",
     "mermaid": "^11.17.2",
+    "minimark": "0.2.0",
     "nuxt-studio": "^1.7.0",
     "pg": "^8.23.0",
     "pixi-live2d-display": "0.4.0",
@@ -85,7 +88,8 @@
     "valibot": "1.4.2",
     "vue-router": "^5.3.0",
     "vue-use-fixed-header": "^2.0.3",
-    "vue3-marquee": "^4.2.2"
+    "vue3-marquee": "^4.2.2",
+    "zod": "3.25.76"
   },
   "pnpm": {
     "overrides": {

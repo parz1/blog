@@ -14,7 +14,7 @@ const {
   async () => {
     // 暂停 2 秒
     await new Promise((resolve) => setTimeout(resolve, 3000))
-    return queryCollection('articles')
+    return querySiteContent('articles')
       .where('kind', '=', 'post')
       .limit(5)
       .order('published', 'DESC')
@@ -30,7 +30,7 @@ const {
 } = await useAsyncData(
   'latest-posts',
   async () => {
-    return queryCollection('articles')
+    return querySiteContent('articles')
       .where('kind', '=', 'post')
       .limit(5)
       .order('published', 'DESC')

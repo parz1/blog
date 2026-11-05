@@ -21,7 +21,7 @@ const slug = computed(() => {
 
 const { data: concepts, refresh } = await useAsyncData(
   'concepts-local-graph',
-  () => queryCollection('concepts').order('updated', 'DESC').all(),
+  () => querySiteContent('concepts').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

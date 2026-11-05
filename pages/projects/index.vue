@@ -3,7 +3,7 @@ const { locale, t } = useI18n()
 
 const { data: projects } = await useAsyncData(
   'projects-index',
-  () => queryCollection('projects').order('updated', 'DESC').all(),
+  () => querySiteContent('projects').order('updated', 'DESC').all(),
   { lazy: false },
 )
 

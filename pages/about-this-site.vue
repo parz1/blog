@@ -4,7 +4,7 @@ const { locale, t } = useI18n()
 
 const { data: pages } = await useAsyncData(
   'about-this-site-page-variants',
-  () => queryCollection('pages').where('slug', '=', 'about-this-site').all(),
+  () => querySiteContent('pages').where('slug', '=', 'about-this-site').all(),
 )
 
 const page = computed(() => {

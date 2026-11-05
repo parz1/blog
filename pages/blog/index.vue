@@ -6,8 +6,8 @@ const { data: sources } = await useAsyncData(
   'blog-overview-sources',
   async () => {
     const [articleVariants, columnVariants] = await Promise.all([
-      queryCollection('articles').order('published', 'DESC').all(),
-      queryCollection('columns').order('updated', 'DESC').all(),
+      querySiteContent('articles').order('published', 'DESC').all(),
+      querySiteContent('columns').order('updated', 'DESC').all(),
     ])
 
     return { articleVariants, columnVariants }

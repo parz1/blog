@@ -32,7 +32,7 @@ const slug = computed(() => {
 
 const { data: concepts, refresh } = await useAsyncData(
   'concepts-detail',
-  () => queryCollection('concepts').order('updated', 'DESC').all(),
+  () => querySiteContent('concepts').order('updated', 'DESC').all(),
   { lazy: false },
 )
 
@@ -63,7 +63,7 @@ const { data: mentionSources } = await useAsyncData<MentionSource[]>(
     const currentSlug = slug.value
     if (!currentSlug) return []
 
-    const sources = await queryCollection('articles')
+    const sources = await querySiteContent('articles')
       .order('published', 'DESC')
       .all()
 
