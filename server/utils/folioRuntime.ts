@@ -2,6 +2,7 @@ import type { H3Event } from 'h3'
 import type { Collections } from '@nuxt/content'
 import { queryCollection } from '@nuxt/content/server'
 import { Redis } from '@upstash/redis'
+import { waitUntil as vercelWaitUntil } from '@vercel/functions'
 import { gzipSync, gunzipSync } from 'node:zlib'
 import { createHash } from 'node:crypto'
 import { createFolioCache } from '~~/lib/folio-cache.mjs'
@@ -132,7 +133,10 @@ async function createRuntime() {
 export function getFolioSnapshot(event: H3Event): Promise<CacheResult> {
   return (event.context.folioSnapshot ||= (async () => {
     const cache = await (runtime ||= createRuntime())
-    return cache.get((task: Promise<unknown>) => event.waitUntil(task))
+    return cache.get((task: Promise<unknown>) => {
+      if (process.env.VERCEL === '1') vercelWaitUntil(task)
+      else event.waitUntil(task)
+    })
   })())
 }
 export function queryRuntimeCollection<K extends keyof Collections>(
