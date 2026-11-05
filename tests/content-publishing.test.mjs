@@ -13,6 +13,50 @@ import {
 } from '../lib/blog-content.mjs'
 import { publishContent } from '../lib/content-publishing.mjs'
 import { withLifecycleStatus } from '../utils/contentLifecycle.mjs'
+import { loadPublishingToken } from '../lib/publishing-credential.mjs'
+
+test('Windows credential child isolates PowerShell module paths without mutating the publishing shell', async () => {
+  const env = {
+    PSModulePath: 'pwsh7-modules',
+    PSMODULEPATH: 'another-path',
+    PATH: 'system-path',
+  }
+  const value = await loadPublishingToken('/workspace', {
+    env,
+    platform: 'win32',
+    run: async (command, args, options) => {
+      assert.equal(command, 'powershell.exe')
+      assert.equal(options.env.PSModulePath, undefined)
+      assert.equal(options.env.PSMODULEPATH, undefined)
+      assert.equal(options.env.PATH, env.PATH)
+      assert.equal(options.windowsHide, true)
+      assert.ok(args.at(-1).includes("$ErrorActionPreference='Stop'"))
+      return { stdout: 'x'.repeat(64) }
+    },
+  })
+  assert.equal(value.length, 64)
+  assert.equal(env.PSModulePath, 'pwsh7-modules')
+})
+
+test('credential loading failures redact child output and explicit environment credentials need no subprocess', async () => {
+  await assert.rejects(
+    loadPublishingToken('/workspace', {
+      env: {},
+      platform: 'win32',
+      run: async () => {
+        throw new Error('private-child-output')
+      },
+    }),
+    (error) =>
+      !error.message.includes('private-child-output') &&
+      error.message.startsWith('Cannot load'),
+  )
+  const explicit = await loadPublishingToken('/workspace', {
+    env: { CONTENT_OWNER_TOKEN: 'x'.repeat(64) },
+    run: () => assert.fail('unnecessary subprocess'),
+  })
+  assert.equal(explicit.length, 64)
+})
 
 const article = (status = '') =>
   `---\n${status ? `status: ${status}\n` : ''}title: Test\nslug: test\nkind: post\nlang: cn\nauthors:\n  - id: parz1\npublished: 2026-11-05T00:00:00.000Z\n---\n\nTest body.\n`
