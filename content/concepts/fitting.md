@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Fitting
 slug: fitting
 summary: A working note on fitting as the process where a model becomes informed by data, not one fixed algorithmic procedure.

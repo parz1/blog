@@ -168,6 +168,10 @@ useHead(() => ({
         >
           {{ project.title }}
         </h1>
+        <ContentByline
+          :authors="project.authors"
+          class="mt-3 text-sm text-gray-500 dark:text-gray-400"
+        />
         <p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400">
           {{ project.summary }}
         </p>

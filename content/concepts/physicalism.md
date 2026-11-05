@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Physicalism
 slug: physicalism
 summary: A working note on the view that mental, cognitive, and social phenomena remain continuous with physical reality rather than floating above it.

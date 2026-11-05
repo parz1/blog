@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: crap
 tags: []
 categories: []

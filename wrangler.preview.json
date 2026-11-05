@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "parz1-blog-preview",
+  "main": ".output/server/index.mjs",
+  "account_id": "527a24c8223d536eb40ff0a9d35d986d",
+  "compatibility_date": "2026-10-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "directory": ".output/public", "binding": "ASSETS" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blog-preview-content",
+      "database_id": "d4067ca2-535f-4211-b179-570c6f9886bb"
+    }
+  ],
+  "vars": {
+    "BLOG_DEPLOY_TARGET": "cloudflare-preview",
+    "NUXT_PUBLIC_ANALYTICS_PROVIDER": "cloudflare",
+    "NUXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN": "64e47a8d0b7043759a51c594315f760a",
+    "ARTICLE_VIEWS_ENABLED": "false"
+  }
+}

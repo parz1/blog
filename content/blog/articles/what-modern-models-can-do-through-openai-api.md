@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 不只是聊天：从 OpenAI API 看现代模型能做什么
 slug: what-modern-models-can-do-through-openai-api

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title:
 slug:
 summary:

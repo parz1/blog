@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: OS 模块编程实验题解
 slug: os-module-hw

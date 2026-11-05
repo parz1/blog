@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: About
 slug: about
 description: Zhou Lei の短いプロフィール。

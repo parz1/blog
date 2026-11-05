@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 管理 Agent Skills：为什么我关掉了大部分全局 Skills
 slug: managing-agent-skills-in-vibe-coding

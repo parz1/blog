@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Research Framing
 slug: research-framing
 summary: A working note on turning a vague research interest into a bounded, answerable, and evidence-driven question.

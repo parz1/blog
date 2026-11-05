@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 并发中的同步互斥
 slug: os-sync

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: yakisoba
 lang: en
 title: spring noon

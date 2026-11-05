@@ -744,6 +744,38 @@
     "log": "Note",
     "crap": "Loose"
   },
+  "profilePages": {
+    "open": "View {name}'s profile",
+    "avatarAlt": "Portrait of {name}",
+    "pageTitle": "{name}'s profile",
+    "back": "Back to the blog",
+    "virtual": "Virtual character",
+    "characters": {
+      "koto": {
+        "tagline": "I gather scattered ideas into words. Occasionally, I point out who scattered them.",
+        "identity": "Kotolog’s virtual maid and keeper of notes.",
+        "introduction": "I’m Koto. You can call me koto chan. I look after the words, drafts, and questions that haven’t found a place here yet.",
+        "temperament": "I’m a little particular, especially about careless explanations. If something is unclear, I keep asking. If I sorted it too soon, I’m willing to start again.",
+        "relationship": "parz1 makes things interesting; I help him explain them afterwards. We discuss, write, and leave room for ideas that don’t have answers yet."
+      }
+    }
+  },
+  "contentAuthors": {
+    "label": "Authors and contributions",
+    "single": "By",
+    "first": "First author",
+    "second": "Second author",
+    "nth": "Author {position}",
+    "virtual": "Virtual author",
+    "roles": {
+      "idea": "Concept",
+      "writing": "Writing",
+      "editing": "Editing",
+      "review": "Review",
+      "translation": "Translation",
+      "photography": "Photography"
+    }
+  },
   "blog": {
     "kicker": "Writing",
     "description": "Essays, notes, and loose fragments collected in one chronological stream.",
@@ -1086,5 +1118,48 @@
     },
     "fps": "{value} FPS",
     "terms": "Sample model terms"
+  },
+  "workspacePreview": {
+    "title": "Content workspace",
+    "private": "Local only · Unpublished",
+    "help": "Record revisions, compare changes and discuss an external draft.",
+    "setup": "Initialize an external workspace, set CONTENT_WORKSPACE_DIR, then restart the dev server.",
+    "refresh": "Refresh workspace",
+    "failed": "Request failed",
+    "version": "Revision",
+    "actor": "Identity for this action",
+    "dirty": "The file contains unrecorded edits. Open Source to record a revision.",
+    "views": "Views",
+    "read": "Read",
+    "diff": "Compare",
+    "edit": "Source",
+    "editHelp": "Edit the current working copy. Recording creates a new revision. Refresh reloads the file; keep any unsaved edits first.",
+    "markdown": "Markdown source",
+    "summary": "Change summary",
+    "save": "Record revision",
+    "compareFrom": "Compare from",
+    "diffHelp": "− Removed / + Added; numbers show old and new line positions. This compares local drafts only.",
+    "add": "Added",
+    "remove": "Removed",
+    "same": "Unchanged",
+    "comment": "Comment",
+    "quote": "Quoted source (or select text first)",
+    "commentText": "Comment text",
+    "send": "Save",
+    "cancel": "Cancel",
+    "discussions": "Inline discussions",
+    "showResolved": "Include resolved discussions",
+    "empty": "No discussions yet. Add a comment below a paragraph.",
+    "open": "Open",
+    "resolved": "Resolved",
+    "anchored": "Anchored",
+    "outdated": "Original text changed",
+    "ambiguous": "Ambiguous location",
+    "original": "View original revision",
+    "resolvedIn": "Resolved in",
+    "reply": "Reply",
+    "resolve": "Resolve",
+    "reopen": "Reopen",
+    "tool": "Tool"
   }
 }

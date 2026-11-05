@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 逻辑回归
 slug: logistic-regression
 summary: 先对特征做线性组合，再用 Sigmoid 将分数转换成概率的二分类模型。

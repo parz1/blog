@@ -1,18 +1,27 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build:cloudflare-preview": "node --experimental-strip-types scripts/blog-content.mjs prepare && node scripts/build-cloudflare-preview.mjs",
+    "preview:cloudflare": "wrangler dev --config wrangler.preview.json --port 8787",
+    "deploy:cloudflare-preview": "node scripts/deploy-cloudflare-preview.mjs",
+    "build": "node --experimental-strip-types scripts/blog-content.mjs prepare && nuxt build",
     "dev": "nuxt dev",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
-    "gallery:import": "node .local/scripts/gallery-import.mjs",
-    "gallery:publish": "sh -c '[ $# -eq 0 ] && set -- ./imports; pnpm gallery:import --auto-write-content \"$@\" && git add content/gallery/ public/gallery/' --",
-    "generate": "nuxt generate",
+    "gallery:import": "node scripts/check-legacy-content-writer.mjs && node .local/scripts/gallery-import.mjs",
+    "gallery:publish": "node scripts/check-legacy-content-writer.mjs && sh -c '[ $# -eq 0 ] && set -- ./imports; pnpm gallery:import --auto-write-content \"$@\" && git add content/gallery/ public/gallery/' --",
+    "generate": "node --experimental-strip-types scripts/blog-content.mjs prepare && nuxt generate",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "preview": "nuxt preview",
     "test:live2d": "node --experimental-strip-types --test tests/live2d-face-parameters.test.ts",
-    "postinstall": "nuxt prepare"
+    "content:release": "node --experimental-strip-types scripts/blog-content.mjs",
+    "content:prepare": "node --experimental-strip-types scripts/blog-content.mjs prepare",
+    "test:content-release": "node --experimental-strip-types --test tests/blog-content.test.mjs",
+    "content:workspace": "node --experimental-strip-types scripts/content-workspace.mjs",
+    "test:workspace": "node --experimental-strip-types --test tests/content-workspace.test.mjs",
+    "test:authors": "node --experimental-strip-types --test tests/content-authors.test.ts",
+    "postinstall": "node scripts/prepare-content-types.mjs"
   },
   "devDependencies": {
     "@fontsource/fira-code": "^5.3.0",
@@ -31,7 +40,9 @@
     "nuxt": "^4.5.2",
     "oxfmt": "^0.65.0",
     "oxlint": "^1.80.0",
-    "sass": "^1.103.1"
+    "sass": "^1.103.1",
+    "wrangler": "4.156.0",
+    "yaml": "2.9.0"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.11",

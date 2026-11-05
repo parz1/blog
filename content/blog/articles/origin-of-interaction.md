@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 交互的起源
 slug: origin-of-interaction

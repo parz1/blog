@@ -52,7 +52,6 @@ const resolvedSections = computed(() => {
 const renderedLang = computed(() =>
   toHtmlLang(column.value?.lang ?? locale.value),
 )
-const author = computed(() => column.value?.author ?? 'parz1')
 const startedYear = computed(
   () =>
     column.value?.started ??
@@ -136,7 +135,7 @@ useSeoMeta({ description: () => column.value?.description })
         <div
           class="mt-5 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-gray-500 dark:text-gray-400"
         >
-          <span>{{ author }}</span>
+          <ContentByline :authors="column.authors" />
           <span>{{ t('columns.started', { year: startedYear }) }}</span>
           <span>{{ publicationStatus }}</span>
         </div>

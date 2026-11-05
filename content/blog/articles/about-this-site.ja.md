@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: このサイトの技術解析
 slug: about-this-site

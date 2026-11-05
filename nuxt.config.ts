@@ -1,5 +1,8 @@
 import { rubyHook } from './utils/rubyHook'
 
+const cloudflarePreview =
+  process.env.BLOG_DEPLOY_TARGET === 'cloudflare-preview'
+
 // Nuxt Content's development checksum does not include `content:file:*` hooks.
 // Version this marker path when syntax hooks change so previously parsed
 // documents cannot leave stale wiki links in the development cache.
@@ -11,7 +14,8 @@ const contentSyntaxCacheMarker = new URL(
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
-    'nuxt-studio',
+    // Studio still targets blog/content; enable only for explicit legacy rollback.
+    ...(process.env.BLOG_CONTENT_MODE === 'legacy' ? ['nuxt-studio'] : []),
     '@nuxt/devtools',
     '@nuxtjs/device',
     '@nuxt/ui',
@@ -208,7 +212,13 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    githubToken: process.env.NUXT_GITHUB_TOKEN || process.env.GITHUB_TOKEN,
+    githubToken: cloudflarePreview
+      ? ''
+      : process.env.NUXT_GITHUB_TOKEN || process.env.GITHUB_TOKEN,
+    public: {
+      analyticsProvider: cloudflarePreview ? 'cloudflare' : 'vercel',
+      cloudflareAnalyticsToken: '',
+    },
   },
 
   devtools: {
@@ -216,8 +226,30 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    ...(cloudflarePreview
+      ? {
+          preset: 'cloudflare-module',
+          cloudflare: { nodeCompat: true, deployConfig: false },
+          ignore: [
+            '**/__local/**',
+            '**/localGalleryUpload.*',
+            '**/localContentWorkspace.*',
+          ],
+          routeRules: {
+            '/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+          },
+        }
+      : {}),
     prerender: {
-      routes: ['/', '/zh-CN', '/ja', '/sitemap.xml'],
+      routes: [
+        '/',
+        '/zh-CN',
+        '/ja',
+        '/sitemap.xml',
+        ...(cloudflarePreview
+          ? JSON.parse(process.env.BLOG_PREVIEW_PRERENDER_ROUTES || '[]')
+          : []),
+      ],
     },
   },
 

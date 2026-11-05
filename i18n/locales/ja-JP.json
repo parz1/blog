@@ -744,6 +744,38 @@
     "log": "メモ",
     "crap": "断片"
   },
+  "profilePages": {
+    "open": "{name} のプロフィールを見る",
+    "avatarAlt": "{name} のアイコン",
+    "pageTitle": "{name} のプロフィール",
+    "back": "ブログに戻る",
+    "virtual": "バーチャルキャラクター",
+    "characters": {
+      "koto": {
+        "tagline": "散らばった考えを、文章に整えます。誰が散らかしたのか、たまには指摘もします。",
+        "identity": "kotolog のバーチャルメイド兼記録係。",
+        "introduction": "Koto です。ことちゃん、と呼んでもらってもかまいません。ここの文章や下書き、まだ置き場所の決まっていない問いを整理しています。",
+        "temperament": "少し細かい性格で、いい加減な説明は苦手です。はっきりしないことは、もう少し聞いてみます。自分が早合点して分類したものは、整理し直します。",
+        "relationship": "parz1 が物事を面白くして、私は後からちゃんと説明できるようにする。一緒に話し、書き、まだ答えの出ていない考えにも場所を残しておきます。"
+      }
+    }
+  },
+  "contentAuthors": {
+    "label": "著者と貢献",
+    "single": "著者",
+    "first": "筆頭著者",
+    "second": "第二著者",
+    "nth": "第 {position} 著者",
+    "virtual": "バーチャル著者",
+    "roles": {
+      "idea": "構想",
+      "writing": "執筆",
+      "editing": "編集",
+      "review": "レビュー",
+      "translation": "翻訳",
+      "photography": "撮影"
+    }
+  },
   "blog": {
     "kicker": "Writing",
     "description": "記事、メモ、ゆるい断片を時系列でまとめた書き物の流れです。",
@@ -1086,5 +1118,48 @@
     },
     "fps": "{value} FPS",
     "terms": "サンプルモデル利用規約"
+  },
+  "workspacePreview": {
+    "title": "コンテンツ作業室",
+    "private": "ローカル限定・未公開",
+    "help": "外部の下書きの版を記録し、差分を確認してコメントを残します。",
+    "setup": "外部ワークスペースを初期化し、CONTENT_WORKSPACE_DIR を設定して開発サーバーを再起動してください。",
+    "refresh": "再読み込み",
+    "failed": "読み込みに失敗しました",
+    "version": "版",
+    "actor": "今回の操作の名義",
+    "dirty": "ファイルに未記録の変更があります。ソース画面で版として記録できます。",
+    "views": "表示",
+    "read": "本文",
+    "diff": "差分",
+    "edit": "ソース",
+    "editHelp": "現在の作業ファイルを編集します。記録すると新しい版になります。再読み込みの前に未保存の編集を保管してください。",
+    "markdown": "Markdown ソース",
+    "summary": "変更の説明",
+    "save": "新しい版を記録",
+    "compareFrom": "比較元",
+    "diffHelp": "− 削除 / + 追加。数字は旧版と新版の行番号です。比較内容は公開されません。",
+    "add": "追加",
+    "remove": "削除",
+    "same": "変更なし",
+    "comment": "コメント",
+    "quote": "引用する原文（本文から選択も可能）",
+    "commentText": "コメント本文",
+    "send": "保存",
+    "cancel": "キャンセル",
+    "discussions": "段落のコメント",
+    "showResolved": "解決済みも表示",
+    "empty": "コメントはまだありません。段落の下から追加できます。",
+    "open": "未解決",
+    "resolved": "解決済み",
+    "anchored": "位置を確認済み",
+    "outdated": "原文が変更されています",
+    "ambiguous": "位置が一意ではありません",
+    "original": "元の版を表示",
+    "resolvedIn": "解決した版",
+    "reply": "返信",
+    "resolve": "解決済みにする",
+    "reopen": "再開",
+    "tool": "ツール"
   }
 }

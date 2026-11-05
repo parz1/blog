@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 从逻辑回归到神经元：机器究竟学到了什么
 slug: from-logistic-regression-to-neuron

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Agent Harness
 slug: agent-harness
 summary: 一个关于 Agent Harness 如何围绕模型组织上下文、工具、状态、权限与反馈循环，使模型成为可行动系统的工作笔记。

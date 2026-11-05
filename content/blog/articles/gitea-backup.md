@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: Gitea Docker 的升级、备份和恢复
 slug: gitea-backup

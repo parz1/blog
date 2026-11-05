@@ -3,7 +3,8 @@ title: 深度学习：Basics
 slug: deep-learning-basics
 description: 从单个神经元到多层感知机，理解神经网络如何完成前向计算、反向传播与参数更新。
 status: active
-author: parz1
+authors:
+  - id: parz1
 started: 2026
 question: 一个线性模型不够的时候怎么办？
 thesis: 神经网络不是一组框架 API，而是可以被拆解、求导、组合和训练的计算单元。

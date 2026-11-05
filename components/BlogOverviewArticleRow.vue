@@ -33,10 +33,7 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
 </script>
 
 <template>
-  <NuxtLink
-    :to="localePath(articleUrl)"
-    class="group block cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50"
-  >
+  <div class="group relative block">
     <article
       :lang="toHtmlLang(article.lang)"
       class="grid py-4 transition-colors sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-4"
@@ -53,6 +50,11 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
           <span class="text-primary-600 dark:text-primary-400">
             {{ kindLabel }}
           </span>
+          <ContentByline
+            :authors="article.authors"
+            compact
+            class="text-gray-500 dark:text-gray-400"
+          />
           <span
             v-for="lang in languageBadges"
             :key="lang.code"
@@ -70,7 +72,12 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
         <h3
           class="font-serif text-lg font-medium leading-snug text-gray-950 transition-colors group-hover:text-primary-600 dark:text-gray-100"
         >
-          {{ article.title }}
+          <NuxtLink
+            :to="localePath(articleUrl)"
+            class="after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          >
+            {{ article.title }}
+          </NuxtLink>
         </h3>
         <p
           v-if="article.description"
@@ -82,9 +89,9 @@ const kindLabel = computed(() => t(`contentKind.${props.article.kind}`))
           v-if="!compact && article.tags?.length"
           :tags="article.tags"
           appearance="overview"
-          class="mt-2"
+          class="relative z-10 mt-2"
         />
       </div>
     </article>
-  </NuxtLink>
+  </div>
 </template>

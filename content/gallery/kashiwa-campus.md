@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: kashiwa-campus
 lang: cn
 title: 初夏

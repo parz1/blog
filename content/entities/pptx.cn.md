@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: PPTX
 slug: pptx
 summary: PowerPoint 使用的 Office Open XML 演示文稿文件格式。

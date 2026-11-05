@@ -224,7 +224,7 @@ const articlePath = (article: SiteArticle) =>
 
 const siteOrigin = 'https://parz1.minerei.dev'
 const siteName = 'parz1 ZHOU'
-const authorName = 'parz1 ZHOU'
+const articleAuthors = computed(() => resolveContentCredits(doc.value?.authors))
 const twitterHandle = '@parz1zhou'
 
 const seoLocales = {
@@ -270,14 +270,21 @@ const canonicalPath = computed(() =>
   ),
 )
 const canonicalUrl = computed(() => toAbsoluteUrl(canonicalPath.value))
-const authorUrl = computed(() =>
+const publisherUrl = computed(() =>
   toAbsoluteUrl(localePath('/about', canonicalLocale.value.routeLocale)),
+)
+const authorProfiles = computed(() =>
+  contentAuthorStructuredData(doc.value?.authors, {
+    urlForPath: (path) =>
+      toAbsoluteUrl(localePath(path, canonicalLocale.value.routeLocale)),
+    characterDescription: t('contentAuthors.virtual'),
+  }),
 )
 const socialImage = computed(() =>
   toAbsoluteUrl(doc.value?.cover?.trim() || defaultSocialImage),
 )
 const socialImageAlt = computed(() =>
-  doc.value?.cover ? seoTitle.value : authorName,
+  doc.value?.cover ? seoTitle.value : contentPublisher.name,
 )
 
 const alternateLinks = computed(() => {
@@ -336,20 +343,17 @@ const articleJsonLd = computed(() => {
     image: socialImage.value,
     articleSection: doc.value.categories,
     keywords: doc.value.tags,
-    author: {
-      '@type': 'Person',
-      name: authorName,
-      url: authorUrl.value,
-    },
+    author: authorProfiles.value,
     publisher: {
       '@type': 'Person',
-      name: authorName,
-      url: authorUrl.value,
+      name: contentPublisher.name,
+      url: publisherUrl.value,
     },
   }).replaceAll('<', '\\u003c')
 })
 
 useSeoMeta({
+  author: () => articleAuthors.value.map((author) => author.name).join(', '),
   title: () => seoTitle.value,
   description: () => seoDescription.value,
   ogTitle: () => seoTitle.value,
@@ -365,12 +369,15 @@ useSeoMeta({
   ogImageHeight: () => (doc.value?.cover ? undefined : 1320),
   twitterCard: () => (doc.value?.cover ? 'summary_large_image' : 'summary'),
   twitterSite: twitterHandle,
-  twitterCreator: twitterHandle,
+  twitterCreator: () => articleAuthors.value[0]?.twitter,
   twitterTitle: () => seoTitle.value,
   twitterDescription: () => seoDescription.value,
   twitterImage: () => socialImage.value,
   twitterImageAlt: () => socialImageAlt.value,
-  articleAuthor: () => [authorUrl.value],
+  articleAuthor: () =>
+    authorProfiles.value.flatMap((author) =>
+      'url' in author ? [author.url] : [],
+    ),
   articlePublishedTime: () => publishedIso.value,
   articleSection: () => doc.value?.categories?.[0],
   articleTag: () => doc.value?.tags,
@@ -449,6 +456,10 @@ useHead(() => ({
           <time class="text-sm text-gray-500 dark:text-gray-400">
             {{ publishedDate }}
           </time>
+          <ContentByline
+            :authors="doc.authors"
+            class="text-sm text-gray-500 dark:text-gray-400"
+          />
           <span
             v-if="articleViews !== null"
             aria-live="polite"

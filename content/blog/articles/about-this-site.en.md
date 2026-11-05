@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: Technical notes about this site
 slug: about-this-site

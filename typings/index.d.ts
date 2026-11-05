@@ -17,6 +17,7 @@ declare global {
   }
 
   type SiteArticle = {
+    authors: import('../utils/contentAuthors').ContentCredit[]
     title: string
     slug?: string
     path?: string
@@ -58,7 +59,7 @@ declare global {
     path?: string
     description: string
     status: SiteColumnStatus
-    author?: string
+    authors: import('../utils/contentAuthors').ContentCredit[]
     started?: number
     question?: string
     thesis?: string

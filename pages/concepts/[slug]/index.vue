@@ -277,6 +277,10 @@ useHead(() => ({
       >
         <div class="mb-4 flex flex-wrap items-center gap-3">
           <ConceptStateBadge :state="doc.state" />
+          <ContentByline
+            :authors="doc.authors"
+            class="text-sm text-gray-500 dark:text-gray-400"
+          />
           <time class="text-sm text-gray-500 dark:text-gray-400">
             {{ t('concepts.detail.updated', { date: updatedDate }) }}
           </time>

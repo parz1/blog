@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: city-wires
 lang: ja
 title: 曇り空

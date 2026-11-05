@@ -143,6 +143,11 @@ onBeforeUnmount(() => {
         <div class="min-w-0">
           <p>{{ entry.title }}</p>
           <h2>{{ activeMedia.title }}</h2>
+          <ContentByline
+            :authors="entry.authors"
+            compact
+            class="text-xs text-muted"
+          />
         </div>
 
         <button

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Leclog
 slug: leclog
 summary: 一个 local-first 的 Tauri 桌面应用，用于课堂录音、转写和 session 资源管理。

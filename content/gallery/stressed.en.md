@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: stressed
 lang: en
 title: dusk

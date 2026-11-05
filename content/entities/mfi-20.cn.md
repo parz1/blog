@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: MFI-20 多维疲劳量表
 slug: mfi-20
 summary: Smets 1995 发表的多维疲劳自陈量表，用于记录近期多维疲劳，而不是访谈当下的瞬时状态。

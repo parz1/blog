@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: PDF
 slug: pdf
 summary: 一种固定版面文档格式；在 AI 工作流里，它同时暴露了解析能力、运行位置与信任边界。

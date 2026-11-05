@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 'Technical notes about this site'
 slug: about-this-site
 description: 'Frontend, content, backend, media pipeline, build, and hosting notes for this website.'

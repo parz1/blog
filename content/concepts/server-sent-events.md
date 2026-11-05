@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Server-Sent Events
 slug: server-sent-events
 summary: A working note on SSE as a simple HTTP-based streaming protocol for one-way server-to-client updates.

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: kashiwa-campus
 lang: en
 title: early summer

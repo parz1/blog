@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Leclog
 slug: leclog
 summary: A local-first Tauri desktop app for lecture recording, transcription, and session resource management.

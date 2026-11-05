@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Metacognition
 slug: metacognition
 summary: A working note on the capacity to observe, model, regulate, and redesign one's own thinking processes.

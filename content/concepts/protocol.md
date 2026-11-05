@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Protocol
 slug: protocol
 summary: A working note on protocol as a shared set of rules that makes interaction, comparison, and collaboration predictable.

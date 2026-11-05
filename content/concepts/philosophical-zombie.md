@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Philosophical Zombie
 slug: philosophical-zombie
 summary: A thought experiment about beings that behave like conscious humans while lacking subjective experience.

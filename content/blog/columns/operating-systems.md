@@ -3,7 +3,8 @@ title: 操作系统实验与原理
 slug: operating-systems
 description: 从内核实验、模块编程到同步互斥与进程间通信。
 status: completed
-author: parz1
+authors:
+  - id: parz1
 started: 2024
 question: 操作系统如何把硬件资源组织成可被程序可靠使用的抽象？
 thesis: 操作系统的核心不是接口清单，而是在共享、隔离与协作之间建立可执行的秩序。

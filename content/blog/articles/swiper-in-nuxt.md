@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 管中窥豹 - Swiper in Nuxt3
 slug: swiper-in-nuxt

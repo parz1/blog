@@ -51,6 +51,11 @@ useHead({
           </NuxtLink>
         </div>
 
+        <ContentByline
+          v-if="page"
+          :authors="page.authors"
+          class="mb-4 text-sm text-gray-500 dark:text-gray-400"
+        />
         <ContentRenderer
           v-if="page"
           :value="page"

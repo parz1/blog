@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 哲学ゾンビ
 slug: philosophical-zombie
 summary: 意識を持つ人間と同じように振る舞うが、主観的経験を持たない存在についての思考実験。

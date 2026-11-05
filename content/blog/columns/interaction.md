@@ -3,7 +3,8 @@ title: 当系统开始解释
 slug: interaction
 description: 从交互的起源出发，理解当系统开始解释语言、推断意图并参与行动以后，人与计算系统之间的关系如何改变。
 status: active
-author: parz1
+authors:
+  - id: parz1
 started: 2026
 question: 当系统不再只执行预设操作，而开始解释语言、推断意图并采取行动，人如何知道它理解了什么，又如何修正、限制并与它继续协作？
 thesis: AI 时代的交互，是人和系统通过表达、解释、回应与修正逐渐形成共同任务的过程；设计的对象也因此从操作映射扩展为解释关系。

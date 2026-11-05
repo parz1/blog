@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: Use mermaid in nuxt
 slug: mermaid

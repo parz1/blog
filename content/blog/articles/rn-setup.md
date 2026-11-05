@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: 'RN 安卓开发指南:rocket:'
 description: 'A simple way to convert a SVG to PNG using Canvas'

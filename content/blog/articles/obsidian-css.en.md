@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: Sharpening Obsidian Font Rendering
 slug: obsidian-css-font

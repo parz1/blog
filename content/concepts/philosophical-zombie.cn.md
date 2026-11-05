@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 哲学僵尸
 slug: philosophical-zombie
 summary: 一个关于“行为上像有意识的人，但没有主观经验”的思想实验。

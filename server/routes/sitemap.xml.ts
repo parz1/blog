@@ -1,6 +1,10 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { Readable } from 'stream'
 import type { Collections } from '@nuxt/content'
+import {
+  contentAuthorIds,
+  resolveContentAuthor,
+} from '../../utils/contentAuthors'
 
 type SitemapLink = { url: string; changefreq: string; priority: number }
 
@@ -29,6 +33,14 @@ const STATIC_ROUTES: SitemapLink[] = [
   { url: '/demo', changefreq: 'weekly', priority: 0.3 },
   { url: '/about', changefreq: 'monthly', priority: 0.4 },
   { url: '/about-this-site', changefreq: 'monthly', priority: 0.4 },
+  ...contentAuthorIds
+    .map((id) => resolveContentAuthor(id))
+    .filter((profile) => profile.kind === 'character')
+    .map((profile) => ({
+      url: profile.path!,
+      changefreq: 'monthly',
+      priority: 0.4,
+    })),
 ]
 
 // Content slugs render under these base routes. Each slug is emitted once per

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: Obsidian のフォント描画を救え
 slug: obsidian-css-font

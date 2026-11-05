@@ -68,6 +68,7 @@ const entries = computed<GalleryEntry[]>(() => {
 
       return {
         id: primary.slug,
+        authors: primary.authors,
         title: primary.title,
         date: primary.date ?? '',
         time: primary.time,

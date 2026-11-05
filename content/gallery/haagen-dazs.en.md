@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: haagen-dazs
 lang: en
 title: night dessert

@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: yakisoba
 lang: ja
 title: 春の昼

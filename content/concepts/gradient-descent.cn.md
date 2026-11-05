@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 梯度下降
 slug: gradient-descent
 summary: 根据损失对参数的梯度反复更新参数，让模型一步步走向损失更小的位置。

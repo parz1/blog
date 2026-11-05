@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: 漢字にルビを振る
 slug: ruby

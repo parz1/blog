@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 二元交叉熵
 slug: binary-cross-entropy
 summary: 衡量二分类概率预测与真实标签有多不一致的损失函数，会显著惩罚自信但错误的预测。

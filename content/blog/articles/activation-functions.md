@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 激活函数：让模型自己学特征
 slug: activation-functions

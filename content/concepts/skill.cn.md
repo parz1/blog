@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 智能体技能 Agent Skill
 slug: skill
 summary: 一个关于 Agent Skills 如何把特定任务的知识、指令与资源封装成可移植工作方法的工作笔记。

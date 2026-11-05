@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 智能体 Agent
 slug: agent
 summary: 一个关于 Agent 如何在环境中围绕目标，根据观察选择行动并利用反馈继续调整的工作笔记。

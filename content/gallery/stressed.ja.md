@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: stressed
 lang: ja
 title: 夕暮れ

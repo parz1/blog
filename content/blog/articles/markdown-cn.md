@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: 'Markdown 中文示例'
 description: '欢迎使用Markdown编辑内容，以下是一些基本的Markdown元素使用示例。'

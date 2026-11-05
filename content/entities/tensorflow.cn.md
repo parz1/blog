@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: TensorFlow
 slug: tensorflow
 summary: 一个用于构建、训练和部署机器学习模型的开源深度学习框架。

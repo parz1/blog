@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: 'OS 实验 - 使用 Docker 编译内核'
 description: '使用 Docker + qemu 快速编译内核并实现自定义系统调用'

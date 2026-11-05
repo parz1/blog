@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: yakisoba
 lang: cn
 title: 春昼

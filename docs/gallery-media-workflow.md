@@ -1,5 +1,7 @@
 # Gallery Media Workflow
 
+External-workspace note: existing media URLs and gallery reading are preserved. The old gallery import/publish scripts target the rollback content tree and now require explicit `BLOG_CONTENT_MODE=legacy`; their writer has not yet been adapted to blog-content. See [workspace and deployment](./blog-content-deployment.md).
+
 ## Decision
 
 Gallery should treat Live Photos as enhanced photos, not as a video grid.

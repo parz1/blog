@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: 光栅 Raster
 slug: raster
 summary: 一个关于光栅作为用像素网格表达连续视觉世界的表征方式的工作笔记。

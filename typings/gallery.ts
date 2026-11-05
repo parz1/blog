@@ -34,6 +34,7 @@ export type GalleryMedia = {
 }
 
 export type GalleryEntry = {
+  authors: import('../utils/contentAuthors').ContentCredit[]
   id: string
   title: string
   date: string

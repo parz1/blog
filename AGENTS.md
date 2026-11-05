@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-Nuxt 4 boots from `app.vue`, with file-based routes in `pages/` and shared shells in `layouts/`. UI elements live in `components/`, composables in `composables/`, and shared helpers in `utils/` plus TypeScript defs in `typings/`. Markdown content sits in `content/` under the schema from `content.config.ts`. Vite-managed assets go in `assets/`, passthrough files in `public/`, localization resources in `lang/` and `i18n/`, and any server handlers in `server/`.
+Nuxt 4 boots from `app.vue`, with file-based routes in `pages/` and shared shells in `layouts/`. UI elements live in `components/`, composables in `composables/`, and shared helpers in `utils/` plus TypeScript defs in `typings/`. Markdown is maintained in the sibling `../folio/content/` workspace (override with `CONTENT_WORKSPACE_DIR`), selected by its `publication.json`. The in-repo `content/` is a rollback copy, not the default source. Production consumes a validated release prepared before build; schemas stay in `content.config.ts`. See `docs/blog-content-deployment.md`. Vite-managed assets go in `assets/`, passthrough files in `public/`, localization resources in `lang/` and `i18n/`, and any server handlers in `server/`.
 
 ## Build, Test, and Development Commands
 
@@ -21,5 +21,7 @@ No automated suite ships yet, so add unit or integration coverage alongside mean
 Keep commits focused, linted, and linked to issues via `closed #123` when applicable. Pull requests should outline the change, list validation steps, attach UI captures when relevant, and mention any affected locales or content entries. The project does not enforce Git hooks or commit-message tooling.
 
 ## Content & Localization Notes
+
+All published Markdown in `content/` requires a nonempty ordered `authors` list. Use entries such as `{ id: parz1, roles: [idea, editing] }` or `{ id: koto, roles: [writing] }`; order determines first/second author, independently of contribution roles. Declare actual credits rather than automatically assigning a character or collaborator. Public identities live in `utils/contentAuthors.ts`; see `docs/content-authorship.md`. Run `pnpm test:authors` when changing attribution or frontmatter.
 
 Include `lang` metadata and slug variants when adding markdown so localized routes stay stable. Place translation keys in the `lang/` bundles rather than hard-coding strings. When changes depend on environment variables, update `.env.example` with safe placeholders to unblock collaborators.

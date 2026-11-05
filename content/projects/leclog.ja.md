@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Leclog
 slug: leclog
 summary: 講義録音、文字起こし、session リソース管理のための local-first な Tauri デスクトップアプリ。

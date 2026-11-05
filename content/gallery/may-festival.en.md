@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: may-festival
 lang: en
 title: afternoon

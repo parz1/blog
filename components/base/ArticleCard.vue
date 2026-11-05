@@ -70,14 +70,7 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
 </script>
 
 <template>
-  <NuxtLink
-    :to="
-      localePath(
-        `/blog/${article.slug ?? (article.path || '').split('/').pop()}`,
-      )
-    "
-    class="group block cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/50"
-  >
+  <div class="group relative block">
     <article
       :lang="articleLang"
       class="rounded-lg border border-transparent px-3 py-4 transition-colors duration-200 hover:border-gray-200 hover:bg-gray-50/70 dark:hover:border-gray-800 dark:hover:bg-gray-900/50"
@@ -97,6 +90,11 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
           </span>
           {{ i18nTime }}
         </time>
+        <ContentByline
+          :authors="article.authors"
+          compact
+          class="text-xs text-gray-500 dark:text-gray-400"
+        />
         <div
           v-if="activityBadge || languageBadges.length"
           class="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400"
@@ -123,11 +121,20 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
       <h2
         class="content-title font-serif text-xl font-medium leading-snug text-gray-900 group-hover:text-primary-600 dark:text-gray-100"
       >
-        {{ article.title }}
+        <NuxtLink
+          :to="
+            localePath(
+              `/blog/${article.slug ?? (article.path || '').split('/').pop()}`,
+            )
+          "
+          class="after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        >
+          {{ article.title }}
+        </NuxtLink>
       </h2>
       <p
         v-if="article.description"
-        class="content-description relative z-10 mt-1 line-clamp-2 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
+        class="content-description mt-1 line-clamp-2 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-400"
       >
         {{ article.description }}
       </p>
@@ -135,8 +142,8 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
         v-if="article.tags?.length"
         :tags="article.tags"
         appearance="card"
-        class="mt-2"
+        class="relative z-10 mt-2"
       />
     </article>
-  </NuxtLink>
+  </div>
 </template>

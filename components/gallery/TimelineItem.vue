@@ -41,6 +41,7 @@ const openMedia = (event: MouseEvent, media: GalleryMedia, index: number) => {
     <div class="timeline-copy">
       <time class="timeline-date">{{ entry.date }}</time>
       <h2>{{ entry.title }}</h2>
+      <ContentByline :authors="entry.authors" class="text-xs text-muted" />
       <p v-if="entry.caption">{{ entry.caption }}</p>
     </div>
 

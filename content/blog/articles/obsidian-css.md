@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 拯救我的 Obsidian 字体显示效果
 slug: obsidian-css-font

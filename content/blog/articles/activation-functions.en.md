@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 'Activation Functions: Why a Network Needs a Bend'
 slug: activation-functions

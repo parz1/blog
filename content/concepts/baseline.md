@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Baseline
 slug: baseline
 summary: A working note on baseline as the reference point that makes an experiment, model, or design decision interpretable.

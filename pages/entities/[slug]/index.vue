@@ -150,6 +150,10 @@ useHead(() => ({
         >
           {{ entity.title }}
         </h1>
+        <ContentByline
+          :authors="entity.authors"
+          class="mt-3 text-sm text-gray-500 dark:text-gray-400"
+        />
         <p
           v-if="entity.summary"
           class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400"

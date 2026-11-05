@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: このサイトの技術ノート
 slug: about-this-site
 description: このサイトのフロントエンド、コンテンツ、バックエンド、メディア処理、ビルド、ホスティングについて。

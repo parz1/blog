@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: log
 title: 把博客接到 Nuxt Studio 和 Oxc
 slug: nuxt-studio-oxc

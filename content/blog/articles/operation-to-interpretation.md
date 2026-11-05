@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 kind: post
 title: 从操作到解释
 slug: operation-to-interpretation

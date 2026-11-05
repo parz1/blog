@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Daemon
 slug: daemon
 summary: A working note on daemon as a long-running background process that keeps a capability available without direct foreground interaction.

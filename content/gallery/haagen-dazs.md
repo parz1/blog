@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 slug: haagen-dazs
 lang: cn
 title: 夜食

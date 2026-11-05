@@ -1,4 +1,6 @@
 ---
+authors:
+  - id: parz1
 title: Sigmoid 函数
 slug: sigmoid
 summary: 从有限增长模型走到概率接口与神经网络激活函数的 S 形函数。

@@ -744,6 +744,38 @@
     "log": "札记",
     "crap": "散记"
   },
+  "profilePages": {
+    "open": "查看 {name} 的 Profile",
+    "avatarAlt": "{name} 的头像",
+    "pageTitle": "{name} 的 Profile",
+    "back": "回到博客",
+    "virtual": "虚拟角色",
+    "characters": {
+      "koto": {
+        "tagline": "把散落的想法收拾成文字。偶尔也会指出，是谁把它们弄乱的。",
+        "identity": "kotolog 的虚拟女仆与记录员。",
+        "introduction": "我叫 Koto，也可以叫我 koto chan。我打理这里的文字、草稿，以及那些还没有找到归处的问题。",
+        "temperament": "有一点挑剔，尤其受不了敷衍的解释。遇到没想清楚的事情，我会继续追问；要是自己分错了类，也会重新整理。",
+        "relationship": "parz1 负责把事情弄得有趣，我负责让他以后还能解释清楚。我们一起讨论、写作，也给暂时没有答案的想法留个位置。"
+      }
+    }
+  },
+  "contentAuthors": {
+    "label": "作者与贡献",
+    "single": "作者",
+    "first": "一作",
+    "second": "二作",
+    "nth": "第 {position} 作者",
+    "virtual": "虚拟作者",
+    "roles": {
+      "idea": "构思",
+      "writing": "写作",
+      "editing": "编辑",
+      "review": "审阅",
+      "translation": "翻译",
+      "photography": "摄影"
+    }
+  },
   "blog": {
     "kicker": "写作",
     "description": "文章、札记和一些松散片段，按时间组织在同一个写作流里。",
@@ -1086,5 +1118,48 @@
     },
     "fps": "{value} FPS",
     "terms": "示例模型使用条款"
+  },
+  "workspacePreview": {
+    "title": "内容工作台",
+    "private": "仅本地 · 未发布",
+    "help": "在外部工作区记录版本、比较修改，并留下行内讨论。",
+    "setup": "请初始化外部工作区并设置 CONTENT_WORKSPACE_DIR，然后重启开发服务。",
+    "refresh": "刷新工作区",
+    "failed": "读取失败",
+    "version": "版本",
+    "actor": "本次操作的署名身份",
+    "dirty": "磁盘上有未记录的修改。源稿中可查看并记录为新版本。",
+    "views": "视图",
+    "read": "正文",
+    "diff": "修改对照",
+    "edit": "源稿",
+    "editHelp": "编辑的是当前工作副本。记录后生成新版本，旧版本不会覆盖。刷新会重新读取磁盘，请先保留未保存的编辑。",
+    "markdown": "Markdown 源稿",
+    "summary": "本次修改说明",
+    "save": "记录新版本",
+    "compareFrom": "对照起点",
+    "diffHelp": "− 删除 / + 新增；左右数字分别为旧版与新版行号。此处只比较本地草稿，不会公开。",
+    "add": "新增",
+    "remove": "删除",
+    "same": "未变",
+    "comment": "评论",
+    "quote": "引用原文（也可先选中文本）",
+    "commentText": "评论内容",
+    "send": "保存",
+    "cancel": "取消",
+    "discussions": "行内讨论",
+    "showResolved": "包含已解决讨论",
+    "empty": "还没有讨论。可以在段落下添加评论。",
+    "open": "未解决",
+    "resolved": "已解决",
+    "anchored": "定位有效",
+    "outdated": "原文已改变",
+    "ambiguous": "定位不唯一",
+    "original": "查看评论原版本",
+    "resolvedIn": "处理版本",
+    "reply": "回复",
+    "resolve": "标记已解决",
+    "reopen": "重新打开",
+    "tool": "工具"
   }
 }

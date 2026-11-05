@@ -1,6 +1,42 @@
+import {
+  collectionContentSource,
+  resolveContentInput,
+} from './lib/blog-content.mjs'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+import {
+  contentAuthorIds,
+  contentAuthorRoles,
+  isValidContentCredits,
+} from './utils/contentAuthors'
+
+const contentInput = resolveContentInput()
+const sourceFor = (pattern: string) =>
+  collectionContentSource(pattern, contentInput)
+
+const authorsSchema = z
+  .array(
+    z
+      .object({
+        id: z.enum(contentAuthorIds),
+        roles: z
+          .array(z.enum(contentAuthorRoles))
+          .min(1)
+          .refine(
+            (roles) => new Set(roles).size === roles.length,
+            'Duplicate contribution roles',
+          )
+          .optional(),
+      })
+      .strict(),
+  )
+  .min(1)
+  .refine(
+    isValidContentCredits,
+    'Each author and contribution role must appear once',
+  )
 
 const articleSchema = z.object({
+  authors: authorsSchema,
   title: z.string(),
   slug: z.string().optional(),
   kind: z.enum(['post', 'log', 'crap']),
@@ -34,8 +70,9 @@ export default defineContentConfig({
   collections: {
     pages: defineCollection({
       type: 'page',
-      source: '*.md',
+      source: sourceFor('*.md'),
       schema: z.object({
+        authors: authorsSchema,
         title: z.string(),
         slug: z.string().optional(),
         description: z.string().optional(),
@@ -44,8 +81,9 @@ export default defineContentConfig({
     }),
     concepts: defineCollection({
       type: 'page',
-      source: 'concepts/*.md',
+      source: sourceFor('concepts/*.md'),
       schema: z.object({
+        authors: authorsSchema,
         title: z.string(),
         slug: z.string(),
         summary: z.string().optional(),
@@ -74,8 +112,9 @@ export default defineContentConfig({
     }),
     entities: defineCollection({
       type: 'page',
-      source: 'entities/*.md',
+      source: sourceFor('entities/*.md'),
       schema: z.object({
+        authors: authorsSchema,
         title: z.string(),
         slug: z.string(),
         summary: z.string().optional(),
@@ -114,8 +153,9 @@ export default defineContentConfig({
     }),
     projects: defineCollection({
       type: 'page',
-      source: 'projects/*.md',
+      source: sourceFor('projects/*.md'),
       schema: z.object({
+        authors: authorsSchema,
         title: z.string(),
         slug: z.string(),
         summary: z.string(),
@@ -141,19 +181,19 @@ export default defineContentConfig({
     }),
     articles: defineCollection({
       type: 'page',
-      source: 'blog/articles/*.md',
+      source: sourceFor('blog/articles/*.md'),
       schema: articleSchema,
     }),
     columns: defineCollection({
       type: 'page',
-      source: 'blog/columns/*.md',
+      source: sourceFor('blog/columns/*.md'),
       schema: z.object({
         title: z.string(),
         slug: z.string(),
         lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
         description: z.string(),
         status: z.enum(['active', 'completed', 'paused']),
-        author: z.string().optional(),
+        authors: authorsSchema,
         started: z.number().int().optional(),
         question: z.string().optional(),
         thesis: z.string().optional(),
@@ -173,8 +213,9 @@ export default defineContentConfig({
     }),
     gallery: defineCollection({
       type: 'page',
-      source: 'gallery/*.md',
+      source: sourceFor('gallery/*.md'),
       schema: z.object({
+        authors: authorsSchema,
         slug: z.string(),
         lang: z.enum(['cn', 'ja', 'en']).default('cn').optional(),
         title: z.string(),

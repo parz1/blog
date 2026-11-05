@@ -3,7 +3,8 @@ title: 深度学习：LLM
 slug: deep-learning-llm
 description: 从语言建模与 Transformer 开始，理解大语言模型的训练、推理和应用边界。
 status: active
-author: parz1
+authors:
+  - id: parz1
 started: 2026
 question: 大语言模型为何只是在预测下一个 Token，却表现出理解与推理的形态？
 thesis: LLM 的能力来自数据、架构、训练目标与推理过程的共同作用，而不是单一算法的魔法。
