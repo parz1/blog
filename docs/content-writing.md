@@ -53,4 +53,6 @@ pnpm content:release migrate-status --workspace D:\projects\folio
 
 2026-11-05：本机旧清单的 88 份内容完成迁移；逐份编译核对，公开元数据、署名、slug、日期、业务状态、正文文字及目录保持一致，Koto 草稿未入包。启动开发服务器后，临时新增一篇 draft 文章取得 SSR 200，修改后正文更新，删除后变为 404，全程没有修改清单或重启；预览带 noindex。临时文件已删除。发布上传、generation 冲突、超时不重试与回执检查使用模拟服务测试，未对正式渠道写入。
 
-相关测试 37 项通过，1 项真实数据库测试因未提供专用测试数据库跳过；修改文件的格式和 lint 检查通过。Vercel preset 生产构建通过，并在断开 Folio/Redis/PostgreSQL 的本地构建产物中验证保底快照可读、Corepack 文章 SSR 200、canonical/hreflang/JSON-LD 存在、88 份公开文档与业务状态完整、草稿未混入。尚未部署这次博客代码，也未执行正式内容发布；首次使用新发布流程前，需要先部署本次博客的生命周期兼容及渲染契约更新。
+相关测试最终 39 项通过，1 项真实数据库测试因未提供专用测试数据库跳过；修改文件的格式和 lint 检查通过。Vercel preset 生产构建通过，并在断开 Folio/Redis/PostgreSQL 的构建产物中验证保底快照可读、Corepack 文章 SSR 200、canonical/hreflang/JSON-LD 存在、88 份公开文档与业务状态完整、草稿未混入。
+
+本次博客代码已部署，并用 `pnpm content:publish` 完成真实发布验收；博客在同一个 deployment 下采用 generation 3，原有 201 个页面巡检通过，Koto 草稿在三个语言入口均为 404。日常现在直接使用上述预览和发布命令即可。详见 [部署验收记录](./writing-publish-deployment.md)。
