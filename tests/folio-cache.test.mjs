@@ -1,11 +1,49 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createFolioCache } from '../lib/folio-cache.mjs'
+test('shared cache timeout and failed persistence never block or reject reading a verified snapshot', async () => {
+  let persists = 0
+  const errors = []
+  const cache = createFolioCache({
+    bootstrap: snapshot(1),
+    readBudget: 5,
+    read: () => new Promise(() => {}),
+    channel: async () => ({ id: id(1), sha256: id(1), generation: 1 }),
+    write: async () => {
+      persists++
+      throw Error('storage unavailable')
+    },
+    onError: (stage) => errors.push(stage),
+  })
+  const value = await cache.get()
+  assert.equal(value.snapshot.id, id(1))
+  assert.equal(value.degraded, false)
+  assert.equal(persists, 1)
+  assert.deepEqual(errors, ['persist'])
+})
 const id = (n) => String(n).repeat(64)
 const snapshot = (n) => ({
   contract: 'test',
   id: id(n),
   collections: { articles: [{ slug: 'post-' + n }] },
+})
+test('late durable restore is adopted after a bounded first response without replacing a newer live generation', async () => {
+  let resolveRead
+  const gate = new Promise((resolve) => {
+    resolveRead = resolve
+  })
+  const tasks = []
+  const cache = createFolioCache({
+    bootstrap: snapshot(1),
+    read: () => gate,
+    readBudget: 1,
+    foregroundBudget: 1,
+    channel: () => new Promise(() => {}),
+  })
+  assert.equal((await cache.get((task) => tasks.push(task))).snapshot.id, id(1))
+  resolveRead({ snapshot: snapshot(2), generation: 2, verifiedAt: 1000 })
+  await tasks[0]
+  assert.equal((await cache.get()).snapshot.id, id(2))
 })
 test('publication switches only after full compilation; failures preserve last good; retry recovers', async () => {
   let clock = 100000,
