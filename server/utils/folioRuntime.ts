@@ -59,8 +59,12 @@ async function createRuntime() {
     process.env.FOLIO_CACHE_DATABASE_URL ||
     process.env.POSTGRES_URL ||
     process.env.DATABASE_URL
-  const postgres =
-    !redis && postgresUrl ? postgresPersistence(postgresUrl, key) : undefined
+  let postgres: ReturnType<typeof postgresPersistence> | undefined
+  try {
+    if (!redis && postgresUrl) postgres = postgresPersistence(postgresUrl, key)
+  } catch {
+    /* An invalid optional cache URL must not disable the bundled snapshot. */
+  }
   async function download(path: string, max: number) {
     if (!origin) throw new Error('Folio origin unavailable')
     const response = await fetch(new URL(path, origin), {
@@ -131,6 +135,7 @@ async function createRuntime() {
             ).toString('base64')
             if (redis && encoded.length > 900000) return
             if (postgres) return postgres.write(record.generation, encoded)
+            if (!redis) return
             // A slower instance cannot replace a newer generation's last-known-good.
             await redis.eval(
               "local old=redis.call('HGET',KEYS[1],'generation'); if not old or tonumber(ARGV[1])>=tonumber(old) then redis.call('HSET',KEYS[1],'generation',ARGV[1],'body',ARGV[2]); end; return 1",

@@ -11,6 +11,8 @@ if (process.env.VERCEL || process.env.NITRO_PRESET === 'vercel') {
     'UPSTASH_REDIS_REST_TOKEN',
   ])
     delete env[key]
+  // The fallback must also survive an invalid optional cache configuration.
+  env.FOLIO_CACHE_DATABASE_URL = 'invalid-cache-url'
   const script = `
     import {createServer} from 'node:http';
     import handler from './.vercel/output/functions/__fallback.func/index.mjs';

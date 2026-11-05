@@ -85,6 +85,8 @@ Copy `.env.example` to `.env` and fill in what you need:
 
 ## External content workspace
 
+Production now reads published Folio releases at runtime: publishing ordinary Markdown does not rebuild the blog. SSR, search, lists and sitemap share a validated snapshot, with memory/shared-cache/bundled fallbacks. See [runtime delivery and SEO](./docs/folio-runtime.md). Build-time release URL/SHA settings below remain the cold-start fallback baseline.
+
 The next design is local-first: editable Markdown plus local SQLite history, comments and a durable sync queue. A Vercel service provides multi-device synchronization and explicit publication backed by cloud storage; Git is not required. See the [local-first design](../folio/docs/serverless-content-service-design.md) and [implementation plan](../folio/docs/serverless-content-service-plan.md). This is documentation only; the existing pipeline below remains active until an explicit migration.
 
 The default local content source is `../folio/content/`, selected by `publication.json`; `content/` in this repository is retained only as a rollback copy. Set `CONTENT_WORKSPACE_DIR` for another location. Unselected drafts and private discussions do not enter normal site collections.
