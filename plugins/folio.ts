@@ -39,5 +39,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (last) await load()
     })
   }
-  return { provide: { folioSnapshot: load } }
+  return {
+    provide: {
+      folioSnapshot: load,
+      folioRefresh: () => {
+        pending = undefined
+        return load()
+      },
+    },
+  }
 })

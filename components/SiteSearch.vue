@@ -46,6 +46,8 @@ const localePath = useLocalePath()
 
 const searchTerm = ref('')
 const folioRelease = useState('folio-release', () => '')
+const { open: searchOpen } = useContentSearch()
+const app = useNuxtApp()
 
 const collections: SearchCollectionConfig[] = [
   {
@@ -172,7 +174,11 @@ const mapSections = (
   })
 }
 
-const { data: searchItems, status } = await useLazyAsyncData(
+const {
+  data: searchItems,
+  status,
+  refresh: refreshSearchItems,
+} = await useLazyAsyncData(
   'site-search-items',
   async () => {
     const [
@@ -239,6 +245,13 @@ const { data: searchItems, status } = await useLazyAsyncData(
     watch: [folioRelease],
   },
 )
+
+watch(searchOpen, async (open) => {
+  if (!open || (import.meta.dev && !useRuntimeConfig().public.folioRuntime))
+    return
+  await app.$folioRefresh()
+  await refreshSearchItems()
+})
 
 const contentLocale = computed(() => normalizeContentLocale(locale.value))
 
