@@ -1,4 +1,5 @@
 import { rubyHook } from './utils/rubyHook'
+import { fileURLToPath } from 'node:url'
 
 const cloudflarePreview =
   process.env.BLOG_DEPLOY_TARGET === 'cloudflare-preview'
@@ -228,7 +229,12 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    serverAssets: [{ baseName: 'folio', dir: '.local/folio-runtime' }],
+    serverAssets: [
+      {
+        baseName: 'folio',
+        dir: fileURLToPath(new URL('./.local/folio-runtime', import.meta.url)),
+      },
+    ],
     ...(cloudflarePreview
       ? {
           preset: 'cloudflare-module',
