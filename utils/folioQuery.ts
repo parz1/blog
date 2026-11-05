@@ -3,7 +3,34 @@ import type { Collections } from '@nuxt/content'
 export type FolioSnapshot = {
   contract: string
   id: string
+  generation?: number
   collections: { [K in keyof Collections]: Collections[K][] }
+}
+export function retainNewestSnapshot(
+  current: FolioSnapshot | undefined,
+  next: FolioSnapshot,
+): FolioSnapshot {
+  if (
+    !next ||
+    !/^[a-f0-9]{64}$/.test(next.id) ||
+    !Number.isSafeInteger(next.generation) ||
+    next.generation! < 0 ||
+    ![
+      'pages',
+      'articles',
+      'columns',
+      'concepts',
+      'entities',
+      'projects',
+      'gallery',
+    ].every((name) =>
+      Array.isArray(next.collections?.[name as keyof Collections]),
+    )
+  )
+    throw new Error('Invalid content snapshot')
+  return current && (current.generation || 0) > next.generation!
+    ? current
+    : next
 }
 export function createFolioQuery<K extends keyof Collections>(
   collection: K,

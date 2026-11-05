@@ -1,6 +1,27 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createFolioQuery } from '../utils/folioQuery.ts'
+import { createFolioQuery, retainNewestSnapshot } from '../utils/folioQuery.ts'
+test('client navigation retains a newer snapshot across cold fallback and accepts explicit higher-generation rollback', () => {
+  const base = {
+    contract: 'test',
+    collections: Object.fromEntries(
+      [
+        'pages',
+        'articles',
+        'columns',
+        'concepts',
+        'entities',
+        'projects',
+        'gallery',
+      ].map((k) => [k, []]),
+    ),
+  }
+  const newer = { ...base, id: '2'.repeat(64), generation: 2 },
+    cold = { ...base, id: '1'.repeat(64), generation: 0 }
+  assert.equal(retainNewestSnapshot(newer, cold), newer)
+  const rollback = { ...cold, generation: 3 }
+  assert.equal(retainNewestSnapshot(newer, rollback), rollback)
+})
 test('runtime queries preserve filtering, multiple sort precedence, projection, limit and do not mutate a snapshot', async () => {
   const rows = [
     { slug: 'a', kind: 'post', published: '2026-01-01' },

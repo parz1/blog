@@ -1,4 +1,5 @@
 import type { FolioSnapshot } from '~/utils/folioQuery'
+import { retainNewestSnapshot } from '~/utils/folioQuery'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const event = import.meta.server ? useRequestEvent() : undefined
@@ -17,14 +18,21 @@ export default defineNuxtPlugin((nuxtApp) => {
       headers: last ? { 'If-None-Match': `"${last.id}"` } : {},
     })
       .then(async (response) => {
-        if (response.status === 304 && last) return last
+        if (response.status === 304 && last) {
+          const generation = Number(response.headers.get('X-Folio-Generation'))
+          return Number.isSafeInteger(generation) &&
+            generation >= (last.generation || 0)
+            ? { ...last, generation }
+            : last
+        }
         if (!response.ok) throw new Error('Content temporarily unavailable')
         return (await response.json()) as FolioSnapshot
       })
       .then((value) => {
-        release.value = value.id
-        last = value
-        return value
+        const newest = retainNewestSnapshot(last, value)
+        release.value = newest.id
+        last = newest
+        return newest
       })
       .catch((error) => {
         pending = undefined
