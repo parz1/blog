@@ -12,6 +12,8 @@ const props = defineProps<{
   linkedLabel: string
   // the name on the plaque over the gate
   plaque: string
+  // by day the same scene is painted in daylight instead of at night
+  day: boolean
   // the notice board that stands in front of the wall
   board: { title: string; rules: string[] }
   // draw the garden in on arrival instead of showing it finished
@@ -720,11 +722,16 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
           place[0] + x + Math.cos(turn) * out,
           y + Math.sin(turn) * out,
           place[1] + (random() - 0.5) * 4,
-          chance < 0.08
-            ? PAINT.shade
-            : chance < 0.2
-              ? PAINT.lilac
-              : blend(PAINT.lilacLight, PAINT.fleck, random()),
+          // pale strokes on the night wall, deep ones on the bright day wall
+          props.day
+            ? chance < 0.12
+              ? PAINT.fleck
+              : blend([0.27, 0.2, 0.52], [0.46, 0.36, 0.74], random())
+            : chance < 0.08
+              ? PAINT.shade
+              : chance < 0.2
+                ? PAINT.lilac
+                : blend(PAINT.lilacLight, PAINT.fleck, random()),
           1.7 + random() * 1.7,
           0,
           edge,
@@ -781,7 +788,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   // The notice board stands on the ground in front of the wall, to the right
   // of the path and turned towards it. On the way to the gate the camera stops
   // and reads it: see the frame loop.
-  const signTurn = -0.9
+  // on a narrow screen it faces the path more squarely, so it can be read
+  const signTurn = compact ? -0.5 : -0.9
   const signAt = {
     x: garden.gate.x + (compact ? 74 : 135) - half,
     z: -(garden.gate.y - 210),
@@ -1000,22 +1008,34 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     )
   }
 
-  // fireflies
-  for (let index = 0; index < (compact ? 46 : 80); index += 1)
-    push(
-      field,
-      -half - 120 + random() * (garden.width + 240),
-      22 + random() * 110,
-      140 - random() * (garden.depth + 300),
-      [1, 0.9, 0.42],
-      1.2,
-      {
-        size: 7 + random() * 4,
-        phase: random() * 60,
-        twinkle: [1 + random() * 2.2, 0.9],
-        wander: [30 + random() * 40, 10 + random() * 14, 30 + random() * 40],
-      },
-    )
+  // by night fireflies drift through the garden; by day, loose petals
+  if (props.day) {
+    for (let index = 0; index < (compact ? 90 : 170); index += 1)
+      dab(
+        garden.base.x + (random() - 0.5) * (garden.reach * 2 + 500),
+        20 + random() * 190,
+        garden.base.y + (random() - 0.5) * (garden.reach * 2 + 500),
+        random() < 0.7 ? PAINT.blossomLight : PAINT.blossom,
+        1.8 + random() * 1.6,
+        28,
+      )
+  } else {
+    for (let index = 0; index < (compact ? 46 : 80); index += 1)
+      push(
+        field,
+        -half - 120 + random() * (garden.width + 240),
+        22 + random() * 110,
+        140 - random() * (garden.depth + 300),
+        [1, 0.9, 0.42],
+        1.2,
+        {
+          size: 7 + random() * 4,
+          phase: random() * 60,
+          twinkle: [1 + random() * 2.2, 0.9],
+          wander: [30 + random() * 40, 10 + random() * 14, 30 + random() * 40],
+        },
+      )
+  }
 
   // The sky is painted with the same brush as the tree: banks of pale specks
   // drifting above the horizon, and a rim of far woods where sky meets ground.
@@ -1063,8 +1083,10 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
         angle,
         lift,
         blend(
-          blend([0.15, 0.14, 0.25], [0.24, 0.21, 0.37], random()),
-          [0.3, 0.2, 0.32],
+          props.day
+            ? blend([0.96, 0.95, 1], [0.86, 0.84, 0.97], random())
+            : blend([0.15, 0.14, 0.25], [0.24, 0.21, 0.37], random()),
+          props.day ? [1, 0.9, 0.94] : [0.3, 0.2, 0.32],
           warm * 0.6 * random(),
         ),
         15 + random() * 17,
@@ -1089,7 +1111,7 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
         ? PAINT.lilac
         : blend(
             blend(PAINT.leafDark, PAINT.leaf, random() * 0.4),
-            [0.12, 0.11, 0.21],
+            props.day ? [0.62, 0.68, 0.84] : [0.12, 0.11, 0.21],
             0.4 + high * 0.5,
           ),
       9 + random() * 9,
@@ -1199,14 +1221,53 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
 
   // how hard the visitor is moving, 0..1: the paint lifts off while they do
   const uRush = uniform(0)
-  // linear light: this is a deep violet on screen
-  const haze = vec3(0.018, 0.016, 0.042)
+  // The air, in linear light, by day and by night: what distance fades to,
+  // what something not yet known looks like, and the colours of the sky.
+  const AIR = props.day
+    ? {
+        haze: [0.56, 0.62, 0.82],
+        unknown: [0.5, 0.5, 0.64],
+        sky: [0.5, 0.62, 0.92],
+        glow: [0.5, 0.36, 0.3],
+        sun: [0.4, 0.34, 0.2],
+        ground: [0.16, 0.27, 0.15],
+      }
+    : {
+        haze: [0.018, 0.016, 0.042],
+        unknown: [0.075, 0.065, 0.15],
+        sky: [0.012, 0.011, 0.034],
+        glow: [0.05, 0.034, 0.085],
+        sun: [0.05, 0.042, 0.08],
+        ground: [0.004, 0.009, 0.007],
+      }
+  const haze = vec3(...(AIR.haze as Rgb))
   // the pointer parts the paint along its line of sight, and a note that is
   // pointed at clears the leaves around itself
   const uRay = uniform(new THREE.Vector3(0, 0, -1))
   const uPart = uniform(0)
   const uFocus = uniform(new THREE.Vector3())
   const uOpen = uniform(0)
+
+  // Light adds to a dark sky but vanishes into a bright one. By day, whatever
+  // is made of light is drawn as translucent colour instead: its brightness
+  // becomes its opacity.
+  const daylight = (material: {
+    blending: number
+    colorNode: unknown
+    opacityNode: unknown
+  }) => {
+    if (!props.day) return
+
+    const colour = material.colorNode as ReturnType<typeof vec3>
+    const strength = colour.r.max(colour.g).max(colour.b)
+    const cover = strength.min(1).mul(0.92)
+
+    material.blending = THREE.NormalBlending
+    material.colorNode = colour.div(strength.max(0.001)).mul(0.78)
+    material.opacityNode = material.opacityNode
+      ? (material.opacityNode as ReturnType<typeof float>).mul(cover)
+      : cover
+  }
 
   const makeSprites = (
     cloud: ReturnType<typeof makeCloud>,
@@ -1316,7 +1377,7 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
         mix(
           mix(
             // not yet known: a pale violet outline against the night
-            vec3(0.075, 0.065, 0.15),
+            vec3(...(AIR.unknown as Rgb)),
             aCol.mul(front.mul(0.9).add(1)),
             learnt,
           ),
@@ -1359,6 +1420,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
       }
     }
 
+    if (!painted) daylight(material)
+
     const sprites = new THREE.Sprite(material)
 
     sprites.count = cloud.size.length
@@ -1388,25 +1451,33 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     }),
   )
 
+  const pageColour = vec3(page.r, page.g, page.b)
+  // 0..1 as the sky opens out of the plain page on arrival
+  const uDawn = uniform(reduced ? 1 : 0)
+
   dome.material.colorNode = mix(
+    pageColour,
     mix(
-      vec3(0.012, 0.011, 0.034),
-      vec3(page.r, page.g, page.b),
-      smoothstep(0.03, 0.5, up),
-    )
-      .add(vec3(0.05, 0.034, 0.085).mul(up.abs().mul(-7).exp()).mul(0.6))
-      .add(
-        vec3(0.05, 0.042, 0.08).mul(
-          toward
-            .dot(vec3(0.41, 0.41, -0.82))
-            .max(0)
-            .pow(5)
-            .mul(0.5),
+      mix(vec3(...(AIR.sky as Rgb)), pageColour, smoothstep(0.03, 0.5, up))
+        .add(
+          vec3(...(AIR.glow as Rgb))
+            .mul(up.abs().mul(-7).exp())
+            .mul(0.6),
+        )
+        .add(
+          vec3(...(AIR.sun as Rgb)).mul(
+            toward
+              .dot(vec3(0.41, 0.41, -0.82))
+              .max(0)
+              .pow(5)
+              .mul(0.5),
+          ),
         ),
-      ),
-    // the ground, dark like the lawn, hazing into the sky at the horizon
-    vec3(0.004, 0.009, 0.007),
-    smoothstep(-0.07, 0.004, up).oneMinus(),
+      // the ground, like the lawn, hazing into the sky at the horizon
+      vec3(...(AIR.ground as Rgb)),
+      smoothstep(-0.07, 0.004, up).oneMinus(),
+    ),
+    uDawn,
   )
   dome.renderOrder = -3
   dome.frustumCulled = false
@@ -1421,7 +1492,9 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   const edging = makeSprites(edge, true, true, true)
 
   edging.renderOrder = -1.5
-  skyGroup.add(dome, clouds, makeSprites(sky, false))
+  skyGroup.add(dome, clouds)
+  // stars and the moon belong to the night
+  if (!props.day) skyGroup.add(makeSprites(sky, false))
   scene.add(skyGroup, edging, painting, makeSprites(field, true))
 
   // mycelium: glowing threads under the ground, lit for the hovered note
@@ -1468,6 +1541,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     material.scaleNode = mine.mul(uThread).mul(pulse.mul(2.5).add(4))
     material.colorNode = varying(vec3(0.42, 0.95, 0.92).mul(pulse.add(0.35)))
     material.opacityNode = soft()
+
+    daylight(material)
 
     const threads = new THREE.Sprite(material)
 
@@ -1598,6 +1673,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     )
     material.opacityNode = soft()
 
+    daylight(material)
+
     const current = new THREE.Sprite(material)
 
     current.count = stream.gain.length
@@ -1637,6 +1714,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
         .mul(smoothstep(50, 220, distance)),
     )
     material.opacityNode = soft()
+
+    daylight(material)
 
     const threshold = new THREE.Sprite(material)
 
@@ -1691,7 +1770,11 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     )
     // brightest at its foot and darker towards the top; the veil stays pale
     material.colorNode = varying(
-      aCol.mul(mix(mix(float(1), float(0.22), high.pow(0.7)), float(1), veil)),
+      props.day
+        ? mix(aCol, pageColour, high.pow(0.7).mul(0.7).mul(veil.oneMinus()))
+        : aCol.mul(
+            mix(mix(float(1), float(0.22), high.pow(0.7)), float(1), veil),
+          ),
     )
     material.opacityNode = smoothstep(0.62, 1, length(uv().sub(0.5)).mul(2))
       .oneMinus()
@@ -1895,9 +1978,9 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   // where the camera would stand to read it squarely; the visitor only turns
   // half-way towards this
   const readPose = new THREE.Vector3(
-    signAt.x + Math.sin(signTurn) * 150,
+    signAt.x + Math.sin(signTurn) * (compact ? 190 : 150),
     64,
-    signAt.z + Math.cos(signTurn) * 150,
+    signAt.z + Math.cos(signTurn) * (compact ? 190 : 150),
   )
   const readLook = new THREE.Vector3(signAt.x, 56, signAt.z)
 
@@ -1920,6 +2003,7 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   })
 
   wingMaterial.colorNode = attribute('color', 'vec3')
+  daylight(wingMaterial)
 
   const makeButterfly = (palette: [Rgb, Rgb], scale: number) => {
     const geometry = new THREE.ShapeGeometry(wingShapes, 10)
@@ -1995,6 +2079,7 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   )
   wakeMaterial.colorNode = vec3(0.62, 0.5, 1).mul(0.8)
   wakeMaterial.opacityNode = soft()
+  daylight(wakeMaterial)
 
   const wakeSprites = new THREE.Sprite(wakeMaterial)
 
@@ -2099,8 +2184,9 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     const turnOut = Math.min(1, Math.max(0, (walk - (resume - 0.06)) / 0.11))
     // only a half turn: the board comes up large on the right while the gate
     // stays in view on the left, and the visitor walks on from there
+    // (a narrow screen has no room for both, so there the turn is nearly full)
     const reading =
-      0.52 *
+      (compact ? 0.94 : 0.52) *
       turnIn *
       turnIn *
       (3 - 2 * turnIn) *
@@ -2161,6 +2247,10 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     uSky.value.copy(skyGroup.position)
 
     uGrow.value = elapsed
+
+    const dawning = Math.min(1, Math.max(0, (elapsed - 0.2) / 3))
+
+    uDawn.value = reduced ? 1 : dawning * dawning * (3 - 2 * dawning)
     // seconds since the entrance began; the wall's specks each pick a moment
     uIntro.value = reduced ? 99 : Math.max(0, elapsed - 0.3)
 
@@ -2525,6 +2615,31 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
 
 .garden-night-end > * {
   pointer-events: auto;
+}
+
+.light .garden-night-label {
+  color: rgb(30 27 46);
+}
+
+.light .garden-night-label span {
+  text-shadow:
+    0 0 8px rgb(255 255 255 / 0.95),
+    0 0 16px rgb(255 255 255 / 0.8);
+}
+
+.light .garden-night-label.is-lit span,
+.light .garden-night-label:focus-visible span {
+  color: rgb(109 40 217);
+}
+
+.light .garden-night-title {
+  background:
+    radial-gradient(
+      ellipse 46% 62% at 50% 62%,
+      rgb(255 255 255 / 0.82),
+      transparent 72%
+    ),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.75), transparent 46%);
 }
 
 .garden-night-label {

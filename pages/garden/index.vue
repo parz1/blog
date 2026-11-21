@@ -180,14 +180,15 @@ const sceneHeight = computed(() => {
   )
 })
 
-// In dark mode the garden is the night garden: a WebGL/WebGPU scene. It only
-// exists in the browser, and falls back to the drawn garden if it cannot start.
+// The garden is a WebGL/WebGPU scene, painted at night in dark mode and in
+// daylight otherwise. It only exists in the browser, and falls back to the
+// drawn garden if it cannot start.
 const colorMode = useColorMode()
 const mounted = ref(false)
 const nightFailed = ref(false)
-const night = computed(
-  () => mounted.value && colorMode.value === 'dark' && !nightFailed.value,
-)
+// by day the same scene is painted in daylight
+const night = computed(() => mounted.value && !nightFailed.value)
+const day = computed(() => colorMode.value !== 'dark')
 
 // the header turns transparent over the night scene
 const gardenNight = useState('garden-night', () => false)
@@ -315,8 +316,9 @@ useHead({
 
     <GardenNight
       v-if="night"
-      :key="`night-${run}`"
+      :key="`night-${run}-${day}`"
       :items="items"
+      :day="day"
       :linked-label="t('garden.linked')"
       :plaque="t('garden.plaque')"
       :board="{

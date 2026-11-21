@@ -65,7 +65,7 @@ const right = spray('right', 120, 1)
 <template>
   <header class="flex flex-col items-center px-6 text-center">
     <p
-      class="garden-night-kicker pl-[0.32em] text-xs font-medium uppercase tracking-[0.32em] text-slate-200"
+      class="garden-night-kicker pl-[0.32em] text-xs font-medium uppercase tracking-[0.32em] text-slate-600 dark:text-slate-200"
     >
       {{ kicker }}
     </p>
@@ -91,7 +91,7 @@ const right = spray('right', 120, 1)
       </svg>
 
       <h1
-        class="garden-night-heading font-serif text-5xl font-semibold leading-tight text-white sm:text-6xl"
+        class="garden-night-heading font-serif text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl dark:text-white"
       >
         {{ title }}
       </h1>
@@ -153,6 +153,13 @@ const right = spray('right', 120, 1)
 
 .garden-night-dot {
   animation: garden-night-dot 1.3s ease-out both;
+}
+
+.light .garden-night-heading,
+.light .garden-night-kicker {
+  text-shadow:
+    0 0 18px rgb(255 255 255 / 0.95),
+    0 2px 6px rgb(255 255 255 / 0.8);
 }
 
 @keyframes garden-night-dot {
