@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 import { loadPublishingToken } from '../lib/publishing-credential.mjs'
 import { contentWorkspaceRoot } from '../lib/blog-content.mjs'
 import { compileRelease } from '../lib/folio-compiler.mjs'
+import { loadLibraryAdapter } from '../lib/library-publishing-adapter.mjs'
 import {
   publishContent,
   defaultDeliveryOrigin,
@@ -23,6 +24,7 @@ try {
     dryRun: values['dry-run'],
     compile: compileRelease,
     loadToken: loadPublishingToken,
+    library: await loadLibraryAdapter(),
   })
   console.log(JSON.stringify(result, null, 2))
   console.log(

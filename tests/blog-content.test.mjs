@@ -10,6 +10,7 @@ import {
   validateContentRelease,
   approveContent,
   collectionContentSource,
+  resolveContentInput,
   sha256,
 } from '../lib/blog-content.mjs'
 
@@ -173,7 +174,10 @@ test('release collection input uses exact paths and preserves original content p
     collectionContentSource('*.md', input).map((entry) => entry.include),
     ['about.md'],
   )
-  assert.equal(collectionContentSource('*.md', { mode: 'legacy' }), '*.md')
+  assert.throws(
+    () => resolveContentInput({ BLOG_CONTENT_MODE: 'legacy' }),
+    /Unknown BLOG_CONTENT_MODE/,
+  )
 })
 
 test('HTTPS transport accepts a pinned package and redacts download failures', async (t) => {

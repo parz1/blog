@@ -15,7 +15,7 @@ dist
 .local
 .claude/settings.local.json
 
-# 原始照片暂存区（gallery:publish 的输入，不进仓库）
+# 本地原始照片暂存区
 imports/
 
 # Live 视频走 R2 CDN，本地 mp4 不进仓库
@@ -24,3 +24,6 @@ public/gallery/*-live.mp4
 .wrangler/
 .playwright-cli/
 .env*
+
+# Authoring lives in the sibling Folio workspace.
+/content/

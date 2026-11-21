@@ -138,10 +138,12 @@ export const contentSchemas = {
     version: z.string().optional(),
     tags: z.array(z.string()).optional(),
     updated: z.string(),
-    repo: z.object({
-      owner: z.string(),
-      name: z.string(),
-    }),
+    repo: z
+      .object({
+        owner: z.string(),
+        name: z.string(),
+      })
+      .optional(),
     links: z
       .array(
         z.object({

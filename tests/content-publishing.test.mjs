@@ -238,6 +238,28 @@ test('dry-run compiles and generates artifacts without touching credentials or n
   assert.equal(manifest.entries.length, 1)
 })
 
+test('reviewed GUI candidate refuses changed files or a changed channel before loading credentials', async (t) => {
+  const { root } = await fixture(t)
+  const release = await createContentRelease(root)
+  for (const mode of ['file', 'channel']) {
+    await assert.rejects(
+      publishContent({
+        root,
+        expectedReleaseId: mode === 'file' ? '0'.repeat(64) : release.id,
+        expectedChannel: { id: 'a'.repeat(64), generation: 3 },
+        compile: () => assert.fail('should reject before compilation'),
+        loadToken: () => assert.fail('should not load credentials'),
+        fetchImpl: async () =>
+          Response.json({
+            id: mode === 'channel' ? 'b'.repeat(64) : 'a'.repeat(64),
+            generation: 3,
+          }),
+      }),
+      /changed after review/,
+    )
+  }
+})
+
 test('one command publishes exactly the compiled snapshot with CAS and records verified receipt', async (t) => {
   const { root } = await fixture(t)
   let compiledId,
@@ -303,5 +325,45 @@ test('failed compilation never loads a credential or posts; conflicts and uncert
       /409|uncertain|mismatch/,
     )
     assert.equal(posts, 1)
+  }
+})
+
+test('media review conflicts and incomplete uploads cannot activate a publication', async (t) => {
+  const { root } = await fixture(t)
+  for (const mode of ['fingerprint', 'upload']) {
+    let activated = false
+    await assert.rejects(
+      publishContent({
+        root,
+        expectedMediaFingerprint: 'reviewed',
+        library: {
+          prepareLibrary: async ({ release }) => ({
+            release,
+            blockers: [],
+            fingerprint: mode === 'fingerprint' ? 'changed' : 'reviewed',
+            files: [{}],
+          }),
+          uploadLibrary: async () => {
+            throw Error('private provider detail must not escape')
+          },
+        },
+        compile: async () => {},
+        loadToken: () => {
+          if (mode === 'fingerprint') assert.fail('credential access')
+          return 'x'.repeat(32)
+        },
+        fetchImpl: async (_url, options) => {
+          if (options.method) {
+            activated = true
+            assert.fail('publication before uploads ready')
+          }
+          return Response.json({ generation: 3 })
+        },
+      }),
+      mode === 'fingerprint'
+        ? /changed after review/
+        : /media upload or verification failed/,
+    )
+    assert.equal(activated, false)
   }
 })

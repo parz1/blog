@@ -16,8 +16,6 @@ const contentSyntaxCacheMarker = new URL(
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
-    // Studio still targets blog/content; enable only for explicit legacy rollback.
-    ...(process.env.BLOG_CONTENT_MODE === 'legacy' ? ['nuxt-studio'] : []),
     '@nuxt/devtools',
     '@nuxtjs/device',
     '@nuxt/ui',
@@ -26,28 +24,6 @@ export default defineNuxtConfig({
 
   ui: {
     fonts: false,
-  },
-
-  studio: {
-    route: '/_studio',
-    // Studio's dev mode writes edits straight back into content/*.md, which
-    // has repeatedly mangled published articles (frontmatter and MDC blocks
-    // get reformatted on save). Keep the editor, but never let it touch the
-    // working tree: with dev: false it goes through the git flow instead.
-    dev: false,
-    repository: {
-      provider: 'github',
-      owner: 'parz1',
-      repo: 'blog',
-      branch: process.env.STUDIO_BRANCH_NAME || 'main',
-      private: false,
-    },
-    i18n: {
-      defaultLocale: 'zh',
-    },
-    editor: {
-      iconLibraries: ['carbon', 'lucide'],
-    },
   },
 
   vite: {
@@ -201,6 +177,13 @@ export default defineNuxtConfig({
   },
 
   hooks: {
+    'components:extend'(components) {
+      // Runtime releases may use MDC components absent from the build snapshot.
+      for (const component of components) {
+        if (/[/\\]components[/\\]content[/\\]/i.test(component.filePath))
+          component.global = true
+      }
+    },
     'content:file:beforeParse'({ file }) {
       rubyHook(file)
     },
@@ -245,7 +228,6 @@ export default defineNuxtConfig({
           cloudflare: { nodeCompat: true, deployConfig: false },
           ignore: [
             '**/__local/**',
-            '**/localGalleryUpload.*',
             '**/localContentWorkspace.*',
           ],
           routeRules: {
