@@ -1806,103 +1806,124 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
   slate.width = 640
   slate.height = 1120
 
+  // The board is written once its handwriting has arrived. The scene does not
+  // wait for that: the board is the last thing to appear, so the fonts load
+  // while the wall and the gate are being drawn.
+  let writeBoard: (() => void) | undefined
+  let lettered: Promise<unknown> = Promise.resolve()
+
   {
     const pen = slate.getContext('2d')!
     const words = [props.board.title, ...props.board.rules].join('')
-    // kana means Japanese, which has its own hand; otherwise the Chinese one
-    const cjk = /[\u3040-\u30ff]/.test(words)
-      ? '"Yomogi", "Long Cang"'
-      : '"Long Cang", "Yomogi"'
+    // kana means Japanese, which has its own hand; otherwise the Chinese one.
+    // Only one of the two is named, so only its slices are fetched.
+    const japanese = /[\u3040-\u30ff]/.test(words)
+    const cjk = japanese ? '"Yomogi"' : '"Long Cang"'
+    // Each hand comes as a couple of hundred small faces. Their stylesheet is
+    // fetched here, by the scene, so the list is not written into every page.
+    const faces = japanese
+      ? import('@fontsource/yomogi/400.css')
+      : /[\u2e80-\u9fff]/.test(words)
+        ? import('@fontsource/long-cang/400.css')
+        : Promise.resolve()
     const hand = `"Caveat", ${cjk}, "HanziPen SC", "Hannotate SC", "Klee", "Bradley Hand", "Segoe Print", "Kaiti SC", "KaiTi", cursive`
 
     // the slices these words need have to arrive before they can be drawn;
     // if they do not, the system's own handwriting stands in
-    await Promise.race([
-      Promise.all(
-        ['700 96px', '500 45px'].map((weight) =>
-          document.fonts.load(`${weight} ${hand}`, `${words}1234`),
-        ),
-      ).catch(() => undefined),
-      new Promise((resolve) => setTimeout(resolve, 2500)),
+    lettered = Promise.race([
+      faces
+        .then(() =>
+          Promise.all(
+            ['700 96px', '500 45px'].map((weight) =>
+              document.fonts.load(`${weight} ${hand}`, `${words}1234`),
+            ),
+          ),
+        )
+        .catch(() => undefined),
+      new Promise((resolve) => setTimeout(resolve, 4000)),
     ])
 
-    const shade = pen.createLinearGradient(0, 0, 0, 1120)
+    writeBoard = () => {
+      const shade = pen.createLinearGradient(0, 0, 0, 1120)
 
-    shade.addColorStop(0, '#1b1630')
-    shade.addColorStop(1, '#0e0b1b')
-    pen.fillStyle = shade
-    pen.fillRect(0, 0, 640, 1120)
+      shade.addColorStop(0, '#1b1630')
+      shade.addColorStop(1, '#0e0b1b')
+      pen.fillStyle = shade
+      pen.fillRect(0, 0, 640, 1120)
 
-    // a dusting of paint, thicker towards the foot, ties it to the meadow
-    const flecks = ['#d9c9ff', '#b9a3f2', '#f6b3da', '#9fcf86', '#ffffff']
+      // a dusting of paint, thicker towards the foot, ties it to the meadow
+      const flecks = ['#d9c9ff', '#b9a3f2', '#f6b3da', '#9fcf86', '#ffffff']
 
-    for (let index = 0; index < 900; index += 1) {
-      const low = random() ** 0.35
+      for (let index = 0; index < 900; index += 1) {
+        const low = random() ** 0.35
 
-      pen.globalAlpha = 0.12 + random() * 0.5 * low ** 3
-      pen.fillStyle = flecks[Math.floor(random() * flecks.length)]!
-      pen.beginPath()
-      pen.arc(random() * 640, low * 1120, 1.5 + random() * 4.5, 0, 6.3)
-      pen.fill()
-    }
-
-    // the frame of the board
-    pen.globalAlpha = 1
-    pen.strokeStyle = '#4a3d78'
-    pen.lineWidth = 22
-    pen.strokeRect(11, 11, 618, 1098)
-    pen.strokeStyle = '#8d79c9'
-    pen.lineWidth = 3
-    pen.strokeRect(25, 25, 590, 1070)
-
-    pen.textBaseline = 'alphabetic'
-    pen.fillStyle = '#f3edff'
-    pen.font = `700 ${/[\u3040-\u30ff]/.test(words) ? 92 : 112}px ${hand}`
-    pen.fillText(props.board.title, 64, 196, 512)
-
-    // a quick underline, drawn by hand
-    pen.strokeStyle = '#f6b3da'
-    pen.lineWidth = 6
-    pen.lineCap = 'round'
-    pen.beginPath()
-    pen.moveTo(64, 238)
-    pen.bezierCurveTo(200, 220, 330, 256, 470, 232)
-    pen.stroke()
-
-    // the three hands differ in how large they write
-    const kana = /[\u3040-\u30ff]/.test(words)
-    const size = kana ? 46 : /[\u4e00-\u9fff]/.test(words) ? 52 : 54
-
-    pen.font = `500 ${size}px ${hand}`
-
-    let baseline = 340
-
-    for (const [index, rule] of props.board.rules.entries()) {
-      pen.fillStyle = '#f6b3da'
-      pen.fillText(`${index + 1}`, 64, baseline)
-      pen.fillStyle = '#ece6fa'
-
-      // wrap by words where there are spaces, otherwise by character
-      const parts = rule.includes(' ') ? rule.split(/(?<= )/) : Array.from(rule)
-      let row = ''
-
-      for (const part of parts) {
-        // never start a row with a punctuation mark
-        if (
-          row &&
-          !/^[，。、；：！？,.;:!?]/.test(part) &&
-          pen.measureText(row + part).width > 452
-        ) {
-          pen.fillText(row.trimEnd(), 118, baseline)
-          row = ''
-          baseline += size * 1.3
-        }
-
-        row += part
+        pen.globalAlpha = 0.12 + random() * 0.5 * low ** 3
+        pen.fillStyle = flecks[Math.floor(random() * flecks.length)]!
+        pen.beginPath()
+        pen.arc(random() * 640, low * 1120, 1.5 + random() * 4.5, 0, 6.3)
+        pen.fill()
       }
 
-      pen.fillText(row.trimEnd(), 118, baseline)
-      baseline += size * 1.8
+      // the frame of the board
+      pen.globalAlpha = 1
+      pen.strokeStyle = '#4a3d78'
+      pen.lineWidth = 22
+      pen.strokeRect(11, 11, 618, 1098)
+      pen.strokeStyle = '#8d79c9'
+      pen.lineWidth = 3
+      pen.strokeRect(25, 25, 590, 1070)
+
+      pen.textBaseline = 'alphabetic'
+      pen.fillStyle = '#f3edff'
+      pen.font = `700 ${/[\u3040-\u30ff]/.test(words) ? 92 : 112}px ${hand}`
+      pen.fillText(props.board.title, 64, 196, 512)
+
+      // a quick underline, drawn by hand
+      pen.strokeStyle = '#f6b3da'
+      pen.lineWidth = 6
+      pen.lineCap = 'round'
+      pen.beginPath()
+      pen.moveTo(64, 238)
+      pen.bezierCurveTo(200, 220, 330, 256, 470, 232)
+      pen.stroke()
+
+      // the three hands differ in how large they write
+      const kana = /[\u3040-\u30ff]/.test(words)
+      const size = kana ? 46 : /[\u4e00-\u9fff]/.test(words) ? 52 : 54
+
+      pen.font = `500 ${size}px ${hand}`
+
+      let baseline = 340
+
+      for (const [index, rule] of props.board.rules.entries()) {
+        pen.fillStyle = '#f6b3da'
+        pen.fillText(`${index + 1}`, 64, baseline)
+        pen.fillStyle = '#ece6fa'
+
+        // wrap by words where there are spaces, otherwise by character
+        const parts = rule.includes(' ')
+          ? rule.split(/(?<= )/)
+          : Array.from(rule)
+        let row = ''
+
+        for (const part of parts) {
+          // never start a row with a punctuation mark
+          if (
+            row &&
+            !/^[，。、；：！？,.;:!?]/.test(part) &&
+            pen.measureText(row + part).width > 452
+          ) {
+            pen.fillText(row.trimEnd(), 118, baseline)
+            row = ''
+            baseline += size * 1.3
+          }
+
+          row += part
+        }
+
+        pen.fillText(row.trimEnd(), 118, baseline)
+        baseline += size * 1.8
+      }
     }
   }
 
@@ -1910,6 +1931,17 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
 
   slateTexture.colorSpace = THREE.SRGBColorSpace
   slateTexture.anisotropy = 8
+
+  // the board stays out of sight until it has been written
+  let boardWritten = false
+  let boardAt = -1
+
+  void (async () => {
+    await lettered
+    writeBoard?.()
+    slateTexture.needsUpdate = true
+    boardWritten = true
+  })()
 
   const signSide = new THREE.MeshBasicNodeMaterial({
     color: 0x0d0b18,
@@ -2456,9 +2488,15 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     }
 
     // the board is put up last in the entrance, and is gone once inside
-    const posting = Math.min(1, Math.max(0, (elapsed - 5.4) / 1.8))
+    if (boardWritten && boardAt < 0) boardAt = elapsed
+
+    // after the gate has been drawn, or as soon as its words are ready
+    const posting = boardWritten
+      ? Math.min(1, Math.max(0, (elapsed - Math.max(5.4, boardAt)) / 1.8))
+      : 0
     const posted =
-      (reduced ? 1 : posting * posting * (3 - 2 * posting)) * (1 - within)
+      (reduced ? Number(boardWritten) : posting * posting * (3 - 2 * posting)) *
+      (1 - within)
 
     signBoard.visible = posted > 0.01
     signFace.opacity = posted
@@ -2561,11 +2599,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
 </template>
 
 <style>
-/* Handwriting for the notice board, self-hosted like the site's other fonts
-   and only loaded with this scene. Each is split into small ranges, so a
-   visitor fetches just the few slices the board's words need. */
-@import '@fontsource/long-cang/chinese-simplified-400.css';
-@import '@fontsource/yomogi/japanese-400.css';
+/* Latin handwriting for the notice board, self-hosted like the site's other
+   fonts. The Chinese and Japanese hands are fetched by the scene itself. */
 @import '@fontsource/caveat/latin-400.css';
 @import '@fontsource/caveat/latin-700.css';
 
