@@ -26,31 +26,6 @@ const authorsSchema = z
     'Each author and contribution role must appear once',
   )
 
-// folio-library-1 content keeps the publication state in `status` and moves a
-// document's own state (a project being active, a column completed) to
-// `lifecycleStatus`. The site's schemas describe the document's own state, so
-// library frontmatter is folded back into that shape before it is parsed.
-export const publicationStates = [
-  'published',
-  'draft',
-  'in_review',
-  'withdrawn',
-] as const
-export function normalizeContentMetadata<T extends Record<string, unknown>>(
-  data: T,
-): T {
-  const publication = (publicationStates as readonly unknown[]).includes(
-    data.status,
-  )
-  if (typeof data.lifecycleStatus === 'string') {
-    data.status = data.lifecycleStatus as T['status']
-  } else if (publication) {
-    delete data.status
-  }
-  delete data.lifecycleStatus
-  return data
-}
-
 const articleSchema = z.object({
   authors: authorsSchema,
   title: z.string(),
@@ -163,13 +138,10 @@ export const contentSchemas = {
     version: z.string().optional(),
     tags: z.array(z.string()).optional(),
     updated: z.string(),
-    // not every project has a public repository
-    repo: z
-      .object({
-        owner: z.string(),
-        name: z.string(),
-      })
-      .optional(),
+    repo: z.object({
+      owner: z.string(),
+      name: z.string(),
+    }),
     links: z
       .array(
         z.object({

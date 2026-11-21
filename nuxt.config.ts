@@ -1,5 +1,4 @@
 import { rubyHook } from './utils/rubyHook'
-import { normalizeContentMetadata } from './lib/content-schema'
 import { fileURLToPath } from 'node:url'
 
 const cloudflarePreview =
@@ -203,10 +202,6 @@ export default defineNuxtConfig({
   hooks: {
     'content:file:beforeParse'({ file }) {
       rubyHook(file)
-    },
-    // library releases carry the publication state in `status`
-    'content:file:afterParse'({ content }) {
-      normalizeContentMetadata(content)
     },
   },
 
