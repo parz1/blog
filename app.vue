@@ -1,5 +1,11 @@
 <script setup>
 // import { SpeedInsights } from '@vercel/speed-insights/vue'
+
+// The garden is a centred composition, so its footer line is centred too.
+const route = useRoute()
+const footerSlot = computed(() =>
+  String(route.name ?? '').startsWith('garden') ? 'default' : 'left',
+)
 </script>
 
 <template>
@@ -16,7 +22,7 @@
     </UMain>
 
     <UFooter>
-      <template #left>
+      <template #[footerSlot]>
         <p class="text-muted text-sm">
           Copyright © {{ new Date().getFullYear() }}
           <span class="font-serif">parz1</span> • MIT License

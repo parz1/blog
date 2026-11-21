@@ -17,6 +17,13 @@ const normalizePath = (path: string) => {
 
 const normalizedRoutePath = computed(() => normalizePath(route.path))
 
+// The garden runs edge to edge, so the header's bottom rule fades away there.
+// Its night scene goes further and runs underneath a transparent header.
+const gardenNight = useState('garden-night', () => false)
+const isGardenRoute = computed(() =>
+  String(route.name ?? '').startsWith('garden'),
+)
+
 const isActivePath = (path?: string | null) => {
   if (!path) return false
   const target = normalizePath(localePath(path))
@@ -93,8 +100,12 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
     ],
   },
   {
-    label: t('menu.knowledge'),
-    active: isActivePath('/concepts') || isActivePath('/entities'),
+    label: t('garden.title'),
+    to: localePath('/garden'),
+    active:
+      isActivePath('/garden') ||
+      isActivePath('/concepts') ||
+      isActivePath('/entities'),
     children: [
       {
         label: t('menu.concepts'),
@@ -139,7 +150,11 @@ const navLinks = computed<NavigationMenuItem[]>(() => [
   >
     <UHeader
       mode="slideover"
-      class="backdrop-blur"
+      class="backdrop-blur transition-[border-color] duration-700 ease-out"
+      :class="{
+        'border-transparent': isGardenRoute,
+        'bg-transparent backdrop-blur-none': gardenNight,
+      }"
       :to="localePath('/about')"
       :ui="{ container: 'py-3' }"
     >

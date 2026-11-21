@@ -333,7 +333,8 @@ const links = computed<ContentSearchLink[]>(() => [
   {
     label: t('menu.knowledge'),
     description: t('menu.knowledgeDescription'),
-    icon: 'i-lucide-network',
+    to: localePath('/garden'),
+    icon: 'i-lucide-sprout',
     children: [
       {
         label: t('menu.concepts'),
