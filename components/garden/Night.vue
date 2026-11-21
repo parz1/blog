@@ -1817,17 +1817,29 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
     const words = [props.board.title, ...props.board.rules].join('')
     // kana means Japanese, which has its own hand; otherwise the Chinese one.
     // Only one of the two is named, so only its slices are fetched.
-    const cjk = /[\u3040-\u30ff]/.test(words) ? '"Yomogi"' : '"Long Cang"'
+    const japanese = /[\u3040-\u30ff]/.test(words)
+    const cjk = japanese ? '"Yomogi"' : '"Long Cang"'
+    // Each hand comes as a couple of hundred small faces. Their stylesheet is
+    // fetched here, by the scene, so the list is not written into every page.
+    const faces = japanese
+      ? import('@fontsource/yomogi/400.css')
+      : /[\u2e80-\u9fff]/.test(words)
+        ? import('@fontsource/long-cang/400.css')
+        : Promise.resolve()
     const hand = `"Caveat", ${cjk}, "HanziPen SC", "Hannotate SC", "Klee", "Bradley Hand", "Segoe Print", "Kaiti SC", "KaiTi", cursive`
 
     // the slices these words need have to arrive before they can be drawn;
     // if they do not, the system's own handwriting stands in
     lettered = Promise.race([
-      Promise.all(
-        ['700 96px', '500 45px'].map((weight) =>
-          document.fonts.load(`${weight} ${hand}`, `${words}1234`),
-        ),
-      ).catch(() => undefined),
+      faces
+        .then(() =>
+          Promise.all(
+            ['700 96px', '500 45px'].map((weight) =>
+              document.fonts.load(`${weight} ${hand}`, `${words}1234`),
+            ),
+          ),
+        )
+        .catch(() => undefined),
       new Promise((resolve) => setTimeout(resolve, 4000)),
     ])
 
@@ -2587,11 +2599,8 @@ const start = async (host: HTMLElement, element: HTMLCanvasElement) => {
 </template>
 
 <style>
-/* Handwriting for the notice board, self-hosted like the site's other fonts
-   and only loaded with this scene. Each is split into small ranges, so a
-   visitor fetches just the few slices the board's words need. */
-@import '@fontsource/long-cang/400.css';
-@import '@fontsource/yomogi/400.css';
+/* Latin handwriting for the notice board, self-hosted like the site's other
+   fonts. The Chinese and Japanese hands are fetched by the scene itself. */
 @import '@fontsource/caveat/latin-400.css';
 @import '@fontsource/caveat/latin-700.css';
 
