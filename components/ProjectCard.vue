@@ -6,7 +6,7 @@ type ProjectCardItem = {
   status: string
   version?: string
   tags?: string[]
-  repo: {
+  repo?: {
     owner: string
     name: string
   }
@@ -37,7 +37,10 @@ const { t } = useI18n()
           >
             {{ project.title }}
           </h2>
-          <p class="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400">
+          <p
+            v-if="project.repo"
+            class="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400"
+          >
             {{ project.repo.owner }}/{{ project.repo.name }}
           </p>
         </div>

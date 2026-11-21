@@ -18,6 +18,21 @@ node --experimental-strip-types scripts/check-content-delivery.mjs --origin http
 
 > 2026-11-05 方向更新：博客继续使用 Vercel。后续采用本地 Markdown + SQLite 修订/评论/同步队列，云端数据库和对象存储负责多设备同步与明确发布，Git 非必需。见 [本地优先设计](../../folio/docs/serverless-content-service-design.md) 与 [实现计划](../../folio/docs/serverless-content-service-plan.md)。下文保留现有文件/构建包管线与当时的部署备选，仍可运行，尚未切换新引擎/云服务；Cloudflare 试部署另见测试记录。
 
+## 发布包格式与预览环境（2026-11-21）
+
+博客接受两种发布包，校验都在 `lib/blog-content.mjs` 的 `validateContentRelease`：
+
+| `schemaVersion`                         | 内容                                                                   | 发布 ID 签的是什么                                                              |
+| --------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 1                                       | `entries`（路径、SHA-256、Markdown）                                   | `entries` 的路径与摘要                                                          |
+| 2（`libraryContract: folio-library-1`） | 另有 `media`（blob 摘要、类型、字节数）和 `bindings`（文档用到的媒体） | `schemaVersion`、`libraryContract`、`entries` 的路径与摘要、`media`、`bindings` |
+
+版本 2 的媒体由 folio 服务直接提供，Markdown 里已经是完整的 HTTPS 地址，博客只校验 `media` 与 `bindings` 的结构和签名，不下载媒体。未知的版本号会被拒绝，不会按旧格式勉强读取。工作区的 `publication.json` 只列 Markdown，仍是版本 1。
+
+版本 2 的 frontmatter 把发布状态放在 `status: published`，文档自身的状态（项目 active、专栏 completed 等）放在 `lifecycleStatus`。站点的 schema 描述的是文档自身的状态，所以 `normalizeContentMetadata`（`lib/content-schema.ts`）在解析前把它折回原来的形状：有 `lifecycleStatus` 时用它覆盖 `status`，否则去掉表示发布状态的 `status`。Nuxt Content 构建（`content:file:afterParse`）和运行时编译（`lib/folio-compiler.mjs`）走同一个函数。项目的 `repo` 现在可选，没有公开仓库的项目不显示 GitHub 区块。
+
+Vercel 的 Preview 环境必须有一对不限分支的 `BLOG_CONTENT_RELEASE_URL` 与 `BLOG_CONTENT_RELEASE_SHA256`，否则除 `codex/content-delivery` 之外的分支预览会在 `content:prepare` 一步因找不到内容来源而失败。两个值必须成对更新。
+
 日期：2026-10-29。本地读取与内容包准备已实现，远端私密仓库、R2 bucket 和线上构建钩子尚未配置，也没有执行部署。
 
 ## 当前目录与真源
@@ -151,7 +166,7 @@ Vercel 的 Deploy Hook 可以触发指定代码分支重建，但不会替我们
 - 85 对源文件逐字节校验一致，记录在工作区 migration-baseline.json；原 content 副本保留。
 - Koto 的三个版本、三个评论线程随目录改名保留；版本控件的桌面横坐标在正文右侧，diff 视图也使用同一右栏。
 - 实际修改外部文档能通过 Nuxt Content 监听反映到页面，原仓库副本不变；测试文字已恢复，摘要与基线重新核对一致。
-- 7 项内容包测试、9 项共同署名测试、10 项工作区测试通过。lint 只有原有警告。
+- 7 项内容包测试（2026-11-21 起为 8 项，新增版本 2 发布包）、9 项共同署名测试、10 项工作区测试通过。lint 只有原有警告。
 - 在工作区目录不存在的配置下，安装阶段 schema 类型生成通过；仅提供固定 JSON 包和 SHA-256 的生产构建通过。
 - Windows 正式产物已启动验证，三语博客、文章、知识库、项目、相册和个人页可访问；未发布 Koto 路由、工作台/API、旧 Studio 均返回 404。
 - 检查了 351 份公开文本资源，未发现试点验收评论。没有创建远端仓库、R2、Cloudflare 项目或线上部署。

@@ -70,9 +70,11 @@ const renderedLang = computed(() =>
   toHtmlLang(project.value?.lang ?? locale.value),
 )
 
+// a project without a public repository has no GitHub status to load
+const repo = computed(() => project.value?.repo)
 const githubQuery = computed(() => ({
-  owner: project.value?.repo.owner ?? 'minerei-devs',
-  repo: project.value?.repo.name ?? 'leclog',
+  owner: repo.value?.owner,
+  repo: repo.value?.name,
 }))
 
 const {
@@ -83,6 +85,7 @@ const {
 } = await useFetch<GitHubRepoStatus>('/api/github/repo', {
   query: githubQuery,
   watch: [githubQuery],
+  immediate: Boolean(repo.value),
 })
 
 const formatDate = (
@@ -178,6 +181,7 @@ useHead(() => ({
 
         <div class="mt-5 flex flex-wrap gap-2">
           <UButton
+            v-if="project.repo"
             icon="i-carbon-logo-github"
             color="neutral"
             variant="subtle"
@@ -220,7 +224,7 @@ useHead(() => ({
         <aside
           class="min-w-0 space-y-6 pt-3 pr-1 text-sm lg:sticky lg:top-[calc(var(--ui-header-height,4rem)+1.75rem)]"
         >
-          <section>
+          <section v-if="project.repo">
             <div class="mb-3 flex items-center justify-between gap-2">
               <h2
                 class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
@@ -301,7 +305,7 @@ useHead(() => ({
             />
           </section>
 
-          <section>
+          <section v-if="project.repo">
             <h2
               class="mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
             >
@@ -335,7 +339,7 @@ useHead(() => ({
             </p>
           </section>
 
-          <section>
+          <section v-if="project.repo">
             <h2
               class="mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
             >
