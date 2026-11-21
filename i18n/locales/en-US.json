@@ -471,8 +471,8 @@
     "logsDescription": "Devlogs, setup notes, and learning traces",
     "crap": "Crap",
     "crapDescription": "Random stuff and nonsense",
-    "knowledge": "Knowledge",
-    "knowledgeDescription": "Concepts and entities in the knowledge base",
+    "knowledge": "Digital Garden",
+    "knowledgeDescription": "Concepts and entities, grown into a garden",
     "concepts": "Concepts",
     "conceptsDescription": "Evolving concept notes and research nodes",
     "entities": "Entities",
@@ -1161,5 +1161,30 @@
     "resolve": "Resolve",
     "reopen": "Reopen",
     "tool": "Tool"
+  },
+  "garden": {
+    "kicker": "A garden of notes",
+    "title": "Digital Garden",
+    "count": "{plants} plants · {stones} stones",
+    "simulate": "Simulate growth states",
+    "simulateNote": "every concept is still a seed, so states are assigned by a fixed rule to preview the style",
+    "simulated": "simulated",
+    "replay": "Grow again",
+    "links": "{count} connections",
+    "stone": "Stone",
+    "linked": "Linked",
+    "label": {
+      "medium": "Pointillism in three dimensions",
+      "materials": "{plants} concepts and {stones} entities, grown into a banyan grove along their links",
+      "inspiration": "Inspired by"
+    },
+    "plaque": "Garden Without Shore",
+    "board": {
+      "title": "Before you enter",
+      "rule1": "Scroll down to walk on.",
+      "rule2": "What lies behind the wall shows only past the gate.",
+      "rule3": "Notes hide among the leaves. Point, and the leaves part.",
+      "rule4": "A lit node is a door. Click to go in."
+    }
   }
 }

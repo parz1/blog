@@ -471,8 +471,8 @@
     "logsDescription": "开发记录、配置笔记和学习过程",
     "crap": "扯",
     "crapDescription": "扯淡随机的东西",
-    "knowledge": "知识库",
-    "knowledgeDescription": "概念和实体组成的知识库索引",
+    "knowledge": "数字花园",
+    "knowledgeDescription": "概念和实体长成的一座花园",
     "concepts": "概念",
     "conceptsDescription": "持续演化的概念笔记和研究节点",
     "entities": "实体",
@@ -1161,5 +1161,30 @@
     "resolve": "标记已解决",
     "reopen": "重新打开",
     "tool": "工具"
+  },
+  "garden": {
+    "kicker": "概念与事物的园子",
+    "title": "数字花园",
+    "count": "{plants} 株植物 · {stones} 块石头",
+    "simulate": "模拟成长状态",
+    "simulateNote": "目前所有概念都还是「种子」，这里按固定规则分配状态，仅用于预览画风",
+    "simulated": "模拟",
+    "replay": "重新生长",
+    "links": "{count} 条连接",
+    "stone": "石头",
+    "linked": "相连",
+    "label": {
+      "medium": "三维点彩",
+      "materials": "{plants} 条概念与 {stones} 个实体，沿着彼此的链接长成一片榕树",
+      "inspiration": "灵感来源"
+    },
+    "plaque": "无涯园",
+    "board": {
+      "title": "入园须知",
+      "rule1": "向下滚动，便是前行。",
+      "rule2": "墙后的一切，过门方见。",
+      "rule3": "叶间藏着笔记，指过去，叶会让开。",
+      "rule4": "亮着的结点，点一下便可入内。"
+    }
   }
 }

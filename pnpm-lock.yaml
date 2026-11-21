@@ -50,6 +50,15 @@ importers:
       '@deck.gl/mapbox':
         specifier: ^9.3.11
         version: 9.3.11(@deck.gl/core@9.3.11)(@luma.gl/core@9.3.6)(@math.gl/web-mercator@4.1.0)
+      '@fontsource/caveat':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/long-cang':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/yomogi':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@iconify-json/carbon':
         specifier: ^1.2.26
         version: 1.2.26
@@ -1052,11 +1061,17 @@ packages:
   '@floating-ui/vue@1.1.11':
     resolution: {integrity: sha512-HzHKCNVxnGS35r9fCHBc3+uCnjw9IWIlCPL683cGgM9Kgj2BiAl8x1mS7vtvP6F9S/e/q4O6MApwSHj8hNLGfw==}
 
+  '@fontsource/caveat@5.3.0':
+    resolution: {integrity: sha512-eHTfzQxFSW9ABERRLNruHoNJmKed2J7pqTUc5lp4a4POMgXGKpxmWj3d9Hz10kmAg6iuTTLe6UagbA4bnsmfQw==}
+
   '@fontsource/fira-code@5.3.0':
     resolution: {integrity: sha512-EJL968RJRkakubAj/coU8pSUaeTE5UNoRjtzAr6kGiSZ3jWuN8/AKWHwym/PFUaQL1q7IL/H+EXs4358YhrTBQ==}
 
   '@fontsource/inter@5.3.0':
     resolution: {integrity: sha512-RofMylZmjlJEfELXeNHFWBRcSs75rGU/6bV2S2jfnvv/3rPXPGe0LgUJTklcHZ9lM4OZmAVFhcJPnACfb91A3g==}
+
+  '@fontsource/long-cang@5.3.0':
+    resolution: {integrity: sha512-lCcBJb+LWZpYCVtGvQRiZPy5/EaGPuYLycpJXUIOz28EYGGqhTVWBRqY6ucaW8l1F8gvfjutY1PoAPUrFiP0wg==}
 
   '@fontsource/noto-serif-jp@5.3.0':
     resolution: {integrity: sha512-7dRFleN7F+uuJdcMW/fJmnl6KLZSn9dHCjAVTaWjTcT4hg5V4ECbi2qgIamI6rS/+yTt16KDLU+9aJi74r6ZxQ==}
@@ -1066,6 +1081,9 @@ packages:
 
   '@fontsource/source-serif-4@5.3.0':
     resolution: {integrity: sha512-yQz8xmIgMzks8zQbpuca3UYtjxK798XCyQAGdDXmzBgvV7sdoK6d0YvE9F9kiYxORCEMRBgGZDZsSYcXj5KvwA==}
+
+  '@fontsource/yomogi@5.3.0':
+    resolution: {integrity: sha512-D35BWMd0BVhtYfpE7r1UfTNZHxaFVvLw4Rz2ym+yvEE7vlIfwtZEQFp4VFCvlcH+BwoAJD1mFH/r/XV7qDxeyg==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -9078,15 +9096,21 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
+  '@fontsource/caveat@5.3.0': {}
+
   '@fontsource/fira-code@5.3.0': {}
 
   '@fontsource/inter@5.3.0': {}
+
+  '@fontsource/long-cang@5.3.0': {}
 
   '@fontsource/noto-serif-jp@5.3.0': {}
 
   '@fontsource/noto-serif-sc@5.3.0': {}
 
   '@fontsource/source-serif-4@5.3.0': {}
+
+  '@fontsource/yomogi@5.3.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

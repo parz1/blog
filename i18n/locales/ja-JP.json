@@ -471,8 +471,8 @@
     "logsDescription": "開発ログ、設定メモ、学習の記録",
     "crap": "デタラメ",
     "crapDescription": "ランダムなものとナンセンス",
-    "knowledge": "Knowledge",
-    "knowledgeDescription": "Concepts と Entities をまとめた知識ベース",
+    "knowledge": "デジタルガーデン",
+    "knowledgeDescription": "概念とエンティティが育つ庭",
     "concepts": "Concepts",
     "conceptsDescription": "変化し続ける概念ノートと研究ノード",
     "entities": "Entities",
@@ -1161,5 +1161,30 @@
     "resolve": "解決済みにする",
     "reopen": "再開",
     "tool": "ツール"
+  },
+  "garden": {
+    "kicker": "概念と物の庭",
+    "title": "デジタルガーデン",
+    "count": "植物 {plants} 株 · 石 {stones} 個",
+    "simulate": "成長状態をシミュレート",
+    "simulateNote": "現在すべての概念が「種」のため、画風の確認用に固定ルールで状態を割り当てています",
+    "simulated": "シミュレーション",
+    "replay": "もう一度育てる",
+    "links": "{count} 件のつながり",
+    "stone": "石",
+    "linked": "つながり",
+    "label": {
+      "medium": "三次元の点描",
+      "materials": "{plants} の概念と {stones} の実体が、つながりに沿ってガジュマルの林に育ったもの",
+      "inspiration": "インスピレーション"
+    },
+    "plaque": "無涯園",
+    "board": {
+      "title": "入園のご案内",
+      "rule1": "下へスクロールすると、前へ進みます。",
+      "rule2": "壁の向こうは、門をくぐってから。",
+      "rule3": "葉のあいだにノートがあります。指せば葉がよけます。",
+      "rule4": "光る節は、クリックで中へ入れます。"
+    }
   }
 }

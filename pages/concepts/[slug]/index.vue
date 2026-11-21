@@ -263,13 +263,23 @@ useHead(() => ({
     </div>
 
     <template v-else>
-      <NuxtLink
-        :to="localePath('/concepts')"
-        class="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400"
+      <nav
+        class="mb-8 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
       >
-        <UIcon name="i-lucide-arrow-left" class="size-4" />
-        {{ t('menu.concepts') }}
-      </NuxtLink>
+        <NuxtLink
+          :to="localePath('/garden')"
+          class="inline-flex items-center gap-2 hover:text-primary-600"
+        >
+          <UIcon name="i-lucide-arrow-left" class="size-4" />
+          {{ t('garden.title') }}
+        </NuxtLink>
+        <span aria-hidden="true" class="text-gray-300 dark:text-gray-600"
+          >/</span
+        >
+        <NuxtLink :to="localePath('/concepts')" class="hover:text-primary-600">
+          {{ t('menu.concepts') }}
+        </NuxtLink>
+      </nav>
 
       <header
         :lang="renderedLang"
