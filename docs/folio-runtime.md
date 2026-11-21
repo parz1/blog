@@ -21,6 +21,8 @@
 
 正文由服务端渲染，搜索引擎不必执行 JavaScript。首页/列表/新 slug/sitemap 随运行时版本改变；搜索不用旧 SQL dump，导航发现新版本时刷新持久搜索组件。CDN 只缓存成功 HTML，404 和降级响应不缓存。
 
+发布状态管线使用 `folio-nuxt-2` 渲染契约：栏目/项目/实体的 `lifecycleStatus` 兼容原业务状态，旧包仍可渲染。Markdown parser 按文档创建并复用代码高亮器，防止标题锚点计数跨文章或跨发布累积；缓存随契约隔离。当前写作命令见 [本地写作](./content-writing.md)。
+
 保底或过期快照无法证明一个陌生 slug 已被删除，因此这种 404 转成 503 + Retry-After + noindex，避免临时故障造成错误移除索引。健康快照中的确不存在才返回 404。已知页面降级仍返回完整旧正文与原 canonical。预览部署应使用 noindex，不让测试内容索引。
 
 `X-Folio-Release`、`X-Folio-State`、`X-Folio-Source` 可用于核对响应来源。编译快照上限 3 MB、单文档 400 KB，元数据和标题也有限制，以控制 Serverless 响应和内存；超限发布不会替换原快照。新 Vue 组件或渲染契约变更仍需代码部署，普通 Markdown 发布不需要。没有承诺网页永远不故障；构建、上游、共享缓存、函数平台与用户网络是不同的失败边界。

@@ -8,6 +8,8 @@ import {
   prepareContentRelease,
   approveContent,
   sha256,
+  writeGeneratedPublication,
+  migratePublicationStatus,
 } from '../lib/blog-content.mjs'
 
 const { values, positionals } = parseArgs({
@@ -38,12 +40,15 @@ try {
     console.log(
       'Reviewed content digest selected. No deployment was triggered.',
     )
+  } else if (command === 'migrate-status') {
+    console.log(JSON.stringify(await migratePublicationStatus(root)))
   } else if (command === 'release') {
     if (!values.output)
       throw new Error('release requires --output NEW_JSON_FILE')
     const release = await createContentRelease(root)
     const bytes = JSON.stringify(release, null, 2) + '\n'
     await writeFile(resolve(values.output), bytes, { flag: 'wx' })
+    await writeGeneratedPublication(root, release)
     console.log(
       JSON.stringify({
         id: release.id,
@@ -53,7 +58,10 @@ try {
     )
   } else if (command === 'prepare')
     console.log(JSON.stringify(await prepareContentRelease({ root })))
-  else throw new Error('Commands: import, approve, release, prepare')
+  else
+    throw new Error(
+      'Commands: import, approve (legacy), migrate-status, release, prepare',
+    )
 } catch (error) {
   console.error(error.message)
   process.exitCode = 1

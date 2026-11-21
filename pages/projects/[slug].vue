@@ -70,20 +70,22 @@ const renderedLang = computed(() =>
   toHtmlLang(project.value?.lang ?? locale.value),
 )
 
-const githubQuery = computed(() => ({
-  owner: project.value?.repo.owner ?? 'minerei-devs',
-  repo: project.value?.repo.name ?? 'leclog',
-}))
-
 const {
   data: githubStatus,
   error: githubError,
   pending: githubPending,
   refresh: refreshGithub,
-} = await useFetch<GitHubRepoStatus>('/api/github/repo', {
-  query: githubQuery,
-  watch: [githubQuery],
-})
+} = await useAsyncData(
+  () =>
+    `project-github:${project.value?.repo?.owner ?? ''}/${project.value?.repo?.name ?? ''}`,
+  async () => {
+    const repo = project.value?.repo
+    if (!repo) return null
+    return $fetch<GitHubRepoStatus>('/api/github/repo', {
+      query: { owner: repo.owner, repo: repo.name },
+    })
+  },
+)
 
 const formatDate = (
   value?: string | null,
@@ -107,13 +109,28 @@ const githubErrorMessage = computed(() => {
   const error = githubError.value
   if (!error) return ''
 
-  return error.statusMessage || error.message || t('projects.github.loadFailed')
+  return error.message || t('projects.github.loadFailed')
 })
 
+const projectLocales = { cn: 'zh-CN', en: 'en', ja: 'ja' } as const
+const projectUrl = (language?: string) => {
+  const key = normalizeContentLocale(language || 'en') as keyof typeof projectLocales
+  return new URL(
+    localePath(`/projects/${slug.value}`, projectLocales[key] || 'en'),
+    'https://parz1.minerei.dev',
+  ).href
+}
+
 useHead(() => ({
-  title: project.value?.title
-    ? `${project.value.title} · ${t('menu.projects')}`
-    : t('menu.projects'),
+  title: project.value?.title || t('menu.projects'),
+  titleTemplate: '%s · parz1 ZHOU',
+  meta: project.value ? [{ name: 'description', content: project.value.summary }] : [],
+  link: project.value ? [
+    { rel: 'canonical', href: projectUrl(project.value.lang) },
+    ...(projects.value || []).map(({ lang }) => ({
+      rel: 'alternate', hreflang: toHtmlLang(lang || 'en'), href: projectUrl(lang),
+    })),
+  ] : [],
 }))
 </script>
 
@@ -176,8 +193,12 @@ useHead(() => ({
           {{ project.summary }}
         </p>
 
-        <div class="mt-5 flex flex-wrap gap-2">
+        <div
+          v-if="project.repo || project.links?.length"
+          class="mt-5 flex flex-wrap gap-2"
+        >
           <UButton
+            v-if="project.repo"
             icon="i-carbon-logo-github"
             color="neutral"
             variant="subtle"
@@ -218,9 +239,10 @@ useHead(() => ({
         </article>
 
         <aside
+          v-if="project.repo || project.relatedConcepts?.length"
           class="min-w-0 space-y-6 pt-3 pr-1 text-sm lg:sticky lg:top-[calc(var(--ui-header-height,4rem)+1.75rem)]"
         >
-          <section>
+          <section v-if="project.repo">
             <div class="mb-3 flex items-center justify-between gap-2">
               <h2
                 class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
@@ -301,7 +323,7 @@ useHead(() => ({
             />
           </section>
 
-          <section>
+          <section v-if="project.repo">
             <h2
               class="mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
             >
@@ -335,7 +357,7 @@ useHead(() => ({
             </p>
           </section>
 
-          <section>
+          <section v-if="project.repo">
             <h2
               class="mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600"
             >

@@ -1,6 +1,6 @@
 # Markdown 共同作者
 
-当前内容工作区 `blog-content/content/` 中的所有公开 Markdown 都必须声明 authors。博客默认按 publication 清单读取外部输入，原仓库 content/ 仅作回退副本；见 [部署说明](./blog-content-deployment.md)。这是有顺序的作者列表：第一项是一作，第二项是二作，以此类推；只有一名作者时显示“作者”。不再使用单独的 author 或 order 字段。
+Folio 工作区 `../folio/content/` 中所有公开 Markdown 都必须声明 `authors`。这是有顺序的作者列表：第一项是一作，第二项是二作，以此类推；只有一名作者时显示“作者”。不再使用单独的 author 或 order 字段。
 
 ```yaml
 ---

@@ -124,6 +124,7 @@ test('all published Markdown collections have explicit, valid ordered credits', 
     const document = parseDocument(frontmatter, { uniqueKeys: true })
     assert.deepEqual(document.errors, [], filename)
     const data = document.toJSON() as Record<string, unknown>
+    if (input.mode === 'workspace' && data.status !== 'published') continue
     assert.equal(
       'author' in data,
       false,

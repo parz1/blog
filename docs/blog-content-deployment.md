@@ -1,6 +1,15 @@
 # folio 工作区与部署
 
-## 当前上线闭环（2026-11-05）
+本文记录早期部署方案。当前的部署和回滚操作见[正式 Folio 切换说明](./folio-production-cutover.md)。
+
+
+## 当前日常写作流程
+
+使用 [本地写作与 Folio 发布](./content-writing.md)：`pnpm dev` 自动发现 Markdown（包含草稿）；设置 `status: published` 后运行 `pnpm content:publish`。发布清单自动生成，日常不再执行 approve。`--dry-run` 只做离线检查。原有已发布文件已在本机完成状态迁移，并保留原文备份。
+
+博客目前运行时读取 Folio，普通内容发布不需要重新构建；SSR、缓存、故障降级和 SEO 见 [运行时说明](./folio-runtime.md)。本次发布工具及业务状态兼容修改需随博客代码部署一次，随后日常写作不再涉及代码部署。以下保留原构建式管线与历史部署方案，不能作为当前操作步骤。
+
+## 历史上线闭环（构建式阶段）
 
 内容项目已改名为 folio，私有源码仓库为 `https://github.com/parz1/folio`，新的默认本地目录是 `../folio`。旧 `../blog-content` 目录仍可用于本地兼容；线上始终使用明确的发布包，不读取这些工作目录。
 
@@ -20,11 +29,10 @@ node --experimental-strip-types scripts/check-content-delivery.mjs --origin http
 
 日期：2026-10-29。本地读取与内容包准备已实现，远端私密仓库、R2 bucket 和线上构建钩子尚未配置，也没有执行部署。
 
-## 当前目录与真源
+## 早期目录与内容来源
 
 ```text
 D:/projects/blog/                 博客应用、渲染器与 schema
-  content/                        原始 85 份文档的回退副本，不再作为默认输入
   .local/blog-content-build/       可重建的公开内容快照，不能提交
 D:/projects/folio/         当前内容真源，可作为私密 Git 仓库
   content/                        原有 85 份文档，加 Koto 未发布试点稿
@@ -45,7 +53,6 @@ D:/projects/folio/         当前内容真源，可作为私密 Git 仓库
 
 普通博客预览用于检查现有文章的工作副本；Koto 草稿继续在 `/zh-CN/__local/content-workspace` 中查看版本 diff 和行内评论。版本、操作身份与视图切换都放在右栏，窄屏时位于正文之后。
 
-默认输入为：开发用 workspace，生产用 release。`BLOG_CONTENT_MODE=legacy` 是显式回退开关，临时恢复旧 content 输入；不能依赖“外部目录没找到就偷偷用旧内容”。生产拒绝 workspace 模式。
 
 Nuxt Studio 仍指向 blog 仓库，因此只在 legacy 回退模式启用；外部模式停用该旧写入入口，避免保存到错误位置。它还没有被适配成外部工作区编辑器。
 
@@ -124,7 +131,6 @@ R2 私有包可由 CI 使用只读 S3 凭据下载为本地文件，或为每次
 
 页面代码更新可以复用上一次内容包，不要求重新确认未变文章。内容更新可以保持博客代码版本不变，只换新的包。任何一端失败，当前线上站点不受影响。
 
-回滚用先前记录的内容 commit 或 release JSON 重新构建并部署；不要覆盖外部工作副本。首轮试用还可以显式设置 `BLOG_CONTENT_MODE=legacy` 启动开发，恢复读取原 content 副本。正式删除该回退副本前，还需验证当前托管环境的真实构建权限、触发器与回滚流程。
 
 本轮没有修改 DNS、创建私库／bucket、上传内容或触发线上部署。托管平台与存储偏好确定后，再连接对应的凭据和触发器；本地文件包和 HTTPS 包的接入接口已就绪。
 
@@ -144,7 +150,6 @@ Vercel 的 Deploy Hook 可以触发指定代码分支重建，但不会替我们
 
 迁移到 Cloudflare 的独立验收应覆盖：SSR 三语路由、Nuxt Content/D1、现有 API 与服务端环境变量、Node 专用依赖、本地工具在产物中不可访问、资源与缓存、构建体积、实际请求量和回滚。未取得流量及计费数据前，不给出“必然更便宜”的结论；先把内容层与平台解耦，避免为了省托管费用又重做创作系统。
 
-原 gallery:import / gallery:publish 写入链路仍指向旧 content，其外部工作区写入尚未适配；现已在命令入口要求显式 legacy 模式，避免试用新真源时误写回退副本。现有相册读取和媒体地址不变。
 
 ## 本轮验证
 

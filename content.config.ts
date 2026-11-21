@@ -15,32 +15,32 @@ export default defineContentConfig({
     }),
     concepts: defineCollection({
       type: 'page',
-      source: sourceFor('concepts/*.md'),
+      source: sourceFor('concepts/**/*.md'),
       schema: contentSchemas.concepts,
     }),
     entities: defineCollection({
       type: 'page',
-      source: sourceFor('entities/*.md'),
+      source: sourceFor('entities/**/*.md'),
       schema: contentSchemas.entities,
     }),
     projects: defineCollection({
       type: 'page',
-      source: sourceFor('projects/*.md'),
+      source: sourceFor('projects/**/*.md'),
       schema: contentSchemas.projects,
     }),
     articles: defineCollection({
       type: 'page',
-      source: sourceFor('blog/articles/*.md'),
+      source: sourceFor('blog/articles/**/*.md'),
       schema: contentSchemas.articles,
     }),
     columns: defineCollection({
       type: 'page',
-      source: sourceFor('blog/columns/*.md'),
+      source: sourceFor('blog/columns/**/*.md'),
       schema: contentSchemas.columns,
     }),
     gallery: defineCollection({
       type: 'page',
-      source: sourceFor('gallery/*.md'),
+      source: sourceFor('gallery/**/*.md'),
       schema: contentSchemas.gallery,
     }),
   },

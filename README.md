@@ -10,12 +10,12 @@ Live at: https://parz1.minerei.dev
 - **Content** — @nuxt/content v3 with a Zod-validated multi-collection schema
 - **UI** — Nuxt UI, Tailwind CSS 4, SCSS, GitHub-flavoured markdown typography
 - **i18n** — @nuxtjs/i18n (English / 简体中文 / 日本語); content localized per-language as separate markdown variants
-- **CMS** — Nuxt Studio (GitHub-backed editing), optional
+- **CMS** — Folio for Markdown, assets and publication
 - **Analytics** — @vercel/analytics + speed-insights
 
 ## Content collections
 
-Paths below are relative to the external content workspace; the same paths in this repository are retained as rollback copies.
+Paths below are relative to the Folio project root.
 
 | Collection | Path                     | Purpose                                                |
 | ---------- | ------------------------ | ------------------------------------------------------ |
@@ -27,11 +27,11 @@ Paths below are relative to the external content workspace; the same paths in th
 
 Schemas and validation live in [`content.config.ts`](./content.config.ts).
 
-Every Markdown document in `content/` declares an ordered `authors` list. List order determines first/second author; optional `roles` record contributions such as `idea`, `writing`, and `editing`. See the [coauthorship guide](./docs/content-authorship.md) for Koto/parz1 examples, and run `pnpm test:authors` when changing attribution.
+Every Markdown document in the Folio vault declares an ordered `authors` list. List order determines first/second author; optional `roles` record contributions such as `idea`, `writing`, and `editing`. See the [coauthorship guide](./docs/content-authorship.md) for Koto/parz1 examples, and run `pnpm test:authors` when changing attribution.
 
 ### Obsidian authoring
 
-`content/` is an Obsidian vault (config in `content/.obsidian/`). The `content:file:beforeParse` hook (`utils/rubyHook.ts`) converts on build:
+Open `../folio/content/` as the Obsidian vault. The `content:file:beforeParse` hook (`utils/rubyHook.ts`) converts on build:
 
 - `{漢字|かな}` → `<ruby>` furigana annotations
 - `[[wikilink]]` → internal links to `/concepts/…` or `/blog/…`
@@ -73,8 +73,6 @@ pnpm format:check
 Copy `.env.example` to `.env` and fill in what you need:
 
 - `NUXT_GITHUB_TOKEN` — server-side GitHub status for project pages (no anonymous fallback)
-- `STUDIO_*` — Nuxt Studio GitHub OAuth + access control
-- `GALLERY_R2_*` — optional Cloudflare R2 upload pipeline for the gallery
 
 ## Documentation
 
@@ -83,14 +81,8 @@ Copy `.env.example` to `.env` and fill in what you need:
 - [`docs/concept-note-template.md`](./docs/concept-note-template.md) — concept-note template
 - [`AGENTS.md`](./AGENTS.md) — repository guidelines for agents & contributors
 
-## External content workspace
+## Writing and publication
 
-Production now reads published Folio releases at runtime: publishing ordinary Markdown does not rebuild the blog. SSR, search, lists and sitemap share a validated snapshot, with memory/shared-cache/bundled fallbacks. See [runtime delivery and SEO](./docs/folio-runtime.md). Build-time release URL/SHA settings below remain the cold-start fallback baseline.
+Folio owns Markdown, translations, assets and publishing. Nuxt Content loads the sibling `../folio/content/` vault during development, including drafts. Set `CONTENT_WORKSPACE_DIR` to the parent of another vault named `content`. Production reads published Folio releases and includes a validated snapshot for outages. Use `pnpm write` for local authoring and the Folio editor to confirm publication.
 
-The next design is local-first: editable Markdown plus local SQLite history, comments and a durable sync queue. A Vercel service provides multi-device synchronization and explicit publication backed by cloud storage; Git is not required. See the [local-first design](../folio/docs/serverless-content-service-design.md) and [implementation plan](../folio/docs/serverless-content-service-plan.md). This is documentation only; the existing pipeline below remains active until an explicit migration.
-
-The default local content source is `../folio/content/`, selected by `publication.json`; `content/` in this repository is retained only as a rollback copy. Set `CONTENT_WORKSPACE_DIR` for another location. Unselected drafts and private discussions do not enter normal site collections.
-
-`pnpm build` and `pnpm generate` prepare a fixed validated release first. CI may supply `BLOG_CONTENT_RELEASE_FILE`, or `BLOG_CONTENT_RELEASE_URL` plus `BLOG_CONTENT_RELEASE_SHA256`. Missing input fails rather than silently building old content. The previous Studio write path is disabled outside explicit `BLOG_CONTENT_MODE=legacy` rollback.
-
-See [workspace and deployment](./docs/blog-content-deployment.md) for local writing, reviewed digests, private Git, R2, CI integration and rollback; [Koto pilot](./docs/content-workspace-pilot.md) covers revision diff and inline discussions.
+See the [writing guide](./docs/content-writing.md) and [production and rollback guide](./docs/folio-production-cutover.md).

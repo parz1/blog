@@ -5,15 +5,17 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
   importPublishedContent,
-  createContentRelease,
+  createApprovedContentRelease as createContentRelease,
   prepareContentRelease,
   validateContentRelease,
   approveContent,
   collectionContentSource,
+  resolveContentInput,
   sha256,
 } from '../lib/blog-content.mjs'
 
 const article = `---
+status: published
 title: Published test
 slug: published-test
 lang: cn
@@ -37,6 +39,7 @@ async function fixture(t) {
     join(root, 'content/blog/articles/private.md'),
     article
       .replace('Public text.', 'Private draft.')
+      .replace('status: published', 'status: draft')
       .replace('title:', 'draft: true\ntitle:'),
   )
   await importPublishedContent(source, root)
@@ -154,9 +157,9 @@ test('file artifacts support CI without a workspace; bad pins and insecure remot
     /SHA-256/,
   )
 })
-test('collection input uses exact selected paths and preserves original content paths', async () => {
+test('release collection input uses exact paths and preserves original content paths', async () => {
   const input = {
-    mode: 'workspace',
+    mode: 'release',
     root: '/external/content',
     entries: [
       { path: 'blog/articles/old.md' },
@@ -171,7 +174,10 @@ test('collection input uses exact selected paths and preserves original content 
     collectionContentSource('*.md', input).map((entry) => entry.include),
     ['about.md'],
   )
-  assert.equal(collectionContentSource('*.md', { mode: 'legacy' }), '*.md')
+  assert.throws(
+    () => resolveContentInput({ BLOG_CONTENT_MODE: 'legacy' }),
+    /Unknown BLOG_CONTENT_MODE/,
+  )
 })
 
 test('HTTPS transport accepts a pinned package and redacts download failures', async (t) => {

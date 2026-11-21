@@ -2,7 +2,11 @@ import { getFolioSnapshot } from '../utils/folioRuntime'
 export default defineEventHandler(async (event) => {
   if (process.env.VERCEL_ENV === 'preview')
     setHeader(event, 'X-Robots-Tag', 'noindex')
-  if (import.meta.dev && !useRuntimeConfig().folioOrigin) return
+  if (import.meta.dev && !useRuntimeConfig().folioOrigin) {
+    setHeader(event, 'X-Robots-Tag', 'noindex, nofollow')
+    setHeader(event, 'Cache-Control', 'no-store')
+    return
+  }
   const path = event.path.split('?')[0]!
   if (
     path.startsWith('/api/') ||
