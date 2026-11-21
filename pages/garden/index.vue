@@ -30,15 +30,39 @@ const year = new Date().getFullYear()
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
+// The garden draws from titles, summaries and links only. Keeping the bodies
+// out of the page's payload is most of what makes it quick to open.
 const { data: concepts } = await useAsyncData(
   'garden-concepts',
-  () => querySiteContent('concepts').order('updated', 'DESC').all(),
+  async () =>
+    (await querySiteContent('concepts').order('updated', 'DESC').all()).map(
+      ({ slug, lang, title, summary, state, updated, linkedConcepts }) => ({
+        slug,
+        lang,
+        title,
+        summary,
+        state,
+        updated,
+        linkedConcepts,
+      }),
+    ),
   { lazy: false },
 )
 
 const { data: entities } = await useAsyncData(
   'garden-entities',
-  () => querySiteContent('entities').order('updated', 'DESC').all(),
+  async () =>
+    (await querySiteContent('entities').order('updated', 'DESC').all()).map(
+      ({ slug, lang, title, summary, kind, updated, relatedConcepts }) => ({
+        slug,
+        lang,
+        title,
+        summary,
+        kind,
+        updated,
+        relatedConcepts,
+      }),
+    ),
   { lazy: false },
 )
 
