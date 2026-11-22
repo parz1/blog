@@ -623,6 +623,14 @@
           }
         }
       }
+    },
+    "front": {
+      "enterGarden": "走进花园",
+      "columns": "长期在写",
+      "recent": "最近写的",
+      "tended": "花园里新近照料的",
+      "allExperiments": "全部实验",
+      "allProjects": "全部项目"
     }
   },
   "about": {

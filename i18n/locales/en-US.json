@@ -623,6 +623,14 @@
           }
         }
       }
+    },
+    "front": {
+      "enterGarden": "Walk in",
+      "columns": "Long-running columns",
+      "recent": "Recently written",
+      "tended": "Lately tended in the garden",
+      "allExperiments": "All experiments",
+      "allProjects": "All projects"
     }
   },
   "about": {

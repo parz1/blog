@@ -623,6 +623,14 @@
           }
         }
       }
+    },
+    "front": {
+      "enterGarden": "庭に入る",
+      "columns": "書き続けている連載",
+      "recent": "最近書いたもの",
+      "tended": "庭で最近手入れしたもの",
+      "allExperiments": "すべての実験",
+      "allProjects": "すべてのプロジェクト"
     }
   },
   "about": {
