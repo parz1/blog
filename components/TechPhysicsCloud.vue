@@ -2,6 +2,8 @@
 type Lane = 'research' | 'bridge' | 'engineering'
 
 type TechCloudItem = {
+  // what the tool is used for, said when it is pointed at
+  descriptionKey?: string
   icon: string
   // which bin the tool falls into; tools without one go in the middle
   lane?: Lane
@@ -123,8 +125,12 @@ const activeItem = computed(() =>
 
 const activeIcon = computed(() => activeItem.value?.icon ?? 'i-lucide-mouse')
 
+const activeAbout = computed(() =>
+  activeItem.value?.descriptionKey ? t(activeItem.value.descriptionKey) : '',
+)
+
 const activeLabel = computed(
-  () => activeItem.value?.name ?? t('home.profile.tech.stackLabel'),
+  () => activeItem.value?.name ?? t('home.profile.tech.hint'),
 )
 
 const isActive = (index: number) => activeIndex.value === index
@@ -862,36 +868,42 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="mt-4">
+  <div class="mt-2">
+    <!-- The tool being pointed at, and what it is for. It has a line of its
+         own above the bins, where falling tools cannot cover it. -->
+    <p
+      class="flex h-6 items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+      aria-live="polite"
+    >
+      <UIcon
+        v-if="isIconifyIcon(activeIcon)"
+        :name="activeIcon"
+        class="size-4 shrink-0"
+        aria-hidden="true"
+      />
+      <img
+        v-else
+        :src="activeIcon"
+        alt=""
+        class="size-4 shrink-0"
+        draggable="false"
+      />
+      <span
+        class="shrink-0"
+        :class="activeItem && 'font-semibold text-gray-900 dark:text-gray-50'"
+      >
+        {{ activeLabel }}
+      </span>
+      <span v-if="activeAbout" class="truncate">{{ activeAbout }}</span>
+    </p>
+
     <div
       ref="container"
       data-tech-cloud
-      class="relative h-72 overflow-hidden bg-transparent sm:h-64 md:h-52"
+      class="relative mt-1 h-56 overflow-hidden bg-transparent sm:h-48 md:h-36"
       @pointerleave="clearHover"
       @pointermove="updateHoverFromPointer"
     >
-      <div
-        class="pointer-events-none absolute left-1/2 top-2 z-50 flex -translate-x-1/2 items-center gap-2 text-base font-semibold text-gray-900 sm:top-3 sm:text-lg dark:text-gray-50"
-        aria-live="polite"
-      >
-        <UIcon
-          v-if="isIconifyIcon(activeIcon)"
-          :name="activeIcon"
-          class="size-5 sm:size-6"
-          aria-hidden="true"
-        />
-        <img
-          v-else
-          :src="activeIcon"
-          alt=""
-          class="size-5 sm:size-6"
-          draggable="false"
-        />
-        <span class="whitespace-nowrap leading-none">
-          {{ activeLabel }}
-        </span>
-      </div>
-
       <!-- the floor and the two short walls that divide it into bins -->
       <template v-if="ready">
         <span

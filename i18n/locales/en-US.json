@@ -621,7 +621,8 @@
           "postman": {
             "description": "Useful for API checks, service boundaries, and keeping interface workflows clear."
           }
-        }
+        },
+        "hint": "Point at one, or throw it around"
       }
     },
     "timeline": {
