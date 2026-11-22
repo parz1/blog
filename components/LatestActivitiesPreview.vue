@@ -79,6 +79,14 @@ const KINDS = ['post', 'log', 'note'] as const
 
 type Kind = (typeof KINDS)[number]
 
+// a feather for a finished piece, a notebook for working notes, and a leaf
+// for the knowledge base, which this site draws as a garden
+const ICONS: Record<Kind, string> = {
+  post: 'i-lucide-feather',
+  log: 'i-lucide-notebook-pen',
+  note: 'i-lucide-leaf',
+}
+
 type Entry = {
   key: string
   kind: Kind
@@ -197,6 +205,8 @@ const months = computed(() => {
     key: string
     name: string
     year: number
+    // true for the first month shown of its year
+    turns: boolean
     entries: (Entry & { day: string; iso: string })[]
   }[] = []
 
@@ -212,6 +222,7 @@ const months = computed(() => {
         key,
         name: name.format(date),
         year: date.getFullYear(),
+        turns: last?.year !== date.getFullYear(),
         entries: [row],
       })
   }
@@ -270,7 +281,7 @@ onBeforeUnmount(() => watcher?.disconnect())
         :aria-pressed="item.on"
         @click="toggle(item.kind)"
       >
-        <span class="timeline__mark" aria-hidden="true" />
+        <UIcon :name="ICONS[item.kind]" class="timeline__mark" />
         {{ item.label }}
         <span class="timeline__count">{{ item.count }}</span>
       </button>
@@ -280,53 +291,59 @@ onBeforeUnmount(() => watcher?.disconnect())
       <!-- the part of the line already read, with a point at its tip -->
       <span class="timeline__walked" aria-hidden="true" />
 
-      <section v-for="month in months" :key="month.key" class="timeline__month">
-        <h3 class="timeline__when">
-          <span class="timeline__name">{{ month.name }}</span>
-          <span class="timeline__year">{{ month.year }}</span>
-        </h3>
+      <template v-for="month in months" :key="month.key">
+        <!-- the year is said once, where the line crosses into it -->
+        <p v-if="month.turns" class="timeline__year">{{ month.year }}</p>
 
-        <ol class="timeline__entries">
-          <li
-            v-for="entry in month.entries"
-            :key="entry.key"
-            class="timeline__entry"
-            :data-kind="entry.kind"
-          >
-            <span class="timeline__mark" aria-hidden="true" />
-            <time class="timeline__day" :datetime="entry.iso">
-              {{ entry.day }}
-            </time>
-            <div class="timeline__body">
-              <p class="timeline__title">
-                <template v-for="(item, index) in entry.items" :key="item.to">
-                  <span v-if="index" class="timeline__gap" aria-hidden="true">
-                    ·
+        <section class="timeline__month">
+          <h3 class="timeline__when">
+            <span class="timeline__name">{{ month.name }}</span>
+          </h3>
+
+          <ol class="timeline__entries">
+            <li
+              v-for="entry in month.entries"
+              :key="entry.key"
+              class="timeline__entry"
+              :data-kind="entry.kind"
+            >
+              <span class="timeline__pin" aria-hidden="true">
+                <UIcon :name="ICONS[entry.kind]" class="timeline__mark" />
+              </span>
+              <time class="timeline__day" :datetime="entry.iso">
+                {{ entry.day }}
+              </time>
+              <div class="timeline__body">
+                <p class="timeline__title">
+                  <template v-for="(item, index) in entry.items" :key="item.to">
+                    <span v-if="index" class="timeline__gap" aria-hidden="true">
+                      ·
+                    </span>
+                    <NuxtLink :to="item.to" :lang="item.lang">
+                      {{ item.title }}
+                    </NuxtLink>
+                  </template>
+                </p>
+                <p class="timeline__about">
+                  <span class="timeline__kind">
+                    {{ t(`home.timeline.kinds.${entry.kind}`) }}
                   </span>
-                  <NuxtLink :to="item.to" :lang="item.lang">
-                    {{ item.title }}
-                  </NuxtLink>
-                </template>
-              </p>
-              <p class="timeline__about">
-                <span class="timeline__kind">
-                  {{ t(`home.timeline.kinds.${entry.kind}`) }}
-                </span>
-                <template v-if="entry.series">
-                  <span class="timeline__gap" aria-hidden="true">·</span>
-                  <NuxtLink :to="entry.series.to" class="timeline__series">
-                    {{ entry.series.label }}
-                  </NuxtLink>
-                </template>
-                <template v-if="entry.about">
-                  <span class="timeline__gap" aria-hidden="true">—</span>
-                  <span :lang="entry.items[0]!.lang">{{ entry.about }}</span>
-                </template>
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
+                  <template v-if="entry.series">
+                    <span class="timeline__gap" aria-hidden="true">·</span>
+                    <NuxtLink :to="entry.series.to" class="timeline__series">
+                      {{ entry.series.label }}
+                    </NuxtLink>
+                  </template>
+                  <template v-if="entry.about">
+                    <span class="timeline__gap" aria-hidden="true">—</span>
+                    <span :lang="entry.items[0]!.lang">{{ entry.about }}</span>
+                  </template>
+                </p>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </template>
 
       <div ref="foot" class="timeline__foot">
         <template v-if="done">
@@ -386,9 +403,32 @@ onBeforeUnmount(() => watcher?.disconnect())
 }
 
 .timeline__year {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
   color: var(--faint);
+}
+
+.timeline__year:not(:first-of-type) {
+  margin-top: 0.25rem;
+}
+
+/* a knot on the line where a year begins */
+.timeline__year::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(var(--rail) - 4px);
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--faint);
+  border-radius: 50%;
+  background: var(--ground);
+  transform: translateY(-50%);
 }
 
 .timeline__entries {
@@ -402,14 +442,15 @@ onBeforeUnmount(() => watcher?.disconnect())
 
 .timeline__entry {
   position: relative;
+  /* above the read part of the line, so its icon's disc interrupts that too */
+  z-index: 2;
   display: grid;
   grid-template-columns: 2.75rem minmax(0, 1fr);
   align-items: baseline;
 }
 
-/* Each kind has a tone and a mark of its own shape, so that it can be told
-   apart without relying on colour: a dot for articles, a square for devlogs,
-   a ring for the knowledge base. */
+/* Each kind has a tone, and an icon of its own (see ICONS), so that it can be
+   told apart without relying on colour. */
 [data-kind='post'] {
   --tone: var(--ui-primary);
 }
@@ -422,34 +463,30 @@ onBeforeUnmount(() => watcher?.disconnect())
   --tone: var(--color-emerald-600);
 }
 
+/* The mark is the kind's icon in its tone. On the line it sits in a small
+   disc of the page's ground, so the line stops short of it on either side. */
 .timeline__mark {
-  display: inline-block;
   flex: none;
-  width: 8px;
-  height: 8px;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--tone);
+}
+
+.timeline__pin {
+  position: absolute;
+  top: 0.0625rem;
+  left: calc(-1.5rem - 0.6875rem);
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
   border-radius: 50%;
-  background: var(--tone);
+  background: var(--ground);
   transition: transform 0.2s ease;
 }
 
-[data-kind='log'] > .timeline__mark {
-  border-radius: 1.5px;
-}
-
-[data-kind='note'] > .timeline__mark {
-  border: 2px solid var(--tone);
-  background: var(--ground);
-}
-
-.timeline__entry > .timeline__mark {
-  position: absolute;
-  top: 0.5rem;
-  left: calc(-1.5rem - 3.5px);
-  box-shadow: 0 0 0 4px var(--ground);
-}
-
-.timeline__entry:hover > .timeline__mark {
-  transform: scale(1.4);
+.timeline__entry:hover > .timeline__pin {
+  transform: scale(1.2);
 }
 
 .timeline__legend {
@@ -486,15 +523,14 @@ onBeforeUnmount(() => watcher?.disconnect())
   outline-offset: 2px;
 }
 
-/* switched off: the mark empties and the label is struck through */
+/* switched off: the mark loses its tone and the label is struck through */
 .timeline__switch[aria-pressed='false'] {
   color: var(--faint);
   text-decoration: line-through;
 }
 
 .timeline__switch[aria-pressed='false'] > .timeline__mark {
-  border: 1px solid var(--faint);
-  background: none;
+  color: var(--faint);
 }
 
 .timeline__count {
@@ -620,6 +656,13 @@ onBeforeUnmount(() => watcher?.disconnect())
   .timeline__name {
     font-size: 1.75rem;
     line-height: 1.1;
+  }
+
+  /* the year stands in the margin too, level with its knot */
+  .timeline__year {
+    width: var(--rail);
+    padding: 0 1.25rem 0 0;
+    text-align: right;
   }
 
   .timeline__entries {
