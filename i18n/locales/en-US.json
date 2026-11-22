@@ -625,7 +625,6 @@
       }
     },
     "timeline": {
-      "earlier": "{count} earlier",
       "start": "The line starts here"
     }
   },

@@ -625,7 +625,6 @@
       }
     },
     "timeline": {
-      "earlier": "以前の {count} 件",
       "start": "ここが始まり"
     }
   },

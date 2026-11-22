@@ -4,10 +4,6 @@ const localePath = useLocalePath()
 
 const props = defineProps<{
   article: SiteArticle
-  // on a page where every entry has the same author, the byline is noise
-  hideByline?: boolean
-  // the column this article is a chapter of, and where it stands in it
-  series?: { title: string; to: string; current: number; total: number }
 }>()
 
 const publishedDate = computed(() =>
@@ -95,7 +91,6 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
           {{ i18nTime }}
         </time>
         <ContentByline
-          v-if="!hideByline"
           :authors="article.authors"
           compact
           class="text-xs text-gray-500 dark:text-gray-400"
@@ -123,21 +118,6 @@ const articleLang = computed(() => toHtmlLang(props.article.lang))
           </UBadge>
         </div>
       </div>
-      <NuxtLink
-        v-if="series"
-        :to="series.to"
-        class="relative z-10 mb-1 inline-flex items-center gap-1.5 text-xs text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-      >
-        <UIcon name="i-lucide-library" class="size-3.5 shrink-0" />
-        {{ series.title }}
-        <span aria-hidden="true">·</span>
-        {{
-          t('columns.chapterProgress', {
-            current: series.current,
-            total: series.total,
-          })
-        }}
-      </NuxtLink>
       <h2
         class="content-title font-serif text-xl font-medium leading-snug text-gray-900 group-hover:text-primary-600 dark:text-gray-100"
       >
