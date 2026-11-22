@@ -6,7 +6,7 @@ const { t } = useI18n()
   <div class="w-screen flex flex-col lg:flex-row">
     <!-- 左侧固定区域 -->
     <div
-      class="w-full lg:flex lg:flex-col lg:items-end lg:w-[25%] ml-0 lg:ml-[10%] h-full pt-24 lg:fixed left-0 top-0"
+      class="w-full lg:flex lg:flex-col lg:items-end lg:w-[25%] ml-0 lg:ml-[10%] h-full pt-24 lg:fixed left-0 top-0 lg:overflow-y-auto lg:pb-6 [scrollbar-width:none]"
     >
       <BaseIntroCard />
     </div>
@@ -23,9 +23,6 @@ const { t } = useI18n()
           >
             {{ t('home.latestActivities') }}
           </h2>
-          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            {{ t('home.latestActivitiesDescription') }}
-          </p>
         </div>
         <LatestActivitiesPreview />
       </section>

@@ -365,8 +365,6 @@ const techItems: TechCloudItem[] = [
       </div>
     </div>
 
-    <HomePlaces class="mt-8" />
-
     <div class="mt-8">
       <h2
         class="text-xl font-semibold font-serif text-gray-900 dark:text-gray-50"
