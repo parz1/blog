@@ -1,6 +1,14 @@
 <script setup>
 // import { SpeedInsights } from '@vercel/speed-insights/vue'
 
+// The page declares its language, so that browsers, screen readers and the
+// font stacks (see main.css) know which one the interface is written in.
+const { localeProperties } = useI18n()
+
+useHead({
+  htmlAttrs: { lang: () => localeProperties.value.language },
+})
+
 // The garden is a centred composition, so its footer line is centred too.
 const route = useRoute()
 const footerSlot = computed(() =>
