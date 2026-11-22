@@ -73,10 +73,10 @@ const places = computed(() => [
     </h2>
 
     <ul class="mt-3 grid gap-3 md:grid-cols-3">
-      <li v-for="place in places" :key="place.key">
+      <li v-for="place in places" :key="place.key" class="@container">
         <NuxtLink
           :to="place.to"
-          class="group flex h-full flex-col rounded-lg border border-gray-200 p-4 transition-colors duration-200 hover:border-gray-300 hover:bg-gray-50/70 dark:border-gray-800 dark:hover:border-gray-700 dark:hover:bg-gray-900/50"
+          class="group relative flex h-full flex-col rounded-lg border border-gray-200 p-4 transition-colors duration-200 hover:border-gray-300 hover:bg-gray-50/70 dark:border-gray-800 dark:hover:border-gray-700 dark:hover:bg-gray-900/50"
         >
           <span class="flex items-center gap-3">
             <span
@@ -85,24 +85,29 @@ const places = computed(() => [
             >
               <UIcon :name="place.icon" class="size-[1.125rem]" />
             </span>
+            <!-- The name keeps to one line in every language: the arrow sits
+                 in the card's corner rather than beside it, and in a narrow
+                 card the name is set a little smaller. -->
             <span
-              class="font-serif text-lg font-medium text-gray-900 transition-colors group-hover:text-primary-600 dark:text-gray-100 dark:group-hover:text-primary-400"
+              class="min-w-0 font-serif text-[clamp(0.9375rem,7.2cqw,1.125rem)] font-medium whitespace-nowrap text-gray-900 transition-colors group-hover:text-primary-600 dark:text-gray-100 dark:group-hover:text-primary-400"
             >
               {{ place.title }}
             </span>
-            <UIcon
-              name="i-lucide-arrow-right"
-              class="ml-auto size-4 shrink-0 text-gray-400 transition-transform group-hover:translate-x-0.5"
-            />
           </span>
           <span
             class="mt-3 text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             {{ place.holds }}
           </span>
-          <span class="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+          <span
+            class="mt-1 pr-5 text-sm leading-6 text-gray-500 dark:text-gray-400"
+          >
             {{ place.about }}
           </span>
+          <UIcon
+            name="i-lucide-arrow-right"
+            class="absolute right-4 bottom-4 size-4 text-gray-400 transition-transform group-hover:translate-x-0.5"
+          />
         </NuxtLink>
       </li>
     </ul>
