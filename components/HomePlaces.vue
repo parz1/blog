@@ -1,24 +1,33 @@
 <script setup lang="ts">
-// The three places on this site that were built rather than written: the
-// garden, the lab and the products. Each says how much is in it and leads in.
+// The four places this site is made of: the blog, the garden, the lab and the
+// products. Each card says how much is in the place and leads into it.
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 const { data: source } = await useAsyncData('home-places', async () => {
-  const [concepts, entities, projects] = await Promise.all([
+  const [articles, columns, concepts, entities, projects] = await Promise.all([
+    querySiteContent('articles').all(),
+    querySiteContent('columns').all(),
     querySiteContent('concepts').all(),
     querySiteContent('entities').all(),
     querySiteContent('projects').order('updated', 'DESC').all(),
   ])
 
+  // only names and slugs are needed, so that is all that travels
   return {
+    articles: articles
+      .filter((article) => article.kind !== 'crap')
+      .map((article) => article.slug ?? article.path),
+    columns: columns.map(({ slug }) => slug),
     concepts: concepts.map(({ slug }) => slug),
     entities: entities.map(({ slug }) => slug),
     projects: projects.map(({ slug, lang, title }) => ({ slug, lang, title })),
   }
 })
 
-// a project written up in several languages is still one project
+// a thing written up in several languages is still one thing
+const count = (slugs?: (string | undefined)[]) => new Set(slugs ?? []).size
+
 const projectNames = computed(() => {
   const code = normalizeContentLocale(locale.value)
   const names = new Map<string, string>()
@@ -32,16 +41,26 @@ const projectNames = computed(() => {
 
 const places = computed(() => [
   {
+    key: 'blog',
+    to: localePath('/blog'),
+    icon: 'i-lucide-feather',
+    tone: 'bg-primary-50 text-primary-700 dark:bg-primary-950/60 dark:text-primary-300',
+    title: t('menu.blog'),
+    holds: t('home.places.blogHolds', {
+      columns: count(source.value?.columns),
+      articles: count(source.value?.articles),
+    }),
+  },
+  {
     key: 'garden',
     to: localePath('/garden'),
     icon: 'i-lucide-leaf',
     tone: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300',
     title: t('garden.title'),
     holds: t('garden.count', {
-      plants: new Set(source.value?.concepts ?? []).size,
-      stones: new Set(source.value?.entities ?? []).size,
+      plants: count(source.value?.concepts),
+      stones: count(source.value?.entities),
     }),
-    about: t('menu.knowledgeDescription'),
   },
   {
     key: 'lab',
@@ -50,16 +69,14 @@ const places = computed(() => [
     tone: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
     title: t('menu.lab'),
     holds: `${demoCatalog.length} ${t('demoHub.experiments')}`,
-    about: t('menu.demoDescription'),
   },
   {
     key: 'products',
     to: localePath('/projects'),
     icon: 'i-lucide-package',
-    tone: 'bg-primary-50 text-primary-700 dark:bg-primary-950/60 dark:text-primary-300',
+    tone: 'bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-300',
     title: t('home.places.products'),
     holds: projectNames.value.join(' · '),
-    about: t('menu.projectsDescription'),
   },
 ])
 </script>
@@ -72,42 +89,36 @@ const places = computed(() => [
       {{ t('home.places.heading') }}
     </h2>
 
-    <ul class="mt-3 grid gap-3 md:grid-cols-3">
+    <!-- four across where there is room, two by two on a phone -->
+    <ul class="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
       <li v-for="place in places" :key="place.key" class="@container">
         <NuxtLink
           :to="place.to"
           class="group relative flex h-full flex-col rounded-lg border border-gray-200 p-4 transition-colors duration-200 hover:border-gray-300 hover:bg-gray-50/70 dark:border-gray-800 dark:hover:border-gray-700 dark:hover:bg-gray-900/50"
         >
-          <span class="flex items-center gap-3">
-            <span
-              class="flex size-9 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110"
-              :class="place.tone"
-            >
-              <UIcon :name="place.icon" class="size-[1.125rem]" />
-            </span>
-            <!-- The name keeps to one line in every language: the arrow sits
-                 in the card's corner rather than beside it, and in a narrow
-                 card the name is set a little smaller. -->
-            <span
-              class="min-w-0 font-serif text-[clamp(0.9375rem,7.2cqw,1.125rem)] font-medium whitespace-nowrap text-gray-900 transition-colors group-hover:text-primary-600 dark:text-gray-100 dark:group-hover:text-primary-400"
-            >
-              {{ place.title }}
-            </span>
+          <span
+            class="flex size-9 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110"
+            :class="place.tone"
+          >
+            <UIcon :name="place.icon" class="size-[1.125rem]" />
+          </span>
+          <UIcon
+            name="i-lucide-arrow-up-right"
+            class="absolute top-4 right-4 size-4 text-gray-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gray-500 dark:text-gray-600 dark:group-hover:text-gray-300"
+          />
+
+          <!-- The name keeps to one line in every language: it has the card's
+               whole width, and in a narrow card is set a little smaller. -->
+          <span
+            class="mt-3 font-serif text-[clamp(0.9375rem,9.5cqw,1.125rem)] font-medium whitespace-nowrap text-gray-900 transition-colors group-hover:text-primary-600 dark:text-gray-100 dark:group-hover:text-primary-400"
+          >
+            {{ place.title }}
           </span>
           <span
-            class="mt-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+            class="mt-1 text-[0.8125rem] leading-5 text-gray-500 dark:text-gray-400"
           >
             {{ place.holds }}
           </span>
-          <span
-            class="mt-1 pr-5 text-sm leading-6 text-gray-500 dark:text-gray-400"
-          >
-            {{ place.about }}
-          </span>
-          <UIcon
-            name="i-lucide-arrow-right"
-            class="absolute right-4 bottom-4 size-4 text-gray-400 transition-transform group-hover:translate-x-0.5"
-          />
         </NuxtLink>
       </li>
     </ul>

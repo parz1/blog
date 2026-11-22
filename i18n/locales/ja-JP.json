@@ -635,7 +635,8 @@
     },
     "places": {
       "heading": "見てまわる",
-      "products": "プロダクト"
+      "products": "プロダクト",
+      "blogHolds": "連載 {columns} 本 · 記事 {articles} 本"
     }
   },
   "about": {
