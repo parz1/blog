@@ -298,7 +298,7 @@ const techItems: TechCloudItem[] = [
 </script>
 
 <template>
-  <section class="max-w-2xl px-4 sm:px-0 mt-6">
+  <section class="mt-6 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
     <div>
       <div class="flex flex-wrap items-end gap-3">
         <h1

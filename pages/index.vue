@@ -16,8 +16,11 @@ const { t } = useI18n()
       class="w-full md:w-[80%] lg:ml-[40%] grow flex flex-col justify-start items-start md:items-center lg:items-start"
     >
       <HomeProfileIntro />
-      <section class="max-w-xl px-4 sm:px-0 mt-10">
-        <div class="mb-4 px-2">
+      <section class="mt-8 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
+        <HomeGardenEntry />
+      </section>
+      <section class="mt-12 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
+        <div class="mb-5">
           <h2
             class="text-4xl font-semibold font-serif leading-tight text-gray-900 dark:text-gray-50"
           >
@@ -27,7 +30,9 @@ const { t } = useI18n()
             {{ t('home.latestActivitiesDescription') }}
           </p>
         </div>
-        <LatestActivitiesPreview />
+        <!-- the entries carry their own padding for the hover surface; pulling
+             the list out by that much lines their text up with the headings -->
+        <LatestActivitiesPreview class="-mx-3" />
       </section>
     </div>
   </div>
