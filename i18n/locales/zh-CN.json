@@ -623,6 +623,10 @@
           }
         }
       }
+    },
+    "timeline": {
+      "earlier": "更早的 {count} 条",
+      "start": "这条线从这里开始"
     }
   },
   "about": {

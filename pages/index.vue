@@ -30,9 +30,7 @@ const { t } = useI18n()
             {{ t('home.latestActivitiesDescription') }}
           </p>
         </div>
-        <!-- the entries carry their own padding for the hover surface; pulling
-             the list out by that much lines their text up with the headings -->
-        <LatestActivitiesPreview class="-mx-3" />
+        <LatestActivitiesPreview />
       </section>
     </div>
   </div>

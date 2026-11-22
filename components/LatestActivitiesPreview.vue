@@ -1,8 +1,12 @@
 <script setup lang="ts">
 // What changed lately, as one line of time: articles and the garden's concept
-// notes together, newest first, gathered by month. An article that belongs to
-// a column says which one and where it stands in it.
-const LIMIT = 10
+// notes together, newest first, gathered by month along a rail. An article
+// that belongs to a column says which one and where it stands in it.
+//
+// The line does not load by itself as you scroll: the page has a footer, and
+// the whole history is short enough to reach by asking for it a stretch at a
+// time, down to the first entry.
+const STEP = 10
 
 const { locale, t } = useI18n()
 const localePath = useLocalePath()
@@ -57,7 +61,9 @@ const localized = <T extends { slug: string; lang?: string }>(docs: T[]) => {
   )
 }
 
-const months = computed(() => {
+const shown = ref(STEP)
+
+const entries = computed(() => {
   const columns = localized(source.value?.columns ?? [])
   const seriesOf = (slug?: string) => {
     for (const column of columns) {
@@ -104,18 +110,23 @@ const months = computed(() => {
     concepts,
   }))
 
-  const entries = [...articles, ...notes]
+  return [...articles, ...notes]
     .filter((entry) => Number.isFinite(entry.at))
     .toSorted((a, b) => b.at - a.at)
-    .slice(0, LIMIT)
+})
 
+const remaining = computed(() =>
+  Math.max(0, entries.value.length - shown.value),
+)
+
+const months = computed(() => {
   const monthLabel = new Intl.DateTimeFormat(locale.value, {
     year: 'numeric',
     month: 'long',
   })
-  const groups: { label: string; entries: typeof entries }[] = []
+  const groups: { label: string; entries: typeof entries.value }[] = []
 
-  for (const entry of entries) {
+  for (const entry of entries.value.slice(0, shown.value)) {
     const label = monthLabel.format(new Date(entry.at))
     const last = groups.at(-1)
 
@@ -133,17 +144,25 @@ const longDate = (at: number) =>
 </script>
 
 <template>
-  <div class="pb-8">
+  <div class="timeline relative pb-8">
+    <!-- the rail, and over it the stretch already walked -->
+    <span class="timeline__rail" aria-hidden="true" />
+    <span class="timeline__walked" aria-hidden="true" />
+
     <section v-for="month in months" :key="month.label" class="mt-6 first:mt-0">
-      <h3
-        class="flex items-center gap-3 px-3 text-sm font-medium text-gray-500 dark:text-gray-400"
-      >
+      <h3 class="timeline__month">
+        <span class="timeline__knot" aria-hidden="true" />
         {{ month.label }}
-        <span class="h-px flex-1 bg-gray-200 dark:bg-gray-800" />
       </h3>
 
-      <ul class="mt-1 space-y-1">
-        <li v-for="entry in month.entries" :key="entry.key">
+      <ul class="mt-1 space-y-1 pl-3">
+        <li
+          v-for="entry in month.entries"
+          :key="entry.key"
+          class="timeline__entry"
+          :data-kind="entry.kind"
+        >
+          <span class="timeline__dot" aria-hidden="true" />
           <BaseArticleCard
             v-if="entry.kind === 'article'"
             :article="entry.article"
@@ -224,5 +243,122 @@ const longDate = (at: number) =>
         </li>
       </ul>
     </section>
+
+    <!-- further back, a stretch at a time, until the line reaches its start -->
+    <div class="timeline__foot">
+      <span class="timeline__knot" aria-hidden="true" />
+      <UButton
+        v-if="remaining"
+        color="neutral"
+        variant="subtle"
+        size="sm"
+        icon="i-lucide-arrow-down"
+        @click="shown += STEP"
+      >
+        {{ t('home.timeline.earlier', { count: remaining }) }}
+      </UButton>
+      <span v-else class="text-sm text-gray-500 dark:text-gray-400">
+        {{ t('home.timeline.start') }}
+      </span>
+    </div>
   </div>
 </template>
+
+<style scoped>
+@reference '~/assets/css/main.css';
+
+/* The rail runs down the left edge, in line with the headings above it. */
+.timeline__rail,
+.timeline__walked {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 2.75rem;
+  left: 4px;
+  width: 1px;
+}
+
+.timeline__rail {
+  @apply bg-gray-200 dark:bg-gray-800;
+}
+
+.timeline__walked {
+  @apply bg-gray-900 dark:bg-gray-100;
+
+  display: none;
+  transform-origin: top;
+}
+
+.timeline__month {
+  @apply relative flex items-center pl-6 text-sm font-medium text-gray-500 dark:text-gray-400;
+}
+
+/* a month, and the foot of the line, are knots on the rail */
+.timeline__knot {
+  @apply absolute left-0 size-[9px] rounded-full border border-gray-400 bg-white dark:border-gray-500 dark:bg-gray-950;
+}
+
+.timeline__entry {
+  position: relative;
+}
+
+.timeline__dot {
+  @apply absolute top-[1.45rem] -left-[10.5px] size-[6px] rounded-full bg-gray-300 dark:bg-gray-600;
+}
+
+.timeline__entry[data-kind='note'] .timeline__dot {
+  @apply bg-emerald-400 dark:bg-emerald-500;
+}
+
+.timeline__entry[data-kind='article'] .timeline__dot {
+  @apply bg-primary-500 dark:bg-primary-400;
+}
+
+.timeline__foot {
+  @apply relative mt-6 flex min-h-8 items-center pl-6;
+}
+
+/* Where the browser can tie an animation to scrolling, the walked part of
+   the rail grows with the page and each entry settles into place as it comes
+   into view. Elsewhere, and for readers who asked for less motion, everything
+   simply stands where it is. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .timeline__walked {
+      display: block;
+      animation: timeline-walk linear both;
+      animation-timeline: view();
+      /* the tip of the walked part keeps to a line near the bottom of the
+         window, so what has been read is dark and what is ahead is not */
+      animation-range: cover 12vh cover calc(100% - 88vh);
+    }
+
+    .timeline__entry {
+      animation: timeline-arrive linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes timeline-walk {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes timeline-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
