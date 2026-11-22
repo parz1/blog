@@ -625,7 +625,13 @@
       }
     },
     "timeline": {
-      "start": "The line starts here"
+      "start": "The line starts here",
+      "legend": "Filter by kind",
+      "kinds": {
+        "post": "Essays",
+        "log": "Devlogs",
+        "note": "Knowledge base"
+      }
     }
   },
   "about": {
