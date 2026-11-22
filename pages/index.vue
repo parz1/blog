@@ -16,9 +16,6 @@ const { t } = useI18n()
       class="w-full md:w-[80%] lg:ml-[40%] grow flex flex-col justify-start items-start md:items-center lg:items-start"
     >
       <HomeProfileIntro />
-      <section class="mt-8 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
-        <HomeGardenEntry />
-      </section>
       <section class="mt-12 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
         <div class="mb-5">
           <h2

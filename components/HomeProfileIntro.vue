@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 type TechCloudItem = {
@@ -19,27 +19,111 @@ const gsiiUrl = 'https://www.iii.u-tokyo.ac.jp/'
 const techDescriptionKey = (item: string) =>
   `home.profile.tech.items.${item}.description`
 
-const focusItems = [
+// What each line of work has lately produced on this site: the newest notes
+// in the knowledge base, experiments in the lab, and the projects under way.
+const { data: produced } = await useAsyncData('home-focus', async () => {
+  const [concepts, projects] = await Promise.all([
+    querySiteContent('concepts').order('updated', 'DESC').all(),
+    querySiteContent('projects').order('updated', 'DESC').all(),
+  ])
+
+  return {
+    concepts: concepts.map(({ slug, lang, title, updated }) => ({
+      slug,
+      lang,
+      title,
+      updated,
+    })),
+    projects: projects.map(({ slug, lang, title, status, updated }) => ({
+      slug,
+      lang,
+      title,
+      status,
+      updated,
+    })),
+  }
+})
+
+// one entry per slug, in the reader's language when there is one, newest first
+const newest = <T extends { slug: string; lang?: string; updated: string }>(
+  docs: T[],
+  count: number,
+) => {
+  const code = normalizeContentLocale(locale.value)
+  const groups = new Map<string, T[]>()
+
+  for (const doc of docs) {
+    if (!groups.has(doc.slug)) groups.set(doc.slug, [])
+    groups.get(doc.slug)!.push(doc)
+  }
+
+  return Array.from(groups.values())
+    .map(
+      (group) =>
+        group.find((doc) => doc.lang?.toLowerCase() === code) ??
+        group.find((doc) => doc.lang?.toLowerCase() === 'en') ??
+        group[0]!,
+    )
+    .toSorted(
+      (a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime(),
+    )
+    .slice(0, count)
+}
+
+const LAB = ['cameraLab', 'performer'] as const
+
+const focusItems = computed(() => [
   {
+    key: 'research',
     icon: 'i-lucide-brain',
-    titleKey: 'home.profile.focus.items.research.title',
-    descriptionKey: 'home.profile.focus.items.research.description',
+    mark: 'i-lucide-leaf',
+    tone: 'text-emerald-600 dark:text-emerald-400',
+    produced: newest(produced.value?.concepts ?? [], 2).map((concept) => ({
+      title: concept.title,
+      to: localePath(`/concepts/${concept.slug}`),
+      lang: toHtmlLang(concept.lang),
+      note: '',
+    })),
+    more: { label: t('garden.title'), to: localePath('/garden') },
   },
   {
+    key: 'engineering',
     icon: 'i-lucide-code-2',
-    titleKey: 'home.profile.focus.items.engineering.title',
-    descriptionKey: 'home.profile.focus.items.engineering.description',
+    mark: 'i-lucide-flask-conical',
+    tone: 'text-amber-600 dark:text-amber-400',
+    produced: LAB.flatMap((id) => {
+      const demo = demoCatalog.find((item) => item.id === id)
+
+      return demo
+        ? [
+            {
+              title: t(`demoHub.items.${id}.title`),
+              to: localePath(demo.to),
+              lang: toHtmlLang(locale.value),
+              note: '',
+            },
+          ]
+        : []
+    }),
+    more: { label: t('menu.lab'), to: localePath('/demo') },
   },
   {
+    key: 'personalDevelopment',
     icon: 'i-lucide-sprout',
-    titleKey: 'home.profile.focus.items.personalDevelopment.title',
-    descriptionKey: 'home.profile.focus.items.personalDevelopment.description',
-    link: {
-      to: '/projects',
-      labelKey: 'home.profile.focus.items.personalDevelopment.action',
+    mark: 'i-lucide-package',
+    tone: 'text-primary-600 dark:text-primary-400',
+    produced: newest(produced.value?.projects ?? [], 2).map((project) => ({
+      title: project.title,
+      to: localePath(`/projects/${project.slug}`),
+      lang: toHtmlLang(project.lang),
+      note: t(`projects.status.${project.status}`),
+    })),
+    more: {
+      label: t('home.profile.focus.items.personalDevelopment.action'),
+      to: localePath('/projects'),
     },
   },
-]
+])
 
 const techItems: TechCloudItem[] = [
   {
@@ -354,29 +438,58 @@ const techItems: TechCloudItem[] = [
       >
         {{ t('home.profile.focus.heading') }}
       </h2>
-      <div class="mt-3 grid gap-4 md:grid-cols-3">
-        <div v-for="item in focusItems" :key="item.titleKey">
+      <div class="mt-3 grid gap-x-6 gap-y-6 md:grid-cols-3">
+        <div v-for="item in focusItems" :key="item.key" class="flex flex-col">
           <div class="flex items-center gap-2">
             <UIcon :name="item.icon" class="size-4 text-primary" />
             <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-              {{ t(item.titleKey) }}
+              {{ t(`home.profile.focus.items.${item.key}.title`) }}
             </h3>
           </div>
-          <p class="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
-            {{ t(item.descriptionKey) }}
-          </p>
-          <UButton
-            v-if="item.link"
-            :to="localePath(item.link.to)"
-            color="neutral"
-            variant="link"
-            size="xs"
-            icon="i-lucide-arrow-right"
-            trailing
-            class="mt-2 px-0"
+          <p
+            class="mt-1 flex-1 text-sm leading-6 text-gray-500 dark:text-gray-400"
           >
-            {{ t(item.link.labelKey) }}
-          </UButton>
+            {{ t(`home.profile.focus.items.${item.key}.description`) }}
+          </p>
+
+          <!-- what this line of work has lately put on the site -->
+          <ul
+            class="mt-3 space-y-1.5 border-t border-gray-200 pt-3 dark:border-gray-800"
+          >
+            <li v-for="thing in item.produced" :key="thing.to">
+              <NuxtLink
+                :to="thing.to"
+                class="group flex items-center gap-2 text-sm text-gray-800 transition-colors hover:text-primary-600 dark:text-gray-200 dark:hover:text-primary-400"
+              >
+                <UIcon
+                  :name="item.mark"
+                  class="size-3.5 shrink-0"
+                  :class="item.tone"
+                />
+                <span :lang="thing.lang" class="truncate">{{
+                  thing.title
+                }}</span>
+                <span
+                  v-if="thing.note"
+                  class="ml-auto shrink-0 text-xs text-gray-400 dark:text-gray-500"
+                >
+                  {{ thing.note }}
+                </span>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                :to="item.more.to"
+                class="group inline-flex items-center gap-1 text-xs text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+              >
+                {{ item.more.label }}
+                <UIcon
+                  name="i-lucide-arrow-right"
+                  class="size-3 transition-transform group-hover:translate-x-0.5"
+                />
+              </NuxtLink>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
