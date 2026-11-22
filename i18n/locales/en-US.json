@@ -635,8 +635,7 @@
     },
     "places": {
       "heading": "Places to wander",
-      "products": "Products",
-      "blogHolds": "{columns} columns · {articles} articles"
+      "products": "Products"
     }
   },
   "about": {

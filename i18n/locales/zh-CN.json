@@ -635,8 +635,7 @@
     },
     "places": {
       "heading": "可以逛逛",
-      "products": "产品",
-      "blogHolds": "{columns} 个专栏 · {articles} 篇文章"
+      "products": "产品"
     }
   },
   "about": {
