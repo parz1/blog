@@ -484,7 +484,7 @@
   },
   "home": {
     "latestActivities": "Latest Activities",
-    "latestActivitiesDescription": "Essays, notes, and devlogs in one stream",
+    "latestActivitiesDescription": "Essays, devlogs and garden notes in one stream",
     "profile": {
       "name": "ZHOU LEI / 周磊",
       "heading": "About me",
@@ -621,8 +621,22 @@
           "postman": {
             "description": "Useful for API checks, service boundaries, and keeping interface workflows clear."
           }
-        }
+        },
+        "hint": "Point at one, or throw it around"
       }
+    },
+    "timeline": {
+      "start": "The line starts here",
+      "legend": "Filter by kind",
+      "kinds": {
+        "post": "Essays",
+        "log": "Devlogs",
+        "note": "Knowledge base"
+      }
+    },
+    "places": {
+      "heading": "Places to wander",
+      "products": "Products"
     }
   },
   "about": {

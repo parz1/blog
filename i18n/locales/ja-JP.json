@@ -484,7 +484,7 @@
   },
   "home": {
     "latestActivities": "最新アクティビティ",
-    "latestActivitiesDescription": "記事、メモ、開発ログをまとめた最新更新",
+    "latestActivitiesDescription": "記事、開発ログ、庭のノートをまとめた最新更新",
     "profile": {
       "name": "周 磊 / ZHOU LEI",
       "heading": "私について",
@@ -621,8 +621,22 @@
           "postman": {
             "description": "API の確認、サービス境界の調整、インターフェース整理に使います。"
           }
-        }
+        },
+        "hint": "触れてみるか、投げてみてください"
       }
+    },
+    "timeline": {
+      "start": "ここが始まり",
+      "legend": "種類で絞り込む",
+      "kinds": {
+        "post": "記事",
+        "log": "メモ",
+        "note": "ナレッジベース"
+      }
+    },
+    "places": {
+      "heading": "見てまわる",
+      "products": "プロダクト"
     }
   },
   "about": {

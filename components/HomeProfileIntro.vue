@@ -34,10 +34,6 @@ const focusItems = [
     icon: 'i-lucide-sprout',
     titleKey: 'home.profile.focus.items.personalDevelopment.title',
     descriptionKey: 'home.profile.focus.items.personalDevelopment.description',
-    link: {
-      to: '/projects',
-      labelKey: 'home.profile.focus.items.personalDevelopment.action',
-    },
   },
 ]
 
@@ -298,7 +294,7 @@ const techItems: TechCloudItem[] = [
 </script>
 
 <template>
-  <section class="max-w-2xl px-4 sm:px-0 mt-6">
+  <section class="mt-6 w-full max-w-2xl px-4 sm:px-0 xl:max-w-3xl">
     <div>
       <div class="flex flex-wrap items-end gap-3">
         <h1
@@ -365,18 +361,6 @@ const techItems: TechCloudItem[] = [
           <p class="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
             {{ t(item.descriptionKey) }}
           </p>
-          <UButton
-            v-if="item.link"
-            :to="localePath(item.link.to)"
-            color="neutral"
-            variant="link"
-            size="xs"
-            icon="i-lucide-arrow-right"
-            trailing
-            class="mt-2 px-0"
-          >
-            {{ t(item.link.labelKey) }}
-          </UButton>
         </div>
       </div>
     </div>

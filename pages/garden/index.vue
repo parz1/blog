@@ -36,7 +36,7 @@ const { data: concepts } = await useAsyncData(
   'garden-concepts',
   async () =>
     (await querySiteContent('concepts').order('updated', 'DESC').all()).map(
-      ({ slug, lang, title, summary, state, updated, linkedConcepts }) => ({
+      ({
         slug,
         lang,
         title,
@@ -44,6 +44,17 @@ const { data: concepts } = await useAsyncData(
         state,
         updated,
         linkedConcepts,
+        body,
+      }) => ({
+        slug,
+        lang,
+        title,
+        summary,
+        state,
+        updated,
+        linkedConcepts,
+        // how much is written in the note: a number, not the text itself
+        size: gardenTextWeight(body),
       }),
     ),
   { lazy: false },
@@ -85,10 +96,12 @@ const pickLocalized = <T extends { slug: string; lang?: string }>(
   )
 }
 
-// Every concept is still a seed today, so during development the garden can
-// preview what it looks like once notes mature. Visitors always see real states.
+// A note's stage is read from the note itself (see gardenGrowth). During
+// development the garden can also deal stages out at random, to preview every
+// look at once; that is off unless switched on, and visitors never see it.
 const canSimulate = import.meta.dev
-const simulate = ref(canSimulate)
+const simulate = ref(false)
+const now = Date.now()
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat(locale.value, { dateStyle: 'medium' }).format(
@@ -115,7 +128,13 @@ const items = computed<GardenItem[]>(() => {
   const plants = conceptDocs.map((concept): GardenItem => {
     const state = simulate.value
       ? SIMULATED_STATES[gardenHash(concept.slug) % SIMULATED_STATES.length]!
-      : (STATES.find((item) => item === concept.state) ?? 'seed')
+      : gardenGrowth({
+          state: concept.state,
+          size: concept.size,
+          ties: degree.get(concept.slug) ?? 0,
+          updated: concept.updated,
+          now,
+        })
     const links = (concept.linkedConcepts ?? []).filter((target) =>
       conceptSlugs.has(target),
     )

@@ -17,6 +17,35 @@ const pageLinks = [
   },
 ]
 
+// The four places this site is made of, each with the icon and tone it has
+// elsewhere on the home page (the feather and the leaf mark the timeline too).
+const places = [
+  {
+    icon: 'i-lucide-feather',
+    tone: 'text-primary-600 dark:text-primary-400',
+    labelKey: 'menu.blog',
+    to: '/blog',
+  },
+  {
+    icon: 'i-lucide-leaf',
+    tone: 'text-emerald-600 dark:text-emerald-400',
+    labelKey: 'garden.title',
+    to: '/garden',
+  },
+  {
+    icon: 'i-lucide-flask-conical',
+    tone: 'text-amber-600 dark:text-amber-400',
+    labelKey: 'menu.lab',
+    to: '/demo',
+  },
+  {
+    icon: 'i-lucide-package',
+    tone: 'text-violet-600 dark:text-violet-400',
+    labelKey: 'home.places.products',
+    to: '/projects',
+  },
+]
+
 // 第一个邮箱（仕事メール）
 const source1 = ref('parz1zhou@gmail.com')
 const {
@@ -87,6 +116,26 @@ const handleCopyEmailToClipboard2 = () => copy2()
       >
         <UIcon :name="link.icon" class="size-4 shrink-0" />
         {{ t(link.labelKey) }}
+        <UIcon
+          name="i-lucide-arrow-right"
+          class="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
+        />
+      </NuxtLink>
+    </div>
+
+    <!-- where to go from here -->
+    <div class="text-sm text-secondary">
+      {{ t('home.places.heading') }}
+    </div>
+    <div class="mt-1 mb-4 flex flex-col items-center gap-y-1.5 lg:items-start">
+      <NuxtLink
+        v-for="place in places"
+        :key="place.to"
+        :to="localePath(place.to)"
+        class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-highlighted"
+      >
+        <UIcon :name="place.icon" class="size-4 shrink-0" :class="place.tone" />
+        {{ t(place.labelKey) }}
         <UIcon
           name="i-lucide-arrow-right"
           class="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"

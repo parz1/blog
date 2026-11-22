@@ -1,6 +1,12 @@
 <script setup lang="ts">
+type Lane = 'research' | 'bridge' | 'engineering'
+
 type TechCloudItem = {
+  // what the tool is used for, said when it is pointed at
+  descriptionKey?: string
   icon: string
+  // which bin the tool falls into; tools without one go in the middle
+  lane?: Lane
   name: string
   rotation?: number
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -119,8 +125,12 @@ const activeItem = computed(() =>
 
 const activeIcon = computed(() => activeItem.value?.icon ?? 'i-lucide-mouse')
 
+const activeAbout = computed(() =>
+  activeItem.value?.descriptionKey ? t(activeItem.value.descriptionKey) : '',
+)
+
 const activeLabel = computed(
-  () => activeItem.value?.name ?? t('home.profile.tech.stackLabel'),
+  () => activeItem.value?.name ?? t('home.profile.tech.hint'),
 )
 
 const isActive = (index: number) => activeIndex.value === index
@@ -137,7 +147,59 @@ const getTargetRadius = (index: number) => {
   return isActive(index) ? baseRadius * 1.42 : baseRadius
 }
 
-const getAnchorX = (item: TechCloudItem) => (item.x / 100) * bounds.width
+// The floor is divided into three bins, one per lane, by two short walls.
+// Each bin is as wide as its tools need, so the three piles end up about the
+// same height.
+const LANES: Lane[] = ['research', 'bridge', 'engineering']
+const laneOf = (item: TechCloudItem) => item.lane ?? 'bridge'
+
+const laneShares = computed(() => {
+  const weights = LANES.map((lane) =>
+    props.items
+      .filter((item) => laneOf(item) === lane)
+      .reduce((sum, item) => sum + (getBaseRadius(item) * 2 + 4) ** 2, 0),
+  )
+  // no bin narrower than a fifth, however few tools it holds
+  const floored = weights.map((weight) =>
+    Math.max(weight, weights.reduce((a, b) => a + b, 0) * 0.2),
+  )
+  const total = floored.reduce((a, b) => a + b, 0) || 1
+
+  return floored.map((weight) => weight / total)
+})
+
+// the x of every bin edge: the left wall, the two dividers, the right wall
+const laneEdges = computed(() => {
+  const inner = Math.max(0, bounds.width - wallInset * 2)
+  const edges = [wallInset]
+
+  for (const share of laneShares.value)
+    edges.push(edges.at(-1)! + inner * share)
+
+  return edges
+})
+
+const dividers = computed(() => laneEdges.value.slice(1, -1))
+const dividerHeight = computed(() => Math.min(bounds.height * 0.42, 104))
+const dividerTop = computed(
+  () => bounds.height - floorInset - dividerHeight.value,
+)
+
+const laneRange = (item: TechCloudItem) => {
+  const index = LANES.indexOf(laneOf(item))
+
+  return [laneEdges.value[index]!, laneEdges.value[index + 1]!] as const
+}
+
+// where in its bin a tool starts and drifts back to: tools of a lane are
+// spread across it in the order they are listed
+const getAnchorX = (item: TechCloudItem) => {
+  const [from, to] = laneRange(item)
+  const mates = props.items.filter((other) => laneOf(other) === laneOf(item))
+  const rank = mates.indexOf(item)
+
+  return from + ((rank + 0.5) / mates.length) * (to - from)
+}
 
 const getIconSize = (index: number) => {
   const body = bodies[index]
@@ -208,6 +270,53 @@ const resolveWalls = (body: Body) => {
 
     body.vx *= 0.82
     body.vr += body.vx * 0.006
+  }
+
+  return active
+}
+
+// The dividers are walls only as tall as they are drawn: a tool thrown over
+// one lands in the neighbouring bin and stays there until it is carried back.
+const resolveDividers = (body: Body) => {
+  const top = dividerTop.value
+  let active = false
+
+  for (const x of dividers.value) {
+    const dx = body.x - x
+
+    if (body.y >= top) {
+      // beside the wall: pushed out to the side it is on
+      if (Math.abs(dx) >= body.radius + 1) continue
+
+      const side = dx >= 0 ? 1 : -1
+
+      body.x = x + side * (body.radius + 1)
+      body.vx = Math.abs(body.vx) > 0.45 ? side * Math.abs(body.vx) * 0.24 : 0
+      active = true
+      continue
+    }
+
+    // above it: the wall's top is a point to roll off
+    const dy = body.y - top
+    const distance = Math.hypot(dx, dy)
+
+    if (distance >= body.radius || distance < 0.001) continue
+
+    const nx = dx / distance
+    const ny = dy / distance
+    const along = body.vx * nx + body.vy * ny
+
+    body.x = x + nx * body.radius
+    body.y = top + ny * body.radius
+
+    if (along < 0) {
+      body.vx -= along * nx * 1.2
+      body.vy -= along * ny * 1.2
+    }
+
+    // never balanced on the tip: a nudge towards whichever side it leans
+    body.vx += (dx >= 0 ? 1 : -1) * 0.06
+    active = true
   }
 
   return active
@@ -313,8 +422,14 @@ const step = () => {
       Math.abs(radiusDelta) < 0.16
     const anchorDelta = anchorX - body.x
 
+    const [laneFrom, laneTo] = laneRange(item)
+    const astray = body.x < laneFrom || body.x > laneTo
+
     body.radius += radiusDelta * 0.2
-    if (Math.abs(anchorDelta) > 8) {
+    if (astray && body.y < dividerTop.value - body.radius) {
+      // in the air over someone else's bin: steered home before it lands
+      body.vx += clamp(anchorDelta * 0.004, -0.5, 0.5)
+    } else if (!astray && Math.abs(anchorDelta) > 8) {
       body.vx += anchorDelta * 0.00025
     }
 
@@ -353,6 +468,7 @@ const step = () => {
 
     bodies.forEach((body) => {
       active = resolveWalls(body) || active
+      active = resolveDividers(body) || active
     })
   }
 
@@ -429,7 +545,7 @@ const dropBodiesFromTop = () => {
     const direction = index % 2 === 0 ? 1 : -1
 
     body.supported = false
-    body.vx += direction * (0.16 + (index % 4) * 0.025)
+    body.vx += direction * 0.04
     body.vy = 0.35 + (index % 5) * 0.08
     body.vr += direction * 0.018
   })
@@ -593,11 +709,10 @@ const initializeBodies = () => {
     body.radius = radius
 
     if (!wasReady) {
-      body.x = clamp((item.x / 100) * bounds.width, minX, maxX)
-      body.y = reducedMotion.value
-        ? clamp((item.y / 100) * bounds.height, minY, maxY)
-        : minY
-      body.vx = ((index % 5) - 2) * 0.08
+      body.x = clamp(getAnchorX(item), minX, maxX)
+      // staggered heights, so a lane's tools arrive one after another
+      body.y = minY + (index % 3) * radius * 0.6
+      body.vx = 0
       body.vy = 0
       return
     }
@@ -606,8 +721,40 @@ const initializeBodies = () => {
     body.y = clamp(body.y * (bounds.height / previousHeight), minY, maxY)
   })
 
+  // with motion reduced nothing falls: each bin is simply filled in rows
+  if (reducedMotion.value) settleInRows()
+
   ready.value = true
   start()
+}
+
+const settleInRows = () => {
+  for (const lane of LANES) {
+    const index = LANES.indexOf(lane)
+    const from = laneEdges.value[index]! + 4
+    const to = laneEdges.value[index + 1]! - 4
+    let x = from
+    let floor = bounds.height - floorInset
+    let rowHeight = 0
+
+    props.items.forEach((item, at) => {
+      if (laneOf(item) !== lane) return
+
+      const body = bodies[at]!
+      const size = body.radius * 2 + collisionGap
+
+      if (x + size > to && x > from) {
+        x = from
+        floor -= rowHeight
+        rowHeight = 0
+      }
+
+      body.x = x + size / 2
+      body.y = floor - size / 2
+      x += size
+      rowHeight = Math.max(rowHeight, size)
+    })
+  }
 }
 
 const updateHoverFromPointer = (event: PointerEvent) => {
@@ -721,35 +868,61 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="mt-4">
+  <div class="mt-2">
+    <!-- The tool being pointed at, and what it is for. It has a line of its
+         own above the bins, where falling tools cannot cover it. -->
+    <p
+      class="flex h-6 items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+      aria-live="polite"
+    >
+      <UIcon
+        v-if="isIconifyIcon(activeIcon)"
+        :name="activeIcon"
+        class="size-4 shrink-0"
+        aria-hidden="true"
+      />
+      <img
+        v-else
+        :src="activeIcon"
+        alt=""
+        class="size-4 shrink-0"
+        draggable="false"
+      />
+      <span
+        class="shrink-0"
+        :class="activeItem && 'font-semibold text-gray-900 dark:text-gray-50'"
+      >
+        {{ activeLabel }}
+      </span>
+      <span v-if="activeAbout" class="truncate">{{ activeAbout }}</span>
+    </p>
+
     <div
       ref="container"
       data-tech-cloud
-      class="relative h-72 overflow-hidden bg-transparent sm:h-64 md:h-52"
+      class="relative mt-1 h-56 overflow-hidden bg-transparent sm:h-48 md:h-36"
       @pointerleave="clearHover"
       @pointermove="updateHoverFromPointer"
     >
-      <div
-        class="pointer-events-none absolute left-1/2 top-2 z-50 flex -translate-x-1/2 items-center gap-2 text-base font-semibold text-gray-900 sm:top-3 sm:text-lg dark:text-gray-50"
-        aria-live="polite"
-      >
-        <UIcon
-          v-if="isIconifyIcon(activeIcon)"
-          :name="activeIcon"
-          class="size-5 sm:size-6"
+      <!-- the floor and the two short walls that divide it into bins -->
+      <template v-if="ready">
+        <span
+          class="pointer-events-none absolute inset-x-1.5 h-px bg-gray-200 dark:bg-gray-800"
+          :style="{ bottom: `${floorInset - 1}px` }"
           aria-hidden="true"
         />
-        <img
-          v-else
-          :src="activeIcon"
-          alt=""
-          class="size-5 sm:size-6"
-          draggable="false"
+        <span
+          v-for="x in dividers"
+          :key="x"
+          class="pointer-events-none absolute w-px rounded-full bg-gray-200 dark:bg-gray-800"
+          :style="{
+            left: `${x}px`,
+            bottom: `${floorInset - 1}px`,
+            height: `${dividerHeight}px`,
+          }"
+          aria-hidden="true"
         />
-        <span class="whitespace-nowrap leading-none">
-          {{ activeLabel }}
-        </span>
-      </div>
+      </template>
 
       <button
         v-for="(item, index) in items"
@@ -784,6 +957,21 @@ onBeforeUnmount(() => {
           draggable="false"
         />
       </button>
+    </div>
+
+    <!-- what each bin holds, under its stretch of floor -->
+    <div
+      class="flex px-1.5 text-xs text-gray-500 dark:text-gray-400"
+      aria-hidden="true"
+    >
+      <span
+        v-for="(lane, index) in LANES"
+        :key="lane"
+        class="text-center"
+        :style="{ width: `${laneShares[index]! * 100}%` }"
+      >
+        {{ t(`home.profile.tech.lanes.${lane}`) }}
+      </span>
     </div>
   </div>
 </template>

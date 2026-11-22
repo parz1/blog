@@ -484,7 +484,7 @@
   },
   "home": {
     "latestActivities": "最新动态",
-    "latestActivitiesDescription": "文章、札记和开发记录的最近更新",
+    "latestActivitiesDescription": "文章、札记和花园笔记的最近更新",
     "profile": {
       "name": "周磊 / ZHOU LEI",
       "heading": "关于我",
@@ -621,8 +621,22 @@
           "postman": {
             "description": "验证 API、调试服务边界和整理接口工作流的工具。"
           }
-        }
+        },
+        "hint": "指一个看看，或者拖着玩"
       }
+    },
+    "timeline": {
+      "start": "这条线从这里开始",
+      "legend": "按类型筛选",
+      "kinds": {
+        "post": "文章",
+        "log": "札记",
+        "note": "知识库"
+      }
+    },
+    "places": {
+      "heading": "可以逛逛",
+      "products": "产品"
     }
   },
   "about": {
