@@ -308,6 +308,10 @@
       "experimental": "Experimental"
     },
     "categories": {
+      "visual": {
+        "title": "Visual design",
+        "description": "Nothing to explain, only to look at: atmospheric scenes made of shaders and motion."
+      },
       "learning": {
         "title": "Learning instruments",
         "description": "Manipulate a concept and see the consequence immediately, from optics to mathematical surfaces."
@@ -326,6 +330,10 @@
       }
     },
     "items": {
+      "jellyfish": {
+        "title": "Jellyfish",
+        "description": "Glowing jellyfish pulsing upward through deep water, with bells, tentacles, and currents all done in shaders."
+      },
       "cameraLab": {
         "title": "Camera Lab",
         "description": "Drag a camera through a realistic interior and use its dashed frustum and final-frame preview to learn focal length, aperture, shutter speed, and ISO."
@@ -395,6 +403,11 @@
         "description": "Follow the pointer, or turn on your camera to animate the character with your head, eyes and mouth."
       }
     }
+  },
+  "jellyfishDemo": {
+    "eyebrow": "Visual design · 01",
+    "title": "Jellyfish",
+    "hint": "Drag to look around, scroll to move closer. Reach into the water and they drift aside and light up."
   },
   "cameraLab": {
     "metaTitle": "Camera Lab",

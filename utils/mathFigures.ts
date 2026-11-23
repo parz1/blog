@@ -155,7 +155,10 @@ export const mathFigurePresets: Record<
   },
   'sigmoid-sensitivity': {
     kind: 'curve-2d',
-    title: { zh: '曲线中间最敏感', en: 'The middle of the curve is the most sensitive' },
+    title: {
+      zh: '曲线中间最敏感',
+      en: 'The middle of the curve is the most sensitive',
+    },
     description: {
       zh: '拖动输入，观察 Sigmoid 的导数如何表示局部变化速度。',
       en: 'Drag the input to see how the derivative of sigmoid measures the local rate of change.',
@@ -178,7 +181,10 @@ export const mathFigurePresets: Record<
   },
   'threshold-to-sigmoid': {
     kind: 'curve-2d',
-    title: { zh: '从硬门槛到光滑门槛', en: 'From a hard threshold to a smooth one' },
+    title: {
+      zh: '从硬门槛到光滑门槛',
+      en: 'From a hard threshold to a smooth one',
+    },
     description: {
       zh: '拖动输入，比较阶跃函数与把它摊平后的 Sigmoid。',
       en: 'Drag the input to compare the step function with the sigmoid that flattens it out.',
@@ -238,7 +244,10 @@ export const mathFigurePresets: Record<
   },
   'linear-vs-band': {
     kind: 'curve-2d',
-    title: { zh: '一条直线追不上一段区间', en: 'A straight line cannot follow a band' },
+    title: {
+      zh: '一条直线追不上一段区间',
+      en: 'A straight line cannot follow a band',
+    },
     description: {
       zh: '拖动温度，比较目标区间与任意一条线性分数。',
       en: 'Drag the temperature to compare the target band with any linear score.',
@@ -317,7 +326,10 @@ export const mathFigurePresets: Record<
   },
   'square-vs-hinges': {
     kind: 'curve-2d',
-    title: { zh: '手工特征与 ReLU 特征', en: 'A hand-made feature vs. ReLU features' },
+    title: {
+      zh: '手工特征与 ReLU 特征',
+      en: 'A hand-made feature vs. ReLU features',
+    },
     description: {
       zh: '拖动温度，比较用 x² 特征和用两个 ReLU 单元得到的分数。',
       en: 'Drag the temperature to compare the score built from x² with the one built from two ReLU units.',
@@ -341,12 +353,18 @@ export const mathFigurePresets: Record<
     evaluate: bandScore,
     series: [
       {
-        label: { zh: 'x² 特征：−(x−18)(x−24)/4.5', en: 'x² feature: −(x−18)(x−24)/4.5' },
+        label: {
+          zh: 'x² 特征：−(x−18)(x−24)/4.5',
+          en: 'x² feature: −(x−18)(x−24)/4.5',
+        },
         evaluate: squareScore,
         tone: 'amber',
       },
       {
-        label: { zh: 'ReLU 特征：2 − h₁ − h₂', en: 'ReLU features: 2 − h₁ − h₂' },
+        label: {
+          zh: 'ReLU 特征：2 − h₁ − h₂',
+          en: 'ReLU features: 2 − h₁ − h₂',
+        },
         evaluate: bandScore,
         tone: 'primary',
       },
@@ -354,7 +372,10 @@ export const mathFigurePresets: Record<
   },
   'relu-xor-bend': {
     kind: 'curve-2d',
-    title: { zh: '两个单侧检测加在一起', en: 'Two one-sided detectors added together' },
+    title: {
+      zh: '两个单侧检测加在一起',
+      en: 'Two one-sided detectors added together',
+    },
     description: {
       zh: '拖动差值 d，比较线性相减与 ReLU(d)+ReLU(−d)。',
       en: 'Drag the difference d to compare plain subtraction with ReLU(d) + ReLU(−d).',

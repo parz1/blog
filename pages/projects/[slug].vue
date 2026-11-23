@@ -114,7 +114,9 @@ const githubErrorMessage = computed(() => {
 
 const projectLocales = { cn: 'zh-CN', en: 'en', ja: 'ja' } as const
 const projectUrl = (language?: string) => {
-  const key = normalizeContentLocale(language || 'en') as keyof typeof projectLocales
+  const key = normalizeContentLocale(
+    language || 'en',
+  ) as keyof typeof projectLocales
   return new URL(
     localePath(`/projects/${slug.value}`, projectLocales[key] || 'en'),
     'https://parz1.minerei.dev',
@@ -124,13 +126,19 @@ const projectUrl = (language?: string) => {
 useHead(() => ({
   title: project.value?.title || t('menu.projects'),
   titleTemplate: '%s · parz1 ZHOU',
-  meta: project.value ? [{ name: 'description', content: project.value.summary }] : [],
-  link: project.value ? [
-    { rel: 'canonical', href: projectUrl(project.value.lang) },
-    ...(projects.value || []).map(({ lang }) => ({
-      rel: 'alternate', hreflang: toHtmlLang(lang || 'en'), href: projectUrl(lang),
-    })),
-  ] : [],
+  meta: project.value
+    ? [{ name: 'description', content: project.value.summary }]
+    : [],
+  link: project.value
+    ? [
+        { rel: 'canonical', href: projectUrl(project.value.lang) },
+        ...(projects.value || []).map(({ lang }) => ({
+          rel: 'alternate',
+          hreflang: toHtmlLang(lang || 'en'),
+          href: projectUrl(lang),
+        })),
+      ]
+    : [],
 }))
 </script>
 
