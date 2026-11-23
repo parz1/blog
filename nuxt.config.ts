@@ -226,10 +226,7 @@ export default defineNuxtConfig({
       ? {
           preset: 'cloudflare-module',
           cloudflare: { nodeCompat: true, deployConfig: false },
-          ignore: [
-            '**/__local/**',
-            '**/localContentWorkspace.*',
-          ],
+          ignore: ['**/__local/**', '**/localContentWorkspace.*'],
           routeRules: {
             '/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
           },

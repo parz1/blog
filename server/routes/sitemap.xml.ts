@@ -59,7 +59,11 @@ export default defineEventHandler(async (event) => {
   // Declare XML so Nitro prerenders this as a plain file at /sitemap.xml
   // instead of wrapping it as sitemap.xml/index.html.
   setHeader(event, 'Content-Type', 'application/xml')
-  setHeader(event, 'Cache-Control', 'public, max-age=0, s-maxage=15, must-revalidate')
+  setHeader(
+    event,
+    'Cache-Control',
+    'public, max-age=0, s-maxage=15, must-revalidate',
+  )
 
   const sitemap = new SitemapStream({ hostname: HOSTNAME })
   const links: SitemapLink[] = []
@@ -71,7 +75,10 @@ export default defineEventHandler(async (event) => {
   }
 
   for (const [collection, base] of Object.entries(CONTENT_ROUTES)) {
-    const docs = await queryRuntimeCollection(event, collection as keyof Collections)
+    const docs = await queryRuntimeCollection(
+      event,
+      collection as keyof Collections,
+    )
       .select('slug')
       .all()
 
