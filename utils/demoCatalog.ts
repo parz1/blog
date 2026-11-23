@@ -1,4 +1,9 @@
-export type DemoCategoryId = 'learning' | 'vision' | 'spatial' | 'interaction'
+export type DemoCategoryId =
+  | 'visual'
+  | 'learning'
+  | 'vision'
+  | 'spatial'
+  | 'interaction'
 
 export type DemoStatus = 'featured' | 'stable' | 'experimental'
 
@@ -15,6 +20,7 @@ export const demoCategories: {
   id: DemoCategoryId
   icon: string
 }[] = [
+  { id: 'visual', icon: 'i-lucide-palette' },
   { id: 'learning', icon: 'i-lucide-graduation-cap' },
   { id: 'vision', icon: 'i-lucide-scan-face' },
   { id: 'spatial', icon: 'i-lucide-box' },
@@ -22,6 +28,14 @@ export const demoCategories: {
 ]
 
 export const demoCatalog: DemoCatalogItem[] = [
+  {
+    id: 'jellyfish',
+    category: 'visual',
+    icon: 'i-lucide-waves',
+    to: '/demo/jellyfish',
+    status: 'stable',
+    tags: ['Three.js', 'GLSL'],
+  },
   {
     id: 'cameraLab',
     category: 'learning',

@@ -308,6 +308,10 @@
       "experimental": "实验中"
     },
     "categories": {
+      "visual": {
+        "title": "视觉设计",
+        "description": "不解释什么，只为好看：用着色器和运动做出的氛围场景。"
+      },
       "learning": {
         "title": "学习仪器",
         "description": "亲手改变概念参数，并立刻看到光学、数学曲面等知识产生的结果。"
@@ -326,6 +330,10 @@
       }
     },
     "items": {
+      "jellyfish": {
+        "title": "水母",
+        "description": "深海里随脉动上浮的发光水母，钟体、触手和洋流都在着色器里完成。"
+      },
       "cameraLab": {
         "title": "摄像机实验室",
         "description": "在真实感室内场景中拖动机位，用虚线画幅与成片预览理解焦段、光圈、快门和 ISO。"
@@ -395,6 +403,11 @@
         "description": "让角色跟随鼠标，或开启摄像头体验头部、眼睛与嘴部联动。"
       }
     }
+  },
+  "jellyfishDemo": {
+    "eyebrow": "视觉设计 · 01",
+    "title": "水母",
+    "hint": "拖动环顾四周，滚轮靠近；把指针伸进水里，它们会避开并亮起来。"
   },
   "cameraLab": {
     "metaTitle": "摄像机实验室",
